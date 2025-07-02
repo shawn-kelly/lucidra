@@ -6,8 +6,12 @@ Future of Integrated Org Strategy
           /modules
               scenario/
               upgrade/
+              ai/
+          /models
+          /middleware
+          /routes
+          /utils
           index.ts
-          ...
       Dockerfile
       .env.example
   /frontend
@@ -15,9 +19,16 @@ Future of Integrated Org Strategy
           /components
               Scenario/
               Upgrade/
+              AI/
+          /pages
           App.tsx
-          ...
       Dockerfile
       .env.example
+  /python-ai
+      /ai_services
+          scenario_ai.py
+          upgrade_ai.py
+      requirements.txt
+      README.md
   docker-compose.yml
   README.md
