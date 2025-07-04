@@ -1,0 +1,40 @@
+name: Lucidra Frontend CI
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+    branches: [ main ]
+  pull_request:
+    paths:
+      - 'frontend/**'
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    env:
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Inject .env file
+        run: |
+          echo "REACT_APP_API_URL=http://localhost:4000/api" >> .env
+          echo "JWT_SECRET=${JWT_SECRET}" >> .env
+
+      - name: Build app
+        run: npm run build
