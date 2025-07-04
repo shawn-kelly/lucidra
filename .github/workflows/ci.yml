@@ -2,8 +2,12 @@ name: Lucidra Backend CI
 
 on:
   push:
+    paths:
+      - 'backend/**'
     branches: [ main ]
   pull_request:
+    paths:
+      - 'backend/**'
     branches: [ main ]
 
 jobs:
@@ -12,17 +16,30 @@ jobs:
     defaults:
       run:
         working-directory: backend
+    env:
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run tests
-      run: npm test
+      - name: Inject .env file
+        run: |
+          echo "PORT=4000" >> .env
+          echo "DB_HOST=db" >> .env
+          echo "DB_PORT=5432" >> .env
+          echo "DB_USER=lucidra" >> .env
+          echo "DB_PASS=lucidra" >> .env
+          echo "DB_NAME=lucidra" >> .env
+          echo "JWT_SECRET=${JWT_SECRET}" >> .env
+
+      - name: Run tests
+        run: npm test
