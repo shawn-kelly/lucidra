@@ -45,6 +45,13 @@ export interface AIManagerActions {
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000/api';
 
+// Check if we're in demo mode
+const isDemoMode = () => {
+  return process.env.REACT_APP_DEMO_MODE === 'true' || 
+         process.env.REACT_APP_GITHUB_PAGES === 'true' ||
+         (typeof window !== 'undefined' && window.location.hostname.includes('github.io'));
+};
+
 export const useAIManager = (): AIManagerState & AIManagerActions => {
   const [state, setState] = useState<AIManagerState>({
     usage: null,

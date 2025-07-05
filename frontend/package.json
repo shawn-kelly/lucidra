@@ -1,6 +1,7 @@
 {
   "name": "lucidra-frontend",
   "version": "1.0.0",
+  "homepage": "https://shawn-kelly.github.io/lucidra",
   "description": "Lucidra Frontend React App",
   "main": "src/index.tsx",
   "scripts": {

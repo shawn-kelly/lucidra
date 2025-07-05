@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChakraProvider, Box, Container, Heading, Text } from '@chakra-ui/react';
-import { ScenarioPanel } from './components/Scenario/ScenarioPanel';
+import { ScenarioPanelWrapper } from './components/Scenario/ScenarioPanelWrapper';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
           </Box>
           
           <Box bg="white" p={8} borderRadius="lg" shadow="md">
-            <ScenarioPanel />
+            <ScenarioPanelWrapper />
           </Box>
         </Container>
       </Box>
