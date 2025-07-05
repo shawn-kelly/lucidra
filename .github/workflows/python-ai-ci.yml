@@ -18,6 +18,7 @@ jobs:
         working-directory: python-ai
     env:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
     steps:
       - name: Checkout code
@@ -34,5 +35,6 @@ jobs:
       - name: Run basic checks
         run: |
           echo "JWT_SECRET=${JWT_SECRET}" > .env
+          echo "ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}" >> .env
           python -m flake8 ai_services
           python -m unittest discover
