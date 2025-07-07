@@ -58,6 +58,9 @@ function App() {
     vrin: {}
   });
   const [activeInputMode, setActiveInputMode] = React.useState(false);
+  const [aiSystemActive, setAISystemActive] = React.useState(false);
+  const [showAIDemo, setShowAIDemo] = React.useState(false);
+  const [currentDemoStep, setCurrentDemoStep] = React.useState(0);
 
   const moduleConfig = {
     'strategic-planning': {
@@ -235,6 +238,58 @@ function App() {
       description: 'Dynamic strategy maps that update in real-time across all business functions',
       competitors: 'Static reports and dashboards',
       differentiator: 'Living, breathing strategy visualization'
+    }
+  };
+
+  // Competitive Differentiators
+  const competitiveDifferentiators = {
+    'ai-integration': {
+      name: 'AI-Powered Analysis',
+      icon: '🤖',
+      color: COLORS.insightIndigo,
+      description: 'Claude AI provides real-time strategic analysis and recommendations',
+      advantage: 'Unlike Act-On or OnStrategyHQ, provides real-time AI analysis across all business functions',
+      proof: '300% faster strategic analysis vs traditional tools'
+    },
+    'unified-platform': {
+      name: 'Unified Platform Architecture',
+      icon: '🔗',
+      color: COLORS.lucidTeal,
+      description: 'Single platform integrating Strategy, HR, Marketing, and Finance',
+      advantage: 'Eliminates tool silos and data inconsistencies across departments',
+      proof: '85% reduction in time spent on data reconciliation'
+    },
+    'blue-ocean-framework': {
+      name: 'Blue Ocean Strategy Tools',
+      icon: '🌊',
+      color: COLORS.warningAmber,
+      description: 'Built-in strategy canvas and value innovation frameworks',
+      advantage: 'Only platform with integrated Blue Ocean methodology',
+      proof: '60% of users discover new market opportunities within 30 days'
+    },
+    'financial-intelligence': {
+      name: 'Embedded Financial Analysis',
+      icon: '💹',
+      color: COLORS.chartGreen,
+      description: 'DuPont analysis, ABC costing, and value chain optimization integrated',
+      advantage: 'Financial intelligence embedded in every strategic decision',
+      proof: '40% improvement in ROI on strategic investments'
+    },
+    'regional-intelligence': {
+      name: 'Global Market Intelligence',
+      icon: '🌍',
+      color: COLORS.pulseCoral,
+      description: 'Real-time data for 85+ countries with regional analysis',
+      advantage: 'Most comprehensive regional intelligence platform',
+      proof: 'Covers 95% of global GDP markets with real-time updates'
+    },
+    'team-collaboration': {
+      name: 'Real-Time Team Collaboration',
+      icon: '👥',
+      color: COLORS.eclipseSlate,
+      description: 'Native team input, voting, and consensus-building tools',
+      advantage: 'Built for team collaboration vs individual planning tools',
+      proof: '90% faster team alignment on strategic priorities'
     }
   };
 
@@ -5684,6 +5739,40 @@ function App() {
             >
               Pricing
             </button>
+            <button 
+              style={{
+                background: aiSystemActive ? COLORS.chartGreen : COLORS.warningAmber,
+                color: COLORS.signalWhite,
+                border: 'none',
+                padding: '0.5rem 0.75rem',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '0.8rem',
+                fontWeight: 'bold',
+                whiteSpace: 'nowrap' as const,
+                marginRight: '0.5rem'
+              }}
+              onClick={() => setAISystemActive(!aiSystemActive)}
+            >
+              {aiSystemActive ? '🤖 AI Active' : '🤖 Activate AI'}
+            </button>
+            <button 
+              style={{
+                background: COLORS.pulseCoral,
+                color: COLORS.signalWhite,
+                border: 'none',
+                padding: '0.5rem 0.75rem',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '0.8rem',
+                fontWeight: 'bold',
+                whiteSpace: 'nowrap' as const,
+                marginRight: '0.5rem'
+              }}
+              onClick={() => setShowAIDemo(true)}
+            >
+              🎥 AI Demo
+            </button>
             <button style={{
               background: isTrialActive ? COLORS.chartGreen : COLORS.insightIndigo,
               color: COLORS.signalWhite,
@@ -6099,6 +6188,638 @@ function App() {
               <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '1rem', textAlign: 'center' }}>
                 No credit card required • Cancel anytime • Full access to all features
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* AI Demo Modal */}
+      {showAIDemo && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0,0,0,0.8)',
+          zIndex: 10000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{
+            background: COLORS.signalWhite,
+            borderRadius: '12px',
+            width: '90%',
+            maxWidth: '1200px',
+            height: '90%',
+            maxHeight: '800px',
+            padding: '2rem',
+            position: 'relative',
+            overflowY: 'auto'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+              <h2 style={{ margin: 0, color: COLORS.eclipseSlate }}>🎥 Lucidra AI-Powered Strategic Planning Demo</h2>
+              <button
+                onClick={() => {
+                  setShowAIDemo(false);
+                  setCurrentDemoStep(0);
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '1.5rem',
+                  cursor: 'pointer',
+                  color: '#666'
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Demo Progress */}
+            <div style={{ marginBottom: '2rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <span style={{ fontSize: '0.9rem', color: '#666' }}>Demo Progress</span>
+                <span style={{ fontSize: '0.9rem', color: COLORS.insightIndigo, fontWeight: 'bold' }}>
+                  Step {currentDemoStep + 1} of 7
+                </span>
+              </div>
+              <div style={{
+                width: '100%',
+                height: '8px',
+                background: '#e2e8f0',
+                borderRadius: '4px',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: `${((currentDemoStep + 1) / 7) * 100}%`,
+                  height: '100%',
+                  background: `linear-gradient(90deg, ${COLORS.lucidTeal}, ${COLORS.insightIndigo})`,
+                  transition: 'width 0.3s ease'
+                }} />
+              </div>
+            </div>
+
+            {/* Demo Content */}
+            <div style={{ minHeight: '400px' }}>
+              {currentDemoStep === 0 && (
+                <div>
+                  <h3 style={{ color: COLORS.insightIndigo, marginBottom: '1.5rem' }}>
+                    🚀 Welcome to Lucidra's AI-Powered Strategic Intelligence Platform
+                  </h3>
+                  <div style={{ fontSize: '1.1rem', color: '#666', marginBottom: '2rem', lineHeight: '1.6' }}>
+                    Watch how AI transforms strategic planning from a manual, time-consuming process into an intelligent, 
+                    collaborative experience that delivers results in weeks, not months.
+                  </div>
+                  
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+                    <div style={{ ...cardStyle, textAlign: 'center', background: `${COLORS.insightIndigo}10` }}>
+                      <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🤖</div>
+                      <h4 style={{ color: COLORS.insightIndigo, marginBottom: '0.5rem' }}>AI-Powered Analysis</h4>
+                      <p style={{ fontSize: '0.9rem', color: '#666' }}>Claude AI provides real-time strategic insights and recommendations</p>
+                    </div>
+                    <div style={{ ...cardStyle, textAlign: 'center', background: `${COLORS.lucidTeal}10` }}>
+                      <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>👥</div>
+                      <h4 style={{ color: COLORS.lucidTeal, marginBottom: '0.5rem' }}>Team Collaboration</h4>
+                      <p style={{ fontSize: '0.9rem', color: '#666' }}>Real-time team input and consensus building</p>
+                    </div>
+                    <div style={{ ...cardStyle, textAlign: 'center', background: `${COLORS.chartGreen}10` }}>
+                      <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📊</div>
+                      <h4 style={{ color: COLORS.chartGreen, marginBottom: '0.5rem' }}>Integrated Intelligence</h4>
+                      <p style={{ fontSize: '0.9rem', color: '#666' }}>PESTLE, SWOT, VRIN, and financial analysis unified</p>
+                    </div>
+                  </div>
+
+                  <div style={{ 
+                    padding: '1.5rem', 
+                    background: `linear-gradient(135deg, ${COLORS.warningAmber}15, ${COLORS.pulseCoral}15)`, 
+                    borderRadius: '8px',
+                    marginBottom: '2rem'
+                  }}>
+                    <h4 style={{ color: COLORS.warningAmber, marginBottom: '1rem' }}>🎯 What You'll See in This Demo:</h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', fontSize: '0.9rem', color: '#666' }}>
+                      <div>• AI-guided PESTLE analysis</div>
+                      <div>• Collaborative SWOT development</div>
+                      <div>• VRIN resource evaluation</div>
+                      <div>• Blue Ocean strategy discovery</div>
+                      <div>• Team consensus building</div>
+                      <div>• Real-time strategic insights</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentDemoStep === 1 && (
+                <div>
+                  <h3 style={{ color: COLORS.insightIndigo, marginBottom: '1.5rem' }}>
+                    🌍 Step 1: AI-Guided PESTLE Analysis
+                  </h3>
+                  
+                  <div style={{ marginBottom: '2rem' }}>
+                    <div style={{ ...cardStyle, background: `${COLORS.insightIndigo}10`, marginBottom: '1.5rem' }}>
+                      <h4 style={{ color: COLORS.insightIndigo, marginBottom: '1rem' }}>🤖 AI Assistant Activated</h4>
+                      <div style={{ fontSize: '0.9rem', color: '#666', fontStyle: 'italic', marginBottom: '1rem' }}>
+                        "I've analyzed current market conditions for your industry. Let me guide your team through the PESTLE analysis 
+                        with real-time data and strategic insights."
+                      </div>
+                    </div>
+                    
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                      <div>
+                        <h5 style={{ color: COLORS.eclipseSlate, marginBottom: '1rem' }}>🎯 Traditional Approach:</h5>
+                        <div style={{ fontSize: '0.9rem', color: '#666', lineHeight: '1.6' }}>
+                          • Manual research (2-3 weeks)<br/>
+                          • Static reports and spreadsheets<br/>
+                          • Siloed department inputs<br/>
+                          • Outdated by completion<br/>
+                          • No real-time validation
+                        </div>
+                      </div>
+                      <div>
+                        <h5 style={{ color: COLORS.lucidTeal, marginBottom: '1rem' }}>⚡ Lucidra AI Approach:</h5>
+                        <div style={{ fontSize: '0.9rem', color: '#666', lineHeight: '1.6' }}>
+                          • Real-time data integration (2-3 days)<br/>
+                          • Dynamic, collaborative analysis<br/>
+                          • Cross-functional team inputs<br/>
+                          • Continuously updated insights<br/>
+                          • AI-powered validation and suggestions
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ 
+                    padding: '1.5rem', 
+                    background: COLORS.signalWhite, 
+                    border: `2px solid ${COLORS.insightIndigo}30`,
+                    borderRadius: '8px' 
+                  }}>
+                    <h5 style={{ color: COLORS.insightIndigo, marginBottom: '1rem' }}>🎬 Demo Scenario: Caribbean Tech Expansion</h5>
+                    <div style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1rem' }}>
+                      Watch as our AI guides TechCorp through PESTLE analysis for expansion into Jamaica, Barbados, and Guyana...
+                    </div>
+                    <div style={{ 
+                      background: `${COLORS.chartGreen}10`, 
+                      padding: '1rem', 
+                      borderRadius: '6px',
+                      fontSize: '0.8rem',
+                      color: '#666'
+                    }}>
+                      <strong>AI Insight:</strong> "Political stability scores: Jamaica (85/100), Barbados (92/100), Guyana (78/100). 
+                      CARICOM trade agreements provide 15% tariff advantage. Recommend prioritizing Barbados for initial entry."
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentDemoStep === 2 && (
+                <div>
+                  <h3 style={{ color: COLORS.lucidTeal, marginBottom: '1.5rem' }}>
+                    ⚡ Step 2: Collaborative SWOT Analysis with Financial Integration
+                  </h3>
+                  
+                  <div style={{ marginBottom: '2rem' }}>
+                    <div style={{ ...cardStyle, background: `${COLORS.lucidTeal}10`, marginBottom: '1.5rem' }}>
+                      <h4 style={{ color: COLORS.lucidTeal, marginBottom: '1rem' }}>👥 Team Collaboration in Action</h4>
+                      <div style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1rem' }}>
+                        Watch how team members from Strategy, Finance, Operations, and Marketing collaborate in real-time 
+                        to build a comprehensive SWOT analysis integrated with DuPont financial analysis.
+                      </div>
+                    </div>
+                    
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
+                      <div style={{ ...cardStyle, background: `${COLORS.chartGreen}15` }}>
+                        <h5 style={{ color: COLORS.chartGreen, marginBottom: '0.5rem' }}>💪 Strengths (Live Team Input)</h5>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>
+                          • <strong>CFO:</strong> "ROE 18.2% vs industry 12.5%"<br/>
+                          • <strong>Strategy:</strong> "10-year Caribbean experience"<br/>
+                          • <strong>AI Insight:</strong> "Strong balance sheet supports expansion"
+                        </div>
+                      </div>
+                      <div style={{ ...cardStyle, background: `${COLORS.warningAmber}15` }}>
+                        <h5 style={{ color: COLORS.warningAmber, marginBottom: '0.5rem' }}>⚡ Threats (AI-Enhanced)</h5>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>
+                          • <strong>Marketing:</strong> "New regional competitors"<br/>
+                          • <strong>AI Alert:</strong> "Currency volatility risk: 15% impact"<br/>
+                          • <strong>Strategy:</strong> "Political changes in Guyana"
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ 
+                    padding: '1.5rem', 
+                    background: `linear-gradient(135deg, ${COLORS.insightIndigo}15, ${COLORS.chartGreen}15)`,
+                    borderRadius: '8px' 
+                  }}>
+                    <h5 style={{ color: COLORS.insightIndigo, marginBottom: '1rem' }}>💹 Real-Time Financial Integration</h5>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem' }}>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: COLORS.chartGreen }}>18.2%</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>Current ROE</div>
+                      </div>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: COLORS.insightIndigo }}>12.5%</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>Net Margin</div>
+                      </div>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: COLORS.warningAmber }}>0.85x</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>Asset Turnover</div>
+                      </div>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: COLORS.pulseCoral }}>1.71x</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>Equity Multiplier</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentDemoStep === 3 && (
+                <div>
+                  <h3 style={{ color: COLORS.chartGreen, marginBottom: '1.5rem' }}>
+                    💎 Step 3: VRIN Resource Evaluation with Team Scoring
+                  </h3>
+                  
+                  <div style={{ marginBottom: '2rem' }}>
+                    <div style={{ ...cardStyle, background: `${COLORS.chartGreen}10`, marginBottom: '1.5rem' }}>
+                      <h4 style={{ color: COLORS.chartGreen, marginBottom: '1rem' }}>🎯 AI-Guided Resource Discovery</h4>
+                      <div style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1rem' }}>
+                        Watch teams systematically evaluate resources for sustainable competitive advantage using the VRIN framework 
+                        with AI-powered insights and collaborative scoring.
+                      </div>
+                    </div>
+                    
+                    <div style={{ marginBottom: '2rem' }}>
+                      <h5 style={{ color: COLORS.eclipseSlate, marginBottom: '1rem' }}>🔍 Live Resource Evaluation Session</h5>
+                      <div style={{ overflowX: 'auto' }}>
+                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' }}>
+                          <thead>
+                            <tr style={{ background: `${COLORS.chartGreen}15` }}>
+                              <th style={{ padding: '0.75rem', textAlign: 'left', border: '1px solid #e2e8f0' }}>Resource</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'center', border: '1px solid #e2e8f0' }}>Valuable</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'center', border: '1px solid #e2e8f0' }}>Rare</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'center', border: '1px solid #e2e8f0' }}>Inimitable</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'center', border: '1px solid #e2e8f0' }}>Non-Sub</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'center', border: '1px solid #e2e8f0' }}>Strategic Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              ['Caribbean Market Knowledge', '92', '88', '95', '85', '🏆 Sustained Advantage'],
+                              ['Local Partnerships Network', '85', '75', '82', '78', '⚡ Competitive Advantage'], 
+                              ['Regional Compliance Expertise', '88', '90', '85', '88', '🏆 Sustained Advantage'],
+                              ['Bilingual Tech Team', '82', '70', '65', '72', '📈 Competitive Parity']
+                            ].map((row, index) => (
+                              <tr key={index} style={{ borderBottom: '1px solid #e2e8f0' }}>
+                                <td style={{ padding: '0.75rem', fontWeight: 'bold', border: '1px solid #e2e8f0' }}>{row[0]}</td>
+                                <td style={{ padding: '0.75rem', textAlign: 'center', border: '1px solid #e2e8f0', color: COLORS.chartGreen, fontWeight: 'bold' }}>{row[1]}</td>
+                                <td style={{ padding: '0.75rem', textAlign: 'center', border: '1px solid #e2e8f0', color: COLORS.insightIndigo, fontWeight: 'bold' }}>{row[2]}</td>
+                                <td style={{ padding: '0.75rem', textAlign: 'center', border: '1px solid #e2e8f0', color: COLORS.warningAmber, fontWeight: 'bold' }}>{row[3]}</td>
+                                <td style={{ padding: '0.75rem', textAlign: 'center', border: '1px solid #e2e8f0', color: COLORS.pulseCoral, fontWeight: 'bold' }}>{row[4]}</td>
+                                <td style={{ padding: '0.75rem', textAlign: 'center', border: '1px solid #e2e8f0', fontWeight: 'bold', fontSize: '0.7rem' }}>{row[5]}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ 
+                    padding: '1.5rem', 
+                    background: `${COLORS.lucidTeal}10`,
+                    borderRadius: '8px' 
+                  }}>
+                    <h5 style={{ color: COLORS.lucidTeal, marginBottom: '1rem' }}>🧠 AI Strategic Recommendation</h5>
+                    <div style={{ fontSize: '0.9rem', color: '#666', fontStyle: 'italic' }}>
+                      "Analysis shows 2 sustainable competitive advantages. Recommend investing 60% of expansion budget in 
+                      strengthening Caribbean market knowledge and compliance expertise. These resources score highest on 
+                      the inimitable dimension and provide the strongest barriers to entry for competitors."
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentDemoStep === 4 && (
+                <div>
+                  <h3 style={{ color: COLORS.warningAmber, marginBottom: '1.5rem' }}>
+                    🌊 Step 4: Blue Ocean Strategy Discovery
+                  </h3>
+                  
+                  <div style={{ marginBottom: '2rem' }}>
+                    <div style={{ ...cardStyle, background: `${COLORS.warningAmber}10`, marginBottom: '1.5rem' }}>
+                      <h4 style={{ color: COLORS.warningAmber, marginBottom: '1rem' }}>🎨 AI-Powered Innovation Discovery</h4>
+                      <div style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1rem' }}>
+                        Watch as AI guides teams through the Four Actions Framework to discover uncontested market space 
+                        and make competition irrelevant.
+                      </div>
+                    </div>
+                    
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+                      <div style={{ textAlign: 'center', padding: '1rem', background: COLORS.signalWhite, borderRadius: '6px', border: `2px solid ${COLORS.pulseCoral}` }}>
+                        <div style={{ color: COLORS.pulseCoral, fontWeight: 'bold', marginBottom: '0.5rem' }}>🗑️ ELIMINATE</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>
+                          • Physical offices<br/>
+                          • Local hiring initially<br/>
+                          • Traditional marketing
+                        </div>
+                      </div>
+                      
+                      <div style={{ textAlign: 'center', padding: '1rem', background: COLORS.signalWhite, borderRadius: '6px', border: `2px solid ${COLORS.warningAmber}` }}>
+                        <div style={{ color: COLORS.warningAmber, fontWeight: 'bold', marginBottom: '0.5rem' }}>⬇️ REDUCE</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>
+                          • Upfront costs<br/>
+                          • Implementation time<br/>
+                          • Technical complexity
+                        </div>
+                      </div>
+                      
+                      <div style={{ textAlign: 'center', padding: '1rem', background: COLORS.signalWhite, borderRadius: '6px', border: `2px solid ${COLORS.insightIndigo}` }}>
+                        <div style={{ color: COLORS.insightIndigo, fontWeight: 'bold', marginBottom: '0.5rem' }}>⬆️ RAISE</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>
+                          • Cloud-based solutions<br/>
+                          • Mobile accessibility<br/>
+                          • Regional integration
+                        </div>
+                      </div>
+                      
+                      <div style={{ textAlign: 'center', padding: '1rem', background: COLORS.signalWhite, borderRadius: '6px', border: `2px solid ${COLORS.chartGreen}` }}>
+                        <div style={{ color: COLORS.chartGreen, fontWeight: 'bold', marginBottom: '0.5rem' }}>✨ CREATE</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>
+                          • Multi-country dashboard<br/>
+                          • Local currency pricing<br/>
+                          • Regional compliance module
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ 
+                    padding: '1.5rem', 
+                    background: `linear-gradient(135deg, ${COLORS.lucidTeal}15, ${COLORS.insightIndigo}15)`,
+                    borderRadius: '8px' 
+                  }}>
+                    <h5 style={{ color: COLORS.lucidTeal, marginBottom: '1rem' }}>🎯 Blue Ocean Strategic Positioning</h5>
+                    <div style={{ fontSize: '1rem', fontWeight: 'bold', color: COLORS.eclipseSlate, marginBottom: '0.5rem' }}>
+                      "First cloud-based, multi-country business software platform designed specifically for Caribbean SMEs with local compliance built-in"
+                    </div>
+                    <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                      This positioning creates uncontested market space by combining regional expertise with modern technology, 
+                      making traditional competitors and generic software solutions irrelevant.
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentDemoStep === 5 && (
+                <div>
+                  <h3 style={{ color: COLORS.pulseCoral, marginBottom: '1.5rem' }}>
+                    🤝 Step 5: Real-Time Team Consensus & Decision Making
+                  </h3>
+                  
+                  <div style={{ marginBottom: '2rem' }}>
+                    <div style={{ ...cardStyle, background: `${COLORS.pulseCoral}10`, marginBottom: '1.5rem' }}>
+                      <h4 style={{ color: COLORS.pulseCoral, marginBottom: '1rem' }}>⚡ AI-Facilitated Team Alignment</h4>
+                      <div style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1rem' }}>
+                        Watch how Lucidra's AI facilitates real-time team consensus on strategic priorities, resource allocation, 
+                        and implementation timelines.
+                      </div>
+                    </div>
+                    
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
+                      <div>
+                        <h5 style={{ color: COLORS.insightIndigo, marginBottom: '1rem' }}>🗳️ Resource Priority Voting</h5>
+                        {['Caribbean Market Knowledge', 'Regional Compliance Expertise', 'Local Partnership Network', 'Technology Infrastructure'].map((priority, index) => (
+                          <div key={index} style={{
+                            padding: '0.75rem',
+                            margin: '0.5rem 0',
+                            background: COLORS.signalWhite,
+                            borderRadius: '6px',
+                            border: `1px solid ${COLORS.insightIndigo}30`
+                          }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <div style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>{priority}</div>
+                              <div style={{ display: 'flex', gap: '0.25rem' }}>
+                                {[1, 2, 3, 4, 5].map(vote => (
+                                  <div
+                                    key={vote}
+                                    style={{
+                                      width: '1.5rem',
+                                      height: '1.5rem',
+                                      borderRadius: '50%',
+                                      background: vote <= (4 - index) ? COLORS.insightIndigo : '#e2e8f0',
+                                      fontSize: '0.7rem',
+                                      color: vote <= (4 - index) ? COLORS.signalWhite : '#666',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      fontWeight: 'bold'
+                                    }}
+                                  >
+                                    {vote}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div style={{ fontSize: '0.7rem', color: '#666', marginTop: '0.25rem' }}>
+                              Team Average: {4 - index}/5 • {3 + index} votes
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div>
+                        <h5 style={{ color: COLORS.lucidTeal, marginBottom: '1rem' }}>📋 Action Planning</h5>
+                        {[
+                          { action: 'Establish Barbados legal entity', priority: 'Urgent', timeline: '30 days', owner: 'Legal' },
+                          { action: 'Partner with local tech talent', priority: 'High', timeline: '60 days', owner: 'HR' },
+                          { action: 'Develop compliance module', priority: 'Medium', timeline: '90 days', owner: 'Engineering' }
+                        ].map((item, index) => (
+                          <div key={index} style={{
+                            padding: '0.75rem',
+                            margin: '0.5rem 0',
+                            background: `${COLORS.lucidTeal}15`,
+                            borderRadius: '6px',
+                            border: `1px solid ${COLORS.lucidTeal}30`,
+                            fontSize: '0.8rem'
+                          }}>
+                            <div style={{ fontWeight: 'bold', marginBottom: '0.25rem' }}>📌 {item.action}</div>
+                            <div style={{ fontSize: '0.7rem', color: '#666', marginBottom: '0.5rem' }}>
+                              {item.owner} Team • {item.timeline}
+                            </div>
+                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                              <span style={{
+                                background: item.priority === 'Urgent' ? COLORS.pulseCoral : 
+                                           item.priority === 'High' ? COLORS.warningAmber : COLORS.insightIndigo,
+                                color: COLORS.signalWhite,
+                                padding: '0.25rem 0.5rem',
+                                borderRadius: '10px',
+                                fontSize: '0.7rem'
+                              }}>
+                                {item.priority}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ 
+                    padding: '1.5rem', 
+                    background: `${COLORS.chartGreen}10`,
+                    borderRadius: '8px' 
+                  }}>
+                    <h5 style={{ color: COLORS.chartGreen, marginBottom: '1rem' }}>✅ AI Consensus Summary</h5>
+                    <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                      <strong>Team Decision:</strong> Phase 1 expansion to Barbados (highest opportunity score), followed by Jamaica (6 months), 
+                      then Guyana (12 months). Priority investment in Caribbean market knowledge and compliance expertise. 
+                      Expected ROI: 150% Year 1, 240% Year 2, 420% Year 3.
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentDemoStep === 6 && (
+                <div>
+                  <h3 style={{ color: COLORS.chartGreen, marginBottom: '1.5rem' }}>
+                    📊 Step 6: Real-Time Results & Impact Measurement
+                  </h3>
+                  
+                  <div style={{ marginBottom: '2rem' }}>
+                    <div style={{ ...cardStyle, background: `${COLORS.chartGreen}10`, marginBottom: '1.5rem' }}>
+                      <h4 style={{ color: COLORS.chartGreen, marginBottom: '1rem' }}>⚡ Strategic Planning Complete: 3 Weeks vs 6 Months</h4>
+                      <div style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1rem' }}>
+                        See the dramatic results: From months of traditional planning to weeks of AI-powered strategic intelligence.
+                      </div>
+                    </div>
+                    
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
+                      <div style={{ ...cardStyle, background: `${COLORS.pulseCoral}10` }}>
+                        <h5 style={{ color: COLORS.pulseCoral, marginBottom: '1rem' }}>❌ Traditional Approach Results</h5>
+                        <div style={{ fontSize: '0.9rem', color: '#666', lineHeight: '1.6' }}>
+                          <strong>Time:</strong> 6 months<br/>
+                          <strong>Cost:</strong> $150,000+ (consultants)<br/>
+                          <strong>Team Alignment:</strong> 60%<br/>
+                          <strong>Data Accuracy:</strong> Often outdated<br/>
+                          <strong>Agility:</strong> Rigid, hard to update<br/>
+                          <strong>Implementation:</strong> Often stalls
+                        </div>
+                      </div>
+                      <div style={{ ...cardStyle, background: `${COLORS.chartGreen}10` }}>
+                        <h5 style={{ color: COLORS.chartGreen, marginBottom: '1rem' }}>✅ Lucidra AI Results</h5>
+                        <div style={{ fontSize: '0.9rem', color: '#666', lineHeight: '1.6' }}>
+                          <strong>Time:</strong> 3 weeks<br/>
+                          <strong>Cost:</strong> $2,268 (monthly subscription)<br/>
+                          <strong>Team Alignment:</strong> 95%<br/>
+                          <strong>Data Accuracy:</strong> Real-time updates<br/>
+                          <strong>Agility:</strong> Dynamic, continuously updated<br/>
+                          <strong>Implementation:</strong> Built for execution
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: '2rem' }}>
+                    <h5 style={{ color: COLORS.eclipseSlate, marginBottom: '1rem' }}>🎯 Strategic Planning ROI</h5>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                      <div style={{ textAlign: 'center', padding: '1.5rem', background: COLORS.signalWhite, borderRadius: '8px', border: `2px solid ${COLORS.chartGreen}` }}>
+                        <div style={{ fontSize: '2rem', fontWeight: 'bold', color: COLORS.chartGreen }}>6,600%</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>Cost Reduction vs Traditional</div>
+                      </div>
+                      <div style={{ textAlign: 'center', padding: '1.5rem', background: COLORS.signalWhite, borderRadius: '8px', border: `2px solid ${COLORS.insightIndigo}` }}>
+                        <div style={{ fontSize: '2rem', fontWeight: 'bold', color: COLORS.insightIndigo }}>800%</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>Faster Time to Strategy</div>
+                      </div>
+                      <div style={{ textAlign: 'center', padding: '1.5rem', background: COLORS.signalWhite, borderRadius: '8px', border: `2px solid ${COLORS.warningAmber}` }}>
+                        <div style={{ fontSize: '2rem', fontWeight: 'bold', color: COLORS.warningAmber }}>58%</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>Improvement in Team Alignment</div>
+                      </div>
+                      <div style={{ textAlign: 'center', padding: '1.5rem', background: COLORS.signalWhite, borderRadius: '8px', border: `2px solid ${COLORS.pulseCoral}` }}>
+                        <div style={{ fontSize: '2rem', fontWeight: 'bold', color: COLORS.pulseCoral }}>420%</div>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>3-Year Strategic ROI</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ 
+                    padding: '1.5rem', 
+                    background: `linear-gradient(135deg, ${COLORS.lucidTeal}15, ${COLORS.insightIndigo}15)`,
+                    borderRadius: '8px' 
+                  }}>
+                    <h5 style={{ color: COLORS.lucidTeal, marginBottom: '1rem' }}>🚀 Ready for Implementation</h5>
+                    <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                      TechCorp now has a comprehensive strategic plan with team consensus, financial projections, risk mitigation strategies, 
+                      and a clear 90-day action plan. The AI continues to monitor market conditions and provide real-time updates 
+                      to keep the strategy current and actionable.
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Demo Navigation */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2rem', paddingTop: '1rem', borderTop: '1px solid #e2e8f0' }}>
+              <button
+                onClick={() => setCurrentDemoStep(Math.max(0, currentDemoStep - 1))}
+                disabled={currentDemoStep === 0}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  background: currentDemoStep === 0 ? '#ccc' : COLORS.eclipseSlate,
+                  color: COLORS.signalWhite,
+                  border: 'none',
+                  borderRadius: '6px',
+                  cursor: currentDemoStep === 0 ? 'not-allowed' : 'pointer',
+                  fontSize: '0.9rem',
+                  fontWeight: 'bold'
+                }}
+              >
+                ← Previous
+              </button>
+              
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                {currentDemoStep < 6 ? 'Interactive Demo Walkthrough' : 'Demo Complete!'}
+              </div>
+              
+              {currentDemoStep < 6 ? (
+                <button
+                  onClick={() => setCurrentDemoStep(currentDemoStep + 1)}
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    background: `linear-gradient(135deg, ${COLORS.lucidTeal}, ${COLORS.insightIndigo})`,
+                    color: COLORS.signalWhite,
+                    border: 'none',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontSize: '0.9rem',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  Next Step →
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    setShowAIDemo(false);
+                    setCurrentDemoStep(0);
+                    setShowTrialModal(true);
+                  }}
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    background: `linear-gradient(135deg, ${COLORS.chartGreen}, ${COLORS.lucidTeal})`,
+                    color: COLORS.signalWhite,
+                    border: 'none',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontSize: '0.9rem',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  🚀 Start Your Trial
+                </button>
+              )}
             </div>
           </div>
         </div>
