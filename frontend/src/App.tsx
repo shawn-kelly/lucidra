@@ -61,6 +61,10 @@ function App() {
   const [aiSystemActive, setAISystemActive] = React.useState(false);
   const [showAIDemo, setShowAIDemo] = React.useState(false);
   const [currentDemoStep, setCurrentDemoStep] = React.useState(0);
+  const [showVideoLibrary, setShowVideoLibrary] = React.useState(false);
+  const [selectedVideo, setSelectedVideo] = React.useState(null);
+  const [isVideoPlaying, setIsVideoPlaying] = React.useState(false);
+  const [videoProgress, setVideoProgress] = React.useState(0);
 
   const moduleConfig = {
     'strategic-planning': {
@@ -290,6 +294,138 @@ function App() {
       description: 'Native team input, voting, and consensus-building tools',
       advantage: 'Built for team collaboration vs individual planning tools',
       proof: '90% faster team alignment on strategic priorities'
+    }
+  };
+
+  // AI-Generated Video Library
+  const videoLibrary = {
+    'strategic-overview': {
+      title: '🎯 Strategic Planning Overview: AI-Powered Transformation',
+      duration: '4:32',
+      thumbnail: '🎯',
+      category: 'Overview',
+      description: 'Complete overview of how AI transforms strategic planning from 6 months to 3 weeks',
+      highlights: [
+        'Traditional vs AI-powered planning comparison',
+        'Real ROI calculations and time savings',
+        'Team collaboration transformation',
+        'Implementation success stories'
+      ],
+      script: `Watch as we demonstrate the complete transformation of strategic planning through AI. 
+               See live examples of teams reducing planning time by 800% while improving alignment by 58%.
+               Real data, real results, real transformation.`
+    },
+    'pestle-analysis': {
+      title: '🌍 AI-Guided PESTLE Analysis in Action',
+      duration: '3:45',
+      thumbnail: '🌍',
+      category: 'Analysis Frameworks',
+      description: 'Live demonstration of AI-powered environmental scanning and analysis',
+      highlights: [
+        'Real-time data integration from 85+ countries',
+        'AI insights and trend identification',
+        'Team input and collaboration',
+        'Dynamic market intelligence updates'
+      ],
+      script: `Experience how Claude AI transforms PESTLE analysis with real-time data from global markets.
+               Watch teams collaborate on environmental scanning with AI-powered insights that identify
+               opportunities and threats as they emerge.`
+    },
+    'swot-collaboration': {
+      title: '⚡ Team SWOT Analysis with Financial Integration',
+      duration: '5:12',
+      thumbnail: '⚡',
+      category: 'Team Collaboration',
+      description: 'Real-time team collaboration on SWOT analysis with DuPont financial integration',
+      highlights: [
+        'Multi-department team inputs',
+        'DuPont analysis integration',
+        'Financial strength assessment',
+        'AI-powered strategic recommendations'
+      ],
+      script: `Watch Strategy, Finance, Operations, and Marketing teams collaborate in real-time
+               to build comprehensive SWOT analysis. See how DuPont financial decomposition
+               provides data-driven insights that strengthen strategic decision-making.`
+    },
+    'vrin-evaluation': {
+      title: '💎 VRIN Resource Evaluation: Competitive Advantage Discovery',
+      duration: '4:18',
+      thumbnail: '💎',
+      category: 'Analysis Frameworks',
+      description: 'Systematic evaluation of resources for sustainable competitive advantage',
+      highlights: [
+        'Resource inventory and discovery',
+        'VRIN framework application',
+        'Team scoring and assessment',
+        'Strategic investment priorities'
+      ],
+      script: `Discover how teams systematically evaluate organizational resources using the VRIN framework.
+               Watch as AI guides the identification of sustainable competitive advantages and provides
+               investment recommendations based on resource strength analysis.`
+    },
+    'blue-ocean-strategy': {
+      title: '🌊 Blue Ocean Strategy Canvas Creation',
+      duration: '6:24',
+      thumbnail: '🌊',
+      category: 'Innovation',
+      description: 'AI-powered innovation discovery and uncontested market space creation',
+      highlights: [
+        'Four Actions Framework application',
+        'Strategy canvas visualization',
+        'Competitive positioning',
+        'Value innovation discovery'
+      ],
+      script: `Experience Blue Ocean strategy creation with AI guidance. Watch teams use the
+               Four Actions Framework to discover uncontested market space and create value innovation
+               that makes competition irrelevant.`
+    },
+    'consensus-building': {
+      title: '🤝 AI-Facilitated Team Consensus Building',
+      duration: '3:56',
+      thumbnail: '🤝',
+      category: 'Team Collaboration',
+      description: 'Real-time consensus building and decision-making with AI facilitation',
+      highlights: [
+        'Priority voting and ranking',
+        'Resource allocation decisions',
+        'Timeline and ownership assignment',
+        'Action plan development'
+      ],
+      script: `See how AI facilitates team consensus on strategic priorities, resource allocation,
+               and implementation timelines. Watch real teams align on decisions with 95% agreement
+               compared to 60% with traditional methods.`
+    },
+    'roi-measurement': {
+      title: '📊 Strategic Planning ROI: Results Measurement',
+      duration: '4:03',
+      thumbnail: '📊',
+      category: 'Results',
+      description: 'Comprehensive ROI analysis and impact measurement of AI-powered strategic planning',
+      highlights: [
+        '6,600% cost reduction analysis',
+        '800% faster implementation',
+        'Team alignment improvements',
+        'Long-term strategic success metrics'
+      ],
+      script: `Analyze the dramatic ROI improvements achieved through AI-powered strategic planning.
+               See real data showing 6,600% cost reduction, 800% faster completion, and 420%
+               three-year strategic ROI compared to traditional consulting approaches.`
+    },
+    'implementation-success': {
+      title: '🚀 Implementation Success Stories',
+      duration: '7:15',
+      thumbnail: '🚀',
+      category: 'Case Studies',
+      description: 'Real implementation stories and success metrics from Lucidra users',
+      highlights: [
+        'Caribbean expansion case study',
+        'Manufacturing transformation',
+        'Technology sector disruption',
+        'Financial services innovation'
+      ],
+      script: `Watch real organizations transform their strategic planning with Lucidra.
+               From Caribbean tech expansion to manufacturing efficiency, see how AI-powered
+               strategic intelligence delivers measurable results across industries.`
     }
   };
 
@@ -5773,6 +5909,23 @@ function App() {
             >
               🎥 AI Demo
             </button>
+            <button 
+              style={{
+                background: COLORS.eclipseSlate,
+                color: COLORS.signalWhite,
+                border: 'none',
+                padding: '0.5rem 0.75rem',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '0.8rem',
+                fontWeight: 'bold',
+                whiteSpace: 'nowrap' as const,
+                marginRight: '0.5rem'
+              }}
+              onClick={() => setShowVideoLibrary(true)}
+            >
+              📚 Video Library
+            </button>
             <button style={{
               background: isTrialActive ? COLORS.chartGreen : COLORS.insightIndigo,
               color: COLORS.signalWhite,
@@ -6821,6 +6974,441 @@ function App() {
                 </button>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Video Library Modal */}
+      {showVideoLibrary && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0,0,0,0.9)',
+          zIndex: 10000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{
+            background: COLORS.signalWhite,
+            borderRadius: '12px',
+            width: '95%',
+            maxWidth: '1400px',
+            height: '95%',
+            maxHeight: '900px',
+            padding: '2rem',
+            position: 'relative',
+            overflowY: 'auto'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+              <h2 style={{ margin: 0, color: COLORS.eclipseSlate }}>📚 Lucidra AI Video Library - Full Platform Demonstration</h2>
+              <button
+                onClick={() => {
+                  setShowVideoLibrary(false);
+                  setSelectedVideo(null);
+                  setIsVideoPlaying(false);
+                  setVideoProgress(0);
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '1.5rem',
+                  cursor: 'pointer',
+                  color: '#666'
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            {!selectedVideo ? (
+              <div>
+                {/* Video Categories */}
+                <div style={{ marginBottom: '2rem' }}>
+                  <div style={{ 
+                    padding: '1.5rem', 
+                    background: `linear-gradient(135deg, ${COLORS.lucidTeal}15, ${COLORS.insightIndigo}15)`, 
+                    borderRadius: '8px',
+                    marginBottom: '2rem'
+                  }}>
+                    <h3 style={{ color: COLORS.insightIndigo, marginBottom: '1rem' }}>🎬 AI-Generated Video Demonstrations</h3>
+                    <div style={{ fontSize: '1rem', color: '#666', marginBottom: '1rem' }}>
+                      Experience Lucidra's full power through comprehensive video demonstrations showing real teams 
+                      using AI-powered strategic planning to transform their organizations.
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                      {['Overview', 'Analysis Frameworks', 'Team Collaboration', 'Innovation', 'Results', 'Case Studies'].map((category, index) => (
+                        <div key={category} style={{
+                          textAlign: 'center',
+                          padding: '1rem',
+                          background: COLORS.signalWhite,
+                          borderRadius: '6px',
+                          border: `2px solid ${[COLORS.insightIndigo, COLORS.lucidTeal, COLORS.pulseCoral, COLORS.warningAmber, COLORS.chartGreen, COLORS.eclipseSlate][index]}`
+                        }}>
+                          <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
+                            {['🎯', '📊', '👥', '🌊', '📈', '🚀'][index]}
+                          </div>
+                          <div style={{ fontWeight: 'bold', fontSize: '0.9rem', color: [COLORS.insightIndigo, COLORS.lucidTeal, COLORS.pulseCoral, COLORS.warningAmber, COLORS.chartGreen, COLORS.eclipseSlate][index] }}>
+                            {category}
+                          </div>
+                          <div style={{ fontSize: '0.7rem', color: '#666', marginTop: '0.5rem' }}>
+                            {Object.values(videoLibrary).filter(v => v.category === category).length} videos
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Video Grid */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '1.5rem' }}>
+                  {Object.entries(videoLibrary).map(([key, video]) => (
+                    <div key={key} style={{
+                      ...cardStyle,
+                      cursor: 'pointer',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      border: `2px solid ${video.category === 'Overview' ? COLORS.insightIndigo :
+                                          video.category === 'Analysis Frameworks' ? COLORS.lucidTeal :
+                                          video.category === 'Team Collaboration' ? COLORS.pulseCoral :
+                                          video.category === 'Innovation' ? COLORS.warningAmber :
+                                          video.category === 'Results' ? COLORS.chartGreen : COLORS.eclipseSlate}30`
+                    }}
+                    onClick={() => setSelectedVideo(key)}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                    >
+                      {/* Video Thumbnail */}
+                      <div style={{
+                        width: '100%',
+                        height: '180px',
+                        background: `linear-gradient(135deg, ${video.category === 'Overview' ? COLORS.insightIndigo :
+                                                             video.category === 'Analysis Frameworks' ? COLORS.lucidTeal :
+                                                             video.category === 'Team Collaboration' ? COLORS.pulseCoral :
+                                                             video.category === 'Innovation' ? COLORS.warningAmber :
+                                                             video.category === 'Results' ? COLORS.chartGreen : COLORS.eclipseSlate}15, ${video.category === 'Overview' ? COLORS.insightIndigo :
+                                                             video.category === 'Analysis Frameworks' ? COLORS.lucidTeal :
+                                                             video.category === 'Team Collaboration' ? COLORS.pulseCoral :
+                                                             video.category === 'Innovation' ? COLORS.warningAmber :
+                                                             video.category === 'Results' ? COLORS.chartGreen : COLORS.eclipseSlate}25)`,
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginBottom: '1rem',
+                        position: 'relative'
+                      }}>
+                        <div style={{ fontSize: '4rem', opacity: 0.8 }}>{video.thumbnail}</div>
+                        <div style={{
+                          position: 'absolute',
+                          bottom: '0.5rem',
+                          right: '0.5rem',
+                          background: 'rgba(0,0,0,0.8)',
+                          color: COLORS.signalWhite,
+                          padding: '0.25rem 0.5rem',
+                          borderRadius: '4px',
+                          fontSize: '0.8rem',
+                          fontWeight: 'bold'
+                        }}>
+                          {video.duration}
+                        </div>
+                        <div style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          width: '3rem',
+                          height: '3rem',
+                          background: 'rgba(255,255,255,0.9)',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '1.5rem',
+                          color: COLORS.eclipseSlate
+                        }}>
+                          ▶️
+                        </div>
+                      </div>
+
+                      {/* Video Info */}
+                      <div>
+                        <div style={{
+                          fontSize: '0.8rem',
+                          color: video.category === 'Overview' ? COLORS.insightIndigo :
+                                 video.category === 'Analysis Frameworks' ? COLORS.lucidTeal :
+                                 video.category === 'Team Collaboration' ? COLORS.pulseCoral :
+                                 video.category === 'Innovation' ? COLORS.warningAmber :
+                                 video.category === 'Results' ? COLORS.chartGreen : COLORS.eclipseSlate,
+                          fontWeight: 'bold',
+                          marginBottom: '0.5rem'
+                        }}>
+                          {video.category}
+                        </div>
+                        <h4 style={{ margin: '0 0 0.75rem 0', color: COLORS.eclipseSlate, fontSize: '1rem' }}>
+                          {video.title}
+                        </h4>
+                        <p style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1rem', lineHeight: '1.4' }}>
+                          {video.description}
+                        </p>
+                        
+                        {/* Highlights */}
+                        <div style={{ marginBottom: '1rem' }}>
+                          <div style={{ fontSize: '0.8rem', fontWeight: 'bold', marginBottom: '0.5rem', color: COLORS.eclipseSlate }}>
+                            🎯 Key Highlights:
+                          </div>
+                          <div style={{ fontSize: '0.8rem', color: '#666' }}>
+                            {video.highlights.slice(0, 2).map((highlight, i) => (
+                              <div key={i} style={{ marginBottom: '0.25rem' }}>• {highlight}</div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* CTA */}
+                        <button style={{
+                          width: '100%',
+                          padding: '0.75rem',
+                          background: `linear-gradient(135deg, ${video.category === 'Overview' ? COLORS.insightIndigo :
+                                                               video.category === 'Analysis Frameworks' ? COLORS.lucidTeal :
+                                                               video.category === 'Team Collaboration' ? COLORS.pulseCoral :
+                                                               video.category === 'Innovation' ? COLORS.warningAmber :
+                                                               video.category === 'Results' ? COLORS.chartGreen : COLORS.eclipseSlate}, ${video.category === 'Overview' ? COLORS.lucidTeal :
+                                                               video.category === 'Analysis Frameworks' ? COLORS.insightIndigo :
+                                                               video.category === 'Team Collaboration' ? COLORS.warningAmber :
+                                                               video.category === 'Innovation' ? COLORS.chartGreen :
+                                                               video.category === 'Results' ? COLORS.lucidTeal : COLORS.insightIndigo})`,
+                          color: COLORS.signalWhite,
+                          border: 'none',
+                          borderRadius: '6px',
+                          fontSize: '0.9rem',
+                          fontWeight: 'bold',
+                          cursor: 'pointer'
+                        }}>
+                          ▶️ Watch Full Demo
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              /* Video Player View */
+              <div>
+                <button
+                  onClick={() => setSelectedVideo(null)}
+                  style={{
+                    background: COLORS.eclipseSlate,
+                    color: COLORS.signalWhite,
+                    border: 'none',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    marginBottom: '1.5rem',
+                    fontSize: '0.9rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ← Back to Video Library
+                </button>
+
+                {/* Video Player */}
+                <div style={{
+                  width: '100%',
+                  height: '400px',
+                  background: `linear-gradient(135deg, ${COLORS.eclipseSlate}, ${COLORS.insightIndigo})`,
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                  marginBottom: '2rem'
+                }}>
+                  <div style={{ textAlign: 'center', color: COLORS.signalWhite }}>
+                    <div style={{ fontSize: '6rem', marginBottom: '1rem' }}>
+                      {videoLibrary[selectedVideo]?.thumbnail}
+                    </div>
+                    <h3 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>
+                      {videoLibrary[selectedVideo]?.title}
+                    </h3>
+                    
+                    {!isVideoPlaying ? (
+                      <button
+                        onClick={() => {
+                          setIsVideoPlaying(true);
+                          // Simulate video progress
+                          const interval = setInterval(() => {
+                            setVideoProgress(prev => {
+                              if (prev >= 100) {
+                                clearInterval(interval);
+                                return 100;
+                              }
+                              return prev + 2;
+                            });
+                          }, 100);
+                        }}
+                        style={{
+                          background: `linear-gradient(135deg, ${COLORS.lucidTeal}, ${COLORS.chartGreen})`,
+                          color: COLORS.signalWhite,
+                          border: 'none',
+                          padding: '1rem 2rem',
+                          borderRadius: '50px',
+                          fontSize: '1.2rem',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }}
+                      >
+                        ▶️ Play Video ({videoLibrary[selectedVideo]?.duration})
+                      </button>
+                    ) : (
+                      <div style={{ width: '100%', maxWidth: '600px' }}>
+                        <div style={{
+                          background: 'rgba(255,255,255,0.2)',
+                          padding: '1rem',
+                          borderRadius: '8px',
+                          marginBottom: '1rem'
+                        }}>
+                          <div style={{ fontSize: '1rem', marginBottom: '1rem' }}>
+                            🎬 AI Video Generation in Progress...
+                          </div>
+                          <div style={{
+                            width: '100%',
+                            height: '8px',
+                            background: 'rgba(255,255,255,0.3)',
+                            borderRadius: '4px',
+                            overflow: 'hidden'
+                          }}>
+                            <div style={{
+                              width: `${videoProgress}%`,
+                              height: '100%',
+                              background: `linear-gradient(90deg, ${COLORS.lucidTeal}, ${COLORS.chartGreen})`,
+                              transition: 'width 0.1s ease'
+                            }} />
+                          </div>
+                          <div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                            Progress: {Math.round(videoProgress)}%
+                          </div>
+                        </div>
+                        
+                        <button
+                          onClick={() => {
+                            setIsVideoPlaying(false);
+                            setVideoProgress(0);
+                          }}
+                          style={{
+                            background: COLORS.warningAmber,
+                            color: COLORS.signalWhite,
+                            border: 'none',
+                            padding: '0.75rem 1.5rem',
+                            borderRadius: '6px',
+                            fontSize: '1rem',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          ⏸️ Pause Video
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Video Controls */}
+                  {isVideoPlaying && (
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '1rem',
+                      left: '1rem',
+                      right: '1rem',
+                      background: 'rgba(0,0,0,0.8)',
+                      padding: '1rem',
+                      borderRadius: '8px',
+                      color: COLORS.signalWhite
+                    }}>
+                      <div style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                        Now Playing: {videoLibrary[selectedVideo]?.title}
+                      </div>
+                      <div style={{ fontSize: '0.8rem', opacity: 0.8 }}>
+                        Duration: {videoLibrary[selectedVideo]?.duration} • Progress: {Math.round(videoProgress)}%
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Video Details */}
+                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem' }}>
+                  <div>
+                    <h3 style={{ color: COLORS.eclipseSlate, marginBottom: '1rem' }}>
+                      📋 Video Description
+                    </h3>
+                    <p style={{ fontSize: '1rem', color: '#666', lineHeight: '1.6', marginBottom: '1.5rem' }}>
+                      {videoLibrary[selectedVideo]?.description}
+                    </p>
+                    
+                    <div style={{ marginBottom: '1.5rem' }}>
+                      <h4 style={{ color: COLORS.insightIndigo, marginBottom: '1rem' }}>🎯 What You'll Learn:</h4>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+                        {videoLibrary[selectedVideo]?.highlights.map((highlight, i) => (
+                          <div key={i} style={{
+                            padding: '0.75rem',
+                            background: `${COLORS.insightIndigo}10`,
+                            borderRadius: '6px',
+                            fontSize: '0.9rem',
+                            color: '#666'
+                          }}>
+                            • {highlight}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div style={{
+                      padding: '1.5rem',
+                      background: `${COLORS.lucidTeal}10`,
+                      borderRadius: '8px'
+                    }}>
+                      <h4 style={{ color: COLORS.lucidTeal, marginBottom: '1rem' }}>🎬 Video Script Preview:</h4>
+                      <div style={{ fontSize: '0.9rem', color: '#666', fontStyle: 'italic', lineHeight: '1.6' }}>
+                        {videoLibrary[selectedVideo]?.script}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 style={{ color: COLORS.eclipseSlate, marginBottom: '1rem' }}>📚 More Videos</h4>
+                    {Object.entries(videoLibrary)
+                      .filter(([key]) => key !== selectedVideo)
+                      .slice(0, 3)
+                      .map(([key, video]) => (
+                        <div key={key} style={{
+                          ...cardStyle,
+                          marginBottom: '1rem',
+                          cursor: 'pointer',
+                          padding: '1rem'
+                        }}
+                        onClick={() => {
+                          setSelectedVideo(key);
+                          setIsVideoPlaying(false);
+                          setVideoProgress(0);
+                        }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <div style={{ fontSize: '2rem' }}>{video.thumbnail}</div>
+                            <div style={{ flex: 1 }}>
+                              <div style={{ fontWeight: 'bold', fontSize: '0.9rem', marginBottom: '0.25rem', color: COLORS.eclipseSlate }}>
+                                {video.title}
+                              </div>
+                              <div style={{ fontSize: '0.8rem', color: '#666' }}>
+                                {video.duration} • {video.category}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
