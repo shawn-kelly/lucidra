@@ -32,17 +32,36 @@ jobs:
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
 
+      - name: Verify Node and npm versions
+        run: |
+          node --version
+          npm --version
+          pwd
+          ls -la
+
+      - name: Clear npm cache
+        run: npm cache clean --force
+
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          echo "Installing dependencies..."
+          npm ci --legacy-peer-deps
+          echo "Dependencies installed successfully"
 
       - name: Create demo environment file
         run: |
           echo "REACT_APP_API_URL=/api" > .env
           echo "REACT_APP_DEMO_MODE=true" >> .env
           echo "REACT_APP_GITHUB_PAGES=true" >> .env
+          echo "Environment file created:"
+          cat .env
 
       - name: Build application
-        run: npm run build
+        run: |
+          echo "Starting build process..."
+          npm run build
+          echo "Build completed successfully"
+          ls -la build/
         env:
           CI: false
           GENERATE_SOURCEMAP: false
