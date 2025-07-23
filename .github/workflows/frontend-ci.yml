@@ -1,14 +1,16 @@
 name: Lucidra Frontend CI
 
 on:
-  push:
-    paths:
-      - 'frontend/**'
-    branches: [ main ]
-  pull_request:
-    paths:
-      - 'frontend/**'
-    branches: [ main ]
+  # Disabled in favor of GitHub Pages deployment workflow
+  # push:
+  #   paths:
+  #     - 'frontend/**'
+  #   branches: [ main ]
+  # pull_request:
+  #   paths:
+  #     - 'frontend/**'
+  #   branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
