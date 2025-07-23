@@ -47,6 +47,9 @@ jobs:
           echo "Installing dependencies..."
           npm ci --legacy-peer-deps
           echo "Dependencies installed successfully"
+          echo "Setting executable permissions..."
+          chmod +x node_modules/.bin/*
+          echo "Permissions set successfully"
 
       - name: Create demo environment file
         run: |
@@ -59,7 +62,11 @@ jobs:
       - name: Build application
         run: |
           echo "Starting build process..."
-          npm run build
+          echo "Trying npm run build first..."
+          npm run build || {
+            echo "npm run build failed, trying npx react-scripts build..."
+            npx react-scripts build
+          }
           echo "Build completed successfully"
           ls -la build/
         env:
