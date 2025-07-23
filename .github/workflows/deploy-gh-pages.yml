@@ -47,6 +47,9 @@ jobs:
           echo "Installing dependencies..."
           npm ci --legacy-peer-deps
           echo "Dependencies installed successfully"
+          echo "Fixing ajv dependency compatibility..."
+          npm install ajv@^8.0.0 --legacy-peer-deps
+          echo "ajv dependency updated"
           echo "Setting executable permissions..."
           chmod +x node_modules/.bin/*
           echo "Permissions set successfully"
@@ -62,16 +65,24 @@ jobs:
       - name: Build application
         run: |
           echo "Starting build process..."
-          echo "Trying npm run build first..."
+          echo "Checking ajv installation..."
+          npm list ajv || echo "ajv not found in npm list"
+          echo "Verifying ajv-keywords compatibility..."
+          npm list ajv-keywords || echo "ajv-keywords not found"
+          echo "Attempting build with npm run build..."
           npm run build || {
-            echo "npm run build failed, trying npx react-scripts build..."
+            echo "npm run build failed, trying with additional dependencies..."
+            npm install ajv-keywords@^5.0.0 --legacy-peer-deps
+            echo "Retrying with npx react-scripts build..."
             npx react-scripts build
           }
           echo "Build completed successfully"
+          echo "Checking build directory..."
           ls -la build/
         env:
           CI: false
           GENERATE_SOURCEMAP: false
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3
