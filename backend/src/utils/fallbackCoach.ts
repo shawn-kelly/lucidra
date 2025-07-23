@@ -20,12 +20,12 @@ export class FallbackCoach {
 
   private static readonly SCENARIO_TEMPLATES = {
     financial: {
-      analysis: "This scenario involves financial considerations that could impact your organization's fiscal health.",
+      analysis: "Your scenario presents strategic financial considerations that directly impact organizational sustainability and growth potential. Through Lucidra's framework, we identify key financial levers that transform challenges into strategic opportunities.",
       recommendations: [
-        "Conduct a thorough financial analysis including cash flow projections",
-        "Review budget allocations and identify potential cost savings",
-        "Consider diversifying revenue streams to reduce financial risk",
-        "Establish clear financial KPIs to track performance"
+        "Deploy comprehensive financial modeling to reveal cash flow patterns and strategic timing opportunities",
+        "Orchestrate budget optimization initiatives that align resources with strategic priorities",
+        "Architect revenue diversification strategies that reduce dependency risks while expanding market reach",
+        "Establish intelligent financial KPIs that provide predictive insights for strategic decision-making"
       ],
       riskFactors: [
         "Potential budget overruns or unexpected expenses",
@@ -39,12 +39,12 @@ export class FallbackCoach {
       ]
     },
     market: {
-      analysis: "This scenario relates to market dynamics and competitive positioning that could affect your business strategy.",
+      analysis: "Your scenario reveals critical market dynamics that shape competitive advantage and customer value creation. Lucidra's strategic lens transforms market complexity into clear positioning opportunities and actionable competitive intelligence.",
       recommendations: [
-        "Conduct comprehensive market research and competitive analysis",
-        "Develop customer feedback mechanisms and satisfaction surveys",
-        "Create differentiation strategies to stand out from competitors",
-        "Monitor market trends and adjust strategies accordingly"
+        "Execute intelligent market research that uncovers hidden customer needs and competitive blind spots",
+        "Implement customer feedback orchestration systems that turn insights into strategic advantages",
+        "Design differentiation strategies that create sustainable competitive moats through unique value propositions",
+        "Deploy market trend monitoring systems that enable proactive strategic repositioning"
       ],
       riskFactors: [
         "Increased competition and market saturation",
@@ -77,12 +77,12 @@ export class FallbackCoach {
       ]
     },
     strategic: {
-      analysis: "This scenario involves strategic decisions that could significantly impact your organization's future direction.",
+      analysis: "Your scenario encompasses strategic considerations that will fundamentally shape organizational trajectory and competitive positioning. Through Lucidra's strategic orchestration framework, complex strategic challenges become clear pathways to sustainable advantage.",
       recommendations: [
-        "Develop a comprehensive strategic plan with clear objectives",
-        "Engage stakeholders in strategic planning discussions",
-        "Create implementation timelines with measurable milestones",
-        "Regularly review and adjust strategies based on outcomes"
+        "Architect comprehensive strategic frameworks that align vision, capabilities, and market opportunities",
+        "Orchestrate stakeholder engagement processes that build strategic consensus and commitment",
+        "Design implementation roadmaps with intelligent milestones that adapt to changing conditions",
+        "Establish strategic review cycles that enable continuous strategic optimization and learning"
       ],
       riskFactors: [
         "Strategic misalignment with organizational capabilities",
@@ -219,9 +219,9 @@ export class FallbackCoach {
 
   static getUpgradeMessage(plan: string): string {
     const messages = {
-      free: "Upgrade to Basic plan for AI-powered insights and analysis. Get personalized recommendations from Claude AI.",
-      basic: "Upgrade to Premium for unlimited AI analysis and advanced strategic planning tools.",
-      premium: "You're on our Premium plan! Contact support if you need additional capacity."
+      free: "Unlock Lucidra's full strategic intelligence with AI-powered insights that transform organizational challenges into competitive advantages. Experience advanced analysis that goes beyond coaching logic to deliver personalized strategic recommendations.",
+      basic: "Elevate to Premium for unlimited strategic intelligence and advanced orchestration tools. Access the complete Lucidra ecosystem where AI-powered analysis meets comprehensive strategic planning capabilities.",
+      premium: "You're maximizing Lucidra's strategic intelligence! Our Premium tier provides unlimited access to AI-powered insights, advanced strategic tools, and priority support for complex organizational challenges."
     };
     
     return messages[plan as keyof typeof messages] || messages.free;
