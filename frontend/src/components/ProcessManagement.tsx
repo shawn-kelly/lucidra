@@ -153,6 +153,119 @@ interface BPMNProcess {
     riskAreas: string[];
     complianceChecks: string[];
   };
+  leanAnalysis?: LeanAnalysis;
+  bottleneckAnalysis?: BottleneckAnalysis;
+}
+
+interface LeanAnalysis {
+  valueStreamMap: ValueStreamStep[];
+  wasteIdentification: WasteCategory[];
+  kanbanRecommendations: KanbanRecommendation[];
+  cycleTimes: CycleTimeMetric[];
+  leadTime: number;
+  processTime: number;
+  efficiency: number;
+  valueAddedRatio: number;
+}
+
+interface BottleneckAnalysis {
+  criticalPath: string[];
+  bottleneckSteps: BottleneckStep[];
+  capacityUtilization: CapacityMetric[];
+  queueAnalysis: QueueMetric[];
+  recommendations: BottleneckRecommendation[];
+  throughputMetrics: ThroughputMetric;
+}
+
+interface ValueStreamStep {
+  stepId: string;
+  valueType: 'value-added' | 'necessary-waste' | 'pure-waste';
+  cycleTime: number;
+  waitTime: number;
+  processingTime: number;
+  changeovers: number;
+  defectRate: number;
+}
+
+interface WasteCategory {
+  type: 'transportation' | 'inventory' | 'motion' | 'waiting' | 'overproduction' | 'overprocessing' | 'defects' | 'skills';
+  description: string;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  impact: number; // percentage
+  suggestedActions: string[];
+  affectedSteps: string[];
+}
+
+interface BottleneckStep {
+  stepId: string;
+  stepName: string;
+  utilization: number;
+  queueLength: number;
+  processingRate: number;
+  demandRate: number;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  rootCauses: string[];
+  impact: {
+    delayMinutes: number;
+    costImpact: number;
+    qualityImpact: number;
+  };
+}
+
+interface CapacityMetric {
+  resourceId: string;
+  resourceName: string;
+  currentCapacity: number;
+  demandedCapacity: number;
+  utilizationRate: number;
+  overloadHours: number;
+}
+
+interface QueueMetric {
+  stepId: string;
+  avgQueueLength: number;
+  maxQueueLength: number;
+  avgWaitTime: number;
+  maxWaitTime: number;
+  serviceRate: number;
+}
+
+interface BottleneckRecommendation {
+  type: 'capacity' | 'process' | 'technology' | 'training' | 'scheduling';
+  priority: 'low' | 'medium' | 'high' | 'critical';
+  description: string;
+  estimatedImpact: {
+    timeReduction: number;
+    costSavings: number;
+    qualityImprovement: number;
+  };
+  implementationCost: number;
+  implementationTime: number;
+  roi: number;
+}
+
+interface ThroughputMetric {
+  currentThroughput: number;
+  theoreticalMaxThroughput: number;
+  efficiencyRatio: number;
+  constraintStep: string;
+}
+
+interface KanbanRecommendation {
+  stepId: string;
+  currentWIP: number;
+  recommendedWIP: number;
+  reasoning: string;
+  expectedImprovement: number;
+}
+
+interface CycleTimeMetric {
+  stepId: string;
+  stepName: string;
+  cycleTime: number;
+  targetCycleTime: number;
+  variance: number;
+  trend: 'improving' | 'stable' | 'declining';
 }
 
 interface ProcessTemplate {
@@ -415,6 +528,226 @@ const ProcessManagement: React.FC = () => {
     });
 
     return aiAnalysis;
+  }, [toast]);
+
+  // AI-Powered Lean Analysis
+  const performLeanAnalysis = useCallback(async (process: BPMNProcess): Promise<LeanAnalysis> => {
+    setAiProcessing(true);
+    
+    // Simulate AI processing for lean analysis
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    const valueStreamMap: ValueStreamStep[] = process.steps.map(step => ({
+      stepId: step.id,
+      valueType: step.type === 'task' ? 'value-added' : 
+                 step.type === 'decision' ? 'necessary-waste' : 'pure-waste',
+      cycleTime: step.duration * 60, // Convert to minutes
+      waitTime: Math.random() * 30, // Simulated wait time
+      processingTime: step.duration * 60 * 0.7, // 70% of cycle time
+      changeovers: Math.floor(Math.random() * 3),
+      defectRate: Math.random() * 0.05 // 0-5% defect rate
+    }));
+
+    const wasteCategories: WasteCategory[] = [
+      {
+        type: 'waiting',
+        description: 'Excessive wait times between process steps',
+        severity: 'high',
+        impact: 25,
+        suggestedActions: [
+          'Implement parallel processing',
+          'Reduce batch sizes',
+          'Balance workload distribution'
+        ],
+        affectedSteps: process.steps.slice(0, 2).map(s => s.id)
+      },
+      {
+        type: 'overprocessing',
+        description: 'Unnecessary approvals and documentation',
+        severity: 'medium',
+        impact: 15,
+        suggestedActions: [
+          'Streamline approval process',
+          'Implement electronic signatures',
+          'Reduce redundant data entry'
+        ],
+        affectedSteps: process.steps.slice(1, 3).map(s => s.id)
+      },
+      {
+        type: 'transportation',
+        description: 'Inefficient information flow between departments',
+        severity: 'medium',
+        impact: 12,
+        suggestedActions: [
+          'Implement shared digital workspace',
+          'Automate data transfer',
+          'Co-locate related functions'
+        ],
+        affectedSteps: process.steps.slice(0, 1).map(s => s.id)
+      }
+    ];
+
+    const cycleTimes: CycleTimeMetric[] = process.steps.map(step => ({
+      stepId: step.id,
+      stepName: step.name,
+      cycleTime: step.duration * 60,
+      targetCycleTime: step.duration * 60 * 0.8, // 20% improvement target
+      variance: Math.random() * 10,
+      trend: Math.random() > 0.5 ? 'improving' : 'stable'
+    }));
+
+    const kanbanRecommendations: KanbanRecommendation[] = process.steps.map(step => ({
+      stepId: step.id,
+      currentWIP: Math.floor(Math.random() * 8) + 2,
+      recommendedWIP: Math.floor(Math.random() * 5) + 2,
+      reasoning: 'Based on Little\'s Law and current throughput analysis',
+      expectedImprovement: Math.random() * 30 + 10 // 10-40% improvement
+    }));
+
+    const leanAnalysis: LeanAnalysis = {
+      valueStreamMap,
+      wasteIdentification: wasteCategories,
+      kanbanRecommendations,
+      cycleTimes,
+      leadTime: process.totalDuration * 60, // Convert to minutes
+      processTime: process.totalDuration * 60 * 0.6, // 60% actual processing
+      efficiency: process.efficiency,
+      valueAddedRatio: valueStreamMap.filter(s => s.valueType === 'value-added').length / valueStreamMap.length
+    };
+
+    setAiProcessing(false);
+    
+    toast({
+      title: "Lean Analysis Complete",
+      description: `Identified ${wasteCategories.length} waste categories and ${kanbanRecommendations.length} optimization opportunities`,
+      status: "success",
+      duration: 5000
+    });
+
+    return leanAnalysis;
+  }, [toast]);
+
+  // AI-Powered Bottleneck Analysis
+  const performBottleneckAnalysis = useCallback(async (process: BPMNProcess): Promise<BottleneckAnalysis> => {
+    setAiProcessing(true);
+    
+    // Simulate AI processing for bottleneck analysis
+    await new Promise(resolve => setTimeout(resolve, 2500));
+    
+    const bottleneckSteps: BottleneckStep[] = process.steps.map(step => {
+      const utilization = Math.random() * 100;
+      const demandRate = Math.random() * 20 + 5;
+      const processingRate = demandRate * (utilization / 100);
+      
+      return {
+        stepId: step.id,
+        stepName: step.name,
+        utilization,
+        queueLength: Math.max(0, (demandRate - processingRate) * step.duration),
+        processingRate,
+        demandRate,
+        severity: utilization > 90 ? 'critical' : 
+                 utilization > 75 ? 'high' : 
+                 utilization > 60 ? 'medium' : 'low',
+        rootCauses: [
+          utilization > 80 ? 'Resource capacity constraint' : 'Process inefficiency',
+          'Uneven workload distribution',
+          'Manual handoffs causing delays'
+        ],
+        impact: {
+          delayMinutes: Math.max(0, (demandRate - processingRate) * 60),
+          costImpact: Math.max(0, (demandRate - processingRate) * step.cost),
+          qualityImpact: Math.random() * 10
+        }
+      };
+    }).filter(step => step.utilization > 60); // Only include potential bottlenecks
+
+    const capacityMetrics: CapacityMetric[] = process.steps.map(step => ({
+      resourceId: step.id,
+      resourceName: step.name,
+      currentCapacity: step.duration * 8, // 8 hours per day
+      demandedCapacity: step.duration * 10, // 25% overdemand
+      utilizationRate: Math.random() * 40 + 60, // 60-100%
+      overloadHours: Math.max(0, step.duration * 2)
+    }));
+
+    const queueMetrics: QueueMetric[] = process.steps.map(step => ({
+      stepId: step.id,
+      avgQueueLength: Math.random() * 5 + 1,
+      maxQueueLength: Math.random() * 10 + 5,
+      avgWaitTime: Math.random() * 60 + 15, // 15-75 minutes
+      maxWaitTime: Math.random() * 120 + 60, // 60-180 minutes
+      serviceRate: 1 / (step.duration * 60) // Items per minute
+    }));
+
+    const recommendations: BottleneckRecommendation[] = [
+      {
+        type: 'capacity',
+        priority: 'high',
+        description: 'Add additional resource to the highest utilized step',
+        estimatedImpact: {
+          timeReduction: 35,
+          costSavings: 12000,
+          qualityImprovement: 15
+        },
+        implementationCost: 5000,
+        implementationTime: 30, // days
+        roi: 2.4
+      },
+      {
+        type: 'process',
+        priority: 'medium',
+        description: 'Implement parallel processing for independent tasks',
+        estimatedImpact: {
+          timeReduction: 25,
+          costSavings: 8000,
+          qualityImprovement: 10
+        },
+        implementationCost: 3000,
+        implementationTime: 45,
+        roi: 2.67
+      },
+      {
+        type: 'technology',
+        priority: 'high',
+        description: 'Automate manual approval steps with workflow engine',
+        estimatedImpact: {
+          timeReduction: 45,
+          costSavings: 18000,
+          qualityImprovement: 25
+        },
+        implementationCost: 8000,
+        implementationTime: 60,
+        roi: 2.25
+      }
+    ];
+
+    const throughputMetrics: ThroughputMetric = {
+      currentThroughput: Math.random() * 10 + 5, // 5-15 items per hour
+      theoreticalMaxThroughput: Math.random() * 5 + 15, // 15-20 items per hour
+      efficiencyRatio: 0.65, // 65% efficiency
+      constraintStep: bottleneckSteps.length > 0 ? bottleneckSteps[0].stepId : process.steps[0].id
+    };
+
+    const bottleneckAnalysis: BottleneckAnalysis = {
+      criticalPath: process.steps.map(s => s.id), // Simplified critical path
+      bottleneckSteps,
+      capacityUtilization: capacityMetrics,
+      queueAnalysis: queueMetrics,
+      recommendations,
+      throughputMetrics
+    };
+
+    setAiProcessing(false);
+    
+    toast({
+      title: "Bottleneck Analysis Complete",
+      description: `Found ${bottleneckSteps.length} bottlenecks with ${recommendations.length} optimization recommendations`,
+      status: "success",
+      duration: 5000
+    });
+
+    return bottleneckAnalysis;
   }, [toast]);
 
   const ProcessDashboard = () => (

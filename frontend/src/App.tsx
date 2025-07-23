@@ -61,6 +61,13 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Avatar,
   useDisclosure,
   CircularProgress,
   CircularProgressLabel
@@ -110,6 +117,48 @@ interface BusinessProfile {
   goals: string[];
   challenges: string[];
   createdAt: string;
+  companySize?: string;
+  revenue?: string;
+  fundingStage?: string;
+}
+
+interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'manager' | 'analyst' | 'viewer';
+  permissions: UserPermissions;
+  department?: string;
+  joinedAt: string;
+  lastActive: string;
+  companyId: string;
+}
+
+interface UserPermissions {
+  canManageUsers: boolean;
+  canAccessProcessManagement: boolean;
+  canAccessProjectManagement: boolean;
+  canAccessFinancialData: boolean;
+  canEditBusinessProfile: boolean;
+  canAccessAIRecommendations: boolean;
+  canExportData: boolean;
+  maxFrameworksAccess: number;
+}
+
+interface CompanyData {
+  businessProfile: BusinessProfile;
+  users: UserProfile[];
+  processData: any[];
+  financialData: any[];
+  aiLearningData: AILearningProfile;
+}
+
+interface AILearningProfile {
+  dataQuality: number;
+  processOptimizations: number;
+  recommendationsAccepted: number;
+  industryBenchmarks: any[];
+  learningInsights: string[];
 }
 
 interface MarketSignal {
@@ -205,40 +254,82 @@ const STRATEGY_FRAMEWORKS: StrategyFramework[] = [
   }
 ];
 
-// Product tier configurations
+// Product tier configurations with multi-user support
 const TIER_CONFIG = {
   lite: {
     name: 'Lucidra Lite',
     description: 'Guided, gamified companion for founders',
     color: 'teal',
     price: '$29/month',
+    baseUsers: 1,
+    additionalUserPrice: '$15/user/month',
+    maxUsers: 3,
     maxFrameworks: 2,
     maxVideos: 5,
     maxSignals: 10,
-    features: ['Business Model Canvas', 'Market Intelligence', 'Stage Selector', 'Basic Analytics', '5 AI Videos/month'],
-    limitations: ['Limited to 2 frameworks', 'Basic market data only', 'Standard support']
+    features: [
+      'Business Model Canvas', 
+      'Market Intelligence', 
+      'Stage Selector', 
+      'Basic Analytics', 
+      '5 AI Videos/month',
+      'Up to 3 users',
+      'Basic user roles'
+    ],
+    limitations: ['Limited to 2 frameworks', 'Basic market data only', 'Standard support', 'Basic admin controls']
   },
   pro: {
     name: 'Lucidra Pro',
     description: 'Modular orchestration sandbox for strategists',
     color: 'purple',
     price: '$99/month',
+    baseUsers: 5,
+    additionalUserPrice: '$20/user/month',
+    maxUsers: 25,
     maxFrameworks: 10,
     maxVideos: 25,
     maxSignals: 100,
-    features: ['All Lite Features', 'Advanced Strategy Frameworks', 'Data Pulse Intelligence', 'Orchestration Sandbox', '25 AI Videos/month', 'Global Market Data'],
-    limitations: ['Advanced analytics included', 'Priority support', 'API access']
+    features: [
+      'All Lite Features', 
+      'Advanced Strategy Frameworks', 
+      'Data Pulse Intelligence', 
+      'Orchestration Sandbox', 
+      '25 AI Videos/month', 
+      'Global Market Data',
+      'Up to 25 users',
+      'Advanced user roles & permissions',
+      'Company dashboard',
+      'Process improvement analytics',
+      'Lean methodology tools'
+    ],
+    limitations: ['Advanced analytics included', 'Priority support', 'API access', 'Advanced admin controls']
   },
   enterprise: {
     name: 'Lucidra Enterprise',
     description: 'Full-scale strategic intelligence platform',
     color: 'blue',
     price: 'Custom Pricing',
+    baseUsers: 'Unlimited',
+    additionalUserPrice: 'Volume pricing',
+    maxUsers: 999,
     maxFrameworks: 999,
     maxVideos: 999,
     maxSignals: 999,
-    features: ['All Pro Features', 'Custom Frameworks', 'Team Collaboration', 'Advanced Analytics', 'Unlimited AI Videos', 'White-label Options'],
-    limitations: ['Unlimited everything', 'Dedicated support', 'Custom integrations']
+    features: [
+      'All Pro Features', 
+      'Custom Frameworks', 
+      'Team Collaboration', 
+      'Advanced Analytics', 
+      'Unlimited AI Videos', 
+      'White-label Options',
+      'Unlimited users',
+      'Custom user roles',
+      'Enterprise-grade admin controls',
+      'Advanced AI learning system',
+      'Custom integrations',
+      'Dedicated success manager'
+    ],
+    limitations: ['Unlimited everything', 'Dedicated support', 'Custom integrations', 'Enterprise admin suite']
   }
 };
 
@@ -3461,6 +3552,331 @@ function App() {
                   </VStack>
                 </CardBody>
               </Card>
+            </VStack>
+          </Box>
+        );
+
+      case 'company-admin':
+        return (
+          <Box p={6}>
+            <VStack spacing={8} maxW="7xl" mx="auto">
+              {/* Header */}
+              <HStack justify="space-between" w="full" mb={6}>
+                <VStack align="start" spacing={1}>
+                  <Text fontSize="2xl" fontWeight="bold">🏢 Company Administration</Text>
+                  <Text color="gray.600">Manage users, permissions, and company settings</Text>
+                </VStack>
+                <Button variant="outline" onClick={() => setCurrentView('dashboard')} leftIcon={<Text>←</Text>}>
+                  Back to Dashboard
+                </Button>
+              </HStack>
+
+              {/* Company Overview Cards */}
+              <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={6} w="full">
+                {/* Current Plan Card */}
+                <Card bg={cardBg} borderColor={`${TIER_CONFIG[currentTier].color}.200`} border="2px">
+                  <CardHeader>
+                    <HStack justify="space-between">
+                      <Text fontSize="lg" fontWeight="bold">Current Plan</Text>
+                      <Badge colorScheme={TIER_CONFIG[currentTier].color}>
+                        {TIER_CONFIG[currentTier].name}
+                      </Badge>
+                    </HStack>
+                  </CardHeader>
+                  <CardBody>
+                    <VStack spacing={3} align="stretch">
+                      <Text fontSize="2xl" fontWeight="bold">{TIER_CONFIG[currentTier].price}</Text>
+                      <Divider />
+                      <HStack justify="space-between">
+                        <Text fontSize="sm" color="gray.600">Users</Text>
+                        <Text fontSize="sm" fontWeight="bold">3 / {TIER_CONFIG[currentTier].maxUsers}</Text>
+                      </HStack>
+                      <HStack justify="space-between">
+                        <Text fontSize="sm" color="gray.600">Additional Users</Text>
+                        <Text fontSize="sm" fontWeight="bold">{TIER_CONFIG[currentTier].additionalUserPrice}</Text>
+                      </HStack>
+                      <Button colorScheme={TIER_CONFIG[currentTier].color} size="sm" onClick={() => setCurrentView('pricing')}>
+                        Upgrade Plan
+                      </Button>
+                    </VStack>
+                  </CardBody>
+                </Card>
+
+                {/* Company Stats Card */}
+                <Card bg={cardBg}>
+                  <CardHeader>
+                    <Text fontSize="lg" fontWeight="bold">Company Analytics</Text>
+                  </CardHeader>
+                  <CardBody>
+                    <VStack spacing={3} align="stretch">
+                      <HStack justify="space-between">
+                        <Text fontSize="sm" color="gray.600">Active Users</Text>
+                        <Text fontSize="sm" fontWeight="bold" color="green.500">3</Text>
+                      </HStack>
+                      <HStack justify="space-between">
+                        <Text fontSize="sm" color="gray.600">Processes Created</Text>
+                        <Text fontSize="sm" fontWeight="bold">12</Text>
+                      </HStack>
+                      <HStack justify="space-between">
+                        <Text fontSize="sm" color="gray.600">AI Recommendations</Text>
+                        <Text fontSize="sm" fontWeight="bold">27</Text>
+                      </HStack>
+                      <HStack justify="space-between">
+                        <Text fontSize="sm" color="gray.600">Data Quality Score</Text>
+                        <Text fontSize="sm" fontWeight="bold" color="blue.500">87%</Text>
+                      </HStack>
+                    </VStack>
+                  </CardBody>
+                </Card>
+
+                {/* AI Learning Status Card */}
+                <Card bg={cardBg}>
+                  <CardHeader>
+                    <Text fontSize="lg" fontWeight="bold">🤖 AI Learning Status</Text>
+                  </CardHeader>
+                  <CardBody>
+                    <VStack spacing={3} align="stretch">
+                      <Box>
+                        <HStack justify="space-between" mb={1}>
+                          <Text fontSize="sm" color="gray.600">Learning Progress</Text>
+                          <Text fontSize="sm" fontWeight="bold">78%</Text>
+                        </HStack>
+                        <Progress value={78} colorScheme="purple" size="sm" />
+                      </Box>
+                      <Box>
+                        <HStack justify="space-between" mb={1}>
+                          <Text fontSize="sm" color="gray.600">Process Optimization</Text>
+                          <Text fontSize="sm" fontWeight="bold">65%</Text>
+                        </HStack>
+                        <Progress value={65} colorScheme="blue" size="sm" />
+                      </Box>
+                      <Box>
+                        <HStack justify="space-between" mb={1}>
+                          <Text fontSize="sm" color="gray.600">Recommendations Accuracy</Text>
+                          <Text fontSize="sm" fontWeight="bold">92%</Text>
+                        </HStack>
+                        <Progress value={92} colorScheme="green" size="sm" />
+                      </Box>
+                    </VStack>
+                  </CardBody>
+                </Card>
+              </Grid>
+
+              {/* User Management Section */}
+              <Box w="full">
+                <Card bg={cardBg}>
+                  <CardHeader>
+                    <HStack justify="space-between">
+                      <VStack align="start" spacing={1}>
+                        <Text fontSize="lg" fontWeight="bold">👥 User Management</Text>
+                        <Text fontSize="sm" color="gray.600">Manage team members and their permissions</Text>
+                      </VStack>
+                      <Button colorScheme="blue" leftIcon={<Text>+</Text>}>
+                        Invite User
+                      </Button>
+                    </HStack>
+                  </CardHeader>
+                  <CardBody>
+                    <VStack spacing={4} align="stretch">
+                      {/* Users Table */}
+                      <Box overflowX="auto">
+                        <Table size="sm">
+                          <Thead>
+                            <Tr>
+                              <Th>User</Th>
+                              <Th>Role</Th>
+                              <Th>Department</Th>
+                              <Th>Last Active</Th>
+                              <Th>Permissions</Th>
+                              <Th>Actions</Th>
+                            </Tr>
+                          </Thead>
+                          <Tbody>
+                            <Tr>
+                              <Td>
+                                <HStack>
+                                  <Avatar size="sm" name="John Admin" />
+                                  <VStack align="start" spacing={0}>
+                                    <Text fontSize="sm" fontWeight="bold">John Admin</Text>
+                                    <Text fontSize="xs" color="gray.600">john@company.com</Text>
+                                  </VStack>
+                                </HStack>
+                              </Td>
+                              <Td>
+                                <Badge colorScheme="red" variant="subtle">Admin</Badge>
+                              </Td>
+                              <Td>
+                                <Text fontSize="sm">Strategy</Text>
+                              </Td>
+                              <Td>
+                                <Text fontSize="sm" color="green.500">Online now</Text>
+                              </Td>
+                              <Td>
+                                <Text fontSize="xs" color="gray.600">Full Access</Text>
+                              </Td>
+                              <Td>
+                                <HStack spacing={1}>
+                                  <Button size="xs" variant="ghost">Edit</Button>
+                                  <Button size="xs" variant="ghost" colorScheme="red">Remove</Button>
+                                </HStack>
+                              </Td>
+                            </Tr>
+                            <Tr>
+                              <Td>
+                                <HStack>
+                                  <Avatar size="sm" name="Sarah Manager" />
+                                  <VStack align="start" spacing={0}>
+                                    <Text fontSize="sm" fontWeight="bold">Sarah Manager</Text>
+                                    <Text fontSize="xs" color="gray.600">sarah@company.com</Text>
+                                  </VStack>
+                                </HStack>
+                              </Td>
+                              <Td>
+                                <Badge colorScheme="purple" variant="subtle">Manager</Badge>
+                              </Td>
+                              <Td>
+                                <Text fontSize="sm">Operations</Text>
+                              </Td>
+                              <Td>
+                                <Text fontSize="sm" color="gray.600">2 hours ago</Text>
+                              </Td>
+                              <Td>
+                                <Text fontSize="xs" color="gray.600">Process & Project Mgmt</Text>
+                              </Td>
+                              <Td>
+                                <HStack spacing={1}>
+                                  <Button size="xs" variant="ghost">Edit</Button>
+                                  <Button size="xs" variant="ghost" colorScheme="red">Remove</Button>
+                                </HStack>
+                              </Td>
+                            </Tr>
+                            <Tr>
+                              <Td>
+                                <HStack>
+                                  <Avatar size="sm" name="Mike Analyst" />
+                                  <VStack align="start" spacing={0}>
+                                    <Text fontSize="sm" fontWeight="bold">Mike Analyst</Text>
+                                    <Text fontSize="xs" color="gray.600">mike@company.com</Text>
+                                  </VStack>
+                                </HStack>
+                              </Td>
+                              <Td>
+                                <Badge colorScheme="blue" variant="subtle">Analyst</Badge>
+                              </Td>
+                              <Td>
+                                <Text fontSize="sm">Finance</Text>
+                              </Td>
+                              <Td>
+                                <Text fontSize="sm" color="gray.600">Yesterday</Text>
+                              </Td>
+                              <Td>
+                                <Text fontSize="xs" color="gray.600">Financial Data Only</Text>
+                              </Td>
+                              <Td>
+                                <HStack spacing={1}>
+                                  <Button size="xs" variant="ghost">Edit</Button>
+                                  <Button size="xs" variant="ghost" colorScheme="red">Remove</Button>
+                                </HStack>
+                              </Td>
+                            </Tr>
+                          </Tbody>
+                        </Table>
+                      </Box>
+                    </VStack>
+                  </CardBody>
+                </Card>
+              </Box>
+
+              {/* Permission Templates Section */}
+              <Box w="full">
+                <Card bg={cardBg}>
+                  <CardHeader>
+                    <VStack align="start" spacing={1}>
+                      <Text fontSize="lg" fontWeight="bold">🔐 Permission Templates</Text>
+                      <Text fontSize="sm" color="gray.600">Pre-configured role templates for quick user setup</Text>
+                    </VStack>
+                  </CardHeader>
+                  <CardBody>
+                    <Grid templateColumns={{ base: "1fr", md: "repeat(4, 1fr)" }} gap={4}>
+                      {/* Admin Template */}
+                      <Card bg="red.50" borderColor="red.200" border="1px">
+                        <CardBody p={4}>
+                          <VStack spacing={3} align="stretch">
+                            <HStack>
+                              <Badge colorScheme="red">Admin</Badge>
+                              <Text fontSize="sm" fontWeight="bold">Full Access</Text>
+                            </HStack>
+                            <VStack align="start" spacing={1}>
+                              <Text fontSize="xs">✓ Manage Users</Text>
+                              <Text fontSize="xs">✓ All Modules</Text>
+                              <Text fontSize="xs">✓ Financial Data</Text>
+                              <Text fontSize="xs">✓ AI Recommendations</Text>
+                              <Text fontSize="xs">✓ Export Data</Text>
+                            </VStack>
+                          </VStack>
+                        </CardBody>
+                      </Card>
+
+                      {/* Manager Template */}
+                      <Card bg="purple.50" borderColor="purple.200" border="1px">
+                        <CardBody p={4}>
+                          <VStack spacing={3} align="stretch">
+                            <HStack>
+                              <Badge colorScheme="purple">Manager</Badge>
+                              <Text fontSize="sm" fontWeight="bold">Operations</Text>
+                            </HStack>
+                            <VStack align="start" spacing={1}>
+                              <Text fontSize="xs">✗ Manage Users</Text>
+                              <Text fontSize="xs">✓ Process/Project Mgmt</Text>
+                              <Text fontSize="xs">✓ Limited Financial</Text>
+                              <Text fontSize="xs">✓ AI Recommendations</Text>
+                              <Text fontSize="xs">✓ Export Data</Text>
+                            </VStack>
+                          </VStack>
+                        </CardBody>
+                      </Card>
+
+                      {/* Analyst Template */}
+                      <Card bg="blue.50" borderColor="blue.200" border="1px">
+                        <CardBody p={4}>
+                          <VStack spacing={3} align="stretch">
+                            <HStack>
+                              <Badge colorScheme="blue">Analyst</Badge>
+                              <Text fontSize="sm" fontWeight="bold">Data Focus</Text>
+                            </HStack>
+                            <VStack align="start" spacing={1}>
+                              <Text fontSize="xs">✗ Manage Users</Text>
+                              <Text fontSize="xs">✓ View Processes</Text>
+                              <Text fontSize="xs">✓ Financial Data</Text>
+                              <Text fontSize="xs">✓ AI Recommendations</Text>
+                              <Text fontSize="xs">✗ Export Data</Text>
+                            </VStack>
+                          </VStack>
+                        </CardBody>
+                      </Card>
+
+                      {/* Viewer Template */}
+                      <Card bg="gray.50" borderColor="gray.200" border="1px">
+                        <CardBody p={4}>
+                          <VStack spacing={3} align="stretch">
+                            <HStack>
+                              <Badge colorScheme="gray">Viewer</Badge>
+                              <Text fontSize="sm" fontWeight="bold">Read Only</Text>
+                            </HStack>
+                            <VStack align="start" spacing={1}>
+                              <Text fontSize="xs">✗ Manage Users</Text>
+                              <Text fontSize="xs">✓ View Processes</Text>
+                              <Text fontSize="xs">✗ Financial Data</Text>
+                              <Text fontSize="xs">✓ Basic AI Insights</Text>
+                              <Text fontSize="xs">✗ Export Data</Text>
+                            </VStack>
+                          </VStack>
+                        </CardBody>
+                      </Card>
+                    </Grid>
+                  </CardBody>
+                </Card>
+              </Box>
             </VStack>
           </Box>
         );
