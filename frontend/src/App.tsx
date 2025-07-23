@@ -4,6 +4,8 @@ import StrategicMarketingAutomation from './components/StrategicMarketingAutomat
 import HRManagementNew from './components/HRManagementNew.tsx';
 import BlueOceanStrategy from './components/BlueOceanStrategy.tsx';
 import ProcessImprovementIntelligence from './components/ProcessImprovementIntelligence.tsx';
+import ProcessManagement from './components/ProcessManagement.tsx';
+import ProjectManagement from './components/ProjectManagement.tsx';
 // import FinancialFrameworks from './components/FinancialFrameworks';
 // import SignalComposer from './components/SignalComposer';
 // import InquiryFramework from './components/InquiryFramework';
@@ -1158,6 +1160,22 @@ const NavigationHeader: React.FC<{
             🔄 Process
           </Button>
           <Button
+            variant={currentView === 'process-management' ? 'solid' : 'ghost'}
+            colorScheme={currentView === 'process-management' ? 'teal' : 'gray'}
+            size="sm"
+            onClick={() => setCurrentView('process-management')}
+          >
+            🏭 BPMN
+          </Button>
+          <Button
+            variant={currentView === 'project-management' ? 'solid' : 'ghost'}
+            colorScheme={currentView === 'project-management' ? 'teal' : 'gray'}
+            size="sm"
+            onClick={() => setCurrentView('project-management')}
+          >
+            📊 Projects
+          </Button>
+          <Button
             variant={currentView === 'capability-architecture' ? 'solid' : 'ghost'}
             colorScheme={currentView === 'capability-architecture' ? 'teal' : 'gray'}
             size="sm"
@@ -1287,6 +1305,12 @@ const Breadcrumb: React.FC<{
         break;
       case 'process-improvement':
         items.push({ label: 'Process Improvement', view: 'process-improvement', icon: '🔄' });
+        break;
+      case 'process-management':
+        items.push({ label: 'Process Management', view: 'process-management', icon: '🏭' });
+        break;
+      case 'project-management':
+        items.push({ label: 'Project Management', view: 'project-management', icon: '📊' });
         break;
       case 'capability-architecture':
         items.push({ label: 'Capability Architecture', view: 'capability-architecture', icon: '🏗️' });
@@ -1780,6 +1804,52 @@ function App() {
                     </Text>
                     <Badge colorScheme="cyan" variant="subtle">
                       Integrated Intelligence
+                    </Badge>
+                  </CardBody>
+                </Card>
+
+                <Card 
+                  bg={cardBg} 
+                  _hover={{ shadow: 'lg', transform: 'translateY(-2px)' }}
+                  cursor="pointer"
+                  onClick={() => setCurrentView('process-management')}
+                  transition="all 0.2s"
+                >
+                  <CardHeader>
+                    <HStack>
+                      <Text fontSize="2xl">🏭</Text>
+                      <Text fontSize="lg" fontWeight="bold">Process Management</Text>
+                    </HStack>
+                  </CardHeader>
+                  <CardBody>
+                    <Text color="gray.600" fontSize="sm" mb={3}>
+                      Full BPMN 2.0 workflow designer with swimlanes, AI narrative analysis, and resource allocation
+                    </Text>
+                    <Badge colorScheme="purple" variant="subtle">
+                      BPMN + AI Integration
+                    </Badge>
+                  </CardBody>
+                </Card>
+
+                <Card 
+                  bg={cardBg} 
+                  _hover={{ shadow: 'lg', transform: 'translateY(-2px)' }}
+                  cursor="pointer"
+                  onClick={() => setCurrentView('project-management')}
+                  transition="all 0.2s"
+                >
+                  <CardHeader>
+                    <HStack>
+                      <Text fontSize="2xl">📊</Text>
+                      <Text fontSize="lg" fontWeight="bold">Project Management</Text>
+                    </HStack>
+                  </CardHeader>
+                  <CardBody>
+                    <Text color="gray.600" fontSize="sm" mb={3}>
+                      Comprehensive project planning with Gantt charts, resource optimization, and process integration
+                    </Text>
+                    <Badge colorScheme="blue" variant="subtle">
+                      Integrated Planning
                     </Badge>
                   </CardBody>
                 </Card>
@@ -2643,6 +2713,28 @@ function App() {
               <Button variant="outline" onClick={() => setCurrentView('dashboard')}>← Back to Dashboard</Button>
             </HStack>
             <ProcessImprovementIntelligence />
+          </Box>
+        );
+
+      case 'process-management':
+        return (
+          <Box p={6}>
+            <HStack justify="space-between" mb={6}>
+              <Text fontSize="2xl" fontWeight="bold">🏭 Process Management & BPMN Design</Text>
+              <Button variant="outline" onClick={() => setCurrentView('dashboard')}>← Back to Dashboard</Button>
+            </HStack>
+            <ProcessManagement />
+          </Box>
+        );
+
+      case 'project-management':
+        return (
+          <Box p={6}>
+            <HStack justify="space-between" mb={6}>
+              <Text fontSize="2xl" fontWeight="bold">📊 Project Management & Resource Planning</Text>
+              <Button variant="outline" onClick={() => setCurrentView('dashboard')}>← Back to Dashboard</Button>
+            </HStack>
+            <ProjectManagement />
           </Box>
         );
 
