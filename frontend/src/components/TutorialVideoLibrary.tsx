@@ -55,7 +55,7 @@ import {
   CheckboxGroup,
   Stack
 } from '@chakra-ui/react';
-import { SearchIcon, PlayIcon, StarIcon, TimeIcon, ViewIcon } from '@chakra-ui/icons';
+import { SearchIcon, StarIcon, TimeIcon, ViewIcon, TriangleUpIcon } from '@chakra-ui/icons';
 
 interface Video {
   id: string;
@@ -328,7 +328,7 @@ const TutorialVideoLibrary: React.FC = () => {
                 justifyContent="center"
                 position="relative"
               >
-                <PlayIcon color="gray.500" boxSize={8} />
+                <TriangleUpIcon color="gray.500" boxSize={8} />
                 {video.progress && (
                   <Progress
                     value={video.progress}
@@ -608,7 +608,7 @@ const TutorialVideoLibrary: React.FC = () => {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    <PlayIcon color="gray.500" boxSize={16} />
+                    <TriangleUpIcon color="gray.500" boxSize={16} />
                   </Box>
                 </AspectRatio>
 

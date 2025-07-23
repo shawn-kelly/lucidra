@@ -72,7 +72,32 @@ export function ScenarioPanel() {
       <GridItem>
         <VStack spacing={6} align="stretch">
           <Box>
-            <Heading size="md" mb={4}>Business Scenario Analysis</Heading>
+            <VStack align="stretch" spacing={4} mb={6}>
+              <HStack justify="space-between" align="center">
+                <Heading size="md">Strategic Scenario Analysis</Heading>
+                <Badge colorScheme="teal" variant="subtle" fontSize="xs">
+                  AI-Powered Intelligence
+                </Badge>
+              </HStack>
+              <Text fontSize="sm" color="gray.600" lineHeight="1.5">
+                Transform complex business challenges into actionable strategic insights through 
+                Lucidra's modular framework and AI-powered analysis.
+              </Text>
+              <HStack spacing={4} flexWrap="wrap">
+                <Badge colorScheme="blue" variant="outline" fontSize="xs">
+                  Strategic Planning
+                </Badge>
+                <Badge colorScheme="green" variant="outline" fontSize="xs">
+                  Risk Assessment
+                </Badge>
+                <Badge colorScheme="purple" variant="outline" fontSize="xs">
+                  Opportunity Mapping
+                </Badge>
+                <Badge colorScheme="orange" variant="outline" fontSize="xs">
+                  Decision Support
+                </Badge>
+              </HStack>
+            </VStack>
             
             {/* AI Status */}
             {usage && (
@@ -114,12 +139,25 @@ export function ScenarioPanel() {
 
             {/* Scenario Input */}
             <VStack spacing={4} align="stretch">
+              <VStack align="stretch" spacing={2}>
+                <Text fontSize="sm" fontWeight="medium" color="gray.700">
+                  Strategic Scenario Input
+                </Text>
+                <Text fontSize="xs" color="gray.500">
+                  Describe your organizational challenge with context, stakeholders, and strategic objectives
+                </Text>
+              </VStack>
               <Textarea
                 value={scenario}
                 onChange={e => setScenario(e.target.value)}
-                placeholder="Describe a strategic scenario (e.g., market disruption, competitor action, new technology adoption, organizational change)..."
-                minH="120px"
+                placeholder="Example: We're facing increased competition from tech-enabled disruptors in our traditional market. Our customers are demanding digital solutions while our infrastructure remains largely analog. Key stakeholders include our board, legacy customers, and new customer segments. Strategic objectives include market share retention, digital transformation, and sustainable growth..."
+                minH="150px"
                 resize="vertical"
+                borderColor="gray.300"
+                _focus={{
+                  borderColor: "teal.400",
+                  boxShadow: "0 0 0 1px #4FD1C7"
+                }}
               />
               
               <HStack justify="space-between">
@@ -147,31 +185,81 @@ export function ScenarioPanel() {
               borderRadius="lg"
               border="1px"
               borderColor={borderColor}
+              position="relative"
+              overflow="hidden"
             >
-              <HStack justify="space-between" mb={4}>
-                <Text fontSize="lg" fontWeight="bold">
-                  Analysis Results
-                </Text>
-                <Badge colorScheme={usedAI ? 'green' : 'blue'} variant="subtle">
-                  {usedAI ? 'AI Generated' : 'Coaching Logic'}
-                </Badge>
-              </HStack>
+              {/* Strategic clarity gradient overlay */}
+              <Box
+                position="absolute"
+                top="0"
+                left="0"
+                right="0"
+                height="4px"
+                bgGradient="linear(to-r, #1FE0C4, #6C75F8)"
+                opacity="0.8"
+              />
               
-              <Text whiteSpace="pre-wrap" lineHeight="1.6">
-                {analysis}
-              </Text>
-              
-              {!usedAI && (
-                <Alert status="info" mt={4}>
-                  <AlertIcon />
-                  <Box>
-                    <Text fontSize="sm">
-                      This analysis was generated using our fallback coaching logic. 
-                      {usage?.userOptedIn ? ' AI quota may be exceeded.' : ' Enable AI for more detailed insights.'}
+              <VStack align="stretch" spacing={4}>
+                <HStack justify="space-between" mb={2}>
+                  <VStack align="start" spacing={1}>
+                    <Text fontSize="lg" fontWeight="bold" color="gray.800">
+                      Strategic Analysis
                     </Text>
-                  </Box>
-                </Alert>
-              )}
+                    <Text fontSize="xs" color="gray.500">
+                      Organizational challenge transformed into actionable insights
+                    </Text>
+                  </VStack>
+                  <VStack align="end" spacing={1}>
+                    <Badge colorScheme={usedAI ? 'green' : 'blue'} variant="subtle">
+                      {usedAI ? 'AI-Powered' : 'Coaching Framework'}
+                    </Badge>
+                    <Text fontSize="xs" color="gray.500">
+                      {usedAI ? 'Advanced Intelligence' : 'Strategic Logic'}
+                    </Text>
+                  </VStack>
+                </HStack>
+                
+                <Box 
+                  p={4} 
+                  bg="white" 
+                  borderRadius="md" 
+                  border="1px" 
+                  borderColor="gray.100"
+                  shadow="sm"
+                >
+                  <Text whiteSpace="pre-wrap" lineHeight="1.7" color="gray.700">
+                    {analysis}
+                  </Text>
+                </Box>
+                
+                {!usedAI && (
+                  <Alert status="info" variant="left-accent" borderRadius="md">
+                    <AlertIcon />
+                    <Box>
+                      <Text fontSize="sm" fontWeight="medium">
+                        Strategic Coaching Active
+                      </Text>
+                      <Text fontSize="xs" color="gray.600" mt={1}>
+                        {usage?.userOptedIn 
+                          ? 'AI quota exceeded - fallback coaching provides structured strategic guidance' 
+                          : 'Enable AI for advanced strategic intelligence and personalized insights'}
+                      </Text>
+                    </Box>
+                  </Alert>
+                )}
+                
+                {usedAI && (
+                  <HStack spacing={2} justify="center" opacity="0.7">
+                    <Text fontSize="xs" color="gray.500">
+                      Powered by Lucidra Strategic Intelligence
+                    </Text>
+                    <Box w="4px" h="4px" bg="teal.400" borderRadius="full" />
+                    <Text fontSize="xs" color="gray.500">
+                      AI-Enhanced Analysis
+                    </Text>
+                  </HStack>
+                )}
+              </VStack>
             </Box>
           )}
         </VStack>
