@@ -6,6 +6,8 @@ import BlueOceanStrategy from './components/BlueOceanStrategy.tsx';
 import ProcessImprovementIntelligence from './components/ProcessImprovementIntelligence.tsx';
 import ProcessManagement from './components/ProcessManagement.tsx';
 import ProjectManagement from './components/ProjectManagement.tsx';
+import MinimalistLayout from './components/MinimalistLayout.tsx';
+import ABCCosting from './components/ABCCosting.tsx';
 // import FinancialFrameworks from './components/FinancialFrameworks';
 // import SignalComposer from './components/SignalComposer';
 // import InquiryFramework from './components/InquiryFramework';
@@ -3880,6 +3882,45 @@ function App() {
             </VStack>
           </Box>
         );
+
+      case 'abc-costing':
+        return <ABCCosting companyData={businessProfile} onCostDataUpdate={(data) => console.log('Cost data updated:', data)} />;
+
+      case 'value-chain':
+        return (
+          <Box p={6}>
+            <VStack spacing={6} maxW="7xl" mx="auto">
+              <HStack justify="space-between" w="full">
+                <VStack align="start" spacing={1}>
+                  <Text fontSize="2xl" fontWeight="bold">🔗 Porter's Value Chain Analysis</Text>
+                  <Text color="gray.600">Integrated with Activity-Based Costing</Text>
+                </VStack>
+                <Button onClick={() => setCurrentView('abc-costing')} colorScheme="blue">
+                  View ABC Costing
+                </Button>
+              </HStack>
+              
+              <Alert status="info">
+                <AlertIcon />
+                <VStack align="start" spacing={1}>
+                  <Text fontWeight="semibold">Value Chain Integration</Text>
+                  <Text fontSize="sm">
+                    This module is fully integrated with ABC Costing for comprehensive cost analysis across your value chain activities.
+                  </Text>
+                </VStack>
+              </Alert>
+              
+              <Card bg={cardBg}>
+                <CardBody>
+                  <Text textAlign="center" py={8}>
+                    Click "View ABC Costing" above to access the integrated Porter's Value Chain analysis 
+                    with Activity-Based Costing, salary allocation tracking, and process cost optimization.
+                  </Text>
+                </CardBody>
+              </Card>
+            </VStack>
+          </Box>
+        );
         
       default:
         return (
@@ -3891,6 +3932,25 @@ function App() {
     }
   };
 
+  // Check if we should use minimalist layout
+  const useMinimalistLayout = currentView !== 'welcome';
+  
+  if (useMinimalistLayout) {
+    return (
+      <ChakraProvider>
+        <MinimalistLayout
+          currentView={currentView}
+          setCurrentView={setCurrentView}
+          currentTier={currentTier}
+          companyName={businessProfile?.businessName || "Your Company"}
+          userName="Admin User"
+        >
+          {renderCurrentView()}
+        </MinimalistLayout>
+      </ChakraProvider>
+    );
+  }
+  
   return (
     <ChakraProvider>
       <Box bg={bgColor} minH="100vh">
