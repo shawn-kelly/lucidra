@@ -1,0 +1,40 @@
+name: Lucidra Python AI CI
+
+on:
+  push:
+    paths:
+      - 'python-ai/**'
+    branches: [ main ]
+  pull_request:
+    paths:
+      - 'python-ai/**'
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: python-ai
+    env:
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run basic checks
+        run: |
+          echo "JWT_SECRET=${JWT_SECRET}" > .env
+          echo "ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}" >> .env
+          python -m flake8 ai_services
+          python -m unittest discover

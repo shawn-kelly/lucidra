@@ -1,0 +1,99 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Verify Node and npm versions
+        run: |
+          node --version
+          npm --version
+          pwd
+          ls -la
+
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      - name: Install dependencies
+        run: |
+          echo "Installing dependencies..."
+          npm ci --legacy-peer-deps
+          echo "Dependencies installed successfully"
+          echo "Removing problematic ajv-keywords..."
+          npm uninstall ajv-keywords --legacy-peer-deps || true
+          echo "Installing compatible ajv and schema-utils versions..."
+          npm install ajv@^6.12.6 schema-utils@^3.0.0 --legacy-peer-deps
+          echo "Dependency compatibility fixed"
+          echo "Setting executable permissions..."
+          chmod +x node_modules/.bin/*
+          echo "Permissions set successfully"
+
+      - name: Create demo environment file
+        run: |
+          echo "REACT_APP_API_URL=/api" > .env
+          echo "REACT_APP_DEMO_MODE=true" >> .env
+          echo "REACT_APP_GITHUB_PAGES=true" >> .env
+          echo "Environment file created:"
+          cat .env
+
+      - name: Build application
+        run: |
+          echo "Starting build process..."
+          echo "Checking installed dependencies..."
+          npm list ajv | head -5 || echo "ajv not properly listed"
+          echo "Building application..."
+          npm run build
+          echo "Build completed successfully"
+          echo "Checking build directory..."
+          ls -la build/
+        env:
+          CI: false
+          GENERATE_SOURCEMAP: false
+          NODE_OPTIONS: "--max-old-space-size=4096"
+
+      - name: Upload build artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
