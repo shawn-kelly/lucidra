@@ -8,7 +8,7 @@ import ProcessManagement from './components/ProcessManagement.tsx';
 import ProjectManagement from './components/ProjectManagement.tsx';
 import MinimalistLayout from './components/MinimalistLayout.tsx';
 import ABCCosting from './components/ABCCosting.tsx';
-import BusinessModelCanvas from './components/BusinessModelCanvas.tsx';
+import BusinessModelCanvasFixed from './components/BusinessModelCanvasFixed.tsx';
 import StrategyFrameworks from './components/StrategyFrameworks.tsx';
 import MissionStatementGenerator from './components/MissionStatementGenerator.tsx';
 import InteractivePortersFiveForces from './components/InteractivePortersFiveForces.tsx';
@@ -17,6 +17,11 @@ import ComprehensiveBlueOceanStrategy from './components/ComprehensiveBlueOceanS
 import AdvancedProcessManagement from './components/AdvancedProcessManagement.tsx';
 import HuggingFaceVideoProduction from './components/HuggingFaceVideoProduction.tsx';
 import RealTimePESTLEAnalysis from './components/RealTimePESTLEAnalysis.tsx';
+import CoreFeaturesPage from './pages/CoreFeaturesPage.tsx';
+import StrategyFrameworksPage from './pages/StrategyFrameworksPage.tsx';
+import OperationsPage from './pages/OperationsPage.tsx';
+import AnalyticsAIPage from './pages/AnalyticsAIPage.tsx';
+import AdministrationPage from './pages/AdministrationPage.tsx';
 // import FinancialFrameworks from './components/FinancialFrameworks';
 // import SignalComposer from './components/SignalComposer';
 // import InquiryFramework from './components/InquiryFramework';
@@ -945,7 +950,7 @@ const NavigationHeader: React.FC<{
           </Badge>
         </HStack>
 
-        {/* Main Navigation */}
+        {/* Main Navigation - Section Based */}
         <HStack spacing={1}>
           <Button
             variant={currentView === 'home' ? 'solid' : 'ghost'}
@@ -956,251 +961,51 @@ const NavigationHeader: React.FC<{
             🏠 Home
           </Button>
           <Button
-            variant={currentView === 'strategic-journey' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'strategic-journey' ? 'teal' : 'gray'}
+            variant={currentView === 'core-features' ? 'solid' : 'ghost'}
+            colorScheme={currentView === 'core-features' ? 'teal' : 'gray'}
             size="sm"
-            onClick={() => setCurrentView('strategic-journey')}
+            onClick={() => setCurrentView('core-features')}
           >
-            🗺️ Journey
+            🎯 Core Features
           </Button>
           <Button
-            variant={currentView === 'dashboard' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'dashboard' ? 'teal' : 'gray'}
+            variant={currentView === 'strategy-frameworks-section' ? 'solid' : 'ghost'}
+            colorScheme={currentView === 'strategy-frameworks-section' ? 'teal' : 'gray'}
             size="sm"
-            onClick={() => setCurrentView('dashboard')}
+            onClick={() => setCurrentView('strategy-frameworks-section')}
           >
-            📊 Dashboard
+            📚 Strategy Frameworks
           </Button>
           <Button
-            variant={currentView === 'strategy-frameworks' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'strategy-frameworks' ? 'teal' : 'gray'}
+            variant={currentView === 'operations-section' ? 'solid' : 'ghost'}
+            colorScheme={currentView === 'operations-section' ? 'teal' : 'gray'}
             size="sm"
-            onClick={() => setCurrentView('strategy-frameworks')}
+            onClick={() => setCurrentView('operations-section')}
           >
-            📚 Frameworks
+            ⚙️ Operations
           </Button>
           <Button
-            variant={currentView === 'mission-statement' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'mission-statement' ? 'teal' : 'gray'}
+            variant={currentView === 'analytics-ai-section' ? 'solid' : 'ghost'}
+            colorScheme={currentView === 'analytics-ai-section' ? 'teal' : 'gray'}
             size="sm"
-            onClick={() => setCurrentView('mission-statement')}
+            onClick={() => setCurrentView('analytics-ai-section')}
           >
-            🎯 Mission
+            🤖 Analytics & AI
           </Button>
           <Button
-            variant={currentView === 'five-forces' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'five-forces' ? 'teal' : 'gray'}
+            variant={currentView === 'administration-section' ? 'solid' : 'ghost'}
+            colorScheme={currentView === 'administration-section' ? 'teal' : 'gray'}
             size="sm"
-            onClick={() => setCurrentView('five-forces')}
+            onClick={() => setCurrentView('administration-section')}
           >
-            🏢 Five Forces
-          </Button>
-          <Button
-            variant={currentView === 'execution-tracker' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'execution-tracker' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('execution-tracker')}
-          >
-            📈 Execution
-          </Button>
-          <Button
-            variant={currentView === 'blue-ocean-comprehensive' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'blue-ocean-comprehensive' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('blue-ocean-comprehensive')}
-          >
-            🌊 Blue Ocean Pro
-          </Button>
-          <Button
-            variant={currentView === 'process-management-advanced' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'process-management-advanced' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('process-management-advanced')}
-          >
-            🏭 Process Pro
-          </Button>
-          <Button
-            variant={currentView === 'video-production' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'video-production' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('video-production')}
-          >
-            🎬 AI Videos
-          </Button>
-          <Button
-            variant={currentView === 'pestle-realtime' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'pestle-realtime' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('pestle-realtime')}
-          >
-            📊 PESTLE Live
-          </Button>
-          <Button
-            variant={currentView === 'marketing-automation' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'marketing-automation' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('marketing-automation')}
-          >
-            📈 Marketing
-          </Button>
-          <Button
-            variant={currentView === 'hr-management' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'hr-management' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('hr-management')}
-          >
-            👥 HR
-          </Button>
-          <Button
-            variant={currentView === 'tutorial-videos' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'tutorial-videos' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('tutorial-videos')}
-          >
-            📚 Tutorials
-          </Button>
-          <Button
-            variant={currentView === 'bloom-training' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'bloom-training' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('bloom-training')}
-          >
-            🔺 Training
-          </Button>
-          <Button
-            variant={currentView === 'process-analysis' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'process-analysis' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('process-analysis')}
-          >
-            🔍 Process Analysis
-          </Button>
-          <Button
-            variant={currentView === 'process-improvement' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'process-improvement' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('process-improvement')}
-          >
-            🔄 Process
-          </Button>
-          <Button
-            variant={currentView === 'process-management' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'process-management' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('process-management')}
-          >
-            🏭 BPMN
-          </Button>
-          <Button
-            variant={currentView === 'project-management' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'project-management' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('project-management')}
-          >
-            📊 Projects
-          </Button>
-          <Button
-            variant={currentView === 'sector-value-chains' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'sector-value-chains' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('sector-value-chains')}
-          >
-            🏭 Value Chains
-          </Button>
-          <Button
-            variant={currentView === 'financial-integration' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'financial-integration' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('financial-integration')}
-          >
-            💰 Finance
-          </Button>
-          <Button
-            variant={currentView === 'ai-process-logger' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'ai-process-logger' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('ai-process-logger')}
-          >
-            🤖 AI Logger
-          </Button>
-          <Button
-            variant={currentView === 'platform-manual' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'platform-manual' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('platform-manual')}
-          >
-            📖 Manual
-          </Button>
-          <Button
-            variant={currentView === 'capability-architecture' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'capability-architecture' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('capability-architecture')}
-          >
-            🏗️ Capabilities
-          </Button>
-          <Button
-            variant={currentView === 'inquiry-framework' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'inquiry-framework' ? 'purple' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('inquiry-framework')}
-          >
-            🧠 Inquiry
-          </Button>
-          <Button
-            variant={currentView === 'ai-implementation' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'ai-implementation' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('ai-implementation')}
-          >
-            🤖 AI Coach
-          </Button>
-          <Button
-            variant={currentView === 'team-collaboration' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'team-collaboration' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('team-collaboration')}
-          >
-            👥 Collaboration
-          </Button>
-          <Button
-            variant={currentView === 'framework-integration' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'framework-integration' ? 'teal' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('framework-integration')}
-          >
-            🔗 Integration
-          </Button>
-          <Button
-            variant={currentView === 'live-integration' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'live-integration' ? 'green' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('live-integration')}
-          >
-            🟢 Live Data
-          </Button>
-          <Button
-            variant={currentView === 'pricing' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'pricing' ? 'orange' : 'gray'}
-            size="sm"
-            onClick={() => setCurrentView('pricing')}
-          >
-            💳 Pricing
+            🛡️ Administration
           </Button>
         </HStack>
 
-        {/* User Info and CTAs */}
-        <HStack spacing={3}>
-          <HStack spacing={2}>
-            <Badge colorScheme="purple" variant="outline" fontSize="xs">
-              Level {learningProgress.level}
-            </Badge>
-            <Badge colorScheme="teal" variant="outline" fontSize="xs">
-              {learningProgress.xp} XP
-            </Badge>
-          </HStack>
+        {/* User Actions */}
+        <HStack spacing={2}>
           <Button 
-            colorScheme="orange" 
+            colorScheme="teal" 
             size="sm" 
             onClick={() => setCurrentView('pricing')}
             variant="solid"
@@ -1258,6 +1063,21 @@ const Breadcrumb: React.FC<{
         break;
       case 'pestle-realtime':
         items.push({ label: 'Real-Time PESTLE Analysis', view: 'pestle-realtime', icon: '📊' });
+        break;
+      case 'core-features':
+        items.push({ label: 'Core Features', view: 'core-features', icon: '🎯' });
+        break;
+      case 'strategy-frameworks-section':
+        items.push({ label: 'Strategy Frameworks', view: 'strategy-frameworks-section', icon: '📚' });
+        break;
+      case 'operations-section':
+        items.push({ label: 'Operations', view: 'operations-section', icon: '⚙️' });
+        break;
+      case 'analytics-ai-section':
+        items.push({ label: 'Analytics & AI', view: 'analytics-ai-section', icon: '🤖' });
+        break;
+      case 'administration-section':
+        items.push({ label: 'Administration', view: 'administration-section', icon: '🛡️' });
         break;
       case 'strategy-framework':
         items.push(
@@ -3975,7 +3795,7 @@ function App() {
         return <ABCCosting companyData={businessProfile} onCostDataUpdate={(data) => console.log('Cost data updated:', data)} />;
 
       case 'business-model-canvas':
-        return <BusinessModelCanvas />;
+        return <BusinessModelCanvasFixed />;
 
       case 'strategy-frameworks':
         return <StrategyFrameworks currentTier={currentTier} />;
@@ -4036,6 +3856,22 @@ function App() {
 
       case 'pestle-realtime':
         return <RealTimePESTLEAnalysis />;
+
+      // Section Pages
+      case 'core-features':
+        return <CoreFeaturesPage onNavigate={setCurrentView} />;
+
+      case 'strategy-frameworks-section':
+        return <StrategyFrameworksPage onNavigate={setCurrentView} />;
+
+      case 'operations-section':
+        return <OperationsPage onNavigate={setCurrentView} />;
+
+      case 'analytics-ai-section':
+        return <AnalyticsAIPage onNavigate={setCurrentView} />;
+
+      case 'administration-section':
+        return <AdministrationPage onNavigate={setCurrentView} />;
         
       default:
         return (
