@@ -7,13 +7,12 @@ import {
   Button,
   Grid,
   GridItem,
-  Card,
-  CardBody,
+  Container,
   useColorModeValue,
-  Icon,
-  Badge,
+  Divider,
 } from '@chakra-ui/react';
 import { FiTarget, FiBarChart3, FiMap, FiUsers, FiDollarSign, FiTrendingUp } from 'react-icons/fi';
+import McKinseyCard from '../components/layout/McKinseyCard';
 
 interface CoreFeature {
   id: string;
@@ -29,8 +28,8 @@ interface CoreFeaturesPageProps {
 }
 
 const CoreFeaturesPage: React.FC<CoreFeaturesPageProps> = ({ onNavigate }) => {
-  const cardBg = useColorModeValue('white', 'gray.800');
-  const borderColor = useColorModeValue('gray.200', 'gray.600');
+  const sectionBg = useColorModeValue('white', 'mckinsey.gray.800');
+  const borderColor = useColorModeValue('mckinsey.gray.200', 'mckinsey.gray.600');
 
   const coreFeatures: CoreFeature[] = [
     {
@@ -102,112 +101,105 @@ const CoreFeaturesPage: React.FC<CoreFeaturesPageProps> = ({ onNavigate }) => {
   };
 
   return (
-    <Box p={6}>
-      <VStack spacing={6} align="stretch">
-        {/* Header */}
-        <VStack spacing={2} align="start">
-          <Text fontSize="3xl" fontWeight="bold">🎯 Core Features</Text>
-          <Text fontSize="lg" color="gray.600">
-            Essential business intelligence tools to drive your strategic success
-          </Text>
-        </VStack>
+    <Box bg="mckinsey.gray.50" minH="calc(100vh - 72px)" pb="60px">
+      <Container maxW="full" p={6}>
+        <VStack spacing={8} align="stretch">
+          {/* Header Section */}
+          <Box bg={sectionBg} borderRadius="12px" p={6} borderWidth="1px" borderColor={borderColor}>
+            <VStack spacing={4} align="start">
+              <HStack justify="space-between" w="full">
+                <VStack align="start" spacing={1}>
+                  <Text fontSize="2xl" fontWeight="700" color="mckinsey.primary.500">
+                    Core Features
+                  </Text>
+                  <Text color="mckinsey.gray.600">
+                    Essential business intelligence tools to drive your strategic success
+                  </Text>
+                </VStack>
+                <HStack spacing={2}>
+                  <Text fontSize="sm" color="mckinsey.gray.500">
+                    {coreFeatures.filter(f => f.status === 'active').length} Active Tools
+                  </Text>
+                </HStack>
+              </HStack>
+            </VStack>
+          </Box>
 
-        {/* Features Grid */}
-        <Grid templateColumns="repeat(auto-fit, minmax(350px, 1fr))" gap={6}>
-          {coreFeatures.map((feature) => (
-            <GridItem key={feature.id}>
-              <Card 
-                bg={cardBg} 
-                borderWidth="1px" 
-                borderColor={borderColor}
-                _hover={{ 
-                  borderColor: 'blue.300', 
-                  shadow: 'md',
-                  transform: 'translateY(-2px)',
-                  transition: 'all 0.2s'
-                }}
-                cursor="pointer"
-                h="full"
-              >
-                <CardBody>
-                  <VStack spacing={4} align="stretch" h="full">
-                    <HStack justify="space-between">
-                      <HStack>
-                        <Icon as={feature.icon} boxSize={6} color="blue.500" />
-                        <Text fontSize="xl" fontWeight="bold">{feature.title}</Text>
-                      </HStack>
-                      <Badge colorScheme={getStatusColor(feature.status)} size="sm">
-                        {getStatusText(feature.status)}
-                      </Badge>
-                    </HStack>
+          {/* Features Grid */}
+          <Grid templateColumns="repeat(auto-fit, minmax(350px, 1fr))" gap={6}>
+            {coreFeatures.map((feature) => (
+              <McKinseyCard
+                key={feature.id}
+                title={feature.title}
+                description={feature.description}
+                icon={feature.icon}
+                status={feature.status}
+                category="Core Feature"
+                onClick={() => onNavigate(feature.path)}
+                actions={[
+                  {
+                    label: feature.status === 'coming-soon' ? 'Coming Soon' : 'Launch Tool',
+                    onClick: () => onNavigate(feature.path),
+                    variant: 'primary',
+                  },
+                ]}
+                variant="elevated"
+              />
+            ))}
+          </Grid>
 
-                    <Text color="gray.600" flex={1}>
-                      {feature.description}
-                    </Text>
-
-                    <Button
-                      colorScheme="blue"
-                      size="sm"
-                      onClick={() => onNavigate(feature.path)}
-                      isDisabled={feature.status === 'coming-soon'}
-                      w="full"
-                    >
-                      {feature.status === 'coming-soon' ? 'Coming Soon' : 'Launch'}
-                    </Button>
-                  </VStack>
-                </CardBody>
-              </Card>
-            </GridItem>
-          ))}
-        </Grid>
-
-        {/* Quick Access Section */}
-        <Card bg={cardBg} borderWidth="1px" borderColor={borderColor}>
-          <CardBody>
-            <VStack spacing={4} align="stretch">
-              <Text fontSize="xl" fontWeight="bold">🚀 Quick Access</Text>
-              <Text color="gray.600">
-                Jump directly to your most used tools and continue where you left off
-              </Text>
+          {/* Quick Access Section */}
+          <Box bg={sectionBg} borderRadius="12px" p={6} borderWidth="1px" borderColor={borderColor}>
+            <VStack spacing={6} align="stretch">
+              <VStack spacing={2} align="start">
+                <Text fontSize="xl" fontWeight="700" color="mckinsey.primary.500">
+                  Quick Access
+                </Text>
+                <Text color="mckinsey.gray.600" fontSize="sm">
+                  Jump directly to your most used tools and continue where you left off
+                </Text>
+              </VStack>
               
-              <HStack spacing={4} flexWrap="wrap">
+              <Divider />
+              
+              <Grid templateColumns="repeat(auto-fit, minmax(200px, 1fr))" gap={3}>
                 <Button
                   leftIcon={<FiTarget />}
+                  variant="mckinseyOutline"
                   size="sm"
-                  variant="outline"
                   onClick={() => onNavigate('business-model-canvas')}
                 >
                   Business Model Canvas
                 </Button>
                 <Button
                   leftIcon={<FiBarChart3 />}
+                  variant="mckinseyOutline"
                   size="sm"
-                  variant="outline"
                   onClick={() => onNavigate('five-forces')}
                 >
                   Competitive Analysis
                 </Button>
                 <Button
                   leftIcon={<FiTrendingUp />}
+                  variant="mckinseyOutline"
                   size="sm"
-                  variant="outline"
                   onClick={() => onNavigate('execution-tracker')}
                 >
                   Strategy Tracker
                 </Button>
                 <Button
                   leftIcon={<FiMap />}
+                  variant="mckinseyOutline"
                   size="sm"
-                  variant="outline"
                   onClick={() => onNavigate('strategic-journey')}
                 >
                   Journey Mapping
                 </Button>
-              </HStack>
+              </Grid>
             </VStack>
-          </CardBody>
-        </Card>
-      </VStack>
+          </Box>
+        </VStack>
+      </Container>
     </Box>
   );
 };
