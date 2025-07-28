@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import mckinseyTheme from './theme/mckinsey-theme';
 import McKinseyLayout from './components/layout/McKinseyLayout';
 import McKinseyDashboard from './pages/McKinseyDashboard';
@@ -3257,38 +3257,8 @@ function App() {
         currentView={currentView}
         onNavigate={setCurrentView}
       >
-        {/* Navigation Header */}
-        {currentView !== 'welcome' && (
-          <NavigationHeader 
-            currentView={currentView}
-            setCurrentView={setCurrentView}
-            currentTier={currentTier}
-            learningProgress={learningProgress}
-          />
-        )}
-
-        {/* Breadcrumb Navigation */}
-        {currentView !== 'welcome' && currentView !== 'home' && (
-          <Breadcrumb 
-            currentView={currentView}
-            selectedFramework={selectedFramework}
-            setCurrentView={setCurrentView}
-          />
-        )}
-
-        {/* Main Content */}
-        <Box maxW="7xl" mx="auto">
-          {renderCurrentView()}
-        </Box>
-
-        {/* Pricing CTA */}
-        {currentView !== 'welcome' && currentView !== 'pricing' && (
-          <PricingCTA 
-            currentTier={currentTier}
-            setCurrentView={setCurrentView}
-          />
-        )}
-      </Box>
+        {renderCurrentView()}
+      </McKinseyLayout>
     </ChakraProvider>
   );
 }
