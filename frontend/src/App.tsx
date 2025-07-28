@@ -920,8 +920,8 @@ const NavigationHeader: React.FC<{
   currentTier: ProductTier;
   learningProgress: LearningProgress;
 }> = ({ currentView, setCurrentView, currentTier, learningProgress }) => {
-  const headerBg = useColorModeValue('white', 'gray.800');
-  const borderColor = useColorModeValue('gray.200', 'gray.600');
+  const headerBg = useColorModeValue('white', 'mckinsey.gray.800');
+  const borderColor = useColorModeValue('mckinsey.gray.200', 'mckinsey.gray.600');
   
   return (
     <Box 
@@ -936,19 +936,31 @@ const NavigationHeader: React.FC<{
       shadow="sm"
     >
       <Flex justify="space-between" align="center" maxW="7xl" mx="auto">
-        {/* Logo and Brand */}
+        {/* McKinsey-Style Logo and Brand */}
         <HStack spacing={4}>
-          <Button 
-            variant="ghost" 
-            fontSize="xl" 
-            fontWeight="bold" 
-            onClick={() => setCurrentView('home')}
-            color="teal.500"
-            leftIcon={<Text>🚀</Text>}
-          >
-            Lucidra
-          </Button>
-          <Badge colorScheme={TIER_CONFIG[currentTier].color} variant="subtle" fontSize="xs">
+          <HStack spacing={3}>
+            <Box w="40px" h="40px" bg="mckinsey.primary.500" borderRadius="4px" display="flex" alignItems="center" justifyContent="center">
+              <Text color="white" fontWeight="bold" fontSize="xl">L</Text>
+            </Box>
+            <VStack align="start" spacing={0}>
+              <Button 
+                variant="ghost" 
+                fontSize="xl" 
+                fontWeight="700" 
+                onClick={() => setCurrentView('home')}
+                color="mckinsey.primary.500"
+                p={0}
+                h="auto"
+                lineHeight="1.2"
+              >
+                Lucidra
+              </Button>
+              <Text fontSize="xs" color="mckinsey.gray.500" lineHeight="1">
+                Strategic Intelligence Platform
+              </Text>
+            </VStack>
+          </HStack>
+          <Badge colorScheme="mckinsey" variant="subtle" fontSize="xs">
             {TIER_CONFIG[currentTier].name}
           </Badge>
         </HStack>
@@ -956,50 +968,62 @@ const NavigationHeader: React.FC<{
         {/* Main Navigation - Section Based */}
         <HStack spacing={1}>
           <Button
-            variant={currentView === 'home' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'home' ? 'teal' : 'gray'}
+            variant={currentView === 'home' ? 'mckinsey' : 'ghost'}
+            color={currentView === 'home' ? 'white' : 'mckinsey.gray.600'}
+            bg={currentView === 'home' ? 'mckinsey.primary.500' : 'transparent'}
             size="sm"
             onClick={() => setCurrentView('home')}
+            _hover={{ bg: currentView === 'home' ? 'mckinsey.primary.600' : 'mckinsey.primary.50', color: currentView === 'home' ? 'white' : 'mckinsey.primary.500' }}
           >
             🏠 Home
           </Button>
           <Button
-            variant={currentView === 'core-features' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'core-features' ? 'teal' : 'gray'}
+            variant={currentView === 'core-features' ? 'mckinsey' : 'ghost'}
+            color={currentView === 'core-features' ? 'white' : 'mckinsey.gray.600'}
+            bg={currentView === 'core-features' ? 'mckinsey.primary.500' : 'transparent'}
             size="sm"
             onClick={() => setCurrentView('core-features')}
+            _hover={{ bg: currentView === 'core-features' ? 'mckinsey.primary.600' : 'mckinsey.primary.50', color: currentView === 'core-features' ? 'white' : 'mckinsey.primary.500' }}
           >
             🎯 Core Features
           </Button>
           <Button
-            variant={currentView === 'strategy-frameworks-section' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'strategy-frameworks-section' ? 'teal' : 'gray'}
+            variant={currentView === 'strategy-frameworks-section' ? 'mckinsey' : 'ghost'}
+            color={currentView === 'strategy-frameworks-section' ? 'white' : 'mckinsey.gray.600'}
+            bg={currentView === 'strategy-frameworks-section' ? 'mckinsey.primary.500' : 'transparent'}
             size="sm"
             onClick={() => setCurrentView('strategy-frameworks-section')}
+            _hover={{ bg: currentView === 'strategy-frameworks-section' ? 'mckinsey.primary.600' : 'mckinsey.primary.50', color: currentView === 'strategy-frameworks-section' ? 'white' : 'mckinsey.primary.500' }}
           >
             📚 Strategy Frameworks
           </Button>
           <Button
-            variant={currentView === 'operations-section' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'operations-section' ? 'teal' : 'gray'}
+            variant={currentView === 'operations-section' ? 'mckinsey' : 'ghost'}
+            color={currentView === 'operations-section' ? 'white' : 'mckinsey.gray.600'}
+            bg={currentView === 'operations-section' ? 'mckinsey.primary.500' : 'transparent'}
             size="sm"
             onClick={() => setCurrentView('operations-section')}
+            _hover={{ bg: currentView === 'operations-section' ? 'mckinsey.primary.600' : 'mckinsey.primary.50', color: currentView === 'operations-section' ? 'white' : 'mckinsey.primary.500' }}
           >
             ⚙️ Operations
           </Button>
           <Button
-            variant={currentView === 'analytics-ai-section' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'analytics-ai-section' ? 'teal' : 'gray'}
+            variant={currentView === 'analytics-ai-section' ? 'mckinsey' : 'ghost'}
+            color={currentView === 'analytics-ai-section' ? 'white' : 'mckinsey.gray.600'}
+            bg={currentView === 'analytics-ai-section' ? 'mckinsey.primary.500' : 'transparent'}
             size="sm"
             onClick={() => setCurrentView('analytics-ai-section')}
+            _hover={{ bg: currentView === 'analytics-ai-section' ? 'mckinsey.primary.600' : 'mckinsey.primary.50', color: currentView === 'analytics-ai-section' ? 'white' : 'mckinsey.primary.500' }}
           >
             🤖 Analytics & AI
           </Button>
           <Button
-            variant={currentView === 'administration-section' ? 'solid' : 'ghost'}
-            colorScheme={currentView === 'administration-section' ? 'teal' : 'gray'}
+            variant={currentView === 'administration-section' ? 'mckinsey' : 'ghost'}
+            color={currentView === 'administration-section' ? 'white' : 'mckinsey.gray.600'}
+            bg={currentView === 'administration-section' ? 'mckinsey.primary.500' : 'transparent'}
             size="sm"
             onClick={() => setCurrentView('administration-section')}
+            _hover={{ bg: currentView === 'administration-section' ? 'mckinsey.primary.600' : 'mckinsey.primary.50', color: currentView === 'administration-section' ? 'white' : 'mckinsey.primary.500' }}
           >
             🛡️ Administration
           </Button>
@@ -1008,10 +1032,9 @@ const NavigationHeader: React.FC<{
         {/* User Actions */}
         <HStack spacing={2}>
           <Button 
-            colorScheme="teal" 
+            variant="mckinsey"
             size="sm" 
             onClick={() => setCurrentView('pricing')}
-            variant="solid"
           >
             ⭐ Upgrade
           </Button>
@@ -1026,10 +1049,10 @@ const Breadcrumb: React.FC<{
   selectedFramework?: StrategyFramework | null;
   setCurrentView: (view: string) => void;
 }> = ({ currentView, selectedFramework, setCurrentView }) => {
-  const textColor = useColorModeValue('gray.600', 'gray.400');
-  const linkColor = useColorModeValue('teal.500', 'teal.300');
-  const breadcrumbBg = useColorModeValue('gray.50', 'gray.900');
-  const hoverBg = useColorModeValue('gray.100', 'gray.700');
+  const textColor = useColorModeValue('mckinsey.gray.600', 'mckinsey.gray.400');
+  const linkColor = useColorModeValue('mckinsey.primary.500', 'mckinsey.primary.300');
+  const breadcrumbBg = useColorModeValue('mckinsey.gray.50', 'mckinsey.gray.900');
+  const hoverBg = useColorModeValue('mckinsey.gray.100', 'mckinsey.gray.700');
   
   const getBreadcrumbItems = () => {
     const items = [
@@ -3241,24 +3264,55 @@ function App() {
   if (useMinimalistLayout) {
     return (
       <ChakraProvider theme={mckinseyTheme}>
-        <McKinseyLayout
+        <MinimalistLayout
           currentView={currentView}
-          onNavigate={setCurrentView}
+          setCurrentView={setCurrentView}
+          currentTier={currentTier}
+          companyName={currentUser?.companyName || businessProfile?.businessName || "Your Company"}
+          userName={currentUser?.name || "Admin User"}
+          onLogout={handleLogout}
         >
           {renderCurrentView()}
-        </McKinseyLayout>
+        </MinimalistLayout>
       </ChakraProvider>
     );
   }
   
   return (
     <ChakraProvider theme={mckinseyTheme}>
-      <McKinseyLayout
-        currentView={currentView}
-        onNavigate={setCurrentView}
-      >
-        {renderCurrentView()}
-      </McKinseyLayout>
+      <Box bg="mckinsey.gray.50" minH="100vh">
+        {/* McKinsey-styled Navigation Header */}
+        {currentView !== 'welcome' && (
+          <NavigationHeader 
+            currentView={currentView}
+            setCurrentView={setCurrentView}
+            currentTier={currentTier}
+            learningProgress={learningProgress}
+          />
+        )}
+
+        {/* Breadcrumb Navigation */}
+        {currentView !== 'welcome' && currentView !== 'home' && (
+          <Breadcrumb 
+            currentView={currentView}
+            selectedFramework={selectedFramework}
+            setCurrentView={setCurrentView}
+          />
+        )}
+
+        {/* Main Content */}
+        <Box maxW="7xl" mx="auto">
+          {renderCurrentView()}
+        </Box>
+
+        {/* Pricing CTA */}
+        {currentView !== 'welcome' && currentView !== 'pricing' && (
+          <PricingCTA 
+            currentTier={currentTier}
+            setCurrentView={setCurrentView}
+          />
+        )}
+      </Box>
     </ChakraProvider>
   );
 }
