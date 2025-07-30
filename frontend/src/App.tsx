@@ -2,6 +2,10 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import mckinseyTheme from './theme/mckinsey-theme';
 import McKinseyLayout from './components/layout/McKinseyLayout';
 import McKinseyDashboard from './pages/McKinseyDashboard';
+
+// Debug: Verify McKinsey theme loading
+console.log('🎨 McKinsey Theme Loaded:', mckinseyTheme ? 'SUCCESS' : 'FAILED');
+console.log('🎯 Primary Color:', mckinseyTheme?.colors?.mckinsey?.primary?.[500] || 'NOT_FOUND');
 import TutorialVideoLibrary from './components/TutorialVideoLibrary.tsx';
 import StrategicMarketingAutomation from './components/StrategicMarketingAutomation.tsx';
 import HRManagementNew from './components/HRManagementNew.tsx';

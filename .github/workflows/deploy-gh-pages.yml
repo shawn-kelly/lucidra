@@ -39,8 +39,12 @@ jobs:
           pwd
           ls -la
 
-      - name: Clear npm cache
-        run: npm cache clean --force
+      - name: Clear all caches
+        run: |
+          npm cache clean --force
+          rm -rf node_modules
+          rm -rf build
+          rm -f package-lock.json
 
       - name: Install dependencies
         run: |
