@@ -39,26 +39,11 @@ jobs:
           pwd
           ls -la
 
-      - name: Clear all caches
-        run: |
-          npm cache clean --force
-          rm -rf node_modules
-          rm -rf build
-          rm -f package-lock.json
-
       - name: Install dependencies
         run: |
           echo "Installing dependencies..."
-          npm ci --legacy-peer-deps
+          npm ci
           echo "Dependencies installed successfully"
-          echo "Removing problematic ajv-keywords..."
-          npm uninstall ajv-keywords --legacy-peer-deps || true
-          echo "Installing compatible ajv and schema-utils versions..."
-          npm install ajv@^6.12.6 schema-utils@^3.0.0 --legacy-peer-deps
-          echo "Dependency compatibility fixed"
-          echo "Setting executable permissions..."
-          chmod +x node_modules/.bin/*
-          echo "Permissions set successfully"
 
       - name: Create demo environment file
         run: |
@@ -68,20 +53,42 @@ jobs:
           echo "Environment file created:"
           cat .env
 
+
       - name: Build application
         run: |
-          echo "Starting build process..."
-          echo "Checking installed dependencies..."
-          npm list ajv | head -5 || echo "ajv not properly listed"
-          echo "Building application..."
-          npm run build
+          echo "Starting build process with GitHub Pages configuration..."
+          npm run build:gh-pages
           echo "Build completed successfully"
-          echo "Checking build directory..."
+          echo "Checking build directory contents..."
           ls -la build/
+          echo "Checking index.html exists..."
+          test -f build/index.html && echo "✅ index.html found" || echo "❌ index.html missing"
+          echo "Content of index.html (first few lines):"
+          head -5 build/index.html || echo "Could not read index.html"
+          echo "Checking static assets..."
+          ls -la build/static/ || echo "No static directory found"
         env:
           CI: false
           GENERATE_SOURCEMAP: false
-          NODE_OPTIONS: "--max-old-space-size=4096"
+
+      - name: Verify build success
+        run: |
+          echo "Verifying build artifacts..."
+          if [ ! -f build/index.html ]; then
+            echo "❌ ERROR: index.html not found in build directory"
+            exit 1
+          fi
+          
+          if [ ! -d build/static ]; then
+            echo "❌ ERROR: static directory not found in build directory"
+            exit 1
+          fi
+          
+          echo "✅ Build verification successful"
+          echo "📊 Build statistics:"
+          find build -type f -name "*.js" | wc -l | xargs echo "JavaScript files:"
+          find build -type f -name "*.css" | wc -l | xargs echo "CSS files:"
+          du -sh build/ | xargs echo "Total build size:"
 
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3
