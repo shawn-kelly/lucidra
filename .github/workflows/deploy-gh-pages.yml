@@ -1,7 +1,8 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Disabled - using deploy-gh-pages-fixed.yml instead
+  # PERMANENTLY DISABLED - React build issues resolved with static site
+  # Use deploy-static.yml for deployments
   workflow_dispatch:
 
 permissions:
