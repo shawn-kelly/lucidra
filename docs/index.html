@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucidra - AI-Powered Business Strategy Platform</title>
-    <meta name="description" content="Lucidra - Latest updates with Mission Generator, Porter's Five Forces, Strategy Execution Tracker">
+    <title>Lucidra - Business Strategy Platform</title>
+    <meta name="description" content="Lucidra - Working application with login and modules">
     <style>
         * {
             margin: 0;
@@ -14,308 +14,847 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f7fafc;
+            color: #2d3748;
+        }
+        
+        .login-container {
             min-height: 100vh;
-            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 24px;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        .login-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
         }
         
         .logo {
-            font-size: 2.5rem;
+            text-align: center;
+            font-size: 2rem;
             font-weight: bold;
             color: #2d3748;
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
         }
         
-        .tagline {
-            font-size: 1.2rem;
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
             color: #4a5568;
-            margin-bottom: 16px;
         }
         
-        .update-badge {
-            display: inline-block;
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4299e1;
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .demo-accounts {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .demo-btn {
             background: #48bb78;
             color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin: 0.25rem;
             cursor: pointer;
+            font-size: 0.9rem;
         }
         
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+        .app-container {
+            display: none;
+            min-height: 100vh;
+            background: #f7fafc;
         }
         
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 16px;
-            display: block;
+        .app-header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .feature-title {
+        .app-logo {
             font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 12px;
             color: #2d3748;
         }
         
-        .feature-description {
-            color: #4a5568;
-            line-height: 1.6;
-            margin-bottom: 16px;
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         
-        .feature-status {
-            display: inline-block;
-            background: #ed8936;
+        .tier-badge {
+            background: #4299e1;
             color: white;
-            padding: 4px 12px;
+            padding: 0.25rem 0.75rem;
             border-radius: 12px;
             font-size: 0.8rem;
             font-weight: 600;
         }
         
-        .feature-status.completed {
-            background: #48bb78;
+        .logout-btn {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
         }
         
-        .feature-status.new {
+        .app-content {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            padding: 1rem;
+        }
+        
+        .nav-item {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .nav-item:hover {
+            background: #edf2f7;
+        }
+        
+        .nav-item.active {
             background: #4299e1;
+            color: white;
         }
         
-        .updates-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-            margin-bottom: 24px;
+        .main-content {
+            flex: 1;
+            padding: 2rem;
         }
         
-        .updates-title {
-            font-size: 1.8rem;
+        .module-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .module-title {
+            font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 16px;
+            margin-bottom: 1rem;
             color: #2d3748;
         }
         
-        .update-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-            padding: 8px 0;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
         }
         
-        .update-icon {
-            font-size: 1.2rem;
-            margin-right: 12px;
+        .feature-item {
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid #4299e1;
         }
         
-        .demo-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-            text-align: center;
-        }
-        
-        .demo-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .btn {
+            background: #4299e1;
             color: white;
             border: none;
-            padding: 16px 32px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
             cursor: pointer;
-            transition: transform 0.2s ease;
-            margin: 8px;
+            margin: 0.25rem;
         }
         
-        .demo-button:hover {
-            transform: translateY(-2px);
+        .btn:hover {
+            background: #3182ce;
         }
         
-        .version-info {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 24px;
-            font-size: 0.9rem;
+        .btn-success {
+            background: #48bb78;
+        }
+        
+        .btn-warning {
+            background: #ed8936;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 8px;
+            margin: 1rem 0;
+        }
+        
+        .progress-fill {
+            background: #48bb78;
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
         }
         
         @media (max-width: 768px) {
-            .features-grid {
-                grid-template-columns: 1fr;
+            .app-content {
+                flex-direction: column;
             }
             
-            .logo {
-                font-size: 2rem;
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
             }
             
-            .container {
-                padding: 16px;
+            .nav-item {
+                display: inline-block;
+                width: auto;
+                margin-right: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-card">
             <div class="logo">🚀 Lucidra</div>
-            <div class="tagline">AI-Powered Business Strategy Platform</div>
-            <div class="update-badge">✨ Latest Updates Deployed!</div>
-        </div>
-
-        <div class="updates-section">
-            <div class="updates-title">🎯 Recent Development Progress</div>
-            <div class="update-item">
-                <span class="update-icon">✅</span>
-                <span><strong>TypeScript Errors Fixed:</strong> Resolved all backend build issues</span>
-            </div>
-            <div class="update-item">
-                <span class="update-icon">✅</span>
-                <span><strong>Security Updates:</strong> Updated axios to 1.11.0, fixed vulnerabilities</span>
-            </div>
-            <div class="update-item">
-                <span class="update-icon">✅</span>
-                <span><strong>Component Architecture:</strong> Simplified App.tsx for better deployment</span>
-            </div>
-            <div class="update-item">
-                <span class="update-icon">🔄</span>
-                <span><strong>GitHub Actions:</strong> Fixed deployment workflows (in progress)</span>
-            </div>
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <span class="feature-icon">🎯</span>
-                <div class="feature-title">Mission Statement Generator</div>
-                <div class="feature-description">
-                    AI-powered mission statement creation with guided workflow, multiple options, and real-time feedback. Includes scoring and improvement suggestions.
+            <div class="subtitle">Business Strategy Platform</div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="email" placeholder="Enter your email" required>
                 </div>
-                <span class="feature-status new">NEW</span>
-            </div>
-
-            <div class="feature-card">
-                <span class="feature-icon">🏢</span>
-                <div class="feature-title">Interactive Porter's Five Forces</div>
-                <div class="feature-description">
-                    Real-time industry analysis with intensity sliders, factor selection, and comprehensive strategic recommendations. Includes export capabilities.
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="password" placeholder="Enter your password" required>
                 </div>
-                <span class="feature-status new">NEW</span>
-            </div>
-
-            <div class="feature-card">
-                <span class="feature-icon">📈</span>
-                <div class="feature-title">Strategy Execution Tracker</div>
-                <div class="feature-description">
-                    Multi-level tracking system with Goals → Milestones → Tasks → KPIs hierarchy. Features real-time progress monitoring and analytics dashboard.
-                </div>
-                <span class="feature-status new">NEW</span>
-            </div>
-
-            <div class="feature-card">
-                <span class="feature-icon">📋</span>
-                <div class="feature-title">Business Model Canvas</div>
-                <div class="feature-description">
-                    Interactive 9-section business model canvas with mobile-responsive design and professional styling. Enhanced UX with proper text wrapping.
-                </div>
-                <span class="feature-status completed">UPDATED</span>
-            </div>
-
-            <div class="feature-card">
-                <span class="feature-icon">🎥</span>
-                <div class="feature-title">AI Video Production</div>
-                <div class="feature-description">
-                    Generate strategy videos with tier-based features, usage tracking, and real-time progress feedback. Supports multiple quality levels and generation speeds.
-                </div>
-                <span class="feature-status completed">ACTIVE</span>
-            </div>
-
-            <div class="feature-card">
-                <span class="feature-icon">💰</span>
-                <div class="feature-title">Financial Analysis Framework</div>
-                <div class="feature-description">
-                    Global market data integration with DuPont Analysis, Activity-Based Costing, IRR & NPV calculations, and multi-regional support.
-                </div>
-                <span class="feature-status completed">INTEGRATED</span>
+                
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            
+            <div class="demo-accounts">
+                <p style="margin-bottom: 0.5rem; color: #718096;">Quick Demo Login:</p>
+                <button class="demo-btn" onclick="demoLogin('lite')">Lite User</button>
+                <button class="demo-btn" onclick="demoLogin('pro')">Pro User</button>
+                <button class="demo-btn" onclick="demoLogin('enterprise')">Enterprise</button>
             </div>
         </div>
+    </div>
 
-        <div class="demo-section">
-            <h2 style="margin-bottom: 16px; color: #2d3748;">🚀 Experience Lucidra</h2>
-            <p style="margin-bottom: 24px; color: #4a5568;">Explore our latest features and see the power of AI-driven business strategy</p>
-            <button class="demo-button" onclick="alert('React application deployment in progress. Full interactive demo coming soon!')">
-                🎯 Try Mission Generator
-            </button>
-            <button class="demo-button" onclick="alert('Porter\'s Five Forces analysis tool ready for testing!')">
-                🏢 Analyze Industry
-            </button>
-            <button class="demo-button" onclick="alert('Strategy execution tracking with real-time analytics!')">
-                📈 Track Execution
-            </button>
+    <!-- Main Application -->
+    <div id="appScreen" class="app-container">
+        <div class="app-header">
+            <div class="app-logo">🚀 Lucidra</div>
+            <div class="user-info">
+                <span id="userName">User</span>
+                <span id="userTier" class="tier-badge">PRO</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
         </div>
+        
+        <div class="app-content">
+            <div class="sidebar">
+                <button class="nav-item active" onclick="showModule('dashboard')">🏠 Dashboard</button>
+                <button class="nav-item" onclick="showModule('mission')">🎯 Mission Generator</button>
+                <button class="nav-item" onclick="showModule('porter')">🏢 Porter's Five Forces</button>
+                <button class="nav-item" onclick="showModule('execution')">📈 Strategy Execution</button>
+                <button class="nav-item" onclick="showModule('canvas')">📋 Business Canvas</button>
+                <button class="nav-item" onclick="showModule('video')">🎥 AI Video</button>
+                <button class="nav-item" onclick="showModule('analytics')">📊 Analytics</button>
+            </div>
+            
+            <div class="main-content">
+                <!-- Dashboard Module -->
+                <div id="dashboard" class="module">
+                    <div class="module-card">
+                        <div class="module-title">Welcome to Lucidra</div>
+                        <p>Your AI-powered business strategy platform is ready. Select a module from the sidebar to get started.</p>
+                        
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <h4>🎯 Mission Generator</h4>
+                                <p>Create compelling mission statements with AI assistance</p>
+                            </div>
+                            <div class="feature-item">
+                                <h4>🏢 Porter's Five Forces</h4>
+                                <p>Analyze your industry's competitive landscape</p>
+                            </div>
+                            <div class="feature-item">
+                                <h4>📈 Strategy Execution</h4>
+                                <p>Track and monitor your strategic initiatives</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="version-info">
-            📅 Build Date: July 31, 2025 | 🔧 Version: 2.1.0 | 🎯 Latest Features Deployed<br>
-            🏗️ React Application: Currently optimizing deployment pipeline<br>
-            💻 Repository: <a href="https://github.com/shawn-kelly/lucidra" style="color: rgba(255,255,255,0.9);">github.com/shawn-kelly/lucidra</a>
+                <!-- Mission Generator Module -->
+                <div id="mission" class="module hidden">
+                    <div class="module-card">
+                        <div class="module-title">🎯 Mission Statement Generator</div>
+                        <p>Create powerful mission statements that define your organization's purpose.</p>
+                        
+                        <div style="margin-top: 1rem;">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-input" id="companyName" placeholder="Enter your company name">
+                        </div>
+                        
+                        <div style="margin-top: 1rem;">
+                            <label class="form-label">Industry</label>
+                            <select class="form-input" id="industry">
+                                <option>Technology</option>
+                                <option>Healthcare</option>
+                                <option>Finance</option>
+                                <option>Retail</option>
+                                <option>Manufacturing</option>
+                            </select>
+                        </div>
+                        
+                        <div style="margin-top: 1rem;">
+                            <label class="form-label">What problem do you solve?</label>
+                            <textarea class="form-input" id="problemSolve" rows="3" placeholder="Describe the core problem your company addresses"></textarea>
+                        </div>
+                        
+                        <button class="btn btn-success" onclick="generateMission()" style="margin-top: 1rem;">Generate Mission Statement</button>
+                        
+                        <div id="missionResult" style="margin-top: 1rem; display: none;">
+                            <h4>Generated Mission Statements:</h4>
+                            <div id="missionOptions"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Porter's Five Forces Module -->
+                <div id="porter" class="module hidden">
+                    <div class="module-card">
+                        <div class="module-title">🏢 Porter's Five Forces Analysis</div>
+                        <p>Analyze your competitive environment across five key forces.</p>
+                        
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <h4>Competitive Rivalry</h4>
+                                <input type="range" min="1" max="5" value="3" id="rivalry" oninput="updateForce('rivalry', this.value)">
+                                <span id="rivalryValue">Medium (3/5)</span>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <h4>Supplier Power</h4>
+                                <input type="range" min="1" max="5" value="3" id="supplier" oninput="updateForce('supplier', this.value)">
+                                <span id="supplierValue">Medium (3/5)</span>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <h4>Buyer Power</h4>
+                                <input type="range" min="1" max="5" value="3" id="buyer" oninput="updateForce('buyer', this.value)">
+                                <span id="buyerValue">Medium (3/5)</span>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <h4>Threat of Substitutes</h4>
+                                <input type="range" min="1" max="5" value="3" id="substitutes" oninput="updateForce('substitutes', this.value)">
+                                <span id="substitutesValue">Medium (3/5)</span>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <h4>Barriers to Entry</h4>
+                                <input type="range" min="1" max="5" value="3" id="barriers" oninput="updateForce('barriers', this.value)">
+                                <span id="barriersValue">Medium (3/5)</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-success" onclick="analyzeForces()" style="margin-top: 1rem;">Analyze Industry</button>
+                        
+                        <div id="forceResults" style="margin-top: 1rem; display: none;">
+                            <h4>Analysis Results:</h4>
+                            <div id="forceAnalysis"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategy Execution Module -->
+                <div id="execution" class="module hidden">
+                    <div class="module-card">
+                        <div class="module-title">📈 Strategy Execution Tracker</div>
+                        <p>Monitor and track your strategic initiatives and goals.</p>
+                        
+                        <div id="goalsContainer">
+                            <div class="feature-item">
+                                <h4>🎯 Increase Market Share</h4>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%;"></div>
+                                </div>
+                                <p>Progress: 65% complete</p>
+                                <button class="btn" onclick="updateProgress(this, 10)">+10%</button>
+                                <button class="btn btn-warning" onclick="updateProgress(this, -10)">-10%</button>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <h4>💰 Revenue Growth</h4>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 40%;"></div>
+                                </div>
+                                <p>Progress: 40% complete</p>
+                                <button class="btn" onclick="updateProgress(this, 10)">+10%</button>
+                                <button class="btn btn-warning" onclick="updateProgress(this, -10)">-10%</button>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <h4>🚀 Product Innovation</h4>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 80%;"></div>
+                                </div>
+                                <p>Progress: 80% complete</p>
+                                <button class="btn" onclick="updateProgress(this, 10)">+10%</button>
+                                <button class="btn btn-warning" onclick="updateProgress(this, -10)">-10%</button>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-success" onclick="addNewGoal()" style="margin-top: 1rem;">Add New Goal</button>
+                    </div>
+                </div>
+
+                <!-- Business Canvas Module -->
+                <div id="canvas" class="module hidden">
+                    <div class="module-card">
+                        <div class="module-title">📋 Business Model Canvas</div>
+                        <p>Design and visualize your business model across 9 key building blocks.</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem;">
+                            <div class="feature-item">
+                                <h4>Key Partners</h4>
+                                <textarea class="form-input" placeholder="Who are your key partners?" rows="3"></textarea>
+                            </div>
+                            <div class="feature-item">
+                                <h4>Key Activities</h4>
+                                <textarea class="form-input" placeholder="What key activities does your value proposition require?" rows="3"></textarea>
+                            </div>
+                            <div class="feature-item">
+                                <h4>Key Resources</h4>
+                                <textarea class="form-input" placeholder="What key resources does your value proposition require?" rows="3"></textarea>
+                            </div>
+                            <div class="feature-item">
+                                <h4>Value Propositions</h4>
+                                <textarea class="form-input" placeholder="What value do we deliver to the customer?" rows="3"></textarea>
+                            </div>
+                            <div class="feature-item">
+                                <h4>Customer Relationships</h4>
+                                <textarea class="form-input" placeholder="What type of relationship does each customer segment expect?" rows="3"></textarea>
+                            </div>
+                            <div class="feature-item">
+                                <h4>Channels</h4>
+                                <textarea class="form-input" placeholder="Through which channels do we reach our customers?" rows="3"></textarea>
+                            </div>
+                            <div class="feature-item">
+                                <h4>Customer Segments</h4>
+                                <textarea class="form-input" placeholder="For whom are we creating value?" rows="3"></textarea>
+                            </div>
+                            <div class="feature-item">
+                                <h4>Cost Structure</h4>
+                                <textarea class="form-input" placeholder="What are the most important costs?" rows="3"></textarea>
+                            </div>
+                            <div class="feature-item">
+                                <h4>Revenue Streams</h4>
+                                <textarea class="form-input" placeholder="For what value are customers willing to pay?" rows="3"></textarea>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-success" onclick="saveCanvas()" style="margin-top: 1rem;">Save Canvas</button>
+                        <button class="btn" onclick="exportCanvas()" style="margin-top: 1rem;">Export PDF</button>
+                    </div>
+                </div>
+
+                <!-- AI Video Module -->
+                <div id="video" class="module hidden">
+                    <div class="module-card">
+                        <div class="module-title">🎥 AI Video Production</div>
+                        <p>Generate strategy explanation videos with AI.</p>
+                        
+                        <div style="margin-top: 1rem;">
+                            <label class="form-label">Video Topic</label>
+                            <select class="form-input" id="videoTopic">
+                                <option>Mission Statement Explanation</option>
+                                <option>Porter's Five Forces Analysis</option>
+                                <option>Business Model Overview</option>
+                                <option>Strategy Execution Plan</option>
+                            </select>
+                        </div>
+                        
+                        <div style="margin-top: 1rem;">
+                            <label class="form-label">Duration</label>
+                            <select class="form-input" id="videoDuration">
+                                <option>30 seconds</option>
+                                <option>1 minute</option>
+                                <option>2 minutes</option>
+                                <option>5 minutes</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-success" onclick="generateVideo()" style="margin-top: 1rem;">Generate Video</button>
+                        
+                        <div id="videoProgress" style="margin-top: 1rem; display: none;">
+                            <h4>Generating Video...</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="videoProgressBar" style="width: 0%;"></div>
+                            </div>
+                            <p id="videoStatus">Initializing...</p>
+                        </div>
+                        
+                        <div id="videoResult" style="margin-top: 1rem; display: none;">
+                            <h4>Generated Video:</h4>
+                            <div style="background: #000; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">
+                                <p>🎥 Video Preview (Demo)</p>
+                            </div>
+                            <button class="btn" style="margin-top: 0.5rem;">Download Video</button>
+                            <button class="btn" style="margin-top: 0.5rem;">Share Link</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Module -->
+                <div id="analytics" class="module hidden">
+                    <div class="module-card">
+                        <div class="module-title">📊 Analytics Dashboard</div>
+                        <p>Monitor your business performance and strategic metrics.</p>
+                        
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <h4>📈 Revenue Growth</h4>
+                                <p style="font-size: 2rem; color: #48bb78;">+23.5%</p>
+                                <p>vs. last quarter</p>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <h4>👥 Customer Acquisition</h4>
+                                <p style="font-size: 2rem; color: #4299e1;">1,247</p>
+                                <p>new customers</p>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <h4>🎯 Goal Completion</h4>
+                                <p style="font-size: 2rem; color: #ed8936;">68%</p>
+                                <p>average completion</p>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <h4>💰 Market Share</h4>
+                                <p style="font-size: 2rem; color: #9f7aea;">15.2%</p>
+                                <p>of target market</p>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 2rem;">
+                            <h4>Strategy Performance</h4>
+                            <div style="background: #f7fafc; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                                <p><strong>Top Performing Strategy:</strong> Market Expansion Initiative</p>
+                                <p><strong>ROI:</strong> 156% over 6 months</p>
+                                <p><strong>Next Review:</strong> Next Friday</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Add some interactivity
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const title = card.querySelector('.feature-title').textContent;
-                alert(`🚀 Feature: ${title}\n\nThis feature is part of our latest development cycle. The full React application with all interactive components is being optimized for deployment.\n\n✨ Coming soon with full functionality!`);
-            });
+        let currentUser = null;
+        let currentTier = 'lite';
+
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (email && password) {
+                login(email, 'pro');
+            }
         });
 
-        // Add loading animation to demonstrate activity
-        let dots = 0;
-        setInterval(() => {
-            const deployStatus = document.querySelector('.update-item:last-child span:last-child');
-            if (deployStatus && deployStatus.textContent.includes('in progress')) {
-                dots = (dots + 1) % 4;
-                deployStatus.textContent = `GitHub Actions: Fixed deployment workflows (in progress${'.'.repeat(dots)})`;
+        function demoLogin(tier) {
+            const users = {
+                lite: { name: 'Demo User (Lite)', email: 'demo@lite.com' },
+                pro: { name: 'Demo User (Pro)', email: 'demo@pro.com' },
+                enterprise: { name: 'Demo User (Enterprise)', email: 'demo@enterprise.com' }
+            };
+            
+            login(users[tier].email, tier, users[tier].name);
+        }
+
+        function login(email, tier, name = null) {
+            currentUser = {
+                email: email,
+                name: name || email.split('@')[0],
+                tier: tier
+            };
+            currentTier = tier;
+            
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userTier').textContent = tier.toUpperCase();
+            document.getElementById('userTier').style.background = 
+                tier === 'lite' ? '#48bb78' : 
+                tier === 'pro' ? '#4299e1' : '#9f7aea';
+            
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appScreen').style.display = 'block';
+            
+            showModule('dashboard');
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('appScreen').style.display = 'none';
+        }
+
+        function showModule(moduleId) {
+            // Hide all modules
+            document.querySelectorAll('.module').forEach(module => {
+                module.classList.add('hidden');
+            });
+            
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected module
+            document.getElementById(moduleId).classList.remove('hidden');
+            
+            // Add active class to selected nav item
+            event.target.classList.add('active');
+        }
+
+        // Mission Generator
+        function generateMission() {
+            const company = document.getElementById('companyName').value || 'Your Company';
+            const industry = document.getElementById('industry').value;
+            const problem = document.getElementById('problemSolve').value || 'solve important problems';
+            
+            const missions = [
+                `To ${problem} and empower ${industry.toLowerCase()} organizations through innovative solutions.`,
+                `${company} exists to transform the ${industry.toLowerCase()} industry by ${problem.toLowerCase()} with cutting-edge technology.`,
+                `Our mission is to ${problem.toLowerCase()} and create lasting value for our customers in the ${industry.toLowerCase()} sector.`
+            ];
+            
+            const resultDiv = document.getElementById('missionResult');
+            const optionsDiv = document.getElementById('missionOptions');
+            
+            optionsDiv.innerHTML = missions.map((mission, index) => `
+                <div class="feature-item" style="margin-bottom: 1rem;">
+                    <h4>Option ${index + 1}:</h4>
+                    <p>"${mission}"</p>
+                    <button class="btn" onclick="selectMission('${mission}')">Select This Mission</button>
+                </div>
+            `).join('');
+            
+            resultDiv.style.display = 'block';
+        }
+
+        function selectMission(mission) {
+            alert(`Selected Mission: "${mission}"\n\nThis mission statement has been saved to your profile.`);
+        }
+
+        // Porter's Five Forces
+        function updateForce(force, value) {
+            const labels = ['Very Low', 'Low', 'Medium', 'High', 'Very High'];
+            document.getElementById(force + 'Value').textContent = `${labels[value-1]} (${value}/5)`;
+        }
+
+        function analyzeForces() {
+            const rivalry = document.getElementById('rivalry').value;
+            const supplier = document.getElementById('supplier').value;
+            const buyer = document.getElementById('buyer').value;
+            const substitutes = document.getElementById('substitutes').value;
+            const barriers = document.getElementById('barriers').value;
+            
+            const average = (parseInt(rivalry) + parseInt(supplier) + parseInt(buyer) + parseInt(substitutes) + parseInt(barriers)) / 5;
+            
+            let attractiveness, recommendation;
+            if (average <= 2) {
+                attractiveness = 'Very Attractive';
+                recommendation = 'This industry shows strong potential for profitability.';
+            } else if (average <= 3) {
+                attractiveness = 'Moderately Attractive';
+                recommendation = 'This industry has reasonable profit potential with the right strategy.';
+            } else {
+                attractiveness = 'Less Attractive';
+                recommendation = 'This industry presents significant competitive challenges.';
             }
-        }, 500);
+            
+            document.getElementById('forceAnalysis').innerHTML = `
+                <div class="feature-item">
+                    <h4>Industry Attractiveness: ${attractiveness}</h4>
+                    <p><strong>Overall Score:</strong> ${average.toFixed(1)}/5</p>
+                    <p><strong>Recommendation:</strong> ${recommendation}</p>
+                    <div style="margin-top: 1rem;">
+                        <p><strong>Key Insights:</strong></p>
+                        <ul>
+                            <li>Competitive Rivalry: ${rivalry}/5 - ${rivalry > 3 ? 'High competition' : 'Manageable competition'}</li>
+                            <li>Supplier Power: ${supplier}/5 - ${supplier > 3 ? 'Strong supplier influence' : 'Reasonable supplier terms'}</li>
+                            <li>Buyer Power: ${buyer}/5 - ${buyer > 3 ? 'Customers have strong negotiating power' : 'Good customer relationships possible'}</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('forceResults').style.display = 'block';
+        }
+
+        // Strategy Execution
+        function updateProgress(button, change) {
+            const item = button.closest('.feature-item');
+            const progressFill = item.querySelector('.progress-fill');
+            const progressText = item.querySelector('p');
+            
+            let currentWidth = parseInt(progressFill.style.width) || 0;
+            let newWidth = Math.max(0, Math.min(100, currentWidth + change));
+            
+            progressFill.style.width = newWidth + '%';
+            progressText.textContent = `Progress: ${newWidth}% complete`;
+            
+            if (newWidth === 100) {
+                progressText.innerHTML = `<strong>✅ COMPLETED!</strong> Goal achieved!`;
+                progressFill.style.background = '#48bb78';
+            }
+        }
+
+        function addNewGoal() {
+            const goalName = prompt('Enter new goal name:');
+            if (goalName) {
+                const container = document.getElementById('goalsContainer');
+                const newGoal = document.createElement('div');
+                newGoal.className = 'feature-item';
+                newGoal.innerHTML = `
+                    <h4>🎯 ${goalName}</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <p>Progress: 0% complete</p>
+                    <button class="btn" onclick="updateProgress(this, 10)">+10%</button>
+                    <button class="btn btn-warning" onclick="updateProgress(this, -10)">-10%</button>
+                `;
+                container.appendChild(newGoal);
+            }
+        }
+
+        // Business Canvas
+        function saveCanvas() {
+            alert('Business Model Canvas saved successfully!\n\nYour canvas has been saved to your profile and can be accessed anytime.');
+        }
+
+        function exportCanvas() {
+            alert('Exporting Business Model Canvas to PDF...\n\nIn the full version, this would generate a professional PDF document with your complete business model.');
+        }
+
+        // AI Video Generation
+        function generateVideo() {
+            const topic = document.getElementById('videoTopic').value;
+            const duration = document.getElementById('videoDuration').value;
+            
+            document.getElementById('videoProgress').style.display = 'block';
+            document.getElementById('videoResult').style.display = 'none';
+            
+            const progressBar = document.getElementById('videoProgressBar');
+            const statusText = document.getElementById('videoStatus');
+            
+            const steps = [
+                'Analyzing content...',
+                'Generating script...',
+                'Creating visuals...',
+                'Adding voiceover...',
+                'Rendering video...',
+                'Finalizing...'
+            ];
+            
+            let currentStep = 0;
+            const interval = setInterval(() => {
+                const progress = ((currentStep + 1) / steps.length) * 100;
+                progressBar.style.width = progress + '%';
+                statusText.textContent = steps[currentStep];
+                
+                currentStep++;
+                
+                if (currentStep >= steps.length) {
+                    clearInterval(interval);
+                    document.getElementById('videoProgress').style.display = 'none';
+                    document.getElementById('videoResult').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user was previously logged in (in a real app, this would check localStorage/cookies)
+            // For demo, we'll start with login screen
+        });
     </script>
 </body>
 </html>
