@@ -25,23 +25,37 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Use pre-built application
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies and build
+        working-directory: frontend
         run: |
-          echo "Using existing production-ready build..."
-          ls -la frontend/build_hosting_ready/
-          echo "Copying pre-built files..."
-          mkdir -p build
-          cp -r frontend/build_hosting_ready/* build/
-          echo "✅ Build ready for deployment"
+          echo "Installing dependencies..."
+          npm ci --legacy-peer-deps
+          echo "Creating environment file..."
+          echo "REACT_APP_API_URL=/api" > .env
+          echo "REACT_APP_DEMO_MODE=true" >> .env
+          echo "REACT_APP_GITHUB_PAGES=true" >> .env
+          echo "Building application with latest updates..."
+          npm run build:gh-pages
+          echo "✅ Build completed with latest features"
           echo "📊 Build contents:"
           ls -la build/
           echo "Verifying index.html..."
           head -3 build/index.html
+        env:
+          CI: false
+          GENERATE_SOURCEMAP: false
 
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          path: build
+          path: frontend/build
 
   deploy:
     needs: build
