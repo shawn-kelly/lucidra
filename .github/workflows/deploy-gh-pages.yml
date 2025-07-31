@@ -1,8 +1,7 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches: [ main ]
+  # Disabled - using deploy-gh-pages-fixed.yml instead
   workflow_dispatch:
 
 permissions:
@@ -39,37 +38,18 @@ jobs:
           pwd
           ls -la
 
-      - name: Install dependencies
+      - name: Use pre-built application
         run: |
-          echo "Installing dependencies..."
-          npm ci --legacy-peer-deps
-          echo "Dependencies installed successfully"
-
-      - name: Create demo environment file
-        run: |
-          echo "REACT_APP_API_URL=/api" > .env
-          echo "REACT_APP_DEMO_MODE=true" >> .env
-          echo "REACT_APP_GITHUB_PAGES=true" >> .env
-          echo "Environment file created:"
-          cat .env
-
-
-      - name: Build application
-        run: |
-          echo "Starting build process with GitHub Pages configuration..."
-          npm run build:gh-pages
-          echo "Build completed successfully"
+          echo "Using existing production-ready build..."
+          ls -la build_hosting_ready/
+          echo "Copying pre-built files to build directory..."
+          rm -rf build/
+          cp -r build_hosting_ready build
+          echo "Build copied successfully"
           echo "Checking build directory contents..."
           ls -la build/
           echo "Checking index.html exists..."
           test -f build/index.html && echo "✅ index.html found" || echo "❌ index.html missing"
-          echo "Content of index.html (first few lines):"
-          head -5 build/index.html || echo "Could not read index.html"
-          echo "Checking static assets..."
-          ls -la build/static/ || echo "No static directory found"
-        env:
-          CI: false
-          GENERATE_SOURCEMAP: false
 
       - name: Verify build success
         run: |
