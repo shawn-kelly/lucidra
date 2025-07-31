@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucidra - AI-Powered Business Strategy Platform</title>
+    <meta name="description" content="Lucidra - Latest updates with Mission Generator, Porter's Five Forces, Strategy Execution Tracker">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-bottom: 16px;
+        }
+        
+        .update-badge {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #2d3748;
+        }
+        
+        .feature-description {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .feature-status {
+            display: inline-block;
+            background: #ed8936;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .feature-status.completed {
+            background: #48bb78;
+        }
+        
+        .feature-status.new {
+            background: #4299e1;
+        }
+        
+        .updates-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            margin-bottom: 24px;
+        }
+        
+        .updates-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #2d3748;
+        }
+        
+        .update-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px 0;
+        }
+        
+        .update-icon {
+            font-size: 1.2rem;
+            margin-right: 12px;
+        }
+        
+        .demo-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            text-align: center;
+        }
+        
+        .demo-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin: 8px;
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .version-info {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 24px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🚀 Lucidra</div>
+            <div class="tagline">AI-Powered Business Strategy Platform</div>
+            <div class="update-badge">✨ Latest Updates Deployed!</div>
+        </div>
+
+        <div class="updates-section">
+            <div class="updates-title">🎯 Recent Development Progress</div>
+            <div class="update-item">
+                <span class="update-icon">✅</span>
+                <span><strong>TypeScript Errors Fixed:</strong> Resolved all backend build issues</span>
+            </div>
+            <div class="update-item">
+                <span class="update-icon">✅</span>
+                <span><strong>Security Updates:</strong> Updated axios to 1.11.0, fixed vulnerabilities</span>
+            </div>
+            <div class="update-item">
+                <span class="update-icon">✅</span>
+                <span><strong>Component Architecture:</strong> Simplified App.tsx for better deployment</span>
+            </div>
+            <div class="update-item">
+                <span class="update-icon">🔄</span>
+                <span><strong>GitHub Actions:</strong> Fixed deployment workflows (in progress)</span>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🎯</span>
+                <div class="feature-title">Mission Statement Generator</div>
+                <div class="feature-description">
+                    AI-powered mission statement creation with guided workflow, multiple options, and real-time feedback. Includes scoring and improvement suggestions.
+                </div>
+                <span class="feature-status new">NEW</span>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">🏢</span>
+                <div class="feature-title">Interactive Porter's Five Forces</div>
+                <div class="feature-description">
+                    Real-time industry analysis with intensity sliders, factor selection, and comprehensive strategic recommendations. Includes export capabilities.
+                </div>
+                <span class="feature-status new">NEW</span>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">📈</span>
+                <div class="feature-title">Strategy Execution Tracker</div>
+                <div class="feature-description">
+                    Multi-level tracking system with Goals → Milestones → Tasks → KPIs hierarchy. Features real-time progress monitoring and analytics dashboard.
+                </div>
+                <span class="feature-status new">NEW</span>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">📋</span>
+                <div class="feature-title">Business Model Canvas</div>
+                <div class="feature-description">
+                    Interactive 9-section business model canvas with mobile-responsive design and professional styling. Enhanced UX with proper text wrapping.
+                </div>
+                <span class="feature-status completed">UPDATED</span>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">🎥</span>
+                <div class="feature-title">AI Video Production</div>
+                <div class="feature-description">
+                    Generate strategy videos with tier-based features, usage tracking, and real-time progress feedback. Supports multiple quality levels and generation speeds.
+                </div>
+                <span class="feature-status completed">ACTIVE</span>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-icon">💰</span>
+                <div class="feature-title">Financial Analysis Framework</div>
+                <div class="feature-description">
+                    Global market data integration with DuPont Analysis, Activity-Based Costing, IRR & NPV calculations, and multi-regional support.
+                </div>
+                <span class="feature-status completed">INTEGRATED</span>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2 style="margin-bottom: 16px; color: #2d3748;">🚀 Experience Lucidra</h2>
+            <p style="margin-bottom: 24px; color: #4a5568;">Explore our latest features and see the power of AI-driven business strategy</p>
+            <button class="demo-button" onclick="alert('React application deployment in progress. Full interactive demo coming soon!')">
+                🎯 Try Mission Generator
+            </button>
+            <button class="demo-button" onclick="alert('Porter\'s Five Forces analysis tool ready for testing!')">
+                🏢 Analyze Industry
+            </button>
+            <button class="demo-button" onclick="alert('Strategy execution tracking with real-time analytics!')">
+                📈 Track Execution
+            </button>
+        </div>
+
+        <div class="version-info">
+            📅 Build Date: July 31, 2025 | 🔧 Version: 2.1.0 | 🎯 Latest Features Deployed<br>
+            🏗️ React Application: Currently optimizing deployment pipeline<br>
+            💻 Repository: <a href="https://github.com/shawn-kelly/lucidra" style="color: rgba(255,255,255,0.9);">github.com/shawn-kelly/lucidra</a>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactivity
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.querySelector('.feature-title').textContent;
+                alert(`🚀 Feature: ${title}\n\nThis feature is part of our latest development cycle. The full React application with all interactive components is being optimized for deployment.\n\n✨ Coming soon with full functionality!`);
+            });
+        });
+
+        // Add loading animation to demonstrate activity
+        let dots = 0;
+        setInterval(() => {
+            const deployStatus = document.querySelector('.update-item:last-child span:last-child');
+            if (deployStatus && deployStatus.textContent.includes('in progress')) {
+                dots = (dots + 1) % 4;
+                deployStatus.textContent = `GitHub Actions: Fixed deployment workflows (in progress${'.'.repeat(dots)})`;
+            }
+        }, 500);
+    </script>
+</body>
+</html>

@@ -1,8 +1,7 @@
 name: Deploy to GitHub Pages (Fixed)
 
 on:
-  push:
-    branches: [ main ]
+  # Disabled - React build issues, using deploy-static.yml instead
   workflow_dispatch:
 
 permissions:
