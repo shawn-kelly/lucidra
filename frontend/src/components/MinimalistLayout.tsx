@@ -31,7 +31,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import { HamburgerIcon, ChevronLeftIcon, ChevronRightIcon, SettingsIcon } from '@chakra-ui/icons';
-import EnhancedVoiceSystem from './EnhancedVoiceSystem.tsx';
+import EnhancedVoiceSystem from './EnhancedVoiceSystem';
 
 interface NavigationItem {
   id: string;
