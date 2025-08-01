@@ -2158,6 +2158,941 @@
             );
         };
 
+        // Resource-Based View (RBV) Framework
+        const ResourceBasedView = () => {
+            const [currentStep, setCurrentStep] = useState('overview');
+            const [resources, setResources] = useState([]);
+            const [selectedResource, setSelectedResource] = useState(null);
+            const [vrioAnalysis, setVrioAnalysis] = useState({});
+
+            const steps = [
+                { id: 'overview', name: 'Overview', icon: '🏗️' },
+                { id: 'inventory', name: 'Resource Inventory', icon: '📋' },
+                { id: 'vrio', name: 'VRIO Analysis', icon: '💎' },
+                { id: 'capabilities', name: 'Capabilities Map', icon: '🗺️' },
+                { id: 'strategy', name: 'Strategic Fit', icon: '🎯' }
+            ];
+
+            const resourceTypes = [
+                { type: 'Physical', icon: '🏭', color: '#4299e1', examples: ['Facilities', 'Equipment', 'Technology', 'Location'] },
+                { type: 'Human', icon: '👥', color: '#48bb78', examples: ['Skills', 'Knowledge', 'Experience', 'Culture'] },
+                { type: 'Financial', icon: '💰', color: '#ed8936', examples: ['Cash', 'Credit', 'Investments', 'Revenue streams'] },
+                { type: 'Intangible', icon: '✨', color: '#9f7aea', examples: ['Brand', 'Patents', 'Reputation', 'Relationships'] },
+                { type: 'Organizational', icon: '⚙️', color: '#e53e3e', examples: ['Processes', 'Systems', 'Structure', 'Governance'] }
+            ];
+
+            const addResource = (name, type, description) => {
+                const newResource = {
+                    id: Date.now().toString(),
+                    name,
+                    type,
+                    description,
+                    valuable: null,
+                    rare: null,
+                    inimitable: null,
+                    organized: null,
+                    competitiveAdvantage: 'Not Assessed'
+                };
+                setResources([...resources, newResource]);
+            };
+
+            const updateVRIO = (resourceId, dimension, value) => {
+                setResources(resources.map(resource => {
+                    if (resource.id === resourceId) {
+                        const updated = { ...resource, [dimension]: value };
+                        
+                        // Calculate competitive advantage
+                        if (updated.valuable && updated.rare && updated.inimitable && updated.organized) {
+                            updated.competitiveAdvantage = 'Sustained Competitive Advantage';
+                        } else if (updated.valuable && updated.rare && updated.inimitable) {
+                            updated.competitiveAdvantage = 'Temporary Competitive Advantage';
+                        } else if (updated.valuable && updated.rare) {
+                            updated.competitiveAdvantage = 'Competitive Parity';
+                        } else if (updated.valuable) {
+                            updated.competitiveAdvantage = 'Competitive Parity';
+                        } else {
+                            updated.competitiveAdvantage = 'Competitive Disadvantage';
+                        }
+                        
+                        return updated;
+                    }
+                    return resource;
+                }));
+            };
+
+            const renderOverview = () => (
+                <div>
+                    <div className="stage-card">
+                        <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                            🏗️ Resource-Based View (RBV) Framework
+                        </h3>
+                        <p style={{fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: '#4a5568'}}>
+                            Identify and analyze your organization's resources and capabilities to build sustainable competitive advantage through the VRIO framework.
+                        </p>
+                        
+                        <div className="module-grid">
+                            <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #ebf8ff, #bee3f8)'}}>
+                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2b6cb0'}}>
+                                    💎 VRIO Analysis
+                                </h4>
+                                <p style={{color: '#2c5282', lineHeight: '1.5'}}>
+                                    Valuable, Rare, Inimitable, and Organized - the four pillars of sustainable competitive advantage.
+                                </p>
+                            </div>
+                            <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #f0fff4, #c6f6d5)'}}>
+                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2f855a'}}>
+                                    🗺️ Capability Mapping
+                                </h4>
+                                <p style={{color: '#276749', lineHeight: '1.5'}}>
+                                    Map your resources to strategic capabilities and identify gaps in your competitive positioning.
+                                </p>
+                            </div>
+                            <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #fef5e7, #fed7aa)'}}>
+                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c05621'}}>
+                                    🎯 Strategic Fit
+                                </h4>
+                                <p style={{color: '#9c4221', lineHeight: '1.5'}}>
+                                    Align your resource portfolio with strategic objectives and market opportunities.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="stage-card">
+                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                            📊 Resource Categories
+                        </h3>
+                        <div className="module-grid">
+                            {resourceTypes.map(({ type, icon, color, examples }) => (
+                                <div key={type} style={{
+                                    textAlign: 'center', padding: '1.5rem', borderRadius: '12px',
+                                    background: `${color}15`, border: `2px solid ${color}30`
+                                }}>
+                                    <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>{icon}</div>
+                                    <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', color, marginBottom: '0.5rem'}}>{type} Resources</h4>
+                                    <div style={{fontSize: '0.9rem', color: '#4a5568'}}>
+                                        {examples.join(' • ')}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderInventory = () => (
+                <div className="stage-card">
+                    <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        📋 Resource Inventory
+                    </h3>
+                    
+                    {/* Add Resource Form */}
+                    <div style={{background: '#f7fafc', padding: '1.5rem', borderRadius: '8px', marginBottom: '2rem'}}>
+                        <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem'}}>Add New Resource</h4>
+                        <form onSubmit={(e) => {
+                            e.preventDefault();
+                            const formData = new FormData(e.target);
+                            addResource(
+                                formData.get('name'),
+                                formData.get('type'),
+                                formData.get('description')
+                            );
+                            e.target.reset();
+                        }}>
+                            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem'}}>
+                                <div>
+                                    <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: '600'}}>Resource Name</label>
+                                    <input name="name" required style={{
+                                        width: '100%', padding: '0.5rem', border: '2px solid #e2e8f0',
+                                        borderRadius: '6px', fontSize: '1rem'
+                                    }} />
+                                </div>
+                                <div>
+                                    <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: '600'}}>Type</label>
+                                    <select name="type" required style={{
+                                        width: '100%', padding: '0.5rem', border: '2px solid #e2e8f0',
+                                        borderRadius: '6px', fontSize: '1rem', backgroundColor: 'white'
+                                    }}>
+                                        <option value="">Select Type</option>
+                                        {resourceTypes.map(rt => (
+                                            <option key={rt.type} value={rt.type}>{rt.icon} {rt.type}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div style={{marginBottom: '1rem'}}>
+                                <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: '600'}}>Description</label>
+                                <textarea name="description" rows="2" style={{
+                                    width: '100%', padding: '0.5rem', border: '2px solid #e2e8f0',
+                                    borderRadius: '6px', fontSize: '1rem', resize: 'vertical'
+                                }} />
+                            </div>
+                            <button type="submit" style={{
+                                background: 'linear-gradient(135deg, #4299e1, #3182ce)',
+                                color: 'white', border: 'none', padding: '0.75rem 1.5rem',
+                                borderRadius: '6px', cursor: 'pointer', fontWeight: '600'
+                            }}>
+                                📝 Add Resource
+                            </button>
+                        </form>
+                    </div>
+
+                    {/* Resource List */}
+                    {resources.length > 0 ? (
+                        <div className="module-grid">
+                            {resources.map(resource => {
+                                const resourceType = resourceTypes.find(rt => rt.type === resource.type);
+                                return (
+                                    <div key={resource.id} className="stage-card" style={{margin: 0}}>
+                                        <div style={{display: 'flex', alignItems: 'center', marginBottom: '1rem'}}>
+                                            <div style={{fontSize: '1.5rem', marginRight: '0.5rem'}}>
+                                                {resourceType?.icon}
+                                            </div>
+                                            <div>
+                                                <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#2d3748'}}>
+                                                    {resource.name}
+                                                </h4>
+                                                <div style={{fontSize: '0.9rem', color: resourceType?.color}}>
+                                                    {resource.type} Resource
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p style={{fontSize: '0.9rem', color: '#4a5568', marginBottom: '1rem'}}>
+                                            {resource.description}
+                                        </p>
+                                        <div style={{
+                                            padding: '0.5rem', borderRadius: '6px', textAlign: 'center',
+                                            background: resource.competitiveAdvantage === 'Sustained Competitive Advantage' ? '#c6f6d5' :
+                                                       resource.competitiveAdvantage === 'Temporary Competitive Advantage' ? '#bee3f8' :
+                                                       resource.competitiveAdvantage === 'Competitive Parity' ? '#fefcbf' :
+                                                       resource.competitiveAdvantage === 'Competitive Disadvantage' ? '#fed7d7' : '#f7fafc',
+                                            color: resource.competitiveAdvantage === 'Sustained Competitive Advantage' ? '#276749' :
+                                                   resource.competitiveAdvantage === 'Temporary Competitive Advantage' ? '#2c5282' :
+                                                   resource.competitiveAdvantage === 'Competitive Parity' ? '#975a16' :
+                                                   resource.competitiveAdvantage === 'Competitive Disadvantage' ? '#742a2a' : '#4a5568',
+                                            fontSize: '0.8rem', fontWeight: '600'
+                                        }}>
+                                            {resource.competitiveAdvantage}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <div style={{textAlign: 'center', padding: '3rem', color: '#4a5568'}}>
+                            📝 Start by adding your organization's key resources above
+                        </div>
+                    )}
+                </div>
+            );
+
+            const renderVRIO = () => (
+                <div className="stage-card">
+                    <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        💎 VRIO Analysis
+                    </h3>
+                    <p style={{marginBottom: '2rem', color: '#4a5568'}}>
+                        Evaluate each resource against the four VRIO criteria to determine its competitive potential.
+                    </p>
+
+                    {resources.length > 0 ? (
+                        <div style={{overflowX: 'auto'}}>
+                            <table style={{width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem'}}>
+                                <thead>
+                                    <tr style={{background: '#f7fafc'}}>
+                                        <th style={{padding: '1rem', textAlign: 'left', borderBottom: '2px solid #e2e8f0'}}>Resource</th>
+                                        <th style={{padding: '1rem', textAlign: 'center', borderBottom: '2px solid #e2e8f0'}}>
+                                            💰 Valuable?
+                                        </th>
+                                        <th style={{padding: '1rem', textAlign: 'center', borderBottom: '2px solid #e2e8f0'}}>
+                                            💎 Rare?
+                                        </th>
+                                        <th style={{padding: '1rem', textAlign: 'center', borderBottom: '2px solid #e2e8f0'}}>
+                                            🔒 Inimitable?
+                                        </th>
+                                        <th style={{padding: '1rem', textAlign: 'center', borderBottom: '2px solid #e2e8f0'}}>
+                                            ⚙️ Organized?
+                                        </th>
+                                        <th style={{padding: '1rem', textAlign: 'center', borderBottom: '2px solid #e2e8f0'}}>
+                                            🏆 Competitive Advantage
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {resources.map(resource => {
+                                        const resourceType = resourceTypes.find(rt => rt.type === resource.type);
+                                        return (
+                                            <tr key={resource.id} style={{borderBottom: '1px solid #e2e8f0'}}>
+                                                <td style={{padding: '1rem'}}>
+                                                    <div style={{display: 'flex', alignItems: 'center'}}>
+                                                        <span style={{fontSize: '1.2rem', marginRight: '0.5rem'}}>
+                                                            {resourceType?.icon}
+                                                        </span>
+                                                        <div>
+                                                            <div style={{fontWeight: '600'}}>{resource.name}</div>
+                                                            <div style={{fontSize: '0.8rem', color: '#4a5568'}}>{resource.type}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                {['valuable', 'rare', 'inimitable', 'organized'].map(dimension => (
+                                                    <td key={dimension} style={{padding: '1rem', textAlign: 'center'}}>
+                                                        <div style={{display: 'flex', gap: '0.5rem', justifyContent: 'center'}}>
+                                                            <button
+                                                                onClick={() => updateVRIO(resource.id, dimension, true)}
+                                                                style={{
+                                                                    background: resource[dimension] === true ? '#48bb78' : '#e2e8f0',
+                                                                    color: resource[dimension] === true ? 'white' : '#4a5568',
+                                                                    border: 'none', padding: '0.25rem 0.5rem',
+                                                                    borderRadius: '4px', cursor: 'pointer', fontSize: '0.8rem'
+                                                                }}
+                                                            >
+                                                                Yes
+                                                            </button>
+                                                            <button
+                                                                onClick={() => updateVRIO(resource.id, dimension, false)}
+                                                                style={{
+                                                                    background: resource[dimension] === false ? '#e53e3e' : '#e2e8f0',
+                                                                    color: resource[dimension] === false ? 'white' : '#4a5568',
+                                                                    border: 'none', padding: '0.25rem 0.5rem',
+                                                                    borderRadius: '4px', cursor: 'pointer', fontSize: '0.8rem'
+                                                                }}
+                                                            >
+                                                                No
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                ))}
+                                                <td style={{padding: '1rem', textAlign: 'center'}}>
+                                                    <div style={{
+                                                        padding: '0.5rem', borderRadius: '6px', fontSize: '0.8rem', fontWeight: '600',
+                                                        background: resource.competitiveAdvantage === 'Sustained Competitive Advantage' ? '#c6f6d5' :
+                                                                   resource.competitiveAdvantage === 'Temporary Competitive Advantage' ? '#bee3f8' :
+                                                                   resource.competitiveAdvantage === 'Competitive Parity' ? '#fefcbf' :
+                                                                   resource.competitiveAdvantage === 'Competitive Disadvantage' ? '#fed7d7' : '#f7fafc',
+                                                        color: resource.competitiveAdvantage === 'Sustained Competitive Advantage' ? '#276749' :
+                                                               resource.competitiveAdvantage === 'Temporary Competitive Advantage' ? '#2c5282' :
+                                                               resource.competitiveAdvantage === 'Competitive Parity' ? '#975a16' :
+                                                               resource.competitiveAdvantage === 'Competitive Disadvantage' ? '#742a2a' : '#4a5568'
+                                                    }}>
+                                                        {resource.competitiveAdvantage}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : (
+                        <div style={{textAlign: 'center', padding: '3rem', color: '#4a5568'}}>
+                            📝 Add resources in the inventory step to perform VRIO analysis
+                        </div>
+                    )}
+                </div>
+            );
+
+            const renderStep = () => {
+                switch(currentStep) {
+                    case 'overview': return renderOverview();
+                    case 'inventory': return renderInventory();
+                    case 'vrio': return renderVRIO();
+                    case 'capabilities':
+                        return (
+                            <div className="stage-card">
+                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>🗺️ Capabilities Mapping</h3>
+                                <p>Map resources to strategic capabilities and identify competitive positioning...</p>
+                                <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
+                                    🚧 Capabilities mapping tools coming soon!
+                                </div>
+                            </div>
+                        );
+                    case 'strategy':
+                        return (
+                            <div className="stage-card">
+                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>🎯 Strategic Fit Analysis</h3>
+                                <p>Align your resource portfolio with strategic objectives...</p>
+                                <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
+                                    🚧 Strategic fit analysis coming soon!
+                                </div>
+                            </div>
+                        );
+                    default: return renderOverview();
+                }
+            };
+
+            return (
+                <div>
+                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                        🏗️ Resource-Based View (RBV)
+                    </h2>
+                    
+                    {/* Navigation */}
+                    <div style={{display: 'flex', gap: '0.5rem', marginBottom: '2rem', overflowX: 'auto'}}>
+                        {steps.map(step => (
+                            <button
+                                key={step.id}
+                                onClick={() => setCurrentStep(step.id)}
+                                style={{
+                                    background: currentStep === step.id ? 'linear-gradient(135deg, #4299e1, #3182ce)' : 'white',
+                                    color: currentStep === step.id ? 'white' : '#4a5568',
+                                    border: '2px solid ' + (currentStep === step.id ? '#4299e1' : '#e2e8f0'),
+                                    padding: '0.75rem 1rem', borderRadius: '8px', cursor: 'pointer',
+                                    fontWeight: '600', transition: 'all 0.2s ease', whiteSpace: 'nowrap'
+                                }}
+                            >
+                                {step.icon} {step.name}
+                            </button>
+                        ))}
+                    </div>
+
+                    {renderStep()}
+                </div>
+            );
+        };
+
+        // Good Strategy / Bad Strategy Framework (Rumelt)
+        const GoodBadStrategy = () => {
+            const [currentStep, setCurrentStep] = useState('overview');
+            const [strategyKernel, setStrategyKernel] = useState({
+                diagnosis: '',
+                policy: '',
+                actions: []
+            });
+            const [badStrategyChecks, setBadStrategyChecks] = useState([]);
+
+            const steps = [
+                { id: 'overview', name: 'Overview', icon: '🎯' },
+                { id: 'kernel', name: 'Strategy Kernel', icon: '🔍' },
+                { id: 'bad-strategy', name: 'Bad Strategy Filter', icon: '🚫' },
+                { id: 'leverage', name: 'Leverage & Focus', icon: '⚡' }
+            ];
+
+            const badStrategyPatterns = [
+                {
+                    id: 'fluff',
+                    name: 'Fluff',
+                    description: 'Superficial restatement of the obvious combined with a generous sprinkling of buzzwords',
+                    examples: ['Synergistic growth', 'Customer-centric excellence', 'Best-in-class solutions']
+                },
+                {
+                    id: 'failure',
+                    name: 'Failure to Face the Challenge',
+                    description: 'Not acknowledging or defining the core challenges facing the organization',
+                    examples: ['Ignoring competitive threats', 'Avoiding difficult decisions', 'Generic mission statements']
+                },
+                {
+                    id: 'mistaking-goals',
+                    name: 'Mistaking Goals for Strategy',
+                    description: 'Setting ambitious goals without explaining how they will be achieved',
+                    examples: ['Increase revenue by 50%', 'Become market leader', 'Achieve operational excellence']
+                },
+                {
+                    id: 'bad-objectives',
+                    name: 'Bad Strategic Objectives',
+                    description: 'Objectives that are impracticable, unachievable, or contradictory',
+                    examples: ['Conflicting priorities', 'Resource-constrained goals', 'Impossible timelines']
+                }
+            ];
+
+            const renderOverview = () => (
+                <div>
+                    <div className="stage-card">
+                        <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                            🎯 Good Strategy / Bad Strategy Framework
+                        </h3>
+                        <p style={{fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: '#4a5568'}}>
+                            Based on Richard Rumelt's work, distinguish between good and bad strategy, and build powerful strategic thinking through the Strategy Kernel.
+                        </p>
+                        
+                        <div className="module-grid">
+                            <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #f0fff4, #c6f6d5)'}}>
+                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2f855a'}}>
+                                    ✅ Good Strategy Has
+                                </h4>
+                                <ul style={{color: '#276749', lineHeight: '1.5', paddingLeft: '1rem'}}>
+                                    <li>Clear diagnosis of the challenge</li>
+                                    <li>Guiding policy to approach the challenge</li>
+                                    <li>Coherent actions to carry out the policy</li>
+                                </ul>
+                            </div>
+                            <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #fef5e7, #fed7aa)'}}>
+                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c05621'}}>
+                                    🔍 Strategy Kernel
+                                </h4>
+                                <p style={{color: '#9c4221', lineHeight: '1.5'}}>
+                                    The three essential elements that form the core of any good strategy: Diagnosis, Policy, and Actions.
+                                </p>
+                            </div>
+                            <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #fed7d7, #feb2b2)'}}>
+                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c53030'}}>
+                                    ❌ Bad Strategy Includes
+                                </h4>
+                                <ul style={{color: '#742a2a', lineHeight: '1.5', paddingLeft: '1rem'}}>
+                                    <li>Fluff and meaningless buzzwords</li>
+                                    <li>Failure to face the challenge</li>
+                                    <li>Mistaking goals for strategy</li>
+                                    <li>Bad strategic objectives</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="stage-card">
+                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                            ⚡ Power of Good Strategy
+                        </h3>
+                        <div className="financial-grid">
+                            <div style={{textAlign: 'center', padding: '1.5rem', background: '#ebf8ff', borderRadius: '12px'}}>
+                                <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>🎯</div>
+                                <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#3182ce'}}>FOCUS</h4>
+                                <p style={{fontSize: '0.9rem', color: '#2c5282'}}>Concentrates resources and effort on what matters most</p>
+                            </div>
+                            <div style={{textAlign: 'center', padding: '1.5rem', background: '#f0fff4', borderRadius: '12px'}}>
+                                <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>⚡</div>
+                                <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#38a169'}}>LEVERAGE</h4>
+                                <p style={{fontSize: '0.9rem', color: '#276749'}}>Amplifies your strengths to overcome challenges</p>
+                            </div>
+                            <div style={{textAlign: 'center', padding: '1.5rem', background: '#fef5e7', borderRadius: '12px'}}>
+                                <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>🔗</div>
+                                <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#d69e2e'}}>COHERENCE</h4>
+                                <p style={{fontSize: '0.9rem', color: '#975a16'}}>Aligns all actions toward common objectives</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderKernel = () => (
+                <div className="stage-card">
+                    <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        🔍 Strategy Kernel Builder
+                    </h3>
+                    <p style={{marginBottom: '2rem', color: '#4a5568'}}>
+                        Build your strategy kernel with the three essential elements of good strategy.
+                    </p>
+
+                    <div className="module-grid">
+                        <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #fef5e7, #fed7aa)'}}>
+                            <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#c05621'}}>
+                                🔍 Diagnosis
+                            </h4>
+                            <p style={{fontSize: '0.9rem', color: '#9c4221', marginBottom: '1rem'}}>
+                                What is the nature of the challenge? Define the critical aspects of your situation.
+                            </p>
+                            <textarea
+                                value={strategyKernel.diagnosis}
+                                onChange={(e) => setStrategyKernel({...strategyKernel, diagnosis: e.target.value})}
+                                placeholder="Identify the core challenge or opportunity your organization faces..."
+                                rows="4"
+                                style={{
+                                    width: '100%', padding: '0.75rem', border: '2px solid #e2e8f0',
+                                    borderRadius: '6px', fontSize: '0.9rem', resize: 'vertical'
+                                }}
+                            />
+                        </div>
+
+                        <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #ebf8ff, #bee3f8)'}}>
+                            <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2b6cb0'}}>
+                                📋 Guiding Policy
+                            </h4>
+                            <p style={{fontSize: '0.9rem', color: '#2c5282', marginBottom: '1rem'}}>
+                                Your overall approach to dealing with the challenge. What will you do and not do?
+                            </p>
+                            <textarea
+                                value={strategyKernel.policy}
+                                onChange={(e) => setStrategyKernel({...strategyKernel, policy: e.target.value})}
+                                placeholder="Describe your guiding policy - your approach to address the challenge..."
+                                rows="4"
+                                style={{
+                                    width: '100%', padding: '0.75rem', border: '2px solid #e2e8f0',
+                                    borderRadius: '6px', fontSize: '0.9rem', resize: 'vertical'
+                                }}
+                            />
+                        </div>
+
+                        <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #f0fff4, #c6f6d5)'}}>
+                            <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2f855a'}}>
+                                ⚡ Coherent Actions
+                            </h4>
+                            <p style={{fontSize: '0.9rem', color: '#276749', marginBottom: '1rem'}}>
+                                Specific steps that work together to accomplish the guiding policy.
+                            </p>
+                            <div style={{marginBottom: '1rem'}}>
+                                <input
+                                    type="text"
+                                    placeholder="Add a specific action..."
+                                    style={{
+                                        width: '100%', padding: '0.5rem', border: '2px solid #e2e8f0',
+                                        borderRadius: '6px', fontSize: '0.9rem'
+                                    }}
+                                    onKeyPress={(e) => {
+                                        if (e.key === 'Enter' && e.target.value.trim()) {
+                                            setStrategyKernel({
+                                                ...strategyKernel,
+                                                actions: [...strategyKernel.actions, e.target.value.trim()]
+                                            });
+                                            e.target.value = '';
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <div style={{minHeight: '100px'}}>
+                                {strategyKernel.actions.map((action, idx) => (
+                                    <div key={idx} style={{
+                                        background: 'white', padding: '0.5rem', margin: '0.25rem 0',
+                                        borderRadius: '6px', fontSize: '0.9rem', display: 'flex',
+                                        justifyContent: 'space-between', alignItems: 'center'
+                                    }}>
+                                        <span>{action}</span>
+                                        <button
+                                            onClick={() => setStrategyKernel({
+                                                ...strategyKernel,
+                                                actions: strategyKernel.actions.filter((_, i) => i !== idx)
+                                            })}
+                                            style={{
+                                                background: 'none', border: 'none', color: '#e53e3e',
+                                                cursor: 'pointer', fontSize: '1rem'
+                                            }}
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {strategyKernel.diagnosis && strategyKernel.policy && strategyKernel.actions.length > 0 && (
+                        <div style={{marginTop: '2rem', padding: '1.5rem', background: 'linear-gradient(135deg, #f0fff4, #c6f6d5)', borderRadius: '8px'}}>
+                            <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2f855a'}}>
+                                ✅ Strategy Kernel Summary
+                            </h4>
+                            <div style={{marginBottom: '1rem'}}>
+                                <strong style={{color: '#276749'}}>Diagnosis:</strong> {strategyKernel.diagnosis}
+                            </div>
+                            <div style={{marginBottom: '1rem'}}>
+                                <strong style={{color: '#276749'}}>Policy:</strong> {strategyKernel.policy}
+                            </div>
+                            <div>
+                                <strong style={{color: '#276749'}}>Actions:</strong>
+                                <ul style={{marginTop: '0.5rem', paddingLeft: '1rem'}}>
+                                    {strategyKernel.actions.map((action, idx) => (
+                                        <li key={idx} style={{marginBottom: '0.25rem'}}>{action}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+
+            const renderBadStrategy = () => (
+                <div className="stage-card">
+                    <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        🚫 Bad Strategy Filter
+                    </h3>
+                    <p style={{marginBottom: '2rem', color: '#4a5568'}}>
+                        Check your strategy against common patterns of bad strategy to ensure clarity and effectiveness.
+                    </p>
+
+                    <div className="module-grid">
+                        {badStrategyPatterns.map((pattern) => (
+                            <div key={pattern.id} className="stage-card" style={{
+                                margin: 0, 
+                                background: 'linear-gradient(135deg, #fed7d7, #fbb6ce)',
+                                border: '2px solid #e53e3e30'
+                            }}>
+                                <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c53030'}}>
+                                    ❌ {pattern.name}
+                                </h4>
+                                <p style={{fontSize: '0.9rem', color: '#742a2a', marginBottom: '1rem', lineHeight: '1.5'}}>
+                                    {pattern.description}
+                                </p>
+                                <div style={{marginBottom: '1rem'}}>
+                                    <strong style={{fontSize: '0.8rem', color: '#742a2a'}}>Common Examples:</strong>
+                                    <ul style={{marginTop: '0.5rem', fontSize: '0.8rem', color: '#742a2a', paddingLeft: '1rem'}}>
+                                        {pattern.examples.map((example, idx) => (
+                                            <li key={idx}>{example}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div style={{textAlign: 'center'}}>
+                                    <button
+                                        onClick={() => alert(`Checking for ${pattern.name}...\n\nReview your strategy for instances of: ${pattern.description}`)}
+                                        style={{
+                                            background: 'white', color: '#c53030', border: '2px solid #c53030',
+                                            padding: '0.5rem 1rem', borderRadius: '6px', cursor: 'pointer',
+                                            fontWeight: '600', fontSize: '0.9rem'
+                                        }}
+                                    >
+                                        🔍 Check My Strategy
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const renderStep = () => {
+                switch(currentStep) {
+                    case 'overview': return renderOverview();
+                    case 'kernel': return renderKernel();
+                    case 'bad-strategy': return renderBadStrategy();
+                    case 'leverage':
+                        return (
+                            <div className="stage-card">
+                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>⚡ Leverage & Focus Principles</h3>
+                                <p>Apply leverage and focus to amplify your strategic advantage...</p>
+                                <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
+                                    🚧 Leverage analysis tools coming soon!
+                                </div>
+                            </div>
+                        );
+                    default: return renderOverview();
+                }
+            };
+
+            return (
+                <div>
+                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                        🎯 Good Strategy / Bad Strategy
+                    </h2>
+                    
+                    <div style={{display: 'flex', gap: '0.5rem', marginBottom: '2rem', overflowX: 'auto'}}>
+                        {steps.map(step => (
+                            <button
+                                key={step.id}
+                                onClick={() => setCurrentStep(step.id)}
+                                style={{
+                                    background: currentStep === step.id ? 'linear-gradient(135deg, #4299e1, #3182ce)' : 'white',
+                                    color: currentStep === step.id ? 'white' : '#4a5568',
+                                    border: '2px solid ' + (currentStep === step.id ? '#4299e1' : '#e2e8f0'),
+                                    padding: '0.75rem 1rem', borderRadius: '8px', cursor: 'pointer',
+                                    fontWeight: '600', transition: 'all 0.2s ease', whiteSpace: 'nowrap'
+                                }}
+                            >
+                                {step.icon} {step.name}
+                            </button>
+                        ))}
+                    </div>
+
+                    {renderStep()}
+                </div>
+            );
+        };
+
+        // Disruption Forecasting Framework (Christensen)
+        const DisruptionForecasting = () => {
+            const [currentStep, setCurrentStep] = useState('overview');
+
+            const steps = [
+                { id: 'overview', name: 'Overview', icon: '🔮' },
+                { id: 'signals', name: 'Signals of Change', icon: '📡' },
+                { id: 'patterns', name: 'Disruption Patterns', icon: '🌊' },
+                { id: 'readiness', name: 'Innovation Readiness', icon: '🚀' }
+            ];
+
+            const disruptionSignals = [
+                {
+                    category: 'Technology',
+                    icon: '⚡',
+                    signals: ['Emerging technologies gaining traction', 'Performance improvements accelerating', 'Cost reductions creating accessibility'],
+                    examples: ['AI capabilities expanding', 'Battery technology improving', 'Internet connectivity spreading']
+                },
+                {
+                    category: 'Market',
+                    icon: '📈',
+                    signals: ['New customer segments emerging', 'Changing customer jobs-to-be-done', 'Value network shifts'],
+                    examples: ['Remote work adoption', 'Sustainable product demand', 'Subscription model preference']
+                },
+                {
+                    category: 'Business Model',
+                    icon: '🔄',
+                    signals: ['New ways of creating/capturing value', 'Platform effects emerging', 'Ecosystem changes'],
+                    examples: ['Platform marketplaces', 'Service-as-a-Service models', 'Data monetization']
+                }
+            ];
+
+            const renderOverview = () => (
+                <div>
+                    <div className="stage-card">
+                        <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                            🔮 Disruption Forecasting Framework
+                        </h3>
+                        <p style={{fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: '#4a5568'}}>
+                            Based on Clayton Christensen's disruption theory, identify signals of change and assess your organization's readiness for industry transformation.
+                        </p>
+                        
+                        <div className="module-grid">
+                            <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #fef5e7, #fed7aa)'}}>
+                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c05621'}}>
+                                    🌊 Disruption Patterns
+                                </h4>
+                                <p style={{color: '#9c4221', lineHeight: '1.5'}}>
+                                    Identify how innovations typically start simple and improve to eventually disrupt established markets.
+                                </p>
+                            </div>
+                            <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #ebf8ff, #bee3f8)'}}>
+                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2b6cb0'}}>
+                                    📡 Signal Detection
+                                </h4>
+                                <p style={{color: '#2c5282', lineHeight: '1.5'}}>
+                                    Monitor technological, market, and business model signals that indicate potential disruption.
+                                </p>
+                            </div>
+                            <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #f0fff4, #c6f6d5)'}}>
+                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2f855a'}}>
+                                    🚀 Innovation Response
+                                </h4>
+                                <p style={{color: '#276749', lineHeight: '1.5'}}>
+                                    Assess your organization's capability to respond to and leverage disruptive changes.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="stage-card">
+                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                            📊 Disruption Framework
+                        </h3>
+                        <div className="financial-grid">
+                            <div style={{textAlign: 'center', padding: '1.5rem', background: '#fed7d7', borderRadius: '12px'}}>
+                                <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>🔍</div>
+                                <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#c53030'}}>OBSERVE</h4>
+                                <p style={{fontSize: '0.9rem', color: '#742a2a'}}>Watch for signals of change</p>
+                            </div>
+                            <div style={{textAlign: 'center', padding: '1.5rem', background: '#fefcbf', borderRadius: '12px'}}>
+                                <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>🧠</div>
+                                <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#d69e2e'}}>ANALYZE</h4>
+                                <p style={{fontSize: '0.9rem', color: '#975a16'}}>Assess disruption potential</p>
+                            </div>
+                            <div style={{textAlign: 'center', padding: '1.5rem', background: '#c6f6d5', borderRadius: '12px'}}>
+                                <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>⚡</div>
+                                <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#38a169'}}>RESPOND</h4>
+                                <p style={{fontSize: '0.9rem', color: '#276749'}}>Take strategic action</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderSignals = () => (
+                <div className="stage-card">
+                    <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        📡 Signals of Change Detection
+                    </h3>
+                    <p style={{marginBottom: '2rem', color: '#4a5568'}}>
+                        Monitor key indicators across technology, market, and business model dimensions to identify potential disruption.
+                    </p>
+
+                    <div className="module-grid">
+                        {disruptionSignals.map((category) => (
+                            <div key={category.category} className="stage-card" style={{margin: 0}}>
+                                <div style={{textAlign: 'center', marginBottom: '1rem'}}>
+                                    <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>{category.icon}</div>
+                                    <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', color: '#2d3748'}}>
+                                        {category.category} Signals
+                                    </h4>
+                                </div>
+                                
+                                <div style={{marginBottom: '1rem'}}>
+                                    <strong style={{color: '#4a5568', fontSize: '0.9rem'}}>Watch For:</strong>
+                                    <ul style={{marginTop: '0.5rem', paddingLeft: '1rem', color: '#4a5568', fontSize: '0.9rem'}}>
+                                        {category.signals.map((signal, idx) => (
+                                            <li key={idx} style={{marginBottom: '0.25rem'}}>{signal}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div style={{marginBottom: '1rem'}}>
+                                    <strong style={{color: '#4a5568', fontSize: '0.9rem'}}>Current Examples:</strong>
+                                    <div style={{marginTop: '0.5rem'}}>
+                                        {category.examples.map((example, idx) => (
+                                            <span key={idx} style={{
+                                                display: 'inline-block', background: '#f7fafc', color: '#4a5568',
+                                                padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.8rem',
+                                                margin: '0.25rem 0.25rem 0 0', border: '1px solid #e2e8f0'
+                                            }}>
+                                                {example}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <button
+                                    onClick={() => alert(`${category.category} Signal Analysis\n\nThis feature will help you:\n• Track ${category.category.toLowerCase()} trends\n• Assess disruption potential\n• Set up monitoring alerts`)}
+                                    style={{
+                                        width: '100%', background: 'linear-gradient(135deg, #4299e1, #3182ce)',
+                                        color: 'white', border: 'none', padding: '0.75rem',
+                                        borderRadius: '6px', cursor: 'pointer', fontWeight: '600'
+                                    }}
+                                >
+                                    🔍 Monitor {category.category} Signals
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const renderStep = () => {
+                switch(currentStep) {
+                    case 'overview': return renderOverview();
+                    case 'signals': return renderSignals();
+                    case 'patterns': 
+                        return (
+                            <div className="stage-card">
+                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>🌊 Disruption Patterns Analysis</h3>
+                                <p>Analyze common disruption patterns and assess industry vulnerability...</p>
+                                <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
+                                    🚧 Disruption pattern analysis coming soon!
+                                </div>
+                            </div>
+                        );
+                    case 'readiness':
+                        return (
+                            <div className="stage-card">
+                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>🚀 Innovation Readiness Assessment</h3>
+                                <p>Evaluate your organization's capability to respond to disruption...</p>
+                                <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
+                                    🚧 Innovation readiness tools coming soon!
+                                </div>
+                            </div>
+                        );
+                    default: return renderOverview();
+                }
+            };
+
+            return (
+                <div>
+                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                        🔮 Disruption Forecasting
+                    </h2>
+                    
+                    <div style={{display: 'flex', gap: '0.5rem', marginBottom: '2rem', overflowX: 'auto'}}>
+                        {steps.map(step => (
+                            <button
+                                key={step.id}
+                                onClick={() => setCurrentStep(step.id)}
+                                style={{
+                                    background: currentStep === step.id ? 'linear-gradient(135deg, #4299e1, #3182ce)' : 'white',
+                                    color: currentStep === step.id ? 'white' : '#4a5568',
+                                    border: '2px solid ' + (currentStep === step.id ? '#4299e1' : '#e2e8f0'),
+                                    padding: '0.75rem 1rem', borderRadius: '8px', cursor: 'pointer',
+                                    fontWeight: '600', transition: 'all 0.2s ease', whiteSpace: 'nowrap'
+                                }}
+                            >
+                                {step.icon} {step.name}
+                            </button>
+                        ))}
+                    </div>
+
+                    {renderStep()}
+                </div>
+            );
+        };
+
         // Main Application Component with All Features
         const CompleteLucidraApp = () => {
             const [currentUser, setCurrentUser] = useState(null);
@@ -2196,6 +3131,12 @@
                         return <InteractivePorterAnalysis />;
                     case 'blue-ocean':
                         return <BlueOceanStrategy />;
+                    case 'rbv-analysis':
+                        return <ResourceBasedView />;
+                    case 'good-bad-strategy':
+                        return <GoodBadStrategy />;
+                    case 'disruption-forecasting':
+                        return <DisruptionForecasting />;
                     default:
                         return (
                             <div>
@@ -2256,6 +3197,18 @@
                                         <div className="module-card medium" onClick={() => setCurrentView('blue-ocean')} style={{cursor: 'pointer'}}>
                                             <h4>🌊 Blue Ocean Strategy Framework</h4>
                                             <p>Create uncontested market space with Four Actions Framework</p>
+                                        </div>
+                                        <div className="module-card medium" onClick={() => setCurrentView('rbv-analysis')} style={{cursor: 'pointer'}}>
+                                            <h4>🏗️ Resource-Based View (RBV)</h4>
+                                            <p>VRIO analysis framework to evaluate competitive advantages</p>
+                                        </div>
+                                        <div className="module-card high" onClick={() => setCurrentView('good-bad-strategy')} style={{cursor: 'pointer'}}>
+                                            <h4>🎯 Good Strategy / Bad Strategy</h4>
+                                            <p>Rumelt's framework for strategic excellence and bad strategy detection</p>
+                                        </div>
+                                        <div className="module-card medium" onClick={() => setCurrentView('disruption-forecasting')} style={{cursor: 'pointer'}}>
+                                            <h4>🔮 Disruption Forecasting</h4>
+                                            <p>Christensen's signals of change and innovation readiness assessment</p>
                                         </div>
                                     </div>
                                 </div>
@@ -2380,6 +3333,15 @@
                             </div>
                             <div className={`nav-item-advanced ${currentView === 'blue-ocean' ? 'active' : ''}`} onClick={() => setCurrentView('blue-ocean')}>
                                 🌊 Blue Ocean Strategy
+                            </div>
+                            <div className={`nav-item-advanced ${currentView === 'rbv-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('rbv-analysis')}>
+                                🏗️ Resource-Based View
+                            </div>
+                            <div className={`nav-item-advanced ${currentView === 'good-bad-strategy' ? 'active' : ''}`} onClick={() => setCurrentView('good-bad-strategy')}>
+                                🎯 Good/Bad Strategy
+                            </div>
+                            <div className={`nav-item-advanced ${currentView === 'disruption-forecasting' ? 'active' : ''}`} onClick={() => setCurrentView('disruption-forecasting')}>
+                                🔮 Disruption Forecasting
                             </div>
                         </div>
 
