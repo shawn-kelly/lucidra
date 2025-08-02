@@ -431,53 +431,219 @@
             font-size: 0.9rem;
         }
         
-        /* Global font size optimization */
+        /* MOBILE-FIRST RESPONSIVE DESIGN */
+        * {
+            box-sizing: border-box;
+        }
+        
+        /* Global font size optimization for all devices */
+        body {
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+        }
+        
         .content-wrapper h1 {
-            font-size: 1.5rem !important;
-            margin-bottom: 1rem !important;
+            font-size: 1.25rem !important;
+            margin-bottom: 0.75rem !important;
+            line-height: 1.3 !important;
         }
         
         .content-wrapper h2 {
-            font-size: 1.3rem !important;
-            margin-bottom: 0.75rem !important;
+            font-size: 1.1rem !important;
+            margin-bottom: 0.5rem !important;
+            line-height: 1.3 !important;
         }
         
         .content-wrapper h3 {
-            font-size: 1.1rem !important;
+            font-size: 1rem !important;
             margin-bottom: 0.5rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        .content-wrapper h4 {
+            font-size: 0.9rem !important;
+            margin-bottom: 0.5rem !important;
+            line-height: 1.3 !important;
         }
         
         .content-wrapper p {
-            font-size: 0.9rem !important;
+            font-size: 0.8rem !important;
             line-height: 1.4 !important;
             margin-bottom: 0.5rem !important;
         }
         
         .content-wrapper {
-            padding: 1.5rem;
+            padding: 1rem;
             min-height: 100%;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
         
-        /* Compact spacing for better content visibility */
+        /* Mobile-optimized spacing */
         .stage-card, .dashboard-card, .strategy-framework {
-            padding: 1rem !important;
-            margin-bottom: 1rem !important;
-            font-size: 0.9rem !important;
+            padding: 0.75rem !important;
+            margin-bottom: 0.75rem !important;
+            font-size: 0.8rem !important;
         }
         
         .module-grid {
-            gap: 1rem !important;
+            gap: 0.75rem !important;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
         }
         
         .module-card {
-            padding: 1rem !important;
-            font-size: 0.85rem !important;
+            padding: 0.75rem !important;
+            font-size: 0.8rem !important;
         }
         
         .module-card h4 {
-            font-size: 1rem !important;
+            font-size: 0.9rem !important;
             margin-bottom: 0.5rem !important;
+        }
+        
+        /* Mobile navigation optimizations */
+        .sidebar-advanced {
+            width: 280px;
+        }
+        
+        /* Mobile-specific responsive breakpoints */
+        @media (max-width: 768px) {
+            .sidebar-advanced {
+                width: 100%;
+                min-height: auto;
+                max-height: 50vh;
+                overflow-y: auto;
+                position: relative;
+                box-shadow: none;
+                border-right: none;
+                border-bottom: 1px solid #4a5568;
+            }
+            
+            .sidebar-toggle {
+                display: none;
+            }
+            
+            .main-content {
+                max-height: calc(100vh - 120px);
+            }
+            
+            .content-wrapper {
+                padding: 0.75rem;
+            }
+            
+            .page-header {
+                margin: -0.75rem -0.75rem 1rem -0.75rem;
+                padding: 1rem 0.75rem;
+            }
+            
+            .page-title {
+                font-size: 1.1rem !important;
+            }
+            
+            .page-subtitle {
+                font-size: 0.8rem !important;
+            }
+            
+            .nav-section-header {
+                padding: 0.75rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .nav-item-advanced {
+                padding: 0.5rem 1.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .module-grid {
+                grid-template-columns: 1fr !important;
+                gap: 0.5rem !important;
+            }
+            
+            .metric-panel {
+                padding: 0.75rem !important;
+            }
+            
+            .metric-panel h3 {
+                font-size: 0.8rem !important;
+            }
+            
+            .metric-value {
+                font-size: 1.2rem !important;
+            }
+            
+            /* Mobile process mapping adjustments */
+            .process-map-container {
+                height: 250px !important;
+                overflow-x: auto;
+            }
+            
+            /* Mobile button sizing */
+            button {
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.8rem !important;
+            }
+            
+            /* Mobile table responsiveness */
+            .table-container {
+                overflow-x: auto;
+            }
+            
+            table {
+                font-size: 0.75rem !important;
+            }
+            
+            th, td {
+                padding: 0.5rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .content-wrapper {
+                padding: 0.5rem;
+            }
+            
+            .page-header {
+                margin: -0.5rem -0.5rem 0.75rem -0.5rem;
+                padding: 0.75rem 0.5rem;
+            }
+            
+            .sidebar-advanced {
+                max-height: 40vh;
+            }
+            
+            .nav-section-header {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
+            }
+            
+            .nav-item-advanced {
+                padding: 0.4rem 1rem;
+                font-size: 0.75rem;
+            }
+            
+            .page-title {
+                font-size: 1rem !important;
+            }
+            
+            .page-subtitle {
+                font-size: 0.75rem !important;
+            }
+            
+            .module-card {
+                padding: 0.5rem !important;
+            }
+            
+            .metric-panel {
+                padding: 0.5rem !important;
+            }
+        }
+        
+        /* Viewport optimization for mobile */
+        @media (max-width: 1024px) {
+            .financial-grid, .framework-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+            }
         }
         
         .tier-badge {
@@ -634,7 +800,7 @@
 
             return (
                 <div>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem'}}>
+                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem'}}>
                         🎯 Startup Stage Selector
                     </h2>
                     
@@ -646,8 +812,8 @@
                                 onClick={() => setSelectedStage(key)}
                             >
                                 <div style={{textAlign: 'center', marginBottom: '1rem'}}>
-                                    <div style={{fontSize: '3rem', marginBottom: '0.5rem'}}>{stage.icon}</div>
-                                    <h3 style={{fontSize: '1.3rem', fontWeight: 'bold'}}>{stage.name}</h3>
+                                    <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>{stage.icon}</div>
+                                    <h3 style={{fontSize: '1rem', fontWeight: 'bold'}}>{stage.name}</h3>
                                 </div>
                                 <p style={{color: '#4a5568', textAlign: 'center', lineHeight: '1.5'}}>
                                     {stage.description}
@@ -657,14 +823,14 @@
                     </div>
 
                     <div className="dashboard-card">
-                        <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1.5rem'}}>
+                        <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1.5rem'}}>
                             {stages[selectedStage].icon} {stages[selectedStage].name} Modules
                         </h3>
                         <div className="module-grid">
                             {stages[selectedStage].modules.map((module, idx) => (
                                 <div key={idx} className={`module-card ${module.priority}`}>
                                     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
-                                        <h4 style={{fontSize: '1.2rem', fontWeight: 'bold'}}>{module.title}</h4>
+                                        <h4 style={{fontSize: '1rem', fontWeight: 'bold'}}>{module.title}</h4>
                                         <div style={{
                                             background: module.priority === 'high' ? '#fed7d7' : module.priority === 'medium' ? '#fefcbf' : '#c6f6d5',
                                             color: module.priority === 'high' ? '#c53030' : module.priority === 'medium' ? '#d69e2e' : '#38a169',
@@ -777,26 +943,26 @@
 
             return (
                 <div>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem'}}>
+                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem'}}>
                         📈 Strategy Execution Tracker
                     </h2>
 
                     {/* Analytics Dashboard */}
                     <div className="financial-grid">
                         <div className="metric-panel">
-                            <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Overall Progress</div>
+                            <div style={{fontSize: '1rem', color: '#4a5568'}}>Overall Progress</div>
                             <div className="metric-value positive">
                                 {Math.round(goals.reduce((sum, goal) => sum + goal.progress, 0) / goals.length)}%
                             </div>
                             <div style={{color: '#48bb78'}}>↗ On Track</div>
                         </div>
                         <div className="metric-panel">
-                            <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Active Goals</div>
+                            <div style={{fontSize: '1rem', color: '#4a5568'}}>Active Goals</div>
                             <div className="metric-value neutral">{goals.length}</div>
                             <div style={{color: '#4299e1'}}>Strategic Initiatives</div>
                         </div>
                         <div className="metric-panel">
-                            <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Completed Tasks</div>
+                            <div style={{fontSize: '1rem', color: '#4a5568'}}>Completed Tasks</div>
                             <div className="metric-value positive">
                                 {goals.reduce((sum, goal) => sum + goal.milestones.reduce((mSum, milestone) => 
                                     mSum + milestone.tasks.filter(task => task.progress === 100).length, 0), 0)}
@@ -834,7 +1000,7 @@
                                     <div key={milestone.id} className="milestone-item">
                                         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem'}}>
                                             <h4 style={{fontSize: '1.1rem', fontWeight: 'bold'}}>{milestone.title}</h4>
-                                            <div style={{fontSize: '1.2rem', fontWeight: 'bold', color: '#ed8936'}}>
+                                            <div style={{fontSize: '1rem', fontWeight: 'bold', color: '#ed8936'}}>
                                                 {milestone.progress}%
                                             </div>
                                         </div>
@@ -928,22 +1094,22 @@
                         return (
                             <div className="financial-grid">
                                 <div className="metric-panel">
-                                    <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Profit Margin</div>
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Profit Margin</div>
                                     <div className="metric-value positive">{dupont.profitMargin.toFixed(1)}%</div>
                                     <div style={{color: '#48bb78'}}>Net Income / Revenue</div>
                                 </div>
                                 <div className="metric-panel">
-                                    <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Asset Turnover</div>
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Asset Turnover</div>
                                     <div className="metric-value neutral">{dupont.assetTurnover.toFixed(2)}x</div>
                                     <div style={{color: '#4299e1'}}>Revenue / Assets</div>
                                 </div>
                                 <div className="metric-panel">
-                                    <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Equity Multiplier</div>
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Equity Multiplier</div>
                                     <div className="metric-value neutral">{dupont.equityMultiplier.toFixed(2)}x</div>
                                     <div style={{color: '#4299e1'}}>Assets / Equity</div>
                                 </div>
                                 <div className="metric-panel">
-                                    <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Return on Equity</div>
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Return on Equity</div>
                                     <div className="metric-value positive">{dupont.roe.toFixed(1)}%</div>
                                     <div style={{color: '#48bb78'}}>Overall ROE</div>
                                 </div>
@@ -954,17 +1120,17 @@
                         return (
                             <div className="financial-grid">
                                 <div className="metric-panel">
-                                    <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Contribution Margin</div>
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Contribution Margin</div>
                                     <div className="metric-value positive">${breakeven.contributionMargin.toFixed(2)}</div>
                                     <div style={{color: '#48bb78'}}>Per Unit</div>
                                 </div>
                                 <div className="metric-panel">
-                                    <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Break-Even Units</div>
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Break-Even Units</div>
                                     <div className="metric-value neutral">{Math.round(breakeven.breakEvenUnits).toLocaleString()}</div>
                                     <div style={{color: '#4299e1'}}>Units to Break Even</div>
                                 </div>
                                 <div className="metric-panel">
-                                    <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Break-Even Revenue</div>
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Break-Even Revenue</div>
                                     <div className="metric-value neutral">${(breakeven.breakEvenRevenue/1000000).toFixed(1)}M</div>
                                     <div style={{color: '#4299e1'}}>Revenue to Break Even</div>
                                 </div>
@@ -977,13 +1143,13 @@
 
             return (
                 <div>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem'}}>
+                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem'}}>
                         💰 Global Financial Analysis Framework
                     </h2>
 
                     {/* Region Selection */}
                     <div className="dashboard-card" style={{marginBottom: '2rem'}}>
-                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem'}}>
+                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>
                             🌍 Regional Economic Data
                         </h3>
                         <div style={{display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap'}}>
@@ -999,17 +1165,17 @@
                         </div>
                         <div className="financial-grid">
                             <div className="metric-panel">
-                                <div style={{fontSize: '1.2rem', color: '#4a5568'}}>GDP</div>
+                                <div style={{fontSize: '1rem', color: '#4a5568'}}>GDP</div>
                                 <div className="metric-value neutral">${regionData[selectedRegion].gdp}B</div>
                                 <div>Total Economic Output</div>
                             </div>
                             <div className="metric-panel">
-                                <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Growth Rate</div>
+                                <div style={{fontSize: '1rem', color: '#4a5568'}}>Growth Rate</div>
                                 <div className="metric-value positive">{regionData[selectedRegion].growth}%</div>
                                 <div>Annual GDP Growth</div>
                             </div>
                             <div className="metric-panel">
-                                <div style={{fontSize: '1.2rem', color: '#4a5568'}}>Inflation</div>
+                                <div style={{fontSize: '1rem', color: '#4a5568'}}>Inflation</div>
                                 <div className="metric-value neutral">{regionData[selectedRegion].inflation}%</div>
                                 <div>Consumer Price Index</div>
                             </div>
@@ -1018,7 +1184,7 @@
 
                     {/* Financial Analysis Controls */}
                     <div className="dashboard-card" style={{marginBottom: '2rem'}}>
-                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem'}}>
+                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>
                             📊 Financial Analysis Tools
                         </h3>
                         <div style={{display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap'}}>
@@ -1106,7 +1272,7 @@
 
             return (
                 <div>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem'}}>
+                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem'}}>
                         📋 Interactive Business Model Canvas
                     </h2>
 
@@ -1251,29 +1417,29 @@
 
             return (
                 <div>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem'}}>
+                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem'}}>
                         🎥 AI Video Production
                     </h2>
 
                     <div className="tier-controls">
-                        <h3 style={{fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '1rem'}}>
+                        <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem'}}>
                             {userTier.toUpperCase()} Tier Features
                         </h3>
                         <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem'}}>
                             <div style={{textAlign: 'center'}}>
-                                <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#4299e1'}}>
+                                <div style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#4299e1'}}>
                                     {tierLimits[userTier].maxVideos}
                                 </div>
                                 <div style={{color: '#4a5568'}}>Videos/Month</div>
                             </div>
                             <div style={{textAlign: 'center'}}>
-                                <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#48bb78'}}>
+                                <div style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#48bb78'}}>
                                     {tierLimits[userTier].quality}
                                 </div>
                                 <div style={{color: '#4a5568'}}>Max Quality</div>
                             </div>
                             <div style={{textAlign: 'center'}}>
-                                <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#ed8936'}}>
+                                <div style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#ed8936'}}>
                                     {tierLimits[userTier].speed}
                                 </div>
                                 <div style={{color: '#4a5568'}}>Generation Speed</div>
@@ -1282,7 +1448,7 @@
                     </div>
 
                     <div className="video-generation">
-                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem'}}>
+                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>
                             Create Strategy Video
                         </h3>
                         
@@ -1342,8 +1508,8 @@
                             <div>
                                 <div className="video-preview">
                                     <div style={{textAlign: 'center'}}>
-                                        <div style={{fontSize: '3rem', marginBottom: '1rem'}}>🎥</div>
-                                        <div style={{fontSize: '1.2rem'}}>
+                                        <div style={{fontSize: '2rem', marginBottom: '1rem'}}>🎥</div>
+                                        <div style={{fontSize: '1rem'}}>
                                             {videoTopic.charAt(0).toUpperCase() + videoTopic.slice(1)} Video ({videoDuration})
                                         </div>
                                         <div style={{fontSize: '1rem', opacity: 0.8, marginTop: '0.5rem'}}>
@@ -1437,7 +1603,7 @@
                     case 1:
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                                     🏢 Company Foundation
                                 </h3>
                                 <div style={{marginBottom: '1.5rem'}}>
@@ -1489,7 +1655,7 @@
                     case 2:
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                                     🎯 Target & Purpose
                                 </h3>
                                 <div style={{marginBottom: '1.5rem'}}>
@@ -1538,7 +1704,7 @@
                     case 3:
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                                     💎 Unique Value & Tone
                                 </h3>
                                 <div style={{marginBottom: '1.5rem'}}>
@@ -1590,12 +1756,12 @@
                     case 4:
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
                                     🎯 AI-Generated Mission Statements
                                 </h3>
                                 {isGenerating ? (
                                     <div style={{textAlign: 'center', padding: '3rem'}}>
-                                        <div style={{marginBottom: '1.5rem', fontSize: '1.2rem', color: '#4a5568'}}>
+                                        <div style={{marginBottom: '1.5rem', fontSize: '1rem', color: '#4a5568'}}>
                                             🤖 Our AI is analyzing your inputs and crafting personalized mission statements...
                                         </div>
                                         <div style={{marginBottom: '1rem'}}>
@@ -1614,7 +1780,7 @@
                                                  onClick={() => setSelectedMission(mission)}
                                                  style={{cursor: 'pointer', margin: 0}}>
                                                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
-                                                    <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', color: '#2d3748'}}>
+                                                    <h4 style={{fontSize: '1rem', fontWeight: 'bold', color: '#2d3748'}}>
                                                         Mission Option {mission.id}
                                                     </h4>
                                                     <div style={{
@@ -1713,7 +1879,7 @@
             return (
                 <div>
                     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem'}}>
-                        <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', color: '#2d3748'}}>
+                        <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', color: '#2d3748'}}>
                             🎯 AI Mission Statement Generator
                         </h2>
                         <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
@@ -1927,13 +2093,13 @@
 
             return (
                 <div>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
                         🏢 Interactive Porter's Five Forces Analysis
                     </h2>
 
                     {/* Industry Selection */}
                     <div className="stage-card" style={{marginBottom: '2rem'}}>
-                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                             📊 Industry Context
                         </h3>
                         <div style={{display: 'flex', gap: '2rem', alignItems: 'center', marginBottom: '1rem'}}>
@@ -1958,19 +2124,19 @@
                             <div className="financial-grid" style={{flex: 1, margin: 0}}>
                                 <div style={{textAlign: 'center'}}>
                                     <div style={{fontSize: '0.9rem', color: '#4a5568'}}>Avg. Margin</div>
-                                    <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#48bb78'}}>
+                                    <div style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#48bb78'}}>
                                         {industryData[selectedIndustry].avgMargin}%
                                     </div>
                                 </div>
                                 <div style={{textAlign: 'center'}}>
                                     <div style={{fontSize: '0.9rem', color: '#4a5568'}}>Growth Rate</div>
-                                    <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#4299e1'}}>
+                                    <div style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#4299e1'}}>
                                         {industryData[selectedIndustry].growthRate}%
                                     </div>
                                 </div>
                                 <div style={{textAlign: 'center'}}>
                                     <div style={{fontSize: '0.9rem', color: '#4a5568'}}>Market Size</div>
-                                    <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#9f7aea'}}>
+                                    <div style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#9f7aea'}}>
                                         {industryData[selectedIndustry].marketSize}
                                     </div>
                                 </div>
@@ -1980,7 +2146,7 @@
 
                     {/* Force Analysis Controls */}
                     <div className="stage-card" style={{marginBottom: '2rem'}}>
-                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
                             🎛️ Force Analysis Controls
                         </h3>
                         <div className="module-grid">
@@ -2039,7 +2205,7 @@
                     {/* Analysis Results */}
                     {analysis && showDetails && (
                         <div className="stage-card">
-                            <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1.5rem', color: '#2d3748'}}>
+                            <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1.5rem', color: '#2d3748'}}>
                                 📊 Comprehensive Analysis Results
                             </h3>
                             <div className="financial-grid">
@@ -2050,12 +2216,12 @@
                                                'linear-gradient(135deg, #e53e3e, #c53030)',
                                     color: 'white'
                                 }}>
-                                    <div style={{fontSize: '1.2rem', marginBottom: '0.5rem', opacity: 0.9}}>Industry Attractiveness</div>
+                                    <div style={{fontSize: '1rem', marginBottom: '0.5rem', opacity: 0.9}}>Industry Attractiveness</div>
                                     <div className="metric-value" style={{color: 'white'}}>{analysis.overall}</div>
                                     <div style={{opacity: 0.9}}>Overall Score: {analysis.score}/5</div>
                                 </div>
                                 <div className="stage-card" style={{margin: 0, padding: '1.5rem'}}>
-                                    <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                    <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                                         🎯 Strategic Recommendation
                                     </h4>
                                     <p style={{lineHeight: '1.6', marginBottom: '1rem', color: '#4a5568'}}>{analysis.recommendation}</p>
@@ -2064,7 +2230,7 @@
 
                             <div className="module-grid" style={{marginTop: '2rem'}}>
                                 <div className="stage-card" style={{margin: 0}}>
-                                    <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                    <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                                         🔍 Key Findings
                                     </h4>
                                     <ul style={{lineHeight: '1.5', color: '#4a5568'}}>
@@ -2074,7 +2240,7 @@
                                     </ul>
                                 </div>
                                 <div className="stage-card" style={{margin: 0}}>
-                                    <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                    <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                                         ⚡ Strategic Actions
                                     </h4>
                                     <ul style={{lineHeight: '1.5', color: '#4a5568'}}>
@@ -2156,7 +2322,7 @@
             const renderOverview = () => (
                 <div>
                     <div className="stage-card">
-                        <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                             🌊 Blue Ocean Strategy Framework
                         </h3>
                         <p style={{fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: '#4a5568'}}>
@@ -2165,7 +2331,7 @@
                         
                         <div className="module-grid">
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #ebf8ff, #bee3f8)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2b6cb0'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2b6cb0'}}>
                                     🎯 Value Innovation
                                 </h4>
                                 <p style={{color: '#2c5282', lineHeight: '1.5'}}>
@@ -2173,7 +2339,7 @@
                                 </p>
                             </div>
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #f0fff4, #c6f6d5)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2f855a'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2f855a'}}>
                                     🏗️ Reconstruct Market
                                 </h4>
                                 <p style={{color: '#276749', lineHeight: '1.5'}}>
@@ -2181,7 +2347,7 @@
                                 </p>
                             </div>
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #fef5e7, #fed7aa)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c05621'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c05621'}}>
                                     💡 Create New Demand
                                 </h4>
                                 <p style={{color: '#9c4221', lineHeight: '1.5'}}>
@@ -2192,7 +2358,7 @@
                     </div>
 
                     <div className="stage-card">
-                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                             🎯 Four Actions Framework
                         </h3>
                         <div className="financial-grid">
@@ -2223,7 +2389,7 @@
 
             const renderCanvas = () => (
                 <div className="stage-card">
-                    <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                    <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                         📊 Interactive Strategy Canvas
                     </h3>
                     <p style={{fontSize: '1rem', lineHeight: '1.6', marginBottom: '2rem', color: '#4a5568'}}>
@@ -2240,7 +2406,7 @@
                             <div key={key} style={{background: color, padding: '1.5rem', borderRadius: '12px'}}>
                                 <div style={{textAlign: 'center', marginBottom: '1rem'}}>
                                     <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>{icon}</div>
-                                    <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', color: textColor}}>{title.toUpperCase()}</h4>
+                                    <h4 style={{fontSize: '1rem', fontWeight: 'bold', color: textColor}}>{title.toUpperCase()}</h4>
                                 </div>
                                 <div style={{marginBottom: '1rem'}}>
                                     <input
@@ -2297,7 +2463,7 @@
                     case 'paths': 
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>🛤️ Six Paths Framework</h3>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem'}}>🛤️ Six Paths Framework</h3>
                                 <p>Explore alternative ways to reconstruct market boundaries...</p>
                                 <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
                                     🚧 Interactive Six Paths analysis coming soon!
@@ -2307,7 +2473,7 @@
                     case 'utility':
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>💎 Buyer Utility Map</h3>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem'}}>💎 Buyer Utility Map</h3>
                                 <p>Map the buyer's experience across the purchase and use cycle...</p>
                                 <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
                                     🚧 Interactive Buyer Utility Map coming soon!
@@ -2317,7 +2483,7 @@
                     case 'implementation':
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>🚀 Implementation Roadmap</h3>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem'}}>🚀 Implementation Roadmap</h3>
                                 <p>Plan your blue ocean strategy execution...</p>
                                 <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
                                     🚧 Implementation planning tools coming soon!
@@ -2330,7 +2496,7 @@
 
             return (
                 <div>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
                         🌊 Blue Ocean Strategy
                     </h2>
                     
@@ -2423,7 +2589,7 @@
             const renderOverview = () => (
                 <div>
                     <div className="stage-card">
-                        <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                             🏗️ Resource-Based View (RBV) Framework
                         </h3>
                         <p style={{fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: '#4a5568'}}>
@@ -2432,7 +2598,7 @@
                         
                         <div className="module-grid">
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #ebf8ff, #bee3f8)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2b6cb0'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2b6cb0'}}>
                                     💎 VRIO Analysis
                                 </h4>
                                 <p style={{color: '#2c5282', lineHeight: '1.5'}}>
@@ -2440,7 +2606,7 @@
                                 </p>
                             </div>
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #f0fff4, #c6f6d5)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2f855a'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2f855a'}}>
                                     🗺️ Capability Mapping
                                 </h4>
                                 <p style={{color: '#276749', lineHeight: '1.5'}}>
@@ -2448,7 +2614,7 @@
                                 </p>
                             </div>
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #fef5e7, #fed7aa)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c05621'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c05621'}}>
                                     🎯 Strategic Fit
                                 </h4>
                                 <p style={{color: '#9c4221', lineHeight: '1.5'}}>
@@ -2459,7 +2625,7 @@
                     </div>
 
                     <div className="stage-card">
-                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                             📊 Resource Categories
                         </h3>
                         <div className="module-grid">
@@ -2482,13 +2648,13 @@
 
             const renderInventory = () => (
                 <div className="stage-card">
-                    <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                    <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                         📋 Resource Inventory
                     </h3>
                     
                     {/* Add Resource Form */}
                     <div style={{background: '#f7fafc', padding: '1.5rem', borderRadius: '8px', marginBottom: '2rem'}}>
-                        <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem'}}>Add New Resource</h4>
+                        <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem'}}>Add New Resource</h4>
                         <form onSubmit={(e) => {
                             e.preventDefault();
                             const formData = new FormData(e.target);
@@ -2545,7 +2711,7 @@
                                 return (
                                     <div key={resource.id} className="stage-card" style={{margin: 0}}>
                                         <div style={{display: 'flex', alignItems: 'center', marginBottom: '1rem'}}>
-                                            <div style={{fontSize: '1.5rem', marginRight: '0.5rem'}}>
+                                            <div style={{fontSize: '1.1rem', marginRight: '0.5rem'}}>
                                                 {resourceType?.icon}
                                             </div>
                                             <div>
@@ -2588,7 +2754,7 @@
 
             const renderVRIO = () => (
                 <div className="stage-card">
-                    <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                    <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                         💎 VRIO Analysis
                     </h3>
                     <p style={{marginBottom: '2rem', color: '#4a5568'}}>
@@ -2625,7 +2791,7 @@
                                             <tr key={resource.id} style={{borderBottom: '1px solid #e2e8f0'}}>
                                                 <td style={{padding: '1rem'}}>
                                                     <div style={{display: 'flex', alignItems: 'center'}}>
-                                                        <span style={{fontSize: '1.2rem', marginRight: '0.5rem'}}>
+                                                        <span style={{fontSize: '1rem', marginRight: '0.5rem'}}>
                                                             {resourceType?.icon}
                                                         </span>
                                                         <div>
@@ -2699,7 +2865,7 @@
                     case 'capabilities':
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>🗺️ Capabilities Mapping</h3>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem'}}>🗺️ Capabilities Mapping</h3>
                                 <p>Map resources to strategic capabilities and identify competitive positioning...</p>
                                 <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
                                     🚧 Capabilities mapping tools coming soon!
@@ -2709,7 +2875,7 @@
                     case 'strategy':
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>🎯 Strategic Fit Analysis</h3>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem'}}>🎯 Strategic Fit Analysis</h3>
                                 <p>Align your resource portfolio with strategic objectives...</p>
                                 <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
                                     🚧 Strategic fit analysis coming soon!
@@ -2722,7 +2888,7 @@
 
             return (
                 <div>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
                         🏗️ Resource-Based View (RBV)
                     </h2>
                     
@@ -2797,7 +2963,7 @@
             const renderOverview = () => (
                 <div>
                     <div className="stage-card">
-                        <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                             🎯 Good Strategy / Bad Strategy Framework
                         </h3>
                         <p style={{fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: '#4a5568'}}>
@@ -2806,7 +2972,7 @@
                         
                         <div className="module-grid">
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #f0fff4, #c6f6d5)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2f855a'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2f855a'}}>
                                     ✅ Good Strategy Has
                                 </h4>
                                 <ul style={{color: '#276749', lineHeight: '1.5', paddingLeft: '1rem'}}>
@@ -2816,7 +2982,7 @@
                                 </ul>
                             </div>
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #fef5e7, #fed7aa)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c05621'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c05621'}}>
                                     🔍 Strategy Kernel
                                 </h4>
                                 <p style={{color: '#9c4221', lineHeight: '1.5'}}>
@@ -2824,7 +2990,7 @@
                                 </p>
                             </div>
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #fed7d7, #feb2b2)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c53030'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c53030'}}>
                                     ❌ Bad Strategy Includes
                                 </h4>
                                 <ul style={{color: '#742a2a', lineHeight: '1.5', paddingLeft: '1rem'}}>
@@ -2838,7 +3004,7 @@
                     </div>
 
                     <div className="stage-card">
-                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                             ⚡ Power of Good Strategy
                         </h3>
                         <div className="financial-grid">
@@ -2864,7 +3030,7 @@
 
             const renderKernel = () => (
                 <div className="stage-card">
-                    <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                    <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                         🔍 Strategy Kernel Builder
                     </h3>
                     <p style={{marginBottom: '2rem', color: '#4a5568'}}>
@@ -2873,7 +3039,7 @@
 
                     <div className="module-grid">
                         <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #fef5e7, #fed7aa)'}}>
-                            <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#c05621'}}>
+                            <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#c05621'}}>
                                 🔍 Diagnosis
                             </h4>
                             <p style={{fontSize: '0.9rem', color: '#9c4221', marginBottom: '1rem'}}>
@@ -2892,7 +3058,7 @@
                         </div>
 
                         <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #ebf8ff, #bee3f8)'}}>
-                            <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2b6cb0'}}>
+                            <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2b6cb0'}}>
                                 📋 Guiding Policy
                             </h4>
                             <p style={{fontSize: '0.9rem', color: '#2c5282', marginBottom: '1rem'}}>
@@ -2911,7 +3077,7 @@
                         </div>
 
                         <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #f0fff4, #c6f6d5)'}}>
-                            <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2f855a'}}>
+                            <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2f855a'}}>
                                 ⚡ Coherent Actions
                             </h4>
                             <p style={{fontSize: '0.9rem', color: '#276749', marginBottom: '1rem'}}>
@@ -2964,7 +3130,7 @@
 
                     {strategyKernel.diagnosis && strategyKernel.policy && strategyKernel.actions.length > 0 && (
                         <div style={{marginTop: '2rem', padding: '1.5rem', background: 'linear-gradient(135deg, #f0fff4, #c6f6d5)', borderRadius: '8px'}}>
-                            <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2f855a'}}>
+                            <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2f855a'}}>
                                 ✅ Strategy Kernel Summary
                             </h4>
                             <div style={{marginBottom: '1rem'}}>
@@ -2988,7 +3154,7 @@
 
             const renderBadStrategy = () => (
                 <div className="stage-card">
-                    <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                    <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                         🚫 Bad Strategy Filter
                     </h3>
                     <p style={{marginBottom: '2rem', color: '#4a5568'}}>
@@ -3042,7 +3208,7 @@
                     case 'leverage':
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>⚡ Leverage & Focus Principles</h3>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem'}}>⚡ Leverage & Focus Principles</h3>
                                 <p>Apply leverage and focus to amplify your strategic advantage...</p>
                                 <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
                                     🚧 Leverage analysis tools coming soon!
@@ -3055,7 +3221,7 @@
 
             return (
                 <div>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
                         🎯 Good Strategy / Bad Strategy
                     </h2>
                     
@@ -3117,7 +3283,7 @@
             const renderOverview = () => (
                 <div>
                     <div className="stage-card">
-                        <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                             🔮 Disruption Forecasting Framework
                         </h3>
                         <p style={{fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: '#4a5568'}}>
@@ -3126,7 +3292,7 @@
                         
                         <div className="module-grid">
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #fef5e7, #fed7aa)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c05621'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#c05621'}}>
                                     🌊 Disruption Patterns
                                 </h4>
                                 <p style={{color: '#9c4221', lineHeight: '1.5'}}>
@@ -3134,7 +3300,7 @@
                                 </p>
                             </div>
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #ebf8ff, #bee3f8)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2b6cb0'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2b6cb0'}}>
                                     📡 Signal Detection
                                 </h4>
                                 <p style={{color: '#2c5282', lineHeight: '1.5'}}>
@@ -3142,7 +3308,7 @@
                                 </p>
                             </div>
                             <div className="stage-card" style={{margin: 0, background: 'linear-gradient(135deg, #f0fff4, #c6f6d5)'}}>
-                                <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2f855a'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2f855a'}}>
                                     🚀 Innovation Response
                                 </h4>
                                 <p style={{color: '#276749', lineHeight: '1.5'}}>
@@ -3153,7 +3319,7 @@
                     </div>
 
                     <div className="stage-card">
-                        <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                             📊 Disruption Framework
                         </h3>
                         <div className="financial-grid">
@@ -3179,7 +3345,7 @@
 
             const renderSignals = () => (
                 <div className="stage-card">
-                    <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                    <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
                         📡 Signals of Change Detection
                     </h3>
                     <p style={{marginBottom: '2rem', color: '#4a5568'}}>
@@ -3191,7 +3357,7 @@
                             <div key={category.category} className="stage-card" style={{margin: 0}}>
                                 <div style={{textAlign: 'center', marginBottom: '1rem'}}>
                                     <div style={{fontSize: '2rem', marginBottom: '0.5rem'}}>{category.icon}</div>
-                                    <h4 style={{fontSize: '1.2rem', fontWeight: 'bold', color: '#2d3748'}}>
+                                    <h4 style={{fontSize: '1rem', fontWeight: 'bold', color: '#2d3748'}}>
                                         {category.category} Signals
                                     </h4>
                                 </div>
@@ -3243,7 +3409,7 @@
                     case 'patterns': 
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>🌊 Disruption Patterns Analysis</h3>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem'}}>🌊 Disruption Patterns Analysis</h3>
                                 <p>Analyze common disruption patterns and assess industry vulnerability...</p>
                                 <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
                                     🚧 Disruption pattern analysis coming soon!
@@ -3253,7 +3419,7 @@
                     case 'readiness':
                         return (
                             <div className="stage-card">
-                                <h3 style={{fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem'}}>🚀 Innovation Readiness Assessment</h3>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem'}}>🚀 Innovation Readiness Assessment</h3>
                                 <p>Evaluate your organization's capability to respond to disruption...</p>
                                 <div style={{padding: '2rem', textAlign: 'center', color: '#4a5568'}}>
                                     🚧 Innovation readiness tools coming soon!
@@ -3266,7 +3432,7 @@
 
             return (
                 <div>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
                         🔮 Disruption Forecasting
                     </h2>
                     
@@ -3880,24 +4046,24 @@
                                 </div>
                                 <div className="financial-grid">
                                     <div className="metric-panel">
-                                        <div style={{fontSize: '1.2rem', marginBottom: '0.5rem'}}>Platform Status</div>
+                                        <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Platform Status</div>
                                         <div className="metric-value positive">🟢</div>
                                         <div>All Systems Operational</div>
                                     </div>
                                     <div className="metric-panel">
-                                        <div style={{fontSize: '1.2rem', marginBottom: '0.5rem'}}>Available Modules</div>
+                                        <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Available Modules</div>
                                         <div className="metric-value neutral">20+</div>
                                         <div>Advanced Features</div>
                                     </div>
                                     <div className="metric-panel">
-                                        <div style={{fontSize: '1.2rem', marginBottom: '0.5rem'}}>User Tier</div>
+                                        <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>User Tier</div>
                                         <div className="metric-value positive">{currentUser?.tier?.toUpperCase() || 'GUEST'}</div>
                                         <div>Access Level</div>
                                     </div>
                                 </div>
                                 
                                 <div className="dashboard-card" style={{marginTop: '2rem'}}>
-                                    <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem'}}>
+                                    <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>
                                         🎯 Complete Feature Suite
                                     </h3>
                                     <div className="module-grid">
@@ -3971,13 +4137,13 @@
                             boxShadow: '0 20px 60px rgba(0,0,0,0.2)', maxWidth: '500px', width: '100%'
                         }}>
                             <div style={{textAlign: 'center', marginBottom: '2rem'}}>
-                                <h1 style={{fontSize: '3rem', marginBottom: '0.5rem'}}>🚀</h1>
+                                <h1 style={{fontSize: '2rem', marginBottom: '0.5rem'}}>🚀</h1>
                                 <h2 style={{fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem'}}>Lucidra</h2>
                                 <p style={{color: '#718096'}}>Complete Business Strategy Platform</p>
                             </div>
                             
                             <div style={{marginBottom: '2rem'}}>
-                                <h3 style={{fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center'}}>
+                                <h3 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center'}}>
                                     Choose Your Access Level
                                 </h3>
                                 <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
@@ -4024,7 +4190,7 @@
                     <div className="nav-advanced">
                         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                             <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-                                <h1 style={{fontSize: '1.8rem', fontWeight: 'bold'}}>🚀 Lucidra</h1>
+                                <h1 style={{fontSize: '1rem', fontWeight: 'bold'}}>🚀 Lucidra</h1>
                                 <div className="tier-badge">{currentUser.tier.toUpperCase()}</div>
                             </div>
                             <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
@@ -4039,7 +4205,7 @@
                         </div>
                     </div>
 
-                    <div style={{display: 'flex'}}>
+                    <div style={{display: 'flex', flexDirection: window.innerWidth <= 768 ? 'column' : 'row'}}>
                         {/* Modern Collapsible Sidebar */}
                         <div className={`sidebar-advanced ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
                             <button className="sidebar-toggle" onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
