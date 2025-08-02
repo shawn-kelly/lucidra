@@ -240,44 +240,195 @@
         }
         
         .nav-advanced {
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            border-bottom: 1px solid #4a5568;
+            padding: 0.75rem 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+        }
+        
+        .nav-advanced h1 {
+            color: white !important;
+            margin: 0;
+        }
+        
+        .nav-advanced .tier-badge {
+            background: linear-gradient(135deg, #4299e1, #3182ce) !important;
+            color: white !important;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .nav-advanced span {
+            color: #e2e8f0 !important;
         }
         
         .sidebar-advanced {
-            width: 300px;
-            background: white;
-            border-right: 1px solid #e2e8f0;
-            padding: 1rem;
-            min-height: calc(100vh - 80px);
+            width: 320px;
+            background: linear-gradient(180deg, #2d3748 0%, #1a365d 100%);
+            border-right: 1px solid #4a5568;
+            padding: 0;
+            min-height: calc(100vh - 70px);
             overflow-y: auto;
+            transition: all 0.3s ease;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .sidebar-collapsed {
+            width: 70px;
+        }
+        
+        .sidebar-toggle {
+            position: absolute;
+            top: 20px;
+            right: -15px;
+            background: #4299e1;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-toggle:hover {
+            background: #3182ce;
+            transform: scale(1.1);
+        }
+        
+        .nav-section {
+            margin: 0;
+            border-bottom: 1px solid rgba(74, 85, 104, 0.3);
+        }
+        
+        .nav-section-header {
+            padding: 1rem 1.5rem;
+            background: rgba(74, 85, 104, 0.2);
+            color: #e2e8f0;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .nav-section-header:hover {
+            background: rgba(74, 85, 104, 0.4);
+            color: #90cdf4;
+        }
+        
+        .nav-section-content {
+            background: rgba(26, 54, 93, 0.2);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .nav-section-content.expanded {
+            max-height: 500px;
         }
         
         .nav-item-advanced {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            border-radius: 12px;
+            padding: 0.75rem 2rem;
+            margin: 0;
             cursor: pointer;
             transition: all 0.2s ease;
             font-weight: 500;
+            color: #cbd5e0;
+            border-bottom: 1px solid rgba(74, 85, 104, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
         }
         
         .nav-item-advanced:hover {
-            background: #f7fafc;
+            background: rgba(66, 153, 225, 0.2);
+            color: #90cdf4;
             transform: translateX(4px);
         }
         
         .nav-item-advanced.active {
             background: linear-gradient(135deg, #4299e1, #3182ce);
             color: white;
-            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+            font-weight: 600;
+            border-left: 4px solid #63b3ed;
+            transform: translateX(4px);
+        }
+        
+        .nav-item-simple {
+            padding: 1rem 1.5rem;
+            margin: 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            color: #cbd5e0;
+            border-bottom: 1px solid rgba(74, 85, 104, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .nav-item-simple:hover {
+            background: rgba(66, 153, 225, 0.2);
+            color: #90cdf4;
+        }
+        
+        .nav-item-simple.active {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+            font-weight: 600;
+            border-left: 4px solid #63b3ed;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 0;
+            overflow-y: auto;
+            max-height: calc(100vh - 70px);
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        }
+        
+        .content-wrapper {
+            padding: 2rem;
+            min-height: 100%;
+        }
+        
+        .page-header {
+            background: white;
+            margin: -2rem -2rem 2rem -2rem;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0;
+        }
+        
+        .page-subtitle {
+            color: #718096;
+            margin: 0.5rem 0 0 0;
+            font-size: 1.1rem;
         }
         
         .tier-badge {
@@ -3260,10 +3411,25 @@
             const [currentUser, setCurrentUser] = useState(null);
             const [currentView, setCurrentView] = useState('dashboard');
             const [isLoading, setIsLoading] = useState(true);
+            const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+            const [expandedSections, setExpandedSections] = useState({
+                core: true,
+                strategy: false,
+                process: false,
+                intelligence: false,
+                collaboration: false
+            });
 
             useEffect(() => {
                 setTimeout(() => setIsLoading(false), 2000);
             }, []);
+            
+            const toggleSection = (section) => {
+                setExpandedSections(prev => ({
+                    ...prev,
+                    [section]: !prev[section]
+                }));
+            };
 
             const login = (tier, name) => {
                 setCurrentUser({ name, tier });
@@ -3314,9 +3480,10 @@
                     default:
                         return (
                             <div>
-                                <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '2rem'}}>
-                                    🚀 Complete Lucidra Platform
-                                </h2>
+                                <div className="page-header">
+                                    <h1 className="page-title">🚀 Lucidra Platform</h1>
+                                    <p className="page-subtitle">Complete Business Strategy Intelligence Suite</p>
+                                </div>
                                 <div className="financial-grid">
                                     <div className="metric-panel">
                                         <div style={{fontSize: '1.2rem', marginBottom: '0.5rem'}}>Platform Status</div>
@@ -3479,134 +3646,137 @@
                     </div>
 
                     <div style={{display: 'flex'}}>
-                        {/* Enhanced Sidebar */}
-                        <div className="sidebar-advanced">
-                            <div className={`nav-item-advanced ${currentView === 'dashboard' ? 'active' : ''}`} onClick={() => setCurrentView('dashboard')}>
-                                🏠 Dashboard
-                            </div>
-                            <div className={`nav-item-advanced ${currentView === 'stage-selector' ? 'active' : ''}`} onClick={() => setCurrentView('stage-selector')}>
-                                🎯 Stage Selector
-                            </div>
-                            <div className={`nav-item-advanced ${currentView === 'execution' ? 'active' : ''}`} onClick={() => setCurrentView('execution')}>
-                                📈 Execution Tracker
-                            </div>
-                            <div className={`nav-item-advanced ${currentView === 'financial' ? 'active' : ''}`} onClick={() => setCurrentView('financial')}>
-                                💰 Financial Analysis
-                            </div>
-                            <div className={`nav-item-advanced ${currentView === 'canvas' ? 'active' : ''}`} onClick={() => setCurrentView('canvas')}>
-                                📋 Business Canvas
-                            </div>
-                            <div className={`nav-item-advanced ${currentView === 'video' ? 'active' : ''}`} onClick={() => setCurrentView('video')}>
-                                🎥 AI Video Production
-                            </div>
-                            <div className={`nav-item-advanced ${currentView === 'mission-generator' ? 'active' : ''}`} onClick={() => setCurrentView('mission-generator')}>
-                                🎯 AI Mission Generator
-                            </div>
-                            <div className={`nav-item-advanced ${currentView === 'porter-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('porter-analysis')}>
-                                🏢 Porter's Five Forces
-                            </div>
-                            <div className={`nav-item-advanced ${currentView === 'blue-ocean' ? 'active' : ''}`} onClick={() => setCurrentView('blue-ocean')}>
-                                🌊 Blue Ocean Strategy
-                            </div>
-                            <div className={`nav-item-advanced ${currentView === 'rbv-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('rbv-analysis')}>
-                                🏗️ Resource-Based View
-                            </div>
-                            <div className={`nav-item-advanced ${currentView === 'good-bad-strategy' ? 'active' : ''}`} onClick={() => setCurrentView('good-bad-strategy')}>
-                                🎯 Good/Bad Strategy
-                            </div>
-                            <div className={`nav-item-advanced ${currentView === 'disruption-forecasting' ? 'active' : ''}`} onClick={() => setCurrentView('disruption-forecasting')}>
-                                🔮 Disruption Forecasting
-                            </div>
+                        {/* Modern Collapsible Sidebar */}
+                        <div className={`sidebar-advanced ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+                            <button className="sidebar-toggle" onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
+                                {sidebarCollapsed ? '→' : '←'}
+                            </button>
                             
-                            {/* Process Management Suite */}
-                            <div style={{marginTop: '1rem', padding: '0.5rem', background: '#f7fafc', borderRadius: '8px'}}>
-                                <div style={{fontWeight: 'bold', fontSize: '0.9rem', color: '#4a5568', marginBottom: '0.5rem'}}>
-                                    🔄 Process Management Suite
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'process-management' ? 'active' : ''}`} onClick={() => setCurrentView('process-management')}>
-                                    🔄 Process Management
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'advanced-process' ? 'active' : ''}`} onClick={() => setCurrentView('advanced-process')}>
-                                    🏭 Advanced Process
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'process-improvement' ? 'active' : ''}`} onClick={() => setCurrentView('process-improvement')}>
-                                    ⚙️ Process Intelligence
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'process-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('process-analysis')}>
-                                    📊 Process Analysis
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'ai-process-logger' ? 'active' : ''}`} onClick={() => setCurrentView('ai-process-logger')}>
-                                    🤖 AI Process Logger
-                                </div>
-                            </div>
-                            
-                            {/* Data & Intelligence Suite */}
-                            <div style={{marginTop: '1rem', padding: '0.5rem', background: '#fff5f5', borderRadius: '8px'}}>
-                                <div style={{fontWeight: 'bold', fontSize: '0.9rem', color: '#4a5568', marginBottom: '0.5rem'}}>
-                                    📊 Data & Intelligence
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'data-pulse' ? 'active' : ''}`} onClick={() => setCurrentView('data-pulse')}>
-                                    📊 Data Pulse Intelligence
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'signal-composer' ? 'active' : ''}`} onClick={() => setCurrentView('signal-composer')}>
-                                    🎼 Signal Composer
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'comprehensive-financial' ? 'active' : ''}`} onClick={() => setCurrentView('comprehensive-financial')}>
-                                    📈 Comprehensive Financial
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'swot-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('swot-analysis')}>
-                                    ⚖️ SWOT Analysis
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'pestle-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('pestle-analysis')}>
-                                    🌍 PESTLE Analysis
+                            {/* Core Navigation */}
+                            <div className="nav-section">
+                                <button className="nav-section-header" onClick={() => toggleSection('core')}>
+                                    <span>🏠 Core Platform</span>
+                                    <span>{expandedSections.core ? '▼' : '▶'}</span>
+                                </button>
+                                <div className={`nav-section-content ${expandedSections.core ? 'expanded' : ''}`}>
+                                    <div className={`nav-item-advanced ${currentView === 'dashboard' ? 'active' : ''}`} onClick={() => setCurrentView('dashboard')}>
+                                        <span>🏠</span> Dashboard
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'stage-selector' ? 'active' : ''}`} onClick={() => setCurrentView('stage-selector')}>
+                                        <span>🎯</span> Stage Selector
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'execution' ? 'active' : ''}`} onClick={() => setCurrentView('execution')}>
+                                        <span>📈</span> Execution Tracker
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'canvas' ? 'active' : ''}`} onClick={() => setCurrentView('canvas')}>
+                                        <span>📋</span> Business Canvas
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'video' ? 'active' : ''}`} onClick={() => setCurrentView('video')}>
+                                        <span>🎥</span> AI Video Production
+                                    </div>
                                 </div>
                             </div>
-                            
-                            {/* Team & Operations Suite */}
-                            <div style={{marginTop: '1rem', padding: '0.5rem', background: '#f0fff4', borderRadius: '8px'}}>
-                                <div style={{fontWeight: 'bold', fontSize: '0.9rem', color: '#4a5568', marginBottom: '0.5rem'}}>
-                                    👥 Team & Operations
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'project-management' ? 'active' : ''}`} onClick={() => setCurrentView('project-management')}>
-                                    📋 Project Management
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'team-collaboration' ? 'active' : ''}`} onClick={() => setCurrentView('team-collaboration')}>
-                                    👥 Team Collaboration
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'team-interaction' ? 'active' : ''}`} onClick={() => setCurrentView('team-interaction')}>
-                                    🤝 Team Hub
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'org-chart' ? 'active' : ''}`} onClick={() => setCurrentView('org-chart')}>
-                                    🏢 Organization Chart
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'hr-module' ? 'active' : ''}`} onClick={() => setCurrentView('hr-module')}>
-                                    👥 HR Management
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'marketing-automation' ? 'active' : ''}`} onClick={() => setCurrentView('marketing-automation')}>
-                                    📧 Marketing Automation
+
+                            {/* Strategic Frameworks */}
+                            <div className="nav-section">
+                                <button className="nav-section-header" onClick={() => toggleSection('strategy')}>
+                                    <span>🎯 Strategic Frameworks</span>
+                                    <span>{expandedSections.strategy ? '▼' : '▶'}</span>
+                                </button>
+                                <div className={`nav-section-content ${expandedSections.strategy ? 'expanded' : ''}`}>
+                                    <div className={`nav-item-advanced ${currentView === 'mission-generator' ? 'active' : ''}`} onClick={() => setCurrentView('mission-generator')}>
+                                        <span>🎯</span> Mission Generator
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'porter-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('porter-analysis')}>
+                                        <span>🏢</span> Porter's Five Forces
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'blue-ocean' ? 'active' : ''}`} onClick={() => setCurrentView('blue-ocean')}>
+                                        <span>🌊</span> Blue Ocean Strategy
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'rbv-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('rbv-analysis')}>
+                                        <span>🏗️</span> Resource-Based View
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'good-bad-strategy' ? 'active' : ''}`} onClick={() => setCurrentView('good-bad-strategy')}>
+                                        <span>🎯</span> Good/Bad Strategy
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'disruption-forecasting' ? 'active' : ''}`} onClick={() => setCurrentView('disruption-forecasting')}>
+                                        <span>🔮</span> Disruption Forecasting
+                                    </div>
                                 </div>
                             </div>
-                            
-                            {/* Learning & Resources Suite */}
-                            <div style={{marginTop: '1rem', padding: '0.5rem', background: '#fffbf0', borderRadius: '8px'}}>
-                                <div style={{fontWeight: 'bold', fontSize: '0.9rem', color: '#4a5568', marginBottom: '0.5rem'}}>
-                                    🎓 Learning & Resources
+
+                            {/* Process Management */}
+                            <div className="nav-section">
+                                <button className="nav-section-header" onClick={() => toggleSection('process')}>
+                                    <span>🔄 Process Management</span>
+                                    <span>{expandedSections.process ? '▼' : '▶'}</span>
+                                </button>
+                                <div className={`nav-section-content ${expandedSections.process ? 'expanded' : ''}`}>
+                                    <div className={`nav-item-advanced ${currentView === 'process-management' ? 'active' : ''}`} onClick={() => setCurrentView('process-management')}>
+                                        <span>🔄</span> Process Management
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'advanced-process' ? 'active' : ''}`} onClick={() => setCurrentView('advanced-process')}>
+                                        <span>🏭</span> Advanced Process
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'process-improvement' ? 'active' : ''}`} onClick={() => setCurrentView('process-improvement')}>
+                                        <span>⚙️</span> Process Intelligence
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'process-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('process-analysis')}>
+                                        <span>📊</span> Process Analysis
+                                    </div>
                                 </div>
-                                <div className={`nav-item-advanced ${currentView === 'tutorial-library' ? 'active' : ''}`} onClick={() => setCurrentView('tutorial-library')}>
-                                    🎓 Tutorial Library
+                            </div>
+
+                            {/* Data & Intelligence */}
+                            <div className="nav-section">
+                                <button className="nav-section-header" onClick={() => toggleSection('intelligence')}>
+                                    <span>📊 Data & Intelligence</span>
+                                    <span>{expandedSections.intelligence ? '▼' : '▶'}</span>
+                                </button>
+                                <div className={`nav-section-content ${expandedSections.intelligence ? 'expanded' : ''}`}>
+                                    <div className={`nav-item-advanced ${currentView === 'financial' ? 'active' : ''}`} onClick={() => setCurrentView('financial')}>
+                                        <span>💰</span> Financial Analysis
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'data-pulse-intelligence' ? 'active' : ''}`} onClick={() => setCurrentView('data-pulse-intelligence')}>
+                                        <span>📊</span> Data Pulse Intelligence
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'swot-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('swot-analysis')}>
+                                        <span>⚖️</span> SWOT Analysis
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'comprehensive-financial' ? 'active' : ''}`} onClick={() => setCurrentView('comprehensive-financial')}>
+                                        <span>📈</span> Comprehensive Financial
+                                    </div>
                                 </div>
-                                <div className={`nav-item-advanced ${currentView === 'strategic-planning' ? 'active' : ''}`} onClick={() => setCurrentView('strategic-planning')}>
-                                    🗺️ Strategic Planning
-                                </div>
-                                <div className={`nav-item-advanced ${currentView === 'visual-mapping' ? 'active' : ''}`} onClick={() => setCurrentView('visual-mapping')}>
-                                    🗺️ Visual Journey Map
+                            </div>
+
+                            {/* Team & Operations */}
+                            <div className="nav-section">
+                                <button className="nav-section-header" onClick={() => toggleSection('collaboration')}>
+                                    <span>👥 Team & Operations</span>
+                                    <span>{expandedSections.collaboration ? '▼' : '▶'}</span>
+                                </button>
+                                <div className={`nav-section-content ${expandedSections.collaboration ? 'expanded' : ''}`}>
+                                    <div className={`nav-item-advanced ${currentView === 'project-management' ? 'active' : ''}`} onClick={() => setCurrentView('project-management')}>
+                                        <span>📋</span> Project Management
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'team-collaboration' ? 'active' : ''}`} onClick={() => setCurrentView('team-collaboration')}>
+                                        <span>👥</span> Team Collaboration
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'hr-module' ? 'active' : ''}`} onClick={() => setCurrentView('hr-module')}>
+                                        <span>👥</span> HR Management
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'marketing-automation' ? 'active' : ''}`} onClick={() => setCurrentView('marketing-automation')}>
+                                        <span>📧</span> Marketing Automation
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Main Content */}
-                        <div style={{flex: 1, padding: '2rem'}}>
-                            {renderView()}
+                        <div className="main-content">
+                            <div className="content-wrapper">
+                                {renderView()}
+                            </div>
                         </div>
                     </div>
                 </div>
