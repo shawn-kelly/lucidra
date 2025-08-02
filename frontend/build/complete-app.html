@@ -419,7 +419,7 @@
         }
         
         .page-title {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #2d3748;
             margin: 0;
@@ -428,7 +428,56 @@
         .page-subtitle {
             color: #718096;
             margin: 0.5rem 0 0 0;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Global font size optimization */
+        .content-wrapper h1 {
+            font-size: 1.5rem !important;
+            margin-bottom: 1rem !important;
+        }
+        
+        .content-wrapper h2 {
+            font-size: 1.3rem !important;
+            margin-bottom: 0.75rem !important;
+        }
+        
+        .content-wrapper h3 {
+            font-size: 1.1rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        
+        .content-wrapper p {
+            font-size: 0.9rem !important;
+            line-height: 1.4 !important;
+            margin-bottom: 0.5rem !important;
+        }
+        
+        .content-wrapper {
+            padding: 1.5rem;
+            min-height: 100%;
+            font-size: 0.9rem;
+        }
+        
+        /* Compact spacing for better content visibility */
+        .stage-card, .dashboard-card, .strategy-framework {
+            padding: 1rem !important;
+            margin-bottom: 1rem !important;
+            font-size: 0.9rem !important;
+        }
+        
+        .module-grid {
+            gap: 1rem !important;
+        }
+        
+        .module-card {
+            padding: 1rem !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .module-card h4 {
+            font-size: 1rem !important;
+            margin-bottom: 0.5rem !important;
         }
         
         .tier-badge {
@@ -3246,28 +3295,373 @@
 
         // Process Management Intelligence Component
         const ProcessManagement = () => {
+            const [activeTab, setActiveTab] = React.useState('dashboard');
+            const [selectedProcess, setSelectedProcess] = React.useState(null);
+            const [showProcessBuilder, setShowProcessBuilder] = React.useState(false);
             const [processes, setProcesses] = React.useState([
-                { id: 1, name: 'Customer Onboarding', stage: 'Design', progress: 75, efficiency: 85 },
-                { id: 2, name: 'Product Development', stage: 'Implementation', progress: 60, efficiency: 78 },
-                { id: 3, name: 'Quality Assurance', stage: 'Testing', progress: 90, efficiency: 92 }
+                { 
+                    id: 1, 
+                    name: 'Customer Onboarding', 
+                    category: 'Customer Management',
+                    owner: 'Sales Team',
+                    inputs: ['Customer Application', 'ID Verification', 'Credit Check'],
+                    processing: ['Data Validation', 'Risk Assessment', 'Account Setup'],
+                    outputs: ['Customer Account', 'Welcome Package', 'Service Activation'],
+                    stage: 'Optimized', 
+                    progress: 95, 
+                    efficiency: 88,
+                    cycleTime: '3.2 days',
+                    cost: '$245',
+                    qualityScore: 92,
+                    narrative: 'Streamlined digital onboarding process with automated verification and real-time status updates.',
+                    processMap: {
+                        steps: [
+                            {id: 'start', name: 'Application Received', type: 'start', x: 50, y: 50},
+                            {id: 'verify', name: 'Verify Identity', type: 'process', x: 200, y: 50},
+                            {id: 'assess', name: 'Risk Assessment', type: 'decision', x: 350, y: 50},
+                            {id: 'approve', name: 'Account Creation', type: 'process', x: 500, y: 50},
+                            {id: 'end', name: 'Welcome Package', type: 'end', x: 650, y: 50}
+                        ],
+                        connections: [
+                            {from: 'start', to: 'verify'},
+                            {from: 'verify', to: 'assess'},
+                            {from: 'assess', to: 'approve'},
+                            {from: 'approve', to: 'end'}
+                        ]
+                    }
+                },
+                { 
+                    id: 2, 
+                    name: 'Product Development', 
+                    category: 'Innovation',
+                    owner: 'Product Team',
+                    inputs: ['Market Research', 'Customer Feedback', 'Technical Requirements'],
+                    processing: ['Design Thinking', 'Prototyping', 'Testing & Validation'],
+                    outputs: ['Product Specification', 'Prototype', 'Market Launch Plan'],
+                    stage: 'In Progress', 
+                    progress: 65, 
+                    efficiency: 75,
+                    cycleTime: '12.5 weeks',
+                    cost: '$125K',
+                    qualityScore: 78,
+                    narrative: 'Agile product development methodology with continuous customer feedback integration and rapid prototyping.',
+                    processMap: {
+                        steps: [
+                            {id: 'research', name: 'Market Research', type: 'start', x: 50, y: 50},
+                            {id: 'ideate', name: 'Ideation', type: 'process', x: 200, y: 50},
+                            {id: 'prototype', name: 'Prototyping', type: 'process', x: 350, y: 50},
+                            {id: 'test', name: 'User Testing', type: 'decision', x: 500, y: 50},
+                            {id: 'launch', name: 'Market Launch', type: 'end', x: 650, y: 50}
+                        ],
+                        connections: [
+                            {from: 'research', to: 'ideate'},
+                            {from: 'ideate', to: 'prototype'},
+                            {from: 'prototype', to: 'test'},
+                            {from: 'test', to: 'launch'}
+                        ]
+                    }
+                }
             ]);
+
+            const ProcessDashboard = () => (
+                <div>
+                    <div className="page-header">
+                        <h1 className="page-title">🔄 Process Management Intelligence</h1>
+                        <p className="page-subtitle">Comprehensive process mapping, optimization, and intelligence platform</p>
+                    </div>
+                    
+                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', marginBottom: '2rem'}}>
+                        <div className="metric-panel">
+                            <h3>Total Processes</h3>
+                            <div className="metric-value" style={{color: '#4299e1'}}>{processes.length}</div>
+                            <p>Active Processes</p>
+                        </div>
+                        <div className="metric-panel">
+                            <h3>Avg Efficiency</h3>
+                            <div className="metric-value" style={{color: '#48bb78'}}>
+                                {Math.round(processes.reduce((sum, p) => sum + p.efficiency, 0) / processes.length)}%
+                            </div>
+                            <p>Process Performance</p>
+                        </div>
+                        <div className="metric-panel">
+                            <h3>Process Categories</h3>
+                            <div className="metric-value" style={{color: '#ed8936'}}>
+                                {[...new Set(processes.map(p => p.category))].length}
+                            </div>
+                            <p>Unique Categories</p>
+                        </div>
+                    </div>
+
+                    <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
+                            <h3>Process Portfolio</h3>
+                            <button 
+                                onClick={() => setShowProcessBuilder(true)}
+                                style={{background: '#4299e1', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '6px', cursor: 'pointer'}}
+                            >
+                                + New Process
+                            </button>
+                        </div>
+                        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem'}}>
+                            {processes.map(process => (
+                                <div key={process.id} 
+                                    style={{
+                                        border: '1px solid #e2e8f0', 
+                                        borderRadius: '8px', 
+                                        padding: '1rem',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s ease'
+                                    }}
+                                    onClick={() => setSelectedProcess(process)}
+                                    onMouseEnter={(e) => e.target.style.borderColor = '#4299e1'}
+                                    onMouseLeave={(e) => e.target.style.borderColor = '#e2e8f0'}
+                                >
+                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem'}}>
+                                        <h4 style={{margin: 0, fontSize: '1rem'}}>{process.name}</h4>
+                                        <span style={{
+                                            background: process.stage === 'Optimized' ? '#c6f6d5' : process.stage === 'In Progress' ? '#bee3f8' : '#fed7d7',
+                                            color: process.stage === 'Optimized' ? '#2f855a' : process.stage === 'In Progress' ? '#2b6cb0' : '#c53030',
+                                            padding: '0.25rem 0.5rem',
+                                            borderRadius: '12px',
+                                            fontSize: '0.75rem'
+                                        }}>
+                                            {process.stage}
+                                        </span>
+                                    </div>
+                                    <p style={{fontSize: '0.8rem', color: '#718096', margin: '0.25rem 0'}}>{process.category}</p>
+                                    <p style={{fontSize: '0.8rem', color: '#718096', margin: '0.25rem 0'}}>Owner: {process.owner}</p>
+                                    <div style={{display: 'flex', gap: '1rem', marginTop: '0.75rem', fontSize: '0.75rem'}}>
+                                        <div>
+                                            <div style={{fontWeight: 'bold'}}>Efficiency</div>
+                                            <div style={{color: '#4299e1'}}>{process.efficiency}%</div>
+                                        </div>
+                                        <div>
+                                            <div style={{fontWeight: 'bold'}}>Cycle Time</div>
+                                            <div style={{color: '#48bb78'}}>{process.cycleTime}</div>
+                                        </div>
+                                        <div>
+                                            <div style={{fontWeight: 'bold'}}>Quality</div>
+                                            <div style={{color: '#ed8936'}}>{process.qualityScore}%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const ProcessMapper = () => (
+                <div>
+                    <div className="page-header">
+                        <h1 className="page-title">🗺️ Process Mapping Studio</h1>
+                        <p className="page-subtitle">Visual process design and optimization workspace</p>
+                    </div>
+                    
+                    {selectedProcess ? (
+                        <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
+                                <h3>{selectedProcess.name} - Process Map</h3>
+                                <button 
+                                    onClick={() => setSelectedProcess(null)}
+                                    style={{background: '#e2e8f0', color: '#4a5568', border: 'none', padding: '0.5rem 1rem', borderRadius: '6px', cursor: 'pointer'}}
+                                >
+                                    ← Back to Dashboard
+                                </button>
+                            </div>
+                            
+                            <div style={{position: 'relative', width: '100%', height: '400px', border: '2px solid #e2e8f0', borderRadius: '8px', background: '#f7fafc'}}>
+                                {selectedProcess.processMap.steps.map(step => (
+                                    <div key={step.id} 
+                                        style={{
+                                            position: 'absolute',
+                                            left: step.x + 'px',
+                                            top: step.y + 'px',
+                                            width: '100px',
+                                            height: '60px',
+                                            background: step.type === 'start' ? '#c6f6d5' : step.type === 'end' ? '#fed7d7' : step.type === 'decision' ? '#fef5e7' : '#bee3f8',
+                                            border: '2px solid ' + (step.type === 'start' ? '#2f855a' : step.type === 'end' ? '#c53030' : step.type === 'decision' ? '#d69e2e' : '#2b6cb0'),
+                                            borderRadius: step.type === 'decision' ? '50%' : '8px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '0.75rem',
+                                            fontWeight: 'bold',
+                                            textAlign: 'center',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        {step.name}
+                                    </div>
+                                ))}
+                                
+                                {selectedProcess.processMap.connections.map((conn, idx) => {
+                                    const fromStep = selectedProcess.processMap.steps.find(s => s.id === conn.from);
+                                    const toStep = selectedProcess.processMap.steps.find(s => s.id === conn.to);
+                                    return (
+                                        <svg key={idx} style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none'}}>
+                                            <line 
+                                                x1={fromStep.x + 100} 
+                                                y1={fromStep.y + 30} 
+                                                x2={toStep.x} 
+                                                y2={toStep.y + 30}
+                                                stroke="#4a5568" 
+                                                strokeWidth="2" 
+                                                markerEnd="url(#arrowhead)"
+                                            />
+                                            <defs>
+                                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                                    <polygon points="0 0, 10 3.5, 0 7" fill="#4a5568" />
+                                                </marker>
+                                            </defs>
+                                        </svg>
+                                    );
+                                })}
+                            </div>
+                            
+                            <div style={{marginTop: '1rem', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem'}}>
+                                <div>
+                                    <h4>📥 Inputs</h4>
+                                    <ul style={{listStyle: 'none', padding: 0}}>
+                                        {selectedProcess.inputs.map((input, idx) => (
+                                            <li key={idx} style={{padding: '0.25rem 0', fontSize: '0.85rem'}}>• {input}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4>⚙️ Processing</h4>
+                                    <ul style={{listStyle: 'none', padding: 0}}>
+                                        {selectedProcess.processing.map((proc, idx) => (
+                                            <li key={idx} style={{padding: '0.25rem 0', fontSize: '0.85rem'}}>• {proc}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4>📤 Outputs</h4>
+                                    <ul style={{listStyle: 'none', padding: 0}}>
+                                        {selectedProcess.outputs.map((output, idx) => (
+                                            <li key={idx} style={{padding: '0.25rem 0', fontSize: '0.85rem'}}>• {output}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div style={{marginTop: '1rem', padding: '1rem', background: '#f7fafc', borderRadius: '8px'}}>
+                                <h4>📝 Process Narrative</h4>
+                                <p style={{fontSize: '0.9rem', lineHeight: '1.4', margin: 0}}>{selectedProcess.narrative}</p>
+                            </div>
+                        </div>
+                    ) : (
+                        <div style={{textAlign: 'center', padding: '3rem', background: 'white', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                            <h3>Select a Process to View Map</h3>
+                            <p>Choose a process from the dashboard to visualize its workflow and components.</p>
+                            <button 
+                                onClick={() => setActiveTab('dashboard')}
+                                style={{background: '#4299e1', color: 'white', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '6px', cursor: 'pointer'}}
+                            >
+                                Go to Dashboard
+                            </button>
+                        </div>
+                    )}
+                </div>
+            );
+
+            const ProcessAnalytics = () => (
+                <div>
+                    <div className="page-header">
+                        <h1 className="page-title">📊 Process Analytics</h1>
+                        <p className="page-subtitle">Performance insights and optimization recommendations</p>
+                    </div>
+                    
+                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem'}}>
+                        <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                            <h3>Efficiency Trends</h3>
+                            <div style={{height: '200px', background: '#f7fafc', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                <span style={{color: '#718096'}}>Interactive Chart: Process efficiency over time</span>
+                            </div>
+                        </div>
+                        <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                            <h3>Cost Analysis</h3>
+                            <div style={{height: '200px', background: '#f7fafc', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                <span style={{color: '#718096'}}>Interactive Chart: Cost breakdown by process</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginTop: '1rem'}}>
+                        <h3>AI-Powered Recommendations</h3>
+                        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem'}}>
+                            <div style={{padding: '1rem', background: '#c6f6d5', borderRadius: '8px', border: '1px solid #2f855a'}}>
+                                <h4 style={{color: '#2f855a', margin: '0 0 0.5rem 0'}}>🚀 High Impact</h4>
+                                <p style={{fontSize: '0.85rem', margin: 0}}>Automate Customer Onboarding approval process to reduce cycle time by 40%</p>
+                            </div>
+                            <div style={{padding: '1rem', background: '#bee3f8', borderRadius: '8px', border: '1px solid #2b6cb0'}}>
+                                <h4 style={{color: '#2b6cb0', margin: '0 0 0.5rem 0'}}>⚡ Quick Win</h4>
+                                <p style={{fontSize: '0.85rem', margin: 0}}>Implement digital signatures to eliminate paper-based bottlenecks</p>
+                            </div>
+                            <div style={{padding: '1rem', background: '#fef5e7', borderRadius: '8px', border: '1px solid #d69e2e'}}>
+                                <h4 style={{color: '#d69e2e', margin: '0 0 0.5rem 0'}}>📈 Strategic</h4>
+                                <p style={{fontSize: '0.85rem', margin: 0}}>Integrate process intelligence with performance management systems</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderActiveTab = () => {
+                switch(activeTab) {
+                    case 'mapper': return <ProcessMapper />;
+                    case 'analytics': return <ProcessAnalytics />;
+                    default: return <ProcessDashboard />;
+                }
+            };
 
             return (
                 <div>
-                    <h2 style={{marginBottom: '1.5rem', color: '#2d3748'}}>🔄 Process Management Dashboard</h2>
-                    <div className="module-grid">
-                        {processes.map(process => (
-                            <div key={process.id} className="module-card medium">
-                                <h3>{process.name}</h3>
-                                <p><strong>Stage:</strong> {process.stage}</p>
-                                <p><strong>Progress:</strong> {process.progress}%</p>
-                                <p><strong>Efficiency:</strong> {process.efficiency}%</p>
-                                <div style={{background: '#e2e8f0', borderRadius: '8px', overflow: 'hidden', height: '8px', marginTop: '1rem'}}>
-                                    <div style={{background: '#4299e1', height: '100%', width: `${process.progress}%`}}></div>
-                                </div>
-                            </div>
-                        ))}
+                    <div style={{background: 'white', padding: '1rem', borderBottom: '1px solid #e2e8f0', marginBottom: '1rem'}}>
+                        <div style={{display: 'flex', gap: '1rem'}}>
+                            <button 
+                                onClick={() => setActiveTab('dashboard')}
+                                style={{
+                                    background: activeTab === 'dashboard' ? '#4299e1' : 'transparent',
+                                    color: activeTab === 'dashboard' ? 'white' : '#4a5568',
+                                    border: '1px solid #4299e1',
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '6px',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                🔄 Dashboard
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('mapper')}
+                                style={{
+                                    background: activeTab === 'mapper' ? '#4299e1' : 'transparent',
+                                    color: activeTab === 'mapper' ? 'white' : '#4a5568',
+                                    border: '1px solid #4299e1',
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '6px',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                🗺️ Process Mapper
+                            </button>
+                            <button 
+                                onClick={() => setActiveTab('analytics')}
+                                style={{
+                                    background: activeTab === 'analytics' ? '#4299e1' : 'transparent',
+                                    color: activeTab === 'analytics' ? 'white' : '#4a5568',
+                                    border: '1px solid #4299e1',
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '6px',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                📊 Analytics
+                            </button>
+                        </div>
                     </div>
+                    {renderActiveTab()}
                 </div>
             );
         };
