@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucidra - Enhanced Mobile Navigation Demo</title>
+    
+    <!-- React 18 -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+            background: #f7fafc;
+            color: #2d3748;
+            line-height: 1.5;
+        }
+        
+        /* Mobile Header */
+        .mobile-header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .menu-button {
+            background: none;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 18px;
+        }
+        
+        .menu-button:hover {
+            background: #f7fafc;
+            border-color: #4299e1;
+        }
+        
+        .logo {
+            font-size: 18px;
+            font-weight: bold;
+            color: #319795;
+        }
+        
+        .tier-badge {
+            background: #319795;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 320px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            z-index: 1001;
+        }
+        
+        .dropdown-content.show {
+            display: block;
+        }
+        
+        .dropdown-item {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f7fafc;
+            transition: background-color 0.2s;
+        }
+        
+        .dropdown-item:hover {
+            background-color: #f7fafc;
+        }
+        
+        .dropdown-item.active {
+            background-color: #e6fffa;
+            border-left: 4px solid #319795;
+        }
+        
+        .dropdown-category {
+            background: #f7fafc;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #4a5568;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+        
+        .item-desc {
+            font-size: 12px;
+            color: #718096;
+            line-height: 1.3;
+        }
+        
+        /* Sidebar Overlay */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        .sidebar-overlay.show {
+            display: block;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 320px;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar.show {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #718096;
+        }
+        
+        .sidebar-nav {
+            height: calc(100% - 70px);
+            overflow-y: auto;
+        }
+        
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            border-bottom: 1px solid #f7fafc;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .sidebar-item:hover {
+            background: #f7fafc;
+        }
+        
+        .sidebar-item.active {
+            background: #e6fffa;
+            border-left: 4px solid #319795;
+            font-weight: bold;
+        }
+        
+        .sidebar-category {
+            background: #f7fafc;
+            padding: 12px 16px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #4a5568;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        /* Content Area */
+        .content {
+            padding: 20px;
+            max-width: 100%;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-button {
+            background: #e2e8f0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .feature-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .alert-success {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        /* Process Management Specific Styling */
+        .process-highlight {
+            background: #faf5ff;
+            border-left: 4px solid #805ad5;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+        }
+        
+        .process-features {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .process-features li {
+            padding: 8px 0;
+            color: #553c9a;
+            font-weight: 500;
+        }
+        
+        /* Desktop Detection */
+        @media (min-width: 768px) {
+            .mobile-only { display: none !important; }
+            .desktop-message {
+                text-align: center;
+                padding: 40px;
+                background: white;
+                border-radius: 12px;
+                margin: 20px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .desktop-message { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop-message">
+        <h2>🖥️ Desktop Detected</h2>
+        <p>This demo shows the mobile navigation experience. Please view on a mobile device or resize your browser window to less than 768px width to see the mobile navigation in action.</p>
+        <p><strong>Features demonstrated:</strong></p>
+        <ul style="text-align: left; display: inline-block; margin-top: 16px;">
+            <li>📱 Hamburger menu button</li>
+            <li>🎯 Dropdown navigation with categories</li>
+            <li>📋 Left sidebar with full module list</li>
+            <li>🔄 Process management module highlighting</li>
+            <li>📊 Organized navigation by business function</li>
+        </ul>
+    </div>
+
+    <div class="mobile-only">
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <div class="logo-section">
+                <button class="menu-button" onclick="toggleSidebar()">☰</button>
+                <div class="logo">Lucidra</div>
+                <div class="tier-badge">PRO</div>
+            </div>
+            
+            <!-- Dropdown Menu -->
+            <div class="dropdown">
+                <button class="menu-button" onclick="toggleDropdown()">Menu ▼</button>
+                <div id="dropdownContent" class="dropdown-content">
+                    <div class="dropdown-item" onclick="selectView('dashboard')">
+                        <span style="font-size: 18px;">🏠</span>
+                        <div class="item-info">
+                            <div class="item-name">Dashboard</div>
+                            <div class="item-desc">Platform overview</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown-category">🎯 Strategy & Planning</div>
+                    <div class="dropdown-item" onclick="selectView('mission')">
+                        <span style="font-size: 18px;">🎯</span>
+                        <div class="item-info">
+                            <div class="item-name">Mission Generator</div>
+                            <div class="item-desc">AI-powered mission statements</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item" onclick="selectView('blue-ocean')">
+                        <span style="font-size: 18px;">🌊</span>
+                        <div class="item-info">
+                            <div class="item-name">Blue Ocean Strategy</div>
+                            <div class="item-desc">Uncontested market space</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item" onclick="selectView('strategy-frameworks')">
+                        <span style="font-size: 18px;">📚</span>
+                        <div class="item-info">
+                            <div class="item-name">Strategy Frameworks</div>
+                            <div class="item-desc">Complete framework library</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown-category">🔄 Process Management</div>
+                    <div class="dropdown-item" onclick="selectView('process-management')">
+                        <span style="font-size: 18px;">🔄</span>
+                        <div class="item-info">
+                            <div class="item-name">Process Management</div>
+                            <div class="item-desc">BPMN process design</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item" onclick="selectView('advanced-process')">
+                        <span style="font-size: 18px;">🏭</span>
+                        <div class="item-info">
+                            <div class="item-name">Advanced Process</div>
+                            <div class="item-desc">AI process optimization</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item" onclick="selectView('process-improvement')">
+                        <span style="font-size: 18px;">⚙️</span>
+                        <div class="item-info">
+                            <div class="item-name">Process Intelligence</div>
+                            <div class="item-desc">Intelligent optimization</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item" onclick="selectView('ai-process-logger')">
+                        <span style="font-size: 18px;">🤖</span>
+                        <div class="item-info">
+                            <div class="item-name">AI Process Logger</div>
+                            <div class="item-desc">Automated logging</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown-category">📊 Analysis & Intelligence</div>
+                    <div class="dropdown-item" onclick="selectView('data-pulse')">
+                        <span style="font-size: 18px;">📊</span>
+                        <div class="item-info">
+                            <div class="item-name">Data Pulse Intelligence</div>
+                            <div class="item-desc">Real-time market signals</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item" onclick="selectView('porter')">
+                        <span style="font-size: 18px;">🏢</span>
+                        <div class="item-info">
+                            <div class="item-name">Porter Five Forces</div>
+                            <div class="item-desc">Industry analysis</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-item" onclick="selectView('financial')">
+                        <span style="font-size: 18px;">💰</span>
+                        <div class="item-info">
+                            <div class="item-name">Financial Analysis</div>
+                            <div class="item-desc">Financial frameworks</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Overlay -->
+        <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+        <!-- Left Sidebar -->
+        <div id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div>
+                    <div class="logo">Lucidra</div>
+                    <div class="tier-badge" style="margin-top: 4px;">PRO</div>
+                </div>
+                <button class="sidebar-close" onclick="closeSidebar()">×</button>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="sidebar-item" onclick="selectView('dashboard')">
+                    <span style="font-size: 20px;">🏠</span>
+                    <div class="item-info">
+                        <div class="item-name">Dashboard</div>
+                        <div class="item-desc">Platform overview</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-category">🎯 Strategy & Planning</div>
+                <div class="sidebar-item" onclick="selectView('mission')">
+                    <span style="font-size: 20px;">🎯</span>
+                    <div class="item-info">
+                        <div class="item-name">Mission Generator</div>
+                        <div class="item-desc">AI-powered mission statements</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('blue-ocean')">
+                    <span style="font-size: 20px;">🌊</span>
+                    <div class="item-info">
+                        <div class="item-name">Blue Ocean Strategy</div>
+                        <div class="item-desc">Uncontested market space</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('strategy-frameworks')">
+                    <span style="font-size: 20px;">📚</span>
+                    <div class="item-info">
+                        <div class="item-name">Strategy Frameworks</div>
+                        <div class="item-desc">Complete framework library</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('strategic-planning')">
+                    <span style="font-size: 20px;">🗺️</span>
+                    <div class="item-info">
+                        <div class="item-name">Strategic Planning</div>
+                        <div class="item-desc">Comprehensive planning</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-category">🔄 Process Management</div>
+                <div class="sidebar-item" onclick="selectView('process-management')">
+                    <span style="font-size: 20px;">🔄</span>
+                    <div class="item-info">
+                        <div class="item-name">Process Management</div>
+                        <div class="item-desc">BPMN process design</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('advanced-process')">
+                    <span style="font-size: 20px;">🏭</span>
+                    <div class="item-info">
+                        <div class="item-name">Advanced Process</div>
+                        <div class="item-desc">AI process optimization</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('process-improvement')">
+                    <span style="font-size: 20px;">⚙️</span>
+                    <div class="item-info">
+                        <div class="item-name">Process Intelligence</div>
+                        <div class="item-desc">Intelligent optimization</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('process-analysis')">
+                    <span style="font-size: 20px;">📊</span>
+                    <div class="item-info">
+                        <div class="item-name">Process Analysis</div>
+                        <div class="item-desc">Analysis framework</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('ai-process-logger')">
+                    <span style="font-size: 20px;">🤖</span>
+                    <div class="item-info">
+                        <div class="item-name">AI Process Logger</div>
+                        <div class="item-desc">Automated logging</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-category">📊 Analysis & Intelligence</div>
+                <div class="sidebar-item" onclick="selectView('data-pulse')">
+                    <span style="font-size: 20px;">📊</span>
+                    <div class="item-info">
+                        <div class="item-name">Data Pulse Intelligence</div>
+                        <div class="item-desc">Real-time market signals</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('porter')">
+                    <span style="font-size: 20px;">🏢</span>
+                    <div class="item-info">
+                        <div class="item-name">Porter Five Forces</div>
+                        <div class="item-desc">Industry analysis</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('financial')">
+                    <span style="font-size: 20px;">💰</span>
+                    <div class="item-info">
+                        <div class="item-name">Financial Analysis</div>
+                        <div class="item-desc">Financial frameworks</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('swot-analysis')">
+                    <span style="font-size: 20px;">⚖️</span>
+                    <div class="item-info">
+                        <div class="item-name">SWOT Analysis</div>
+                        <div class="item-desc">Live SWOT analysis</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-category">👥 Operations & Team</div>
+                <div class="sidebar-item" onclick="selectView('project-management')">
+                    <span style="font-size: 20px;">📋</span>
+                    <div class="item-info">
+                        <div class="item-name">Project Management</div>
+                        <div class="item-desc">Complete project system</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('team-collaboration')">
+                    <span style="font-size: 20px;">👥</span>
+                    <div class="item-info">
+                        <div class="item-name">Team Collaboration</div>
+                        <div class="item-desc">Collaboration tools</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('hr-module')">
+                    <span style="font-size: 20px;">👥</span>
+                    <div class="item-info">
+                        <div class="item-name">HR Management</div>
+                        <div class="item-desc">Enhanced HR system</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-category">🛠️ Tools & Resources</div>
+                <div class="sidebar-item" onclick="selectView('execution')">
+                    <span style="font-size: 20px;">📈</span>
+                    <div class="item-info">
+                        <div class="item-name">Execution Tracker</div>
+                        <div class="item-desc">Strategy implementation</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('canvas')">
+                    <span style="font-size: 20px;">📋</span>
+                    <div class="item-info">
+                        <div class="item-name">Business Model Canvas</div>
+                        <div class="item-desc">Visual business planning</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" onclick="selectView('video')">
+                    <span style="font-size: 20px;">🎥</span>
+                    <div class="item-info">
+                        <div class="item-name">AI Video Production</div>
+                        <div class="item-desc">Generate strategy videos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <div id="mainContent">
+                <!-- Dashboard View -->
+                <div id="dashboard-view">
+                    <h1>Welcome to Lucidra</h1>
+                    <p style="color: #718096; margin-bottom: 24px;">Your AI-powered business strategy platform</p>
+
+                    <div class="alert-success">
+                        <span style="font-size: 20px;">✅</span>
+                        <div>
+                            <strong>🚀 ENHANCED MOBILE NAVIGATION IMPLEMENTED!</strong>
+                            <br />
+                            <span style="font-size: 14px;">
+                                Experience the new mobile-first navigation with hamburger menu, dropdown navigation, and left sidebar for the complete Lucidra platform with 26+ modules.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3 style="margin-bottom: 16px;">📱 Mobile Navigation Features</h3>
+                        <ul style="padding-left: 20px; line-height: 1.8;">
+                            <li><strong>☰ Hamburger Menu:</strong> Left sidebar with full module access</li>
+                            <li><strong>📋 Dropdown Menu:</strong> Quick access to key modules</li>
+                            <li><strong>🎯 Organized Categories:</strong> Modules grouped by business function</li>
+                            <li><strong>📱 Touch-Friendly:</strong> Large touch targets optimized for mobile</li>
+                            <li><strong>🔍 Detailed Descriptions:</strong> See what each module offers</li>
+                        </ul>
+                    </div>
+
+                    <div class="process-highlight">
+                        <h4 style="color: #805ad5; margin-bottom: 12px;">🔄 Process Management Suite Highlighted</h4>
+                        <p style="margin-bottom: 12px;">All process management modules are now easily accessible with clear descriptions:</p>
+                        <ul class="process-features">
+                            <li>✅ 🔄 Process Management - BPMN process design</li>
+                            <li>✅ 🏭 Advanced Process - AI process optimization</li>
+                            <li>✅ ⚙️ Process Intelligence - Intelligent optimization</li>
+                            <li>✅ 📊 Process Analysis - Analysis framework</li>
+                            <li>✅ 🤖 AI Process Logger - Automated logging</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Dynamic Content Views -->
+                <div id="dynamic-view" style="display: none;">
+                    <div class="page-header">
+                        <div class="page-title">
+                            <span id="current-icon">🏠</span>
+                            <span id="current-title">Dashboard</span>
+                        </div>
+                        <button class="back-button" onclick="selectView('dashboard')">← Back to Dashboard</button>
+                    </div>
+
+                    <div class="alert-success">
+                        <span style="font-size: 20px;">✅</span>
+                        <div>
+                            <strong id="module-title">Module Active!</strong>
+                            <br />
+                            <span style="font-size: 14px;" id="module-description">
+                                Module description will appear here.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3 id="module-dashboard-title">Module Dashboard</h3>
+                        <p style="color: #718096; margin-bottom: 16px;">
+                            This module is fully operational with all business intelligence features active. 
+                            Use the mobile navigation to explore other modules in the comprehensive Lucidra platform.
+                        </p>
+                        
+                        <div id="process-highlight" class="process-highlight" style="display: none;">
+                            <h4 style="color: #805ad5; margin-bottom: 8px;">
+                                🔧 Process Management Features:
+                            </h4>
+                            <ul class="process-features">
+                                <li>✅ BPMN Process Design & Modeling</li>
+                                <li>✅ AI-Powered Process Optimization</li>
+                                <li>✅ Real-time Process Intelligence</li>
+                                <li>✅ Automated Process Logging</li>
+                                <li>✅ Performance Analytics & Reporting</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="margin-top: 16px; padding: 12px; background: #f0fff4; border-radius: 6px;">
+                            <small style="color: #276749;">
+                                📱 <strong>Mobile Optimized:</strong> This interface adapts to your screen size and provides easy navigation through the hamburger menu and dropdown options.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentView = 'dashboard';
+        
+        const moduleData = {
+            'dashboard': { icon: '🏠', title: 'Dashboard', desc: 'Platform overview' },
+            'mission': { icon: '🎯', title: 'Mission Generator', desc: 'AI-powered mission statements' },
+            'blue-ocean': { icon: '🌊', title: 'Blue Ocean Strategy', desc: 'Uncontested market space' },
+            'strategy-frameworks': { icon: '📚', title: 'Strategy Frameworks', desc: 'Complete framework library' },
+            'strategic-planning': { icon: '🗺️', title: 'Strategic Planning', desc: 'Comprehensive planning' },
+            'process-management': { icon: '🔄', title: 'Process Management', desc: 'BPMN process design' },
+            'advanced-process': { icon: '🏭', title: 'Advanced Process', desc: 'AI process optimization' },
+            'process-improvement': { icon: '⚙️', title: 'Process Intelligence', desc: 'Intelligent optimization' },
+            'process-analysis': { icon: '📊', title: 'Process Analysis', desc: 'Analysis framework' },
+            'ai-process-logger': { icon: '🤖', title: 'AI Process Logger', desc: 'Automated logging' },
+            'data-pulse': { icon: '📊', title: 'Data Pulse Intelligence', desc: 'Real-time market signals' },
+            'porter': { icon: '🏢', title: 'Porter Five Forces', desc: 'Industry analysis' },
+            'financial': { icon: '💰', title: 'Financial Analysis', desc: 'Financial frameworks' },
+            'swot-analysis': { icon: '⚖️', title: 'SWOT Analysis', desc: 'Live SWOT analysis' },
+            'project-management': { icon: '📋', title: 'Project Management', desc: 'Complete project system' },
+            'team-collaboration': { icon: '👥', title: 'Team Collaboration', desc: 'Collaboration tools' },
+            'hr-module': { icon: '👥', title: 'HR Management', desc: 'Enhanced HR system' },
+            'execution': { icon: '📈', title: 'Execution Tracker', desc: 'Strategy implementation' },
+            'canvas': { icon: '📋', title: 'Business Model Canvas', desc: 'Visual business planning' },
+            'video': { icon: '🎥', title: 'AI Video Production', desc: 'Generate strategy videos' }
+        };
+        
+        const processModules = ['process-management', 'advanced-process', 'process-improvement', 'process-analysis', 'ai-process-logger'];
+        
+        function toggleDropdown() {
+            document.getElementById("dropdownContent").classList.toggle("show");
+        }
+        
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.add("show");
+            document.getElementById("sidebarOverlay").classList.add("show");
+        }
+        
+        function closeSidebar() {
+            document.getElementById("sidebar").classList.remove("show");
+            document.getElementById("sidebarOverlay").classList.remove("show");
+        }
+        
+        function selectView(viewId) {
+            currentView = viewId;
+            
+            // Close menus
+            document.getElementById("dropdownContent").classList.remove("show");
+            closeSidebar();
+            
+            // Update active states
+            updateActiveStates();
+            
+            if (viewId === 'dashboard') {
+                document.getElementById('dashboard-view').style.display = 'block';
+                document.getElementById('dynamic-view').style.display = 'none';
+            } else {
+                document.getElementById('dashboard-view').style.display = 'none';
+                document.getElementById('dynamic-view').style.display = 'block';
+                
+                const module = moduleData[viewId];
+                if (module) {
+                    document.getElementById('current-icon').textContent = module.icon;
+                    document.getElementById('current-title').textContent = module.title;
+                    document.getElementById('module-title').textContent = module.title + ' Active!';
+                    document.getElementById('module-description').textContent = module.desc + ' - Fully functional and ready for business use.' + (processModules.includes(viewId) ? ' 🔧 Process management features are working perfectly!' : '');
+                    document.getElementById('module-dashboard-title').textContent = module.title + ' Dashboard';
+                    
+                    // Show process highlight for process modules
+                    const processHighlight = document.getElementById('process-highlight');
+                    if (processModules.includes(viewId)) {
+                        processHighlight.style.display = 'block';
+                    } else {
+                        processHighlight.style.display = 'none';
+                    }
+                }
+            }
+        }
+        
+        function updateActiveStates() {
+            // Update dropdown items
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Update sidebar items
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            sidebarItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Set active states
+            const activeDropdownItem = Array.from(dropdownItems).find(item => 
+                item.onclick && item.onclick.toString().includes(currentView)
+            );
+            if (activeDropdownItem) {
+                activeDropdownItem.classList.add('active');
+            }
+            
+            const activeSidebarItem = Array.from(sidebarItems).find(item => 
+                item.onclick && item.onclick.toString().includes(currentView)
+            );
+            if (activeSidebarItem) {
+                activeSidebarItem.classList.add('active');
+            }
+        }
+        
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-button')) {
+                const dropdown = document.getElementById("dropdownContent");
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+        
+        // Initialize
+        updateActiveStates();
+    </script>
+</body>
+</html>
