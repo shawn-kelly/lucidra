@@ -1,1 +1,0 @@
-export { DataPulseWidget } from './DataPulseWidget';
