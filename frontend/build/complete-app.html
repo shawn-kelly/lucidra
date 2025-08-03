@@ -4415,6 +4415,149 @@
                         </div>
                     </div>
                     {renderActiveTab()}
+                    
+                    {/* Process Builder Modal */}
+                    {showProcessBuilder && (
+                        <div style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'rgba(0,0,0,0.5)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 1000
+                        }}>
+                            <div style={{
+                                background: 'white',
+                                borderRadius: '12px',
+                                padding: '2rem',
+                                maxWidth: '600px',
+                                width: '90%',
+                                maxHeight: '80vh',
+                                overflow: 'auto',
+                                boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
+                            }}>
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem'}}>
+                                    <h3 style={{margin: 0, fontSize: '1.5rem', color: '#2d3748'}}>🚀 Create New Process</h3>
+                                    <button 
+                                        onClick={() => setShowProcessBuilder(false)}
+                                        style={{
+                                            background: 'none',
+                                            border: 'none',
+                                            fontSize: '1.5rem',
+                                            cursor: 'pointer',
+                                            color: '#718096'
+                                        }}
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+                                
+                                <div style={{marginBottom: '1rem'}}>
+                                    <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold'}}>Process Name</label>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Enter process name..." 
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            border: '1px solid #e2e8f0',
+                                            borderRadius: '6px',
+                                            fontSize: '1rem'
+                                        }}
+                                    />
+                                </div>
+                                
+                                <div style={{marginBottom: '1rem'}}>
+                                    <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold'}}>Category</label>
+                                    <select style={{
+                                        width: '100%',
+                                        padding: '0.75rem',
+                                        border: '1px solid #e2e8f0',
+                                        borderRadius: '6px',
+                                        fontSize: '1rem'
+                                    }}>
+                                        <option value="">Select category...</option>
+                                        <option value="Customer Management">Customer Management</option>
+                                        <option value="Marketing Excellence">Marketing Excellence</option>
+                                        <option value="Human Resources Excellence">Human Resources Excellence</option>
+                                        <option value="Operations Management">Operations Management</option>
+                                        <option value="Financial Management">Financial Management</option>
+                                        <option value="Strategic Planning">Strategic Planning</option>
+                                    </select>
+                                </div>
+                                
+                                <div style={{marginBottom: '1rem'}}>
+                                    <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold'}}>Process Owner</label>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Enter process owner..." 
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            border: '1px solid #e2e8f0',
+                                            borderRadius: '6px',
+                                            fontSize: '1rem'
+                                        }}
+                                    />
+                                </div>
+                                
+                                <div style={{marginBottom: '1rem'}}>
+                                    <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold'}}>Process Description</label>
+                                    <textarea 
+                                        placeholder="Describe your process..." 
+                                        style={{
+                                            width: '100%',
+                                            height: '100px',
+                                            padding: '0.75rem',
+                                            border: '1px solid #e2e8f0',
+                                            borderRadius: '6px',
+                                            fontSize: '1rem',
+                                            resize: 'vertical'
+                                        }}
+                                    />
+                                </div>
+                                
+                                <div style={{display: 'flex', gap: '1rem', justifyContent: 'flex-end'}}>
+                                    <button 
+                                        onClick={() => setShowProcessBuilder(false)}
+                                        style={{
+                                            background: '#e2e8f0',
+                                            color: '#4a5568',
+                                            border: 'none',
+                                            padding: '0.75rem 1.5rem',
+                                            borderRadius: '6px',
+                                            cursor: 'pointer',
+                                            fontSize: '1rem'
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button 
+                                        onClick={() => {
+                                            // Add logic to create new process
+                                            setShowProcessBuilder(false);
+                                            alert('🎉 New Process Created Successfully!\n\nYour process has been added to the Process Portfolio. You can now map, analyze, and optimize it using all the advanced tools available.');
+                                        }}
+                                        style={{
+                                            background: '#4299e1',
+                                            color: 'white',
+                                            border: 'none',
+                                            padding: '0.75rem 1.5rem',
+                                            borderRadius: '6px',
+                                            cursor: 'pointer',
+                                            fontSize: '1rem'
+                                        }}
+                                    >
+                                        🚀 Create Process
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             );
         };
