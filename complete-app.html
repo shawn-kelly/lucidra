@@ -4792,6 +4792,913 @@
             );
         };
 
+        // Organization-Wide Process Management Component
+        const OrganizationWideProcessManagement = () => {
+            const [processes, setProcesses] = React.useState([]);
+            const [selectedProcess, setSelectedProcess] = React.useState(null);
+            const [aiAssistant, setAiAssistant] = React.useState({
+                isActive: true,
+                currentSuggestion: '',
+                insights: [],
+                alerts: []
+            });
+            const [activeTab, setActiveTab] = React.useState(0);
+            const [isLoading, setIsLoading] = React.useState(false);
+            const [collaborationMode, setCollaborationMode] = React.useState(false);
+            const [realTimeUsers, setRealTimeUsers] = React.useState([]);
+            const [showProcessModal, setShowProcessModal] = React.useState(false);
+
+            // Initialize with demo data
+            React.useEffect(() => {
+                setIsLoading(true);
+                setTimeout(() => {
+                    setProcesses([
+                        {
+                            id: 'proc-001',
+                            name: 'Customer Onboarding',
+                            department: 'Sales & Marketing',
+                            owner: 'Sarah Johnson',
+                            status: 'active',
+                            efficiency: 78,
+                            bottlenecks: ['Document verification delays', 'Manual approval process'],
+                            conflicts: ['Overlapping with customer service workflows'],
+                            dependencies: ['CRM system', 'Document management', 'Payment processing'],
+                            integrations: ['Mission Statement Module', 'Financial Analysis', 'HR Management'],
+                            lastUpdated: '2025-08-03',
+                            team: [
+                                {id: '1', name: 'Sarah Johnson', role: 'Process Owner'},
+                                {id: '2', name: 'Mike Chen', role: 'Analyst'},
+                                {id: '3', name: 'Lisa Park', role: 'Coordinator'}
+                            ],
+                            metrics: {
+                                cycleTime: 5.2,
+                                throughput: 24,
+                                errorRate: 3.1,
+                                costPerUnit: 45.60
+                            },
+                            aiRecommendations: [
+                                'Implement automated document verification',
+                                'Create parallel approval pathways',
+                                'Integrate with Blue Ocean Strategy for competitive advantage'
+                            ]
+                        },
+                        {
+                            id: 'proc-002',
+                            name: 'Product Development',
+                            department: 'R&D',
+                            owner: 'Dr. Alex Rodriguez',
+                            status: 'optimizing',
+                            efficiency: 65,
+                            bottlenecks: ['Resource allocation conflicts', 'Testing phase delays'],
+                            conflicts: ['Budget approval overlap with financial processes'],
+                            dependencies: ['Project management', 'Quality assurance', 'Market research'],
+                            integrations: ['Strategy Frameworks', 'Porter Five Forces', 'Data Pulse Intelligence'],
+                            lastUpdated: '2025-08-02',
+                            team: [
+                                {id: '4', name: 'Dr. Alex Rodriguez', role: 'Process Owner'},
+                                {id: '5', name: 'Emma Wilson', role: 'Lead Developer'},
+                                {id: '6', name: 'James Lee', role: 'QA Manager'}
+                            ],
+                            metrics: {
+                                cycleTime: 12.8,
+                                throughput: 8,
+                                errorRate: 5.7,
+                                costPerUnit: 1250.00
+                            },
+                            aiRecommendations: [
+                                'Optimize resource allocation using AI predictions',
+                                'Implement agile testing methodologies',
+                                'Connect with market intelligence for trend-based development'
+                            ]
+                        },
+                        {
+                            id: 'proc-003',
+                            name: 'Supply Chain Management',
+                            department: 'Operations',
+                            owner: 'Maria Santos',
+                            status: 'under_review',
+                            efficiency: 82,
+                            bottlenecks: ['Vendor communication gaps', 'Inventory forecasting'],
+                            conflicts: ['Procurement timing with production schedules'],
+                            dependencies: ['ERP system', 'Vendor management', 'Logistics'],
+                            integrations: ['Financial Analysis', 'Data Pulse', 'Execution Tracker'],
+                            lastUpdated: '2025-08-01',
+                            team: [
+                                {id: '7', name: 'Maria Santos', role: 'Process Owner'},
+                                {id: '8', name: 'Kevin Wong', role: 'Supply Chain Analyst'},
+                                {id: '9', name: 'Rachel Green', role: 'Vendor Relations'}
+                            ],
+                            metrics: {
+                                cycleTime: 8.5,
+                                throughput: 18,
+                                errorRate: 2.3,
+                                costPerUnit: 89.40
+                            },
+                            aiRecommendations: [
+                                'Implement predictive analytics for inventory',
+                                'Automate vendor communications',
+                                'Integrate with financial forecasting modules'
+                            ]
+                        }
+                    ]);
+                    
+                    setAiAssistant({
+                        isActive: true,
+                        currentSuggestion: 'AI Analysis: Customer Onboarding process shows 23% improvement potential through automation. Recommend immediate action on document verification bottleneck.',
+                        insights: [
+                            'Cross-department process conflicts detected in 3 areas',
+                            'Potential 18% efficiency gain through module integration',
+                            'Real-time collaboration can reduce cycle time by 15%',
+                            'AI-driven resource allocation could optimize 5 processes simultaneously'
+                        ],
+                        alerts: [
+                            {type: 'warning', message: 'Document verification bottleneck affecting 3 processes'},
+                            {type: 'error', message: 'Critical conflict detected between procurement and production'},
+                            {type: 'info', message: 'New integration opportunity with Data Pulse module identified'}
+                        ]
+                    });
+                    
+                    setRealTimeUsers([
+                        {id: '1', name: 'Sarah Johnson', action: 'Editing Customer Onboarding'},
+                        {id: '2', name: 'Mike Chen', action: 'Analyzing metrics'},
+                        {id: '3', name: 'Dr. Alex Rodriguez', action: 'Reviewing R&D process'}
+                    ]);
+                    
+                    setIsLoading(false);
+                }, 1500);
+            }, []);
+
+            if (isLoading) {
+                return (
+                    <div style={{padding: '2rem', textAlign: 'center'}}>
+                        <div style={{fontSize: '2rem', marginBottom: '1rem'}}>⏳</div>
+                        <h3>Loading Organization-Wide Process Management...</h3>
+                        <p style={{color: '#718096'}}>Analyzing processes, connections, and AI insights</p>
+                    </div>
+                );
+            }
+
+            return (
+                <div style={{padding: '1.5rem'}}>
+                    <div style={{marginBottom: '2rem'}}>
+                        <h1 style={{fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem'}}>
+                            🔄 Organization-Wide Process Management
+                        </h1>
+                        <p style={{fontSize: '1.1rem', color: '#718096'}}>
+                            Coordinate, optimize, and integrate all organizational processes with AI assistance
+                        </p>
+                    </div>
+
+                    {/* Organization Metrics */}
+                    <div className="financial-grid" style={{marginBottom: '2rem'}}>
+                        <div className="metric-panel">
+                            <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Total Processes</div>
+                            <div className="metric-value positive">24</div>
+                            <div style={{fontSize: '0.9rem', color: '#48bb78'}}>↗ 12% from last month</div>
+                        </div>
+                        <div className="metric-panel">
+                            <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Avg Efficiency</div>
+                            <div className="metric-value positive">75%</div>
+                            <div style={{fontSize: '0.9rem', color: '#48bb78'}}>↗ 8% improvement</div>
+                        </div>
+                        <div className="metric-panel">
+                            <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Active Bottlenecks</div>
+                            <div className="metric-value negative">7</div>
+                            <div style={{fontSize: '0.9rem', color: '#48bb78'}}>↗ 3 resolved this week</div>
+                        </div>
+                        <div className="metric-panel">
+                            <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Cost Savings</div>
+                            <div className="metric-value positive">$42K</div>
+                            <div style={{fontSize: '0.9rem', color: '#48bb78'}}>↗ This quarter</div>
+                        </div>
+                    </div>
+
+                    {/* Tab Navigation */}
+                    <div style={{marginBottom: '1.5rem'}}>
+                        <div style={{borderBottom: '1px solid #e2e8f0', marginBottom: '1rem'}}>
+                            {['📊 Process Overview', '🤖 AI Assistant', '👥 Collaboration', '🔗 Integrations', '📈 Analytics'].map((tab, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setActiveTab(index)}
+                                    style={{
+                                        padding: '0.75rem 1rem',
+                                        marginRight: '0.5rem',
+                                        background: activeTab === index ? '#319795' : 'transparent',
+                                        color: activeTab === index ? 'white' : '#4a5568',
+                                        border: 'none',
+                                        borderRadius: '4px 4px 0 0',
+                                        cursor: 'pointer',
+                                        fontWeight: activeTab === index ? 'bold' : 'normal'
+                                    }}
+                                >
+                                    {tab}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Tab Panels */}
+                        {activeTab === 0 && (
+                            <div>
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem'}}>
+                                    <h3 style={{fontSize: '1.25rem', fontWeight: 'bold'}}>Active Processes</h3>
+                                    <button 
+                                        style={{
+                                            background: '#319795',
+                                            color: 'white',
+                                            border: 'none',
+                                            padding: '0.5rem 1rem',
+                                            borderRadius: '6px',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        ➕ Create New Process
+                                    </button>
+                                </div>
+
+                                <div className="module-grid">
+                                    {processes.map(process => (
+                                        <div 
+                                            key={process.id}
+                                            className="module-card"
+                                            style={{
+                                                cursor: 'pointer',
+                                                borderLeft: `4px solid ${
+                                                    process.status === 'active' ? '#48bb78' :
+                                                    process.status === 'optimizing' ? '#ed8936' :
+                                                    process.status === 'under_review' ? '#4299e1' : '#a0aec0'
+                                                }`
+                                            }}
+                                            onClick={() => {
+                                                setSelectedProcess(process);
+                                                setShowProcessModal(true);
+                                            }}
+                                        >
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem'}}>
+                                                <div>
+                                                    <h4 style={{fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.5rem'}}>{process.name}</h4>
+                                                    <div style={{display: 'flex', gap: '0.5rem', marginBottom: '0.5rem'}}>
+                                                        <span style={{
+                                                            background: '#805ad5',
+                                                            color: 'white',
+                                                            padding: '0.25rem 0.5rem',
+                                                            borderRadius: '4px',
+                                                            fontSize: '0.75rem'
+                                                        }}>
+                                                            {process.department}
+                                                        </span>
+                                                        <span style={{
+                                                            background: process.status === 'active' ? '#48bb78' :
+                                                                       process.status === 'optimizing' ? '#ed8936' :
+                                                                       process.status === 'under_review' ? '#4299e1' : '#a0aec0',
+                                                            color: 'white',
+                                                            padding: '0.25rem 0.5rem',
+                                                            borderRadius: '4px',
+                                                            fontSize: '0.75rem'
+                                                        }}>
+                                                            {process.status.replace('_', ' ').toUpperCase()}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div style={{textAlign: 'right'}}>
+                                                    <div style={{fontSize: '2rem', fontWeight: 'bold', color: '#319795'}}>
+                                                        {process.efficiency}%
+                                                    </div>
+                                                    <div style={{fontSize: '0.75rem', color: '#718096'}}>Efficiency</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div style={{marginBottom: '1rem'}}>
+                                                <div style={{fontSize: '0.9rem', color: '#718096', marginBottom: '0.5rem'}}>Process Health</div>
+                                                <div style={{
+                                                    background: '#e2e8f0',
+                                                    height: '8px',
+                                                    borderRadius: '4px',
+                                                    overflow: 'hidden'
+                                                }}>
+                                                    <div style={{
+                                                        background: process.efficiency > 80 ? '#48bb78' : process.efficiency > 60 ? '#ed8936' : '#e53e3e',
+                                                        height: '100%',
+                                                        width: `${process.efficiency}%`
+                                                    }}></div>
+                                                </div>
+                                            </div>
+
+                                            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem'}}>
+                                                <div>
+                                                    <div style={{fontSize: '0.75rem', color: '#718096'}}>Cycle Time</div>
+                                                    <div style={{fontWeight: 'bold'}}>{process.metrics.cycleTime}d</div>
+                                                </div>
+                                                <div>
+                                                    <div style={{fontSize: '0.75rem', color: '#718096'}}>Throughput</div>
+                                                    <div style={{fontWeight: 'bold'}}>{process.metrics.throughput}/day</div>
+                                                </div>
+                                            </div>
+
+                                            {process.bottlenecks.length > 0 && (
+                                                <div style={{marginBottom: '1rem'}}>
+                                                    <div style={{fontSize: '0.85rem', fontWeight: 'bold', color: '#e53e3e', marginBottom: '0.25rem'}}>
+                                                        🚫 Active Bottlenecks ({process.bottlenecks.length})
+                                                    </div>
+                                                    <div style={{fontSize: '0.75rem', color: '#718096'}}>
+                                                        {process.bottlenecks[0]}
+                                                        {process.bottlenecks.length > 1 && ` +${process.bottlenecks.length - 1} more`}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            <div style={{marginBottom: '1rem'}}>
+                                                <div style={{fontSize: '0.85rem', fontWeight: 'bold', color: '#4299e1', marginBottom: '0.5rem'}}>
+                                                    🔗 Module Integrations ({process.integrations.length})
+                                                </div>
+                                                <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem'}}>
+                                                    {process.integrations.slice(0, 3).map((integration, idx) => (
+                                                        <span key={idx} style={{
+                                                            background: '#4299e1',
+                                                            color: 'white',
+                                                            padding: '0.125rem 0.25rem',
+                                                            borderRadius: '4px',
+                                                            fontSize: '0.75rem'
+                                                        }}>
+                                                            {integration}
+                                                        </span>
+                                                    ))}
+                                                    {process.integrations.length > 3 && (
+                                                        <span style={{
+                                                            border: '1px solid #4299e1',
+                                                            color: '#4299e1',
+                                                            padding: '0.125rem 0.25rem',
+                                                            borderRadius: '4px',
+                                                            fontSize: '0.75rem'
+                                                        }}>
+                                                            +{process.integrations.length - 3}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <div style={{fontSize: '0.85rem', fontWeight: 'bold', marginBottom: '0.5rem'}}>Team</div>
+                                                <div style={{display: 'flex', gap: '0.5rem'}}>
+                                                    {process.team.slice(0, 3).map(member => (
+                                                        <div key={member.id} style={{
+                                                            width: '2rem',
+                                                            height: '2rem',
+                                                            borderRadius: '50%',
+                                                            background: '#319795',
+                                                            color: 'white',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            fontSize: '0.75rem',
+                                                            fontWeight: 'bold'
+                                                        }}>
+                                                            {member.name.split(' ').map(n => n[0]).join('')}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 1 && (
+                            <div>
+                                <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '1.5rem'}}>
+                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
+                                        <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                            <h3 style={{fontSize: '1.25rem', fontWeight: 'bold'}}>🤖 AI Process Assistant</h3>
+                                            <span style={{
+                                                background: '#48bb78',
+                                                color: 'white',
+                                                padding: '0.25rem 0.5rem',
+                                                borderRadius: '4px',
+                                                fontSize: '0.75rem'
+                                            }}>
+                                                ACTIVE
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style={{
+                                        background: '#ebf8ff',
+                                        border: '1px solid #4299e1',
+                                        borderRadius: '8px',
+                                        padding: '1rem',
+                                        marginBottom: '1rem'
+                                    }}>
+                                        <div style={{fontWeight: 'bold', marginBottom: '0.5rem'}}>Current AI Insight</div>
+                                        <div style={{fontSize: '0.9rem'}}>{aiAssistant.currentSuggestion}</div>
+                                    </div>
+
+                                    <div>
+                                        <div style={{fontWeight: 'bold', marginBottom: '0.75rem'}}>🚨 Active Alerts</div>
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+                                            {aiAssistant.alerts.map((alert, idx) => (
+                                                <div key={idx} style={{
+                                                    background: alert.type === 'error' ? '#fed7d7' : alert.type === 'warning' ? '#fefcbf' : '#e6fffa',
+                                                    border: `1px solid ${alert.type === 'error' ? '#e53e3e' : alert.type === 'warning' ? '#d69e2e' : '#319795'}`,
+                                                    borderRadius: '6px',
+                                                    padding: '0.75rem',
+                                                    fontSize: '0.9rem'
+                                                }}>
+                                                    {alert.message}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
+                                        <h3 style={{fontSize: '1.25rem', fontWeight: 'bold'}}>👥 Real-Time Collaboration</h3>
+                                        <label style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                            <input 
+                                                type="checkbox" 
+                                                checked={collaborationMode} 
+                                                onChange={(e) => setCollaborationMode(e.target.checked)}
+                                            />
+                                            <span>Enable Live Mode</span>
+                                        </label>
+                                    </div>
+                                    
+                                    {collaborationMode && (
+                                        <div>
+                                            <div style={{fontWeight: 'bold', marginBottom: '0.75rem'}}>Active Users</div>
+                                            {realTimeUsers.map(user => (
+                                                <div key={user.id} style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '0.75rem',
+                                                    padding: '0.5rem',
+                                                    marginBottom: '0.5rem',
+                                                    background: '#f7fafc',
+                                                    borderRadius: '6px'
+                                                }}>
+                                                    <div style={{
+                                                        width: '2rem',
+                                                        height: '2rem',
+                                                        borderRadius: '50%',
+                                                        background: '#319795',
+                                                        color: 'white',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        fontSize: '0.75rem',
+                                                        fontWeight: 'bold'
+                                                    }}>
+                                                        {user.name.split(' ').map(n => n[0]).join('')}
+                                                    </div>
+                                                    <div style={{flex: 1}}>
+                                                        <div style={{fontWeight: 'bold', fontSize: '0.9rem'}}>{user.name}</div>
+                                                        <div style={{fontSize: '0.75rem', color: '#718096'}}>{user.action}</div>
+                                                    </div>
+                                                    <span style={{
+                                                        background: '#48bb78',
+                                                        color: 'white',
+                                                        padding: '0.125rem 0.25rem',
+                                                        borderRadius: '4px',
+                                                        fontSize: '0.75rem'
+                                                    }}>
+                                                        LIVE
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 2 && (
+                            <div>
+                                <div style={{
+                                    background: '#f0fff4',
+                                    border: '1px solid #9ae6b4',
+                                    borderRadius: '8px',
+                                    padding: '1rem',
+                                    marginBottom: '1.5rem'
+                                }}>
+                                    <div style={{fontWeight: 'bold', marginBottom: '0.5rem'}}>Real-Time Collaboration Active</div>
+                                    <div style={{fontSize: '0.9rem'}}>
+                                        Teams can now work together in real-time to improve processes across the organization.
+                                    </div>
+                                </div>
+
+                                <div style={{display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem'}}>
+                                    <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>🚀 Process Improvement Sessions</h3>
+                                        
+                                        <div style={{
+                                            background: '#ebf8ff',
+                                            border: '1px solid #4299e1',
+                                            borderRadius: '8px',
+                                            padding: '1rem',
+                                            marginBottom: '1rem'
+                                        }}>
+                                            <div style={{fontWeight: 'bold', marginBottom: '0.5rem'}}>Customer Onboarding Optimization</div>
+                                            <div style={{fontSize: '0.9rem', color: '#718096', marginBottom: '0.75rem'}}>Active collaboration: 5 team members</div>
+                                            <button style={{
+                                                background: '#4299e1',
+                                                color: 'white',
+                                                border: 'none',
+                                                padding: '0.5rem 1rem',
+                                                borderRadius: '4px',
+                                                cursor: 'pointer'
+                                            }}>
+                                                Join Session
+                                            </button>
+                                        </div>
+                                        
+                                        <div style={{
+                                            background: '#f0fff4',
+                                            border: '1px solid #9ae6b4',
+                                            borderRadius: '8px',
+                                            padding: '1rem'
+                                        }}>
+                                            <div style={{fontWeight: 'bold', marginBottom: '0.5rem'}}>Supply Chain Integration Review</div>
+                                            <div style={{fontSize: '0.9rem', color: '#718096', marginBottom: '0.75rem'}}>Active collaboration: 3 team members</div>
+                                            <button style={{
+                                                background: '#48bb78',
+                                                color: 'white',
+                                                border: 'none',
+                                                padding: '0.5rem 1rem',
+                                                borderRadius: '4px',
+                                                cursor: 'pointer'
+                                            }}>
+                                                Join Session
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>👥 Live Collaboration</h3>
+                                        {realTimeUsers.map(user => (
+                                            <div key={user.id} style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '0.5rem',
+                                                marginBottom: '0.75rem'
+                                            }}>
+                                                <div style={{
+                                                    width: '1.5rem',
+                                                    height: '1.5rem',
+                                                    borderRadius: '50%',
+                                                    background: '#319795',
+                                                    color: 'white',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    fontSize: '0.7rem',
+                                                    fontWeight: 'bold'
+                                                }}>
+                                                    {user.name.split(' ').map(n => n[0]).join('')}
+                                                </div>
+                                                <div style={{flex: 1}}>
+                                                    <div style={{fontSize: '0.85rem', fontWeight: 'bold'}}>{user.name}</div>
+                                                    <div style={{fontSize: '0.7rem', color: '#718096'}}>{user.action}</div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 3 && (
+                            <div>
+                                <h3 style={{fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem'}}>🔗 Cross-Module Integration</h3>
+                                
+                                <div style={{
+                                    background: '#ebf8ff',
+                                    border: '1px solid #4299e1',
+                                    borderRadius: '8px',
+                                    padding: '1rem',
+                                    marginBottom: '1.5rem'
+                                }}>
+                                    <div style={{fontWeight: 'bold', marginBottom: '0.5rem'}}>Smart Integration Active</div>
+                                    <div style={{fontSize: '0.9rem'}}>
+                                        Processes are automatically pulling data from Mission Statement, Blue Ocean Strategy, 
+                                        Financial Analysis, Data Pulse, and other Lucidra modules for comprehensive optimization.
+                                    </div>
+                                </div>
+
+                                <div className="module-grid">
+                                    {[
+                                        {icon: '🎯', title: 'Mission Integration', desc: 'Customer processes aligned with organizational mission statements', status: 'Active', color: '#48bb78'},
+                                        {icon: '🌊', title: 'Blue Ocean Strategy', desc: 'Process innovations guided by blue ocean opportunities', status: 'Active', color: '#4299e1'},
+                                        {icon: '💰', title: 'Financial Analysis', desc: 'Cost optimization through financial data integration', status: 'Active', color: '#d69e2e'},
+                                        {icon: '📊', title: 'Data Pulse', desc: 'Real-time market signals influencing process decisions', status: 'Active', color: '#ed8936'},
+                                        {icon: '🏢', title: 'Porter Analysis', desc: 'Competitive analysis informing process improvements', status: 'Active', color: '#319795'},
+                                        {icon: '👥', title: 'HR Management', desc: 'Team capabilities and resource allocation optimization', status: 'Active', color: '#6b46c1'}
+                                    ].map((integration, idx) => (
+                                        <div key={idx} style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                                            <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem'}}>
+                                                <div style={{fontSize: '2rem'}}>{integration.icon}</div>
+                                                <div style={{fontWeight: 'bold'}}>{integration.title}</div>
+                                            </div>
+                                            <div style={{fontSize: '0.9rem', color: '#718096', marginBottom: '1rem'}}>
+                                                {integration.desc}
+                                            </div>
+                                            <span style={{
+                                                background: integration.color,
+                                                color: 'white',
+                                                padding: '0.25rem 0.5rem',
+                                                borderRadius: '4px',
+                                                fontSize: '0.75rem'
+                                            }}>
+                                                {integration.status}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 4 && (
+                            <div>
+                                <h3 style={{fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem'}}>📈 Process Analytics & Insights</h3>
+                                
+                                <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem'}}>
+                                    <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                                        <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>Efficiency Trends</h4>
+                                        <div style={{
+                                            height: '200px',
+                                            background: '#f7fafc',
+                                            borderRadius: '8px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            color: '#718096'
+                                        }}>
+                                            📊 Efficiency chart visualization
+                                        </div>
+                                    </div>
+
+                                    <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                                        <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>Bottleneck Analysis</h4>
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: '0.75rem'}}>
+                                            {[
+                                                {name: 'Document verification', value: 85, level: 'Critical', color: '#e53e3e'},
+                                                {name: 'Resource allocation', value: 65, level: 'High', color: '#ed8936'},
+                                                {name: 'Vendor communication', value: 40, level: 'Medium', color: '#d69e2e'}
+                                            ].map((bottleneck, idx) => (
+                                                <div key={idx} style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
+                                                    <div style={{flex: 1, fontSize: '0.9rem'}}>{bottleneck.name}</div>
+                                                    <div style={{
+                                                        flex: 2,
+                                                        background: '#e2e8f0',
+                                                        height: '8px',
+                                                        borderRadius: '4px',
+                                                        overflow: 'hidden'
+                                                    }}>
+                                                        <div style={{
+                                                            background: bottleneck.color,
+                                                            height: '100%',
+                                                            width: `${bottleneck.value}%`
+                                                        }}></div>
+                                                    </div>
+                                                    <div style={{fontSize: '0.9rem', color: bottleneck.color}}>{bottleneck.level}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                                    <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>🎯 AI-Driven Improvement Opportunities</h4>
+                                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem'}}>
+                                        <div style={{
+                                            background: '#f0fff4',
+                                            border: '1px solid #9ae6b4',
+                                            borderRadius: '8px',
+                                            padding: '1rem'
+                                        }}>
+                                            <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem'}}>
+                                                <span style={{
+                                                    background: '#48bb78',
+                                                    color: 'white',
+                                                    padding: '0.125rem 0.25rem',
+                                                    borderRadius: '4px',
+                                                    fontSize: '0.75rem'
+                                                }}>
+                                                    High Impact
+                                                </span>
+                                                <div style={{fontSize: '0.9rem', fontWeight: 'bold'}}>Automation Opportunity</div>
+                                            </div>
+                                            <div style={{fontSize: '0.9rem', marginBottom: '0.75rem'}}>
+                                                Automate document verification across 3 processes for 23% efficiency gain
+                                            </div>
+                                            <button style={{
+                                                background: '#48bb78',
+                                                color: 'white',
+                                                border: 'none',
+                                                padding: '0.5rem 0.75rem',
+                                                borderRadius: '4px',
+                                                cursor: 'pointer',
+                                                fontSize: '0.9rem'
+                                            }}>
+                                                Implement
+                                            </button>
+                                        </div>
+
+                                        <div style={{
+                                            background: '#ebf8ff',
+                                            border: '1px solid #4299e1',
+                                            borderRadius: '8px',
+                                            padding: '1rem'
+                                        }}>
+                                            <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem'}}>
+                                                <span style={{
+                                                    background: '#4299e1',
+                                                    color: 'white',
+                                                    padding: '0.125rem 0.25rem',
+                                                    borderRadius: '4px',
+                                                    fontSize: '0.75rem'
+                                                }}>
+                                                    Medium Impact
+                                                </span>
+                                                <div style={{fontSize: '0.9rem', fontWeight: 'bold'}}>Integration Synergy</div>
+                                            </div>
+                                            <div style={{fontSize: '0.9rem', marginBottom: '0.75rem'}}>
+                                                Connect supply chain with financial forecasting for 15% cost reduction
+                                            </div>
+                                            <button style={{
+                                                background: '#4299e1',
+                                                color: 'white',
+                                                border: 'none',
+                                                padding: '0.5rem 0.75rem',
+                                                borderRadius: '4px',
+                                                cursor: 'pointer',
+                                                fontSize: '0.9rem'
+                                            }}>
+                                                Review
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Process Detail Modal */}
+                    {showProcessModal && selectedProcess && (
+                        <div style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'rgba(0,0,0,0.5)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 1000
+                        }}>
+                            <div style={{
+                                background: 'white',
+                                borderRadius: '12px',
+                                padding: '2rem',
+                                maxWidth: '80%',
+                                maxHeight: '80%',
+                                overflow: 'auto'
+                            }}>
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem'}}>
+                                    <h2 style={{fontSize: '1.5rem', fontWeight: 'bold'}}>{selectedProcess.name} - Detailed Process Management</h2>
+                                    <button 
+                                        onClick={() => setShowProcessModal(false)}
+                                        style={{
+                                            background: 'none',
+                                            border: 'none',
+                                            fontSize: '1.5rem',
+                                            cursor: 'pointer',
+                                            color: '#718096'
+                                        }}
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+
+                                <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginBottom: '1.5rem'}}>
+                                    <div>
+                                        <div style={{fontSize: '0.9rem', color: '#718096'}}>Current Efficiency</div>
+                                        <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#319795'}}>{selectedProcess.efficiency}%</div>
+                                    </div>
+                                    <div>
+                                        <div style={{fontSize: '0.9rem', color: '#718096'}}>Process Owner</div>
+                                        <div style={{fontSize: '1.1rem', fontWeight: 'bold'}}>{selectedProcess.owner}</div>
+                                    </div>
+                                    <div>
+                                        <div style={{fontSize: '0.9rem', color: '#718096'}}>Department</div>
+                                        <div style={{fontSize: '1.1rem', fontWeight: 'bold'}}>{selectedProcess.department}</div>
+                                    </div>
+                                </div>
+
+                                <div style={{marginBottom: '1.5rem'}}>
+                                    <h3 style={{fontWeight: 'bold', marginBottom: '0.75rem'}}>🚫 Bottlenecks & Issues ({selectedProcess.bottlenecks.length})</h3>
+                                    {selectedProcess.bottlenecks.map((bottleneck, idx) => (
+                                        <div key={idx} style={{
+                                            background: '#fed7d7',
+                                            border: '1px solid #e53e3e',
+                                            borderRadius: '6px',
+                                            padding: '0.75rem',
+                                            marginBottom: '0.5rem',
+                                            fontSize: '0.9rem'
+                                        }}>
+                                            {bottleneck}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div style={{marginBottom: '1.5rem'}}>
+                                    <h3 style={{fontWeight: 'bold', marginBottom: '0.75rem'}}>🤖 AI Recommendations ({selectedProcess.aiRecommendations.length})</h3>
+                                    {selectedProcess.aiRecommendations.map((recommendation, idx) => (
+                                        <div key={idx} style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '1rem',
+                                            background: '#ebf8ff',
+                                            border: '1px solid #4299e1',
+                                            borderRadius: '6px',
+                                            padding: '0.75rem',
+                                            marginBottom: '0.5rem'
+                                        }}>
+                                            <div style={{flex: 1, fontSize: '0.9rem'}}>{recommendation}</div>
+                                            <button style={{
+                                                background: '#4299e1',
+                                                color: 'white',
+                                                border: 'none',
+                                                padding: '0.5rem 0.75rem',
+                                                borderRadius: '4px',
+                                                cursor: 'pointer',
+                                                fontSize: '0.9rem'
+                                            }}>
+                                                Apply
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div style={{marginBottom: '1.5rem'}}>
+                                    <h3 style={{fontWeight: 'bold', marginBottom: '0.75rem'}}>🔗 Module Integrations ({selectedProcess.integrations.length})</h3>
+                                    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem'}}>
+                                        {selectedProcess.integrations.map((integration, idx) => (
+                                            <div key={idx} style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '0.75rem',
+                                                background: '#f0fff4',
+                                                border: '1px solid #9ae6b4',
+                                                borderRadius: '6px',
+                                                padding: '0.75rem'
+                                            }}>
+                                                <div style={{flex: 1, fontSize: '0.9rem', fontWeight: 'bold'}}>{integration}</div>
+                                                <span style={{
+                                                    background: '#48bb78',
+                                                    color: 'white',
+                                                    padding: '0.125rem 0.25rem',
+                                                    borderRadius: '4px',
+                                                    fontSize: '0.75rem'
+                                                }}>
+                                                    Connected
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div style={{display: 'flex', gap: '1rem', justifyContent: 'flex-end'}}>
+                                    <button style={{
+                                        background: '#319795',
+                                        color: 'white',
+                                        border: 'none',
+                                        padding: '0.75rem 1.5rem',
+                                        borderRadius: '6px',
+                                        cursor: 'pointer'
+                                    }}>
+                                        Save Changes
+                                    </button>
+                                    <button 
+                                        onClick={() => setShowProcessModal(false)}
+                                        style={{
+                                            background: 'transparent',
+                                            border: '1px solid #e2e8f0',
+                                            padding: '0.75rem 1.5rem',
+                                            borderRadius: '6px',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
         // Data Pulse Intelligence Component
         const DataPulseIntelligence = () => {
             const [signals, setSignals] = React.useState([
@@ -4939,6 +5846,8 @@
                         return <AdvancedProcess />;
                     case 'process-improvement':
                         return <ProcessImprovement />;
+                    case 'organization-process':
+                        return <OrganizationWideProcessManagement />;
                     case 'data-pulse-intelligence':
                         return <DataPulseIntelligence />;
                     case 'team-collaboration':
@@ -5191,6 +6100,9 @@
                                     </div>
                                     <div className={`nav-item-advanced ${currentView === 'process-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('process-analysis')}>
                                         <span>📊</span> Process Analysis
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'organization-process' ? 'active' : ''}`} onClick={() => setCurrentView('organization-process')}>
+                                        <span>🏢</span> Organization-Wide Process Management
                                     </div>
                                 </div>
                             </div>
