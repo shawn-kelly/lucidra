@@ -6785,32 +6785,735 @@
             );
         };
 
-        // Project Management Component
+        // Enhanced Project Management Component
         const ProjectManagement = () => {
-            return (
+            const [activeTab, setActiveTab] = React.useState('dashboard');
+            const [showCreateProject, setShowCreateProject] = React.useState(false);
+            const [showProjectDetails, setShowProjectDetails] = React.useState(false);
+            const [selectedProject, setSelectedProject] = React.useState(null);
+            const [newProject, setNewProject] = React.useState({
+                name: '',
+                description: '',
+                startDate: '',
+                endDate: '',
+                budget: '',
+                priority: 'medium',
+                category: 'strategic',
+                teamMembers: [],
+                milestones: []
+            });
+            
+            const [projects, setProjects] = React.useState([
+                {
+                    id: 1,
+                    name: 'Digital Transformation Initiative',
+                    description: 'Complete overhaul of legacy systems and processes',
+                    status: 'on-track',
+                    progress: 68,
+                    startDate: '2024-01-15',
+                    endDate: '2024-12-31',
+                    budget: 500000,
+                    spent: 285000,
+                    priority: 'high',
+                    category: 'strategic',
+                    teamMembers: ['Alice Johnson', 'Bob Smith', 'Carol Davis'],
+                    milestones: [
+                        { name: 'Planning Phase', status: 'completed', date: '2024-02-15' },
+                        { name: 'System Analysis', status: 'completed', date: '2024-04-30' },
+                        { name: 'Development Phase', status: 'in-progress', date: '2024-08-15' },
+                        { name: 'Testing & QA', status: 'pending', date: '2024-10-30' },
+                        { name: 'Deployment', status: 'pending', date: '2024-12-15' }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: 'Market Expansion Strategy',
+                    description: 'Enter three new international markets',
+                    status: 'at-risk',
+                    progress: 42,
+                    startDate: '2024-03-01',
+                    endDate: '2024-11-30',
+                    budget: 300000,
+                    spent: 145000,
+                    priority: 'high',
+                    category: 'growth',
+                    teamMembers: ['David Wilson', 'Emma Thompson', 'Frank Miller'],
+                    milestones: [
+                        { name: 'Market Research', status: 'completed', date: '2024-04-15' },
+                        { name: 'Legal Framework', status: 'in-progress', date: '2024-06-30' },
+                        { name: 'Partner Negotiations', status: 'pending', date: '2024-08-31' },
+                        { name: 'Launch Campaign', status: 'pending', date: '2024-10-15' }
+                    ]
+                },
+                {
+                    id: 3,
+                    name: 'Employee Training Program',
+                    description: 'Comprehensive skills development initiative',
+                    status: 'on-track',
+                    progress: 85,
+                    startDate: '2024-02-01',
+                    endDate: '2024-09-30',
+                    budget: 150000,
+                    spent: 125000,
+                    priority: 'medium',
+                    category: 'operational',
+                    teamMembers: ['Grace Lee', 'Henry Brown', 'Ivy Chen'],
+                    milestones: [
+                        { name: 'Curriculum Design', status: 'completed', date: '2024-03-15' },
+                        { name: 'Platform Setup', status: 'completed', date: '2024-04-30' },
+                        { name: 'Pilot Training', status: 'completed', date: '2024-06-15' },
+                        { name: 'Full Rollout', status: 'in-progress', date: '2024-08-31' }
+                    ]
+                },
+                {
+                    id: 4,
+                    name: 'Product Innovation Lab',
+                    description: 'R&D facility for next-generation products',
+                    status: 'delayed',
+                    progress: 25,
+                    startDate: '2024-01-01',
+                    endDate: '2024-10-31',
+                    budget: 750000,
+                    spent: 200000,
+                    priority: 'high',
+                    category: 'innovation',
+                    teamMembers: ['Jack Rodriguez', 'Kate Patel', 'Luke Kim'],
+                    milestones: [
+                        { name: 'Facility Planning', status: 'completed', date: '2024-02-28' },
+                        { name: 'Equipment Procurement', status: 'delayed', date: '2024-05-31' },
+                        { name: 'Team Hiring', status: 'in-progress', date: '2024-07-15' },
+                        { name: 'Lab Setup', status: 'pending', date: '2024-09-15' }
+                    ]
+                }
+            ]);
+
+            const handleCreateProject = () => {
+                if (newProject.name && newProject.description) {
+                    const project = {
+                        ...newProject,
+                        id: projects.length + 1,
+                        status: 'planning',
+                        progress: 0,
+                        spent: 0,
+                        teamMembers: [],
+                        milestones: []
+                    };
+                    setProjects([...projects, project]);
+                    setNewProject({
+                        name: '',
+                        description: '',
+                        startDate: '',
+                        endDate: '',
+                        budget: '',
+                        priority: 'medium',
+                        category: 'strategic',
+                        teamMembers: [],
+                        milestones: []
+                    });
+                    setShowCreateProject(false);
+                }
+            };
+
+            const getStatusColor = (status) => {
+                switch(status) {
+                    case 'on-track': return '#48bb78';
+                    case 'at-risk': return '#ed8936';
+                    case 'delayed': return '#e53e3e';
+                    case 'completed': return '#38a169';
+                    case 'planning': return '#4299e1';
+                    default: return '#718096';
+                }
+            };
+
+            const getPriorityColor = (priority) => {
+                switch(priority) {
+                    case 'high': return '#e53e3e';
+                    case 'medium': return '#ed8936';
+                    case 'low': return '#48bb78';
+                    default: return '#718096';
+                }
+            };
+
+            const calculateProjectStats = () => {
+                const total = projects.length;
+                const onTrack = projects.filter(p => p.status === 'on-track').length;
+                const atRisk = projects.filter(p => p.status === 'at-risk').length;
+                const delayed = projects.filter(p => p.status === 'delayed').length;
+                const completed = projects.filter(p => p.status === 'completed').length;
+                
+                return { total, onTrack, atRisk, delayed, completed };
+            };
+
+            const stats = calculateProjectStats();
+
+            const renderDashboard = () => (
                 <div>
-                    <h2 style={{marginBottom: '1.5rem', color: '#2d3748'}}>📋 Project Management Dashboard</h2>
-                    <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
-                        <h3>Project Portfolio Overview</h3>
-                        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginTop: '1rem'}}>
-                            <div style={{textAlign: 'center'}}>
-                                <div style={{fontSize: '2rem', fontWeight: 'bold', color: '#4299e1'}}>24</div>
-                                <p>Active Projects</p>
+                    {/* Project Statistics */}
+                    <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem'}}>
+                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
+                            <h3 style={{margin: 0, fontSize: '1.5rem', color: '#2d3748'}}>📊 Project Portfolio Overview</h3>
+                            <button 
+                                onClick={() => setShowCreateProject(true)}
+                                style={{
+                                    background: '#4299e1',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    padding: '0.75rem 1.5rem',
+                                    cursor: 'pointer',
+                                    fontWeight: 'bold'
+                                }}
+                            >
+                                ➕ New Project
+                            </button>
+                        </div>
+                        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem'}}>
+                            <div style={{textAlign: 'center', padding: '1rem', background: '#f7fafc', borderRadius: '8px'}}>
+                                <div style={{fontSize: '2.5rem', fontWeight: 'bold', color: '#4299e1'}}>{stats.total}</div>
+                                <p style={{margin: '0.5rem 0', color: '#4a5568'}}>Total Projects</p>
                             </div>
-                            <div style={{textAlign: 'center'}}>
-                                <div style={{fontSize: '2rem', fontWeight: 'bold', color: '#48bb78'}}>18</div>
-                                <p>On Track</p>
+                            <div style={{textAlign: 'center', padding: '1rem', background: '#f0fff4', borderRadius: '8px'}}>
+                                <div style={{fontSize: '2.5rem', fontWeight: 'bold', color: '#48bb78'}}>{stats.onTrack}</div>
+                                <p style={{margin: '0.5rem 0', color: '#4a5568'}}>On Track</p>
                             </div>
-                            <div style={{textAlign: 'center'}}>
-                                <div style={{fontSize: '2rem', fontWeight: 'bold', color: '#ed8936'}}>4</div>
-                                <p>At Risk</p>
+                            <div style={{textAlign: 'center', padding: '1rem', background: '#fffaf0', borderRadius: '8px'}}>
+                                <div style={{fontSize: '2.5rem', fontWeight: 'bold', color: '#ed8936'}}>{stats.atRisk}</div>
+                                <p style={{margin: '0.5rem 0', color: '#4a5568'}}>At Risk</p>
                             </div>
-                            <div style={{textAlign: 'center'}}>
-                                <div style={{fontSize: '2rem', fontWeight: 'bold', color: '#e53e3e'}}>2</div>
-                                <p>Delayed</p>
+                            <div style={{textAlign: 'center', padding: '1rem', background: '#fed7d7', borderRadius: '8px'}}>
+                                <div style={{fontSize: '2.5rem', fontWeight: 'bold', color: '#e53e3e'}}>{stats.delayed}</div>
+                                <p style={{margin: '0.5rem 0', color: '#4a5568'}}>Delayed</p>
                             </div>
                         </div>
                     </div>
+
+                    {/* Active Projects List */}
+                    <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                        <h3 style={{margin: '0 0 1.5rem 0', fontSize: '1.5rem', color: '#2d3748'}}>🚀 Active Projects</h3>
+                        <div style={{display: 'grid', gap: '1rem'}}>
+                            {projects.map(project => (
+                                <div 
+                                    key={project.id} 
+                                    style={{
+                                        border: '1px solid #e2e8f0',
+                                        borderRadius: '8px',
+                                        padding: '1.5rem',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s',
+                                        ':hover': { boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }
+                                    }}
+                                    onClick={() => {
+                                        setSelectedProject(project);
+                                        setShowProjectDetails(true);
+                                    }}
+                                >
+                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem'}}>
+                                        <div style={{flex: 1}}>
+                                            <h4 style={{margin: '0 0 0.5rem 0', fontSize: '1.25rem', color: '#2d3748'}}>{project.name}</h4>
+                                            <p style={{margin: '0 0 1rem 0', color: '#4a5568', fontSize: '0.9rem'}}>{project.description}</p>
+                                        </div>
+                                        <div style={{textAlign: 'right', marginLeft: '1rem'}}>
+                                            <div 
+                                                style={{
+                                                    background: getStatusColor(project.status),
+                                                    color: 'white',
+                                                    padding: '0.25rem 0.75rem',
+                                                    borderRadius: '20px',
+                                                    fontSize: '0.8rem',
+                                                    fontWeight: 'bold',
+                                                    marginBottom: '0.5rem'
+                                                }}
+                                            >
+                                                {project.status.toUpperCase()}
+                                            </div>
+                                            <div 
+                                                style={{
+                                                    background: getPriorityColor(project.priority),
+                                                    color: 'white',
+                                                    padding: '0.25rem 0.75rem',
+                                                    borderRadius: '20px',
+                                                    fontSize: '0.8rem',
+                                                    fontWeight: 'bold'
+                                                }}
+                                            >
+                                                {project.priority.toUpperCase()}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style={{marginBottom: '1rem'}}>
+                                        <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem'}}>
+                                            <span style={{fontSize: '0.9rem', color: '#4a5568'}}>Progress</span>
+                                            <span style={{fontSize: '0.9rem', fontWeight: 'bold', color: '#2d3748'}}>{project.progress}%</span>
+                                        </div>
+                                        <div style={{background: '#e2e8f0', borderRadius: '10px', height: '8px', overflow: 'hidden'}}>
+                                            <div 
+                                                style={{
+                                                    background: getStatusColor(project.status),
+                                                    height: '100%',
+                                                    width: `${project.progress}%`,
+                                                    transition: 'width 0.3s ease'
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem', fontSize: '0.9rem'}}>
+                                        <div>
+                                            <strong style={{color: '#4a5568'}}>Budget:</strong>
+                                            <div style={{color: '#2d3748'}}>${project.budget?.toLocaleString()} / ${project.spent?.toLocaleString()}</div>
+                                        </div>
+                                        <div>
+                                            <strong style={{color: '#4a5568'}}>Timeline:</strong>
+                                            <div style={{color: '#2d3748'}}>{new Date(project.startDate).toLocaleDateString()} - {new Date(project.endDate).toLocaleDateString()}</div>
+                                        </div>
+                                        <div>
+                                            <strong style={{color: '#4a5568'}}>Team:</strong>
+                                            <div style={{color: '#2d3748'}}>{project.teamMembers?.length || 0} members</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const renderTimeline = () => (
+                <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                    <h3 style={{margin: '0 0 1.5rem 0', fontSize: '1.5rem', color: '#2d3748'}}>📅 Project Timeline</h3>
+                    <div style={{position: 'relative'}}>
+                        {projects.map((project, index) => (
+                            <div key={project.id} style={{display: 'flex', marginBottom: '2rem', alignItems: 'center'}}>
+                                <div style={{
+                                    width: '12px',
+                                    height: '12px',
+                                    borderRadius: '50%',
+                                    background: getStatusColor(project.status),
+                                    marginRight: '1rem',
+                                    zIndex: 2
+                                }} />
+                                <div style={{flex: 1, padding: '1rem', background: '#f7fafc', borderRadius: '8px'}}>
+                                    <h4 style={{margin: '0 0 0.5rem 0', color: '#2d3748'}}>{project.name}</h4>
+                                    <p style={{margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: '#4a5568'}}>
+                                        {new Date(project.startDate).toLocaleDateString()} - {new Date(project.endDate).toLocaleDateString()}
+                                    </p>
+                                    <div style={{display: 'flex', gap: '1rem', fontSize: '0.8rem'}}>
+                                        <span style={{color: getStatusColor(project.status), fontWeight: 'bold'}}>
+                                            {project.status.toUpperCase()}
+                                        </span>
+                                        <span>Progress: {project.progress}%</span>
+                                        <span>Budget: ${project.spent?.toLocaleString()} / ${project.budget?.toLocaleString()}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const renderTeams = () => (
+                <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                    <h3 style={{margin: '0 0 1.5rem 0', fontSize: '1.5rem', color: '#2d3748'}}>👥 Team Management</h3>
+                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem'}}>
+                        {projects.map(project => (
+                            <div key={project.id} style={{border: '1px solid #e2e8f0', borderRadius: '8px', padding: '1rem'}}>
+                                <h4 style={{margin: '0 0 1rem 0', color: '#2d3748'}}>{project.name}</h4>
+                                <div style={{marginBottom: '1rem'}}>
+                                    <strong style={{fontSize: '0.9rem', color: '#4a5568'}}>Team Members:</strong>
+                                    <div style={{marginTop: '0.5rem'}}>
+                                        {project.teamMembers?.map((member, idx) => (
+                                            <span 
+                                                key={idx} 
+                                                style={{
+                                                    display: 'inline-block',
+                                                    background: '#4299e1',
+                                                    color: 'white',
+                                                    padding: '0.25rem 0.75rem',
+                                                    borderRadius: '20px',
+                                                    fontSize: '0.8rem',
+                                                    margin: '0.25rem 0.25rem 0 0'
+                                                }}
+                                            >
+                                                {member}
+                                            </span>
+                                        )) || <span style={{color: '#a0aec0', fontStyle: 'italic'}}>No team members assigned</span>}
+                                    </div>
+                                </div>
+                                <div style={{fontSize: '0.9rem', color: '#4a5568'}}>
+                                    <div><strong>Status:</strong> <span style={{color: getStatusColor(project.status)}}>{project.status}</span></div>
+                                    <div><strong>Progress:</strong> {project.progress}%</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const renderBudgets = () => (
+                <div style={{background: 'white', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                    <h3 style={{margin: '0 0 1.5rem 0', fontSize: '1.5rem', color: '#2d3748'}}>💰 Budget Analysis</h3>
+                    <div style={{display: 'grid', gap: '1rem'}}>
+                        {projects.map(project => {
+                            const budgetUsed = (project.spent / project.budget * 100).toFixed(1);
+                            const isOverBudget = project.spent > project.budget;
+                            const budgetColor = isOverBudget ? '#e53e3e' : project.spent > project.budget * 0.8 ? '#ed8936' : '#48bb78';
+                            
+                            return (
+                                <div key={project.id} style={{border: '1px solid #e2e8f0', borderRadius: '8px', padding: '1rem'}}>
+                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
+                                        <h4 style={{margin: 0, color: '#2d3748'}}>{project.name}</h4>
+                                        <div style={{textAlign: 'right'}}>
+                                            <div style={{fontSize: '1.25rem', fontWeight: 'bold', color: budgetColor}}>
+                                                ${project.spent?.toLocaleString()} / ${project.budget?.toLocaleString()}
+                                            </div>
+                                            <div style={{fontSize: '0.9rem', color: '#4a5568'}}>
+                                                {budgetUsed}% utilized
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style={{background: '#e2e8f0', borderRadius: '10px', height: '10px', overflow: 'hidden'}}>
+                                        <div 
+                                            style={{
+                                                background: budgetColor,
+                                                height: '100%',
+                                                width: `${Math.min(100, budgetUsed)}%`,
+                                                transition: 'width 0.3s ease'
+                                            }}
+                                        />
+                                    </div>
+                                    {isOverBudget && (
+                                        <div style={{marginTop: '0.5rem', color: '#e53e3e', fontSize: '0.9rem', fontWeight: 'bold'}}>
+                                            ⚠️ Over budget by ${(project.spent - project.budget).toLocaleString()}
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+
+            return (
+                <div>
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem'}}>
+                        <h2 style={{margin: 0, color: '#2d3748'}}>📋 Enhanced Project Management</h2>
+                        <div style={{display: 'flex', gap: '0.5rem'}}>
+                            {[
+                                { key: 'dashboard', label: '📊 Dashboard', icon: '📊' },
+                                { key: 'timeline', label: '📅 Timeline', icon: '📅' },
+                                { key: 'teams', label: '👥 Teams', icon: '👥' },
+                                { key: 'budgets', label: '💰 Budgets', icon: '💰' }
+                            ].map(tab => (
+                                <button
+                                    key={tab.key}
+                                    onClick={() => setActiveTab(tab.key)}
+                                    style={{
+                                        background: activeTab === tab.key ? '#4299e1' : 'white',
+                                        color: activeTab === tab.key ? 'white' : '#4a5568',
+                                        border: activeTab === tab.key ? 'none' : '1px solid #e2e8f0',
+                                        borderRadius: '8px',
+                                        padding: '0.75rem 1rem',
+                                        cursor: 'pointer',
+                                        fontWeight: activeTab === tab.key ? 'bold' : 'normal',
+                                        fontSize: '0.9rem'
+                                    }}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {activeTab === 'dashboard' && renderDashboard()}
+                    {activeTab === 'timeline' && renderTimeline()}
+                    {activeTab === 'teams' && renderTeams()}
+                    {activeTab === 'budgets' && renderBudgets()}
+
+                    {/* Create Project Modal */}
+                    {showCreateProject && (
+                        <div style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'rgba(0,0,0,0.5)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 1000
+                        }}>
+                            <div style={{
+                                background: 'white',
+                                borderRadius: '12px',
+                                padding: '2rem',
+                                width: '600px',
+                                maxWidth: '90vw',
+                                maxHeight: '90vh',
+                                overflow: 'auto'
+                            }}>
+                                <h3 style={{margin: '0 0 1.5rem 0', fontSize: '1.5rem', color: '#2d3748'}}>🚀 Create New Project</h3>
+                                
+                                <div style={{marginBottom: '1rem'}}>
+                                    <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#4a5568'}}>Project Name</label>
+                                    <input
+                                        type="text"
+                                        value={newProject.name}
+                                        onChange={(e) => setNewProject({...newProject, name: e.target.value})}
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            border: '1px solid #e2e8f0',
+                                            borderRadius: '8px',
+                                            fontSize: '1rem'
+                                        }}
+                                        placeholder="Enter project name..."
+                                    />
+                                </div>
+
+                                <div style={{marginBottom: '1rem'}}>
+                                    <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#4a5568'}}>Description</label>
+                                    <textarea
+                                        value={newProject.description}
+                                        onChange={(e) => setNewProject({...newProject, description: e.target.value})}
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.75rem',
+                                            border: '1px solid #e2e8f0',
+                                            borderRadius: '8px',
+                                            fontSize: '1rem',
+                                            minHeight: '100px',
+                                            resize: 'vertical'
+                                        }}
+                                        placeholder="Project description and objectives..."
+                                    />
+                                </div>
+
+                                <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem'}}>
+                                    <div>
+                                        <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#4a5568'}}>Start Date</label>
+                                        <input
+                                            type="date"
+                                            value={newProject.startDate}
+                                            onChange={(e) => setNewProject({...newProject, startDate: e.target.value})}
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.75rem',
+                                                border: '1px solid #e2e8f0',
+                                                borderRadius: '8px',
+                                                fontSize: '1rem'
+                                            }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#4a5568'}}>End Date</label>
+                                        <input
+                                            type="date"
+                                            value={newProject.endDate}
+                                            onChange={(e) => setNewProject({...newProject, endDate: e.target.value})}
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.75rem',
+                                                border: '1px solid #e2e8f0',
+                                                borderRadius: '8px',
+                                                fontSize: '1rem'
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginBottom: '2rem'}}>
+                                    <div>
+                                        <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#4a5568'}}>Budget ($)</label>
+                                        <input
+                                            type="number"
+                                            value={newProject.budget}
+                                            onChange={(e) => setNewProject({...newProject, budget: parseInt(e.target.value)})}
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.75rem',
+                                                border: '1px solid #e2e8f0',
+                                                borderRadius: '8px',
+                                                fontSize: '1rem'
+                                            }}
+                                            placeholder="0"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#4a5568'}}>Priority</label>
+                                        <select
+                                            value={newProject.priority}
+                                            onChange={(e) => setNewProject({...newProject, priority: e.target.value})}
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.75rem',
+                                                border: '1px solid #e2e8f0',
+                                                borderRadius: '8px',
+                                                fontSize: '1rem'
+                                            }}
+                                        >
+                                            <option value="low">Low</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="high">High</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#4a5568'}}>Category</label>
+                                        <select
+                                            value={newProject.category}
+                                            onChange={(e) => setNewProject({...newProject, category: e.target.value})}
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.75rem',
+                                                border: '1px solid #e2e8f0',
+                                                borderRadius: '8px',
+                                                fontSize: '1rem'
+                                            }}
+                                        >
+                                            <option value="strategic">Strategic</option>
+                                            <option value="operational">Operational</option>
+                                            <option value="innovation">Innovation</option>
+                                            <option value="growth">Growth</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div style={{display: 'flex', gap: '1rem', justifyContent: 'flex-end'}}>
+                                    <button
+                                        onClick={() => setShowCreateProject(false)}
+                                        style={{
+                                            background: '#e2e8f0',
+                                            color: '#4a5568',
+                                            border: 'none',
+                                            borderRadius: '8px',
+                                            padding: '0.75rem 1.5rem',
+                                            cursor: 'pointer',
+                                            fontWeight: 'bold'
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={handleCreateProject}
+                                        style={{
+                                            background: '#4299e1',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '8px',
+                                            padding: '0.75rem 1.5rem',
+                                            cursor: 'pointer',
+                                            fontWeight: 'bold'
+                                        }}
+                                    >
+                                        Create Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Project Details Modal */}
+                    {showProjectDetails && selectedProject && (
+                        <div style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'rgba(0,0,0,0.5)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 1000
+                        }}>
+                            <div style={{
+                                background: 'white',
+                                borderRadius: '12px',
+                                padding: '2rem',
+                                width: '800px',
+                                maxWidth: '90vw',
+                                maxHeight: '90vh',
+                                overflow: 'auto'
+                            }}>
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem'}}>
+                                    <h3 style={{margin: 0, fontSize: '1.5rem', color: '#2d3748'}}>{selectedProject.name}</h3>
+                                    <button
+                                        onClick={() => setShowProjectDetails(false)}
+                                        style={{
+                                            background: 'none',
+                                            border: 'none',
+                                            fontSize: '1.5rem',
+                                            cursor: 'pointer',
+                                            color: '#4a5568'
+                                        }}
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+
+                                <div style={{marginBottom: '2rem'}}>
+                                    <p style={{color: '#4a5568', fontSize: '1rem', marginBottom: '1rem'}}>{selectedProject.description}</p>
+                                    
+                                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem'}}>
+                                        <div style={{textAlign: 'center', padding: '1rem', background: '#f7fafc', borderRadius: '8px'}}>
+                                            <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: getStatusColor(selectedProject.status)}}>
+                                                {selectedProject.progress}%
+                                            </div>
+                                            <p style={{margin: '0.5rem 0', color: '#4a5568'}}>Progress</p>
+                                        </div>
+                                        <div style={{textAlign: 'center', padding: '1rem', background: '#f7fafc', borderRadius: '8px'}}>
+                                            <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#4299e1'}}>
+                                                ${selectedProject.spent?.toLocaleString()}
+                                            </div>
+                                            <p style={{margin: '0.5rem 0', color: '#4a5568'}}>Spent / ${selectedProject.budget?.toLocaleString()}</p>
+                                        </div>
+                                        <div style={{textAlign: 'center', padding: '1rem', background: '#f7fafc', borderRadius: '8px'}}>
+                                            <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#48bb78'}}>
+                                                {selectedProject.teamMembers?.length || 0}
+                                            </div>
+                                            <p style={{margin: '0.5rem 0', color: '#4a5568'}}>Team Members</p>
+                                        </div>
+                                    </div>
+
+                                    <h4 style={{margin: '2rem 0 1rem 0', color: '#2d3748'}}>📋 Project Milestones</h4>
+                                    <div style={{display: 'grid', gap: '0.5rem'}}>
+                                        {selectedProject.milestones?.map((milestone, idx) => (
+                                            <div key={idx} style={{display: 'flex', alignItems: 'center', padding: '0.75rem', background: '#f7fafc', borderRadius: '8px'}}>
+                                                <div style={{
+                                                    width: '12px',
+                                                    height: '12px',
+                                                    borderRadius: '50%',
+                                                    background: milestone.status === 'completed' ? '#48bb78' : 
+                                                               milestone.status === 'in-progress' ? '#4299e1' : 
+                                                               milestone.status === 'delayed' ? '#e53e3e' : '#a0aec0',
+                                                    marginRight: '1rem'
+                                                }} />
+                                                <div style={{flex: 1}}>
+                                                    <span style={{fontWeight: 'bold', color: '#2d3748'}}>{milestone.name}</span>
+                                                    <span style={{marginLeft: '1rem', color: '#4a5568', fontSize: '0.9rem'}}>
+                                                        {new Date(milestone.date).toLocaleDateString()}
+                                                    </span>
+                                                </div>
+                                                <span style={{
+                                                    background: milestone.status === 'completed' ? '#48bb78' : 
+                                                               milestone.status === 'in-progress' ? '#4299e1' : 
+                                                               milestone.status === 'delayed' ? '#e53e3e' : '#a0aec0',
+                                                    color: 'white',
+                                                    padding: '0.25rem 0.75rem',
+                                                    borderRadius: '20px',
+                                                    fontSize: '0.8rem',
+                                                    fontWeight: 'bold'
+                                                }}>
+                                                    {milestone.status.replace('-', ' ').toUpperCase()}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             );
         };
