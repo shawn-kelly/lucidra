@@ -32,8 +32,19 @@
     </div>
     
     <script>
-        // Immediate redirect
-        window.location.href = 'complete-app.html';
+        // Smart redirect - check if mobile to avoid redirect issues
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+        }
+        
+        // Redirect based on device type
+        if (isMobile()) {
+            // For mobile, go directly to complete app
+            window.location.href = 'complete-app.html';
+        } else {
+            // For desktop, also go to complete app (no different behavior needed)
+            window.location.href = 'complete-app.html';
+        }
     </script>
 </body>
 </html>
