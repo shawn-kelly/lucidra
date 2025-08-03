@@ -63,6 +63,7 @@ import ProjectManagement from './components/ProjectManagement';
 import TeamCollaboration from './components/TeamCollaboration';
 import TeamInteractionHub from './components/TeamInteractionHub';
 import AIProcessLogger from './components/AIProcessLogger';
+import OrganizationWideProcessManagement from './components/OrganizationWideProcessManagement';
 
 // Import additional strategic components
 import StrategicPlanningModule from './components/StrategicPlanningModule';
@@ -98,6 +99,7 @@ function App() {
       title: "🔄 Process Management",
       color: "purple.500",
       items: [
+        { id: 'organization-process', name: 'Organization-Wide Process', icon: '🌐', desc: 'Complete organizational process coordination' },
         { id: 'process-management', name: 'Process Management', icon: '🔄', desc: 'BPMN process design' },
         { id: 'advanced-process', name: 'Advanced Process', icon: '🏭', desc: 'AI process optimization' },
         { id: 'process-improvement', name: 'Process Intelligence', icon: '⚙️', desc: 'Intelligent optimization' },
@@ -164,6 +166,9 @@ function App() {
         break;
       case 'visual-mapping':
         items.push({ label: 'Visual Mapping', view: 'visual-mapping', icon: '🗺️' });
+        break;
+      case 'organization-process':
+        items.push({ label: 'Organization-Wide Process', view: 'organization-process', icon: '🌐' });
         break;
       case 'process-management':
         items.push({ label: 'Process Management', view: 'process-management', icon: '🔄' });
@@ -463,6 +468,14 @@ function App() {
 
           {/* Row 2: Process Management Suite */}
           <HStack spacing={1} flexWrap="wrap" justify="center">
+            <Button
+              variant={currentView === 'organization-process' ? 'solid' : 'ghost'}
+              colorScheme={currentView === 'organization-process' ? 'purple' : 'gray'}
+              size="sm"
+              onClick={() => setCurrentView('organization-process')}
+            >
+              🌐 Org Process
+            </Button>
             <Button
               variant={currentView === 'process-management' ? 'solid' : 'ghost'}
               colorScheme={currentView === 'process-management' ? 'purple' : 'gray'}
@@ -784,6 +797,17 @@ function App() {
             🔄 Process Management Suite
           </Text>
           <Grid templateColumns="repeat(auto-fit, minmax(280px, 1fr))" gap={3}>
+            <Card cursor="pointer" _hover={{ transform: 'translateY(-2px)', shadow: 'lg' }} transition="all 0.2s" onClick={() => setCurrentView('organization-process')}>
+              <CardBody py={3}>
+                <HStack>
+                  <Text fontSize="xl">🌐</Text>
+                  <VStack align="start" spacing={0}>
+                    <Text fontWeight="bold" fontSize="sm">Organization-Wide Process</Text>
+                    <Text fontSize="xs" color="gray.600">Complete process coordination</Text>
+                  </VStack>
+                </HStack>
+              </CardBody>
+            </Card>
             <Card cursor="pointer" _hover={{ transform: 'translateY(-2px)', shadow: 'lg' }} transition="all 0.2s" onClick={() => setCurrentView('process-management')}>
               <CardBody py={3}>
                 <HStack>
@@ -1075,6 +1099,8 @@ function App() {
         return <VisualJourneyMapping />;
       
       // Process Management Suite
+      case 'organization-process':
+        return <OrganizationWideProcessManagement />;
       case 'process-management':
         return <ProcessManagement />;
       case 'advanced-process':
