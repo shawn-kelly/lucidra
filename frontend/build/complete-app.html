@@ -1091,16 +1091,19 @@
             );
         };
 
-        // Comprehensive Financial Analysis Framework
+        // Enhanced Comprehensive Financial Analysis Framework
         const FinancialFrameworks = () => {
             const [selectedRegion, setSelectedRegion] = useState('americas');
             const [analysisType, setAnalysisType] = useState('dupont');
+            const [activeTab, setActiveTab] = useState('analysis');
             
             const regionData = {
-                americas: { gdp: 24000, growth: 2.1, inflation: 3.2, currency: 'USD' },
-                europe: { gdp: 18000, growth: 1.8, inflation: 2.8, currency: 'EUR' },
-                asia: { gdp: 28000, growth: 5.2, inflation: 2.5, currency: 'USD' },
-                caribbean: { gdp: 890, growth: 3.1, inflation: 4.1, currency: 'USD' }
+                americas: { gdp: 24000, growth: 2.1, inflation: 3.2, currency: 'USD', interestRate: 5.25, marketSize: 350000000 },
+                europe: { gdp: 18000, growth: 1.8, inflation: 2.8, currency: 'EUR', interestRate: 4.50, marketSize: 450000000 },
+                asia: { gdp: 28000, growth: 5.2, inflation: 2.5, currency: 'USD', interestRate: 3.75, marketSize: 4600000000 },
+                caribbean: { gdp: 890, growth: 3.1, inflation: 4.1, currency: 'USD', interestRate: 6.00, marketSize: 44000000 },
+                australia: { gdp: 1400, growth: 2.8, inflation: 3.4, currency: 'AUD', interestRate: 4.35, marketSize: 26000000 },
+                india: { gdp: 3700, growth: 6.8, inflation: 5.9, currency: 'INR', interestRate: 6.50, marketSize: 1400000000 }
             };
 
             const [financialInputs, setFinancialInputs] = useState({
@@ -1111,7 +1114,16 @@
                 fixedCosts: 2000000,
                 variableCosts: 1500000,
                 unitPrice: 100,
-                unitsProduced: 50000
+                unitsProduced: 50000,
+                initialInvestment: 1000000,
+                discountRate: 10,
+                projectYears: 5,
+                yearlyRevenue: [800000, 1200000, 1500000, 1800000, 2000000],
+                yearlyCosts: [600000, 850000, 1000000, 1200000, 1300000],
+                productionCosts: 500000,
+                qualityCosts: 150000,
+                packagingCosts: 200000,
+                shippingCosts: 100000
             });
 
             const calculateDuPont = () => {
@@ -1129,6 +1141,80 @@
                 const breakEvenRevenue = breakEvenUnits * financialInputs.unitPrice;
                 
                 return { contributionMargin, breakEvenUnits, breakEvenRevenue };
+            };
+
+            const calculateNPV = () => {
+                let npv = -financialInputs.initialInvestment;
+                for (let year = 0; year < financialInputs.projectYears; year++) {
+                    const cashFlow = financialInputs.yearlyRevenue[year] - financialInputs.yearlyCosts[year];
+                    npv += cashFlow / Math.pow(1 + (financialInputs.discountRate / 100), year + 1);
+                }
+                return npv;
+            };
+
+            const calculateIRR = () => {
+                // Simplified IRR calculation using approximation method
+                let rate = 0.1; // starting guess
+                let npv = 0;
+                let iterations = 0;
+                const maxIterations = 100;
+                
+                while (Math.abs(npv) > 1000 && iterations < maxIterations) {
+                    npv = -financialInputs.initialInvestment;
+                    for (let year = 0; year < financialInputs.projectYears; year++) {
+                        const cashFlow = financialInputs.yearlyRevenue[year] - financialInputs.yearlyCosts[year];
+                        npv += cashFlow / Math.pow(1 + rate, year + 1);
+                    }
+                    
+                    if (npv > 0) {
+                        rate += 0.01;
+                    } else {
+                        rate -= 0.005;
+                    }
+                    iterations++;
+                }
+                
+                return rate * 100;
+            };
+
+            const calculateActivityBasedCosting = () => {
+                const totalCosts = financialInputs.productionCosts + financialInputs.qualityCosts + 
+                                 financialInputs.packagingCosts + financialInputs.shippingCosts;
+                
+                const costDrivers = {
+                    production: financialInputs.unitsProduced,
+                    quality: Math.floor(financialInputs.unitsProduced * 0.1), // 10% quality checks
+                    packaging: financialInputs.unitsProduced,
+                    shipping: Math.floor(financialInputs.unitsProduced / 50) // 50 units per shipment
+                };
+
+                const costPerDriver = {
+                    production: financialInputs.productionCosts / costDrivers.production,
+                    quality: financialInputs.qualityCosts / costDrivers.quality,
+                    packaging: financialInputs.packagingCosts / costDrivers.packaging,
+                    shipping: financialInputs.shippingCosts / costDrivers.shipping
+                };
+
+                const costPerUnit = Object.values(costPerDriver).reduce((sum, cost) => sum + cost, 0);
+                
+                return { totalCosts, costDrivers, costPerDriver, costPerUnit };
+            };
+
+            const calculatePaybackPeriod = () => {
+                let cumulativeCash = -financialInputs.initialInvestment;
+                let paybackPeriod = 0;
+                
+                for (let year = 0; year < financialInputs.projectYears; year++) {
+                    const cashFlow = financialInputs.yearlyRevenue[year] - financialInputs.yearlyCosts[year];
+                    cumulativeCash += cashFlow;
+                    paybackPeriod = year + 1;
+                    
+                    if (cumulativeCash >= 0) {
+                        break;
+                    }
+                }
+                
+                return paybackPeriod;
             };
 
             const renderAnalysis = () => {
@@ -1180,6 +1266,126 @@
                                 </div>
                             </div>
                         );
+                    case 'investment':
+                        const npv = calculateNPV();
+                        const irr = calculateIRR();
+                        const payback = calculatePaybackPeriod();
+                        return (
+                            <div>
+                                <div className="financial-grid" style={{marginBottom: '2rem'}}>
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', color: '#4a5568'}}>Net Present Value</div>
+                                        <div className={`metric-value ${npv > 0 ? 'positive' : 'negative'}`}>
+                                            ${(npv/1000).toFixed(0)}K
+                                        </div>
+                                        <div style={{color: npv > 0 ? '#48bb78' : '#e53e3e'}}>
+                                            {npv > 0 ? 'Profitable Investment' : 'Loss Making'}
+                                        </div>
+                                    </div>
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', color: '#4a5568'}}>Internal Rate of Return</div>
+                                        <div className="metric-value positive">{irr.toFixed(1)}%</div>
+                                        <div style={{color: '#4299e1'}}>Expected Return Rate</div>
+                                    </div>
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', color: '#4a5568'}}>Payback Period</div>
+                                        <div className="metric-value neutral">{payback} years</div>
+                                        <div style={{color: '#4299e1'}}>Time to Break Even</div>
+                                    </div>
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', color: '#4a5568'}}>Investment Decision</div>
+                                        <div className={`metric-value ${npv > 0 && irr > financialInputs.discountRate ? 'positive' : 'negative'}`}>
+                                            {npv > 0 && irr > financialInputs.discountRate ? 'ACCEPT' : 'REJECT'}
+                                        </div>
+                                        <div style={{color: npv > 0 && irr > financialInputs.discountRate ? '#48bb78' : '#e53e3e'}}>
+                                            {npv > 0 && irr > financialInputs.discountRate ? 'Meets Criteria' : 'Below Threshold'}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style={{background: 'white', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0'}}>
+                                    <h4 style={{marginBottom: '1rem', color: '#2d3748'}}>5-Year Cash Flow Analysis</h4>
+                                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '1rem', fontSize: '0.9rem'}}>
+                                        <div style={{fontWeight: 'bold', color: '#4a5568'}}>Year</div>
+                                        <div style={{fontWeight: 'bold', color: '#4a5568'}}>Revenue</div>
+                                        <div style={{fontWeight: 'bold', color: '#4a5568'}}>Costs</div>
+                                        <div style={{fontWeight: 'bold', color: '#4a5568'}}>Cash Flow</div>
+                                        <div style={{fontWeight: 'bold', color: '#4a5568'}}>Discounted CF</div>
+                                        <div style={{fontWeight: 'bold', color: '#4a5568'}}>Cumulative</div>
+                                        
+                                        {[0, 1, 2, 3, 4].map(year => {
+                                            const revenue = financialInputs.yearlyRevenue[year] || 0;
+                                            const costs = financialInputs.yearlyCosts[year] || 0;
+                                            const cashFlow = revenue - costs;
+                                            const discountedCF = cashFlow / Math.pow(1 + (financialInputs.discountRate / 100), year + 1);
+                                            const cumulative = year === 0 ? discountedCF - financialInputs.initialInvestment : 0; // Simplified
+                                            
+                                            return (
+                                                <React.Fragment key={year}>
+                                                    <div>{year + 1}</div>
+                                                    <div>${(revenue/1000).toFixed(0)}K</div>
+                                                    <div>${(costs/1000).toFixed(0)}K</div>
+                                                    <div style={{color: cashFlow > 0 ? '#48bb78' : '#e53e3e'}}>
+                                                        ${(cashFlow/1000).toFixed(0)}K
+                                                    </div>
+                                                    <div>${(discountedCF/1000).toFixed(0)}K</div>
+                                                    <div>${((discountedCF - (year === 0 ? financialInputs.initialInvestment : 0))/1000).toFixed(0)}K</div>
+                                                </React.Fragment>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    case 'abc':
+                        const abc = calculateActivityBasedCosting();
+                        return (
+                            <div>
+                                <div className="financial-grid" style={{marginBottom: '2rem'}}>
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', color: '#4a5568'}}>Total Activity Costs</div>
+                                        <div className="metric-value neutral">${(abc.totalCosts/1000).toFixed(0)}K</div>
+                                        <div style={{color: '#4299e1'}}>All Activities Combined</div>
+                                    </div>
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', color: '#4a5568'}}>Cost Per Unit</div>
+                                        <div className="metric-value positive">${abc.costPerUnit.toFixed(2)}</div>
+                                        <div style={{color: '#48bb78'}}>ABC Unit Cost</div>
+                                    </div>
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', color: '#4a5568'}}>Production Efficiency</div>
+                                        <div className="metric-value neutral">{((abc.costPerDriver.production / (financialInputs.unitPrice * 0.6)) * 100).toFixed(1)}%</div>
+                                        <div style={{color: '#4299e1'}}>Cost vs Price Ratio</div>
+                                    </div>
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', color: '#4a5568'}}>Quality Cost Ratio</div>
+                                        <div className="metric-value neutral">{((abc.costPerDriver.quality / abc.costPerUnit) * 100).toFixed(1)}%</div>
+                                        <div style={{color: '#4299e1'}}>Quality % of Total</div>
+                                    </div>
+                                </div>
+                                <div style={{background: 'white', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0'}}>
+                                    <h4 style={{marginBottom: '1rem', color: '#2d3748'}}>Activity-Based Cost Breakdown</h4>
+                                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem'}}>
+                                        {Object.entries(abc.costPerDriver).map(([activity, cost]) => (
+                                            <div key={activity} style={{textAlign: 'center', padding: '1rem', background: '#f7fafc', borderRadius: '8px'}}>
+                                                <div style={{fontSize: '1.5rem', marginBottom: '0.5rem'}}>
+                                                    {activity === 'production' ? '🏭' : activity === 'quality' ? '✅' : activity === 'packaging' ? '📦' : '🚚'}
+                                                </div>
+                                                <div style={{fontWeight: 'bold', color: '#2d3748', textTransform: 'capitalize'}}>{activity}</div>
+                                                <div style={{fontSize: '1.2rem', fontWeight: 'bold', color: '#4299e1', margin: '0.5rem 0'}}>
+                                                    ${cost.toFixed(2)}
+                                                </div>
+                                                <div style={{fontSize: '0.9rem', color: '#4a5568'}}>
+                                                    {abc.costDrivers[activity].toLocaleString()} {activity === 'shipping' ? 'shipments' : 'units'}
+                                                </div>
+                                                <div style={{fontSize: '0.8rem', color: '#718096', marginTop: '0.5rem'}}>
+                                                    {((cost / abc.costPerUnit) * 100).toFixed(1)}% of total
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        );
                     default:
                         return <div>Select an analysis type</div>;
                 }
@@ -1187,107 +1393,257 @@
 
             return (
                 <div>
-                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem'}}>
-                        💰 Global Financial Analysis Framework
-                    </h2>
+                    <div style={{background: '#e6fffa', border: '1px solid #319795', borderRadius: '8px', padding: '1rem', marginBottom: '2rem'}}>
+                        <div style={{fontSize: '0.9rem', color: '#2c7a7b', fontWeight: 'bold'}}>
+                            🚀 ENHANCED: Financial Framework v2.0 - Added IRR/NPV Analysis, Activity-Based Costing, and Global Market Intelligence!
+                        </div>
+                    </div>
 
-                    {/* Region Selection */}
-                    <div className="dashboard-card" style={{marginBottom: '2rem'}}>
-                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>
-                            🌍 Regional Economic Data
-                        </h3>
-                        <div style={{display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap'}}>
-                            {Object.entries(regionData).map(([key, data]) => (
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem'}}>
+                        <h2 style={{margin: 0, fontSize: '1.4rem', fontWeight: 'bold', color: '#2d3748'}}>
+                            💰 Enhanced Global Financial Analysis Framework v2.0
+                        </h2>
+                        <div style={{display: 'flex', gap: '0.5rem'}}>
+                            {[
+                                { key: 'analysis', label: '📊 Analysis', icon: '📊' },
+                                { key: 'inputs', label: '⚙️ Inputs', icon: '⚙️' },
+                                { key: 'regions', label: '🌍 Regions', icon: '🌍' }
+                            ].map(tab => (
                                 <button
-                                    key={key}
-                                    className={`btn ${selectedRegion === key ? 'btn-primary' : ''}`}
-                                    onClick={() => setSelectedRegion(key)}
+                                    key={tab.key}
+                                    onClick={() => setActiveTab(tab.key)}
+                                    style={{
+                                        background: activeTab === tab.key ? '#4299e1' : 'white',
+                                        color: activeTab === tab.key ? 'white' : '#4a5568',
+                                        border: activeTab === tab.key ? 'none' : '1px solid #e2e8f0',
+                                        borderRadius: '8px',
+                                        padding: '0.75rem 1rem',
+                                        cursor: 'pointer',
+                                        fontWeight: activeTab === tab.key ? 'bold' : 'normal',
+                                        fontSize: '0.9rem'
+                                    }}
                                 >
-                                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                                    {tab.label}
                                 </button>
                             ))}
                         </div>
-                        <div className="financial-grid">
-                            <div className="metric-panel">
-                                <div style={{fontSize: '1rem', color: '#4a5568'}}>GDP</div>
-                                <div className="metric-value neutral">${regionData[selectedRegion].gdp}B</div>
-                                <div>Total Economic Output</div>
-                            </div>
-                            <div className="metric-panel">
-                                <div style={{fontSize: '1rem', color: '#4a5568'}}>Growth Rate</div>
-                                <div className="metric-value positive">{regionData[selectedRegion].growth}%</div>
-                                <div>Annual GDP Growth</div>
-                            </div>
-                            <div className="metric-panel">
-                                <div style={{fontSize: '1rem', color: '#4a5568'}}>Inflation</div>
-                                <div className="metric-value neutral">{regionData[selectedRegion].inflation}%</div>
-                                <div>Consumer Price Index</div>
-                            </div>
-                        </div>
                     </div>
 
-                    {/* Financial Analysis Controls */}
-                    <div className="dashboard-card" style={{marginBottom: '2rem'}}>
-                        <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>
-                            📊 Financial Analysis Tools
-                        </h3>
-                        <div style={{display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap'}}>
-                            <button
-                                className={`btn ${analysisType === 'dupont' ? 'btn-primary' : ''}`}
-                                onClick={() => setAnalysisType('dupont')}
-                            >
-                                DuPont Analysis
-                            </button>
-                            <button
-                                className={`btn ${analysisType === 'breakeven' ? 'btn-primary' : ''}`}
-                                onClick={() => setAnalysisType('breakeven')}
-                            >
-                                Break-Even Analysis
-                            </button>
-                        </div>
-
-                        {/* Financial Inputs */}
-                        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', marginBottom: '2rem'}}>
-                            <div>
-                                <label className="form-label">Revenue ($)</label>
-                                <input
-                                    type="number"
-                                    className="form-input"
-                                    value={financialInputs.revenue}
-                                    onChange={(e) => setFinancialInputs({...financialInputs, revenue: parseInt(e.target.value)})}
-                                />
-                            </div>
-                            <div>
-                                <label className="form-label">Net Income ($)</label>
-                                <input
-                                    type="number"
-                                    className="form-input"
-                                    value={financialInputs.netIncome}
-                                    onChange={(e) => setFinancialInputs({...financialInputs, netIncome: parseInt(e.target.value)})}
-                                />
-                            </div>
-                            <div>
-                                <label className="form-label">Total Assets ($)</label>
-                                <input
-                                    type="number"
-                                    className="form-input"
-                                    value={financialInputs.totalAssets}
-                                    onChange={(e) => setFinancialInputs({...financialInputs, totalAssets: parseInt(e.target.value)})}
-                                />
-                            </div>
-                            <div>
-                                <label className="form-label">Total Equity ($)</label>
-                                <input
-                                    type="number"
-                                    className="form-input"
-                                    value={financialInputs.totalEquity}
-                                    onChange={(e) => setFinancialInputs({...financialInputs, totalEquity: parseInt(e.target.value)})}
-                                />
+                    {/* Analysis Tab */}
+                    {activeTab === 'analysis' && (
+                        <div>
+                            <div className="dashboard-card" style={{marginBottom: '2rem'}}>
+                                <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>
+                                    📊 Advanced Financial Analysis Tools
+                                </h3>
+                                <div style={{display: 'flex', gap: '0.5rem', marginBottom: '2rem', flexWrap: 'wrap'}}>
+                                    <button
+                                        className={`btn ${analysisType === 'dupont' ? 'btn-primary' : ''}`}
+                                        onClick={() => setAnalysisType('dupont')}
+                                    >
+                                        🔄 DuPont Analysis
+                                    </button>
+                                    <button
+                                        className={`btn ${analysisType === 'breakeven' ? 'btn-primary' : ''}`}
+                                        onClick={() => setAnalysisType('breakeven')}
+                                    >
+                                        ⚖️ Break-Even Analysis
+                                    </button>
+                                    <button
+                                        className={`btn ${analysisType === 'investment' ? 'btn-primary' : ''}`}
+                                        onClick={() => setAnalysisType('investment')}
+                                    >
+                                        💼 Investment Analysis (IRR/NPV)
+                                    </button>
+                                    <button
+                                        className={`btn ${analysisType === 'abc' ? 'btn-primary' : ''}`}
+                                        onClick={() => setAnalysisType('abc')}
+                                    >
+                                        🏭 Activity-Based Costing
+                                    </button>
+                                </div>
+                                {renderAnalysis()}
                             </div>
                         </div>
+                    )}
 
-                        {renderAnalysis()}
-                    </div>
+                    {/* Inputs Tab */}
+                    {activeTab === 'inputs' && (
+                        <div className="dashboard-card" style={{marginBottom: '2rem'}}>
+                            <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>
+                                ⚙️ Financial Input Parameters
+                            </h3>
+                            
+                            <div style={{marginBottom: '2rem'}}>
+                                <h4 style={{color: '#2d3748', marginBottom: '1rem'}}>Basic Financial Data</h4>
+                                <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem'}}>
+                                    <div>
+                                        <label className="form-label">Revenue ($)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={financialInputs.revenue}
+                                            onChange={(e) => setFinancialInputs({...financialInputs, revenue: parseInt(e.target.value)})}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="form-label">Net Income ($)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={financialInputs.netIncome}
+                                            onChange={(e) => setFinancialInputs({...financialInputs, netIncome: parseInt(e.target.value)})}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="form-label">Total Assets ($)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={financialInputs.totalAssets}
+                                            onChange={(e) => setFinancialInputs({...financialInputs, totalAssets: parseInt(e.target.value)})}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="form-label">Total Equity ($)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={financialInputs.totalEquity}
+                                            onChange={(e) => setFinancialInputs({...financialInputs, totalEquity: parseInt(e.target.value)})}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style={{marginBottom: '2rem'}}>
+                                <h4 style={{color: '#2d3748', marginBottom: '1rem'}}>Investment Analysis Parameters</h4>
+                                <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem'}}>
+                                    <div>
+                                        <label className="form-label">Initial Investment ($)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={financialInputs.initialInvestment}
+                                            onChange={(e) => setFinancialInputs({...financialInputs, initialInvestment: parseInt(e.target.value)})}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="form-label">Discount Rate (%)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={financialInputs.discountRate}
+                                            onChange={(e) => setFinancialInputs({...financialInputs, discountRate: parseFloat(e.target.value)})}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="form-label">Project Years</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={financialInputs.projectYears}
+                                            onChange={(e) => setFinancialInputs({...financialInputs, projectYears: parseInt(e.target.value)})}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style={{marginBottom: '2rem'}}>
+                                <h4 style={{color: '#2d3748', marginBottom: '1rem'}}>Activity-Based Costing</h4>
+                                <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem'}}>
+                                    <div>
+                                        <label className="form-label">Production Costs ($)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={financialInputs.productionCosts}
+                                            onChange={(e) => setFinancialInputs({...financialInputs, productionCosts: parseInt(e.target.value)})}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="form-label">Quality Control Costs ($)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={financialInputs.qualityCosts}
+                                            onChange={(e) => setFinancialInputs({...financialInputs, qualityCosts: parseInt(e.target.value)})}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="form-label">Packaging Costs ($)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={financialInputs.packagingCosts}
+                                            onChange={(e) => setFinancialInputs({...financialInputs, packagingCosts: parseInt(e.target.value)})}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="form-label">Shipping Costs ($)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={financialInputs.shippingCosts}
+                                            onChange={(e) => setFinancialInputs({...financialInputs, shippingCosts: parseInt(e.target.value)})}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Regions Tab */}
+                    {activeTab === 'regions' && (
+                        <div className="dashboard-card" style={{marginBottom: '2rem'}}>
+                            <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem'}}>
+                                🌍 Enhanced Global Economic Intelligence
+                            </h3>
+                            <div style={{display: 'flex', gap: '0.5rem', marginBottom: '2rem', flexWrap: 'wrap'}}>
+                                {Object.entries(regionData).map(([key, data]) => (
+                                    <button
+                                        key={key}
+                                        className={`btn ${selectedRegion === key ? 'btn-primary' : ''}`}
+                                        onClick={() => setSelectedRegion(key)}
+                                    >
+                                        {key === 'americas' ? '🇺🇸' : key === 'europe' ? '🇪🇺' : key === 'asia' ? '🌏' : key === 'caribbean' ? '🏝️' : key === 'australia' ? '🇦🇺' : '🇮🇳'} {key.charAt(0).toUpperCase() + key.slice(1)}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="financial-grid">
+                                <div className="metric-panel">
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>GDP</div>
+                                    <div className="metric-value neutral">${regionData[selectedRegion].gdp}B</div>
+                                    <div>Total Economic Output</div>
+                                </div>
+                                <div className="metric-panel">
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Growth Rate</div>
+                                    <div className="metric-value positive">{regionData[selectedRegion].growth}%</div>
+                                    <div>Annual GDP Growth</div>
+                                </div>
+                                <div className="metric-panel">
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Inflation</div>
+                                    <div className="metric-value neutral">{regionData[selectedRegion].inflation}%</div>
+                                    <div>Consumer Price Index</div>
+                                </div>
+                                <div className="metric-panel">
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Interest Rate</div>
+                                    <div className="metric-value neutral">{regionData[selectedRegion].interestRate}%</div>
+                                    <div>Central Bank Rate</div>
+                                </div>
+                                <div className="metric-panel">
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Market Size</div>
+                                    <div className="metric-value positive">{(regionData[selectedRegion].marketSize/1000000).toFixed(0)}M</div>
+                                    <div>Population</div>
+                                </div>
+                                <div className="metric-panel">
+                                    <div style={{fontSize: '1rem', color: '#4a5568'}}>Currency</div>
+                                    <div className="metric-value neutral">{regionData[selectedRegion].currency}</div>
+                                    <div>Base Currency</div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             );
         };
