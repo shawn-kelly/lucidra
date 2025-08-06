@@ -53,6 +53,11 @@ import StrategicMarketingAutomation from './components/StrategicMarketingAutomat
 import EnhancedHRModule from './components/EnhancedHRModule';
 import TutorialVideoLibrary from './components/TutorialVideoLibrary';
 
+// Import new advanced infrastructure components
+import EnhancedFrameworkHub from './components/EnhancedFrameworkHub';
+import AIScenarioEngine from './components/AIScenarioEngine';
+import StrategicIntelligenceHub from './components/StrategicIntelligenceHub';
+
 // Import ALL Process Management components that were missing
 import AdvancedProcessManagement from './components/AdvancedProcessManagement';
 import ProcessManagement from './components/ProcessManagement';
@@ -78,6 +83,7 @@ import RealTimePESTLEAnalysis from './components/RealTimePESTLEAnalysis';
 function App() {
   const [currentView, setCurrentView] = useState('dashboard');
   const [userTier] = useState('pro'); // Default to pro for demo
+  const [currentUser] = useState('demo-user-123'); // Demo user ID
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
 
@@ -140,6 +146,16 @@ function App() {
         { id: 'canvas', name: 'Business Model Canvas', icon: '📋', desc: 'Visual business planning' },
         { id: 'tutorials', name: 'Tutorial Library', icon: '🎓', desc: 'Video tutorial system' },
         { id: 'video', name: 'AI Video Production', icon: '🎥', desc: 'Generate strategy videos' }
+      ]
+    },
+    {
+      title: "🚀 Advanced Infrastructure",
+      color: "purple.500",
+      items: [
+        { id: 'framework-hub', name: 'Enhanced Framework Hub', icon: '🚀', desc: 'Advanced framework management' },
+        { id: 'ai-scenarios', name: 'AI Scenario Engine', icon: '🤖', desc: 'Cross-framework AI scenarios' },
+        { id: 'intelligence-hub', name: 'Strategic Intelligence', icon: '🧠', desc: 'Real-time strategic insights' },
+        { id: 'signal-composer', name: 'Signal Composer', icon: '📊', desc: 'Custom intelligence dashboards' }
       ]
     }
   ];
@@ -235,6 +251,18 @@ function App() {
         break;
       case 'video':
         items.push({ label: 'AI Video', view: 'video', icon: '🎥' });
+        break;
+      case 'framework-hub':
+        items.push({ label: 'Enhanced Framework Hub', view: 'framework-hub', icon: '🚀' });
+        break;
+      case 'ai-scenarios':
+        items.push({ label: 'AI Scenario Engine', view: 'ai-scenarios', icon: '🤖' });
+        break;
+      case 'intelligence-hub':
+        items.push({ label: 'Strategic Intelligence', view: 'intelligence-hub', icon: '🧠' });
+        break;
+      case 'signal-composer':
+        items.push({ label: 'Signal Composer', view: 'signal-composer', icon: '📊' });
         break;
     }
     
@@ -665,6 +693,42 @@ function App() {
               🎥 AI Video
             </Button>
           </HStack>
+
+          {/* Row 6: Advanced Infrastructure */}
+          <HStack spacing={1} flexWrap="wrap" justify="center">
+            <Button
+              variant={currentView === 'framework-hub' ? 'solid' : 'ghost'}
+              colorScheme={currentView === 'framework-hub' ? 'purple' : 'gray'}
+              size="sm"
+              onClick={() => setCurrentView('framework-hub')}
+            >
+              🚀 Framework Hub
+            </Button>
+            <Button
+              variant={currentView === 'ai-scenarios' ? 'solid' : 'ghost'}
+              colorScheme={currentView === 'ai-scenarios' ? 'purple' : 'gray'}
+              size="sm"
+              onClick={() => setCurrentView('ai-scenarios')}
+            >
+              🤖 AI Scenarios
+            </Button>
+            <Button
+              variant={currentView === 'intelligence-hub' ? 'solid' : 'ghost'}
+              colorScheme={currentView === 'intelligence-hub' ? 'purple' : 'gray'}
+              size="sm"
+              onClick={() => setCurrentView('intelligence-hub')}
+            >
+              🧠 Intelligence
+            </Button>
+            <Button
+              variant={currentView === 'signal-composer' ? 'solid' : 'ghost'}
+              colorScheme={currentView === 'signal-composer' ? 'purple' : 'gray'}
+              size="sm"
+              onClick={() => setCurrentView('signal-composer')}
+            >
+              📊 Signal Composer
+            </Button>
+          </HStack>
           </VStack>
         </VStack>
       )}
@@ -1073,6 +1137,59 @@ function App() {
                   <VStack align="start" spacing={0}>
                     <Text fontWeight="bold" fontSize="sm">AI Video Production</Text>
                     <Text fontSize="xs" color="gray.600">Generate strategy videos</Text>
+                  </VStack>
+                </HStack>
+              </CardBody>
+            </Card>
+          </Grid>
+        </Box>
+
+        {/* Advanced Infrastructure Suite */}
+        <Box mb={8}>
+          <Text fontSize="xl" fontWeight="bold" mb={4} color="purple.600">
+            🚀 Advanced Infrastructure
+          </Text>
+          <Grid templateColumns="repeat(auto-fit, minmax(280px, 1fr))" gap={3}>
+            <Card cursor="pointer" _hover={{ transform: 'translateY(-2px)', shadow: 'lg' }} transition="all 0.2s" onClick={() => setCurrentView('framework-hub')}>
+              <CardBody py={3}>
+                <HStack>
+                  <Text fontSize="xl">🚀</Text>
+                  <VStack align="start" spacing={0}>
+                    <Text fontWeight="bold" fontSize="sm">Enhanced Framework Hub</Text>
+                    <Text fontSize="xs" color="gray.600">Advanced framework management</Text>
+                  </VStack>
+                </HStack>
+              </CardBody>
+            </Card>
+            <Card cursor="pointer" _hover={{ transform: 'translateY(-2px)', shadow: 'lg' }} transition="all 0.2s" onClick={() => setCurrentView('ai-scenarios')}>
+              <CardBody py={3}>
+                <HStack>
+                  <Text fontSize="xl">🤖</Text>
+                  <VStack align="start" spacing={0}>
+                    <Text fontWeight="bold" fontSize="sm">AI Scenario Engine</Text>
+                    <Text fontSize="xs" color="gray.600">Cross-framework AI scenarios</Text>
+                  </VStack>
+                </HStack>
+              </CardBody>
+            </Card>
+            <Card cursor="pointer" _hover={{ transform: 'translateY(-2px)', shadow: 'lg' }} transition="all 0.2s" onClick={() => setCurrentView('intelligence-hub')}>
+              <CardBody py={3}>
+                <HStack>
+                  <Text fontSize="xl">🧠</Text>
+                  <VStack align="start" spacing={0}>
+                    <Text fontWeight="bold" fontSize="sm">Strategic Intelligence Hub</Text>
+                    <Text fontSize="xs" color="gray.600">Real-time strategic insights</Text>
+                  </VStack>
+                </HStack>
+              </CardBody>
+            </Card>
+            <Card cursor="pointer" _hover={{ transform: 'translateY(-2px)', shadow: 'lg' }} transition="all 0.2s" onClick={() => setCurrentView('signal-composer')}>
+              <CardBody py={3}>
+                <HStack>
+                  <Text fontSize="xl">📊</Text>
+                  <VStack align="start" spacing={0}>
+                    <Text fontWeight="bold" fontSize="sm">Signal Composer</Text>
+                    <Text fontSize="xs" color="gray.600">Custom intelligence dashboards</Text>
                   </VStack>
                 </HStack>
               </CardBody>

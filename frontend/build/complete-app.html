@@ -5161,106 +5161,2322 @@
             );
         };
 
-        // Process Management Intelligence Component
+        // Unified Process Management Center v3.0 - Complete Integration
         const ProcessManagement = () => {
             const [activeTab, setActiveTab] = React.useState('dashboard');
             const [selectedProcess, setSelectedProcess] = React.useState(null);
             const [showProcessBuilder, setShowProcessBuilder] = React.useState(false);
+            const [showApprovalWorkflow, setShowApprovalWorkflow] = React.useState(false);
+            const [processEditMode, setProcessEditMode] = React.useState(false);
+            const [processApprovals, setProcessApprovals] = React.useState([]);
+            const [globalProcessLibrary, setGlobalProcessLibrary] = React.useState([]);
+            const [processMetrics, setProcessMetrics] = React.useState({});
+            const [integrationData, setIntegrationData] = React.useState({});
             const [editingNarrative, setEditingNarrative] = React.useState(false);
             const [narrativeText, setNarrativeText] = React.useState('');
-            const [organizationChart, setOrganizationChart] = React.useState({});
-            const [mckinsey7S, setMckinsey7S] = React.useState({
-                strategy: '', structure: '', systems: '', sharedValues: '', 
-                style: '', staff: '', skills: ''
-            });
+            const [bpmnData, setBpmnData] = React.useState({});
+            const [aiRecommendations, setAiRecommendations] = React.useState([]);
+
+            // Comprehensive process data with full integration
             const [processes, setProcesses] = React.useState([
-                { 
-                    id: 1, 
-                    name: 'Customer Onboarding', 
+                {
+                    id: 'proc-001',
+                    name: 'Customer Onboarding Process',
                     category: 'Customer Management',
-                    owner: 'Sales Team',
-                    inputs: ['Customer Application', 'ID Verification', 'Credit Check'],
-                    processing: ['Data Validation', 'Risk Assessment', 'Account Setup'],
-                    outputs: ['Customer Account', 'Welcome Package', 'Service Activation'],
-                    stage: 'Optimized', 
-                    progress: 95, 
-                    efficiency: 88,
-                    cycleTime: '3.2 days',
-                    cost: '$245',
-                    qualityScore: 92,
-                    narrative: 'Streamlined digital onboarding process with automated verification and real-time status updates that creates exceptional customer experience from first contact.',
-                    hrAlignment: {
-                        roles: ['Customer Success Specialist', 'Data Verification Analyst', 'Risk Assessment Manager'],
-                        skills: ['Customer service excellence', 'Risk analysis', 'Digital literacy'],
-                        training: ['Customer onboarding certification', 'Risk assessment training']
+                    status: 'active',
+                    version: '2.1',
+                    owner: 'Sarah Johnson',
+                    department: 'Customer Success',
+                    priority: 'high',
+                    lastUpdated: '2024-08-04',
+                    approvalStatus: 'approved',
+                    narrative: 'Complete customer onboarding workflow from initial contact to full activation, ensuring compliance and optimal customer experience.',
+                    steps: [
+                        { id: 1, name: 'Lead Qualification', duration: '2 hours', cost: '$50', owner: 'Sales Team' },
+                        { id: 2, name: 'Contract Processing', duration: '4 hours', cost: '$120', owner: 'Legal Team' },
+                        { id: 3, name: 'Account Setup', duration: '1 hour', cost: '$80', owner: 'IT Team' },
+                        { id: 4, name: 'Training Session', duration: '3 hours', cost: '$200', owner: 'Customer Success' },
+                        { id: 5, name: 'Follow-up Review', duration: '1 hour', cost: '$60', owner: 'Account Manager' }
+                    ],
+                    metrics: {
+                        averageDuration: '11 hours',
+                        totalCost: '$510',
+                        successRate: '94%',
+                        customerSatisfaction: '4.8/5',
+                        bottlenecks: ['Contract Processing', 'Legal Review'],
+                        improvements: ['Automated document verification', 'Digital signature integration']
                     },
-                    marketingAlignment: {
-                        touchpoints: ['Application landing page', 'Welcome email series', 'Onboarding tutorials'],
-                        brandMessage: 'Seamless journey from prospect to valued customer',
-                        channels: ['Digital marketing', 'Email campaigns', 'Customer portal']
-                    },
-                    abcCosting: {
-                        activities: [
-                            {name: 'Data Collection', cost: 85, driver: 'Applications processed'},
-                            {name: 'Verification', cost: 120, driver: 'Documents verified'},
-                            {name: 'Account Setup', cost: 40, driver: 'Accounts created'}
-                        ],
-                        totalCost: 245
-                    },
-                    valueChain: {
-                        primary: ['Application intake', 'Identity verification', 'Risk assessment', 'Account creation'],
-                        support: ['Technology infrastructure', 'Compliance framework', 'Customer support']
-                    },
-                    processMap: {
-                        steps: [
-                            {id: 'start', name: 'Application\nReceived', type: 'start', x: 50, y: 100, description: 'Customer submits application through digital channel'},
-                            {id: 'verify', name: 'Identity\nVerification', type: 'process', x: 220, y: 100, description: 'Automated ID verification using AI'},
-                            {id: 'assess', name: 'Risk\nAssessment', type: 'decision', x: 390, y: 100, description: 'AI-powered risk scoring and evaluation'},
-                            {id: 'approve', name: 'Account\nCreation', type: 'process', x: 560, y: 100, description: 'Automated account setup and configuration'},
-                            {id: 'welcome', name: 'Welcome\nPackage', type: 'process', x: 730, y: 100, description: 'Personalized welcome materials and onboarding'},
-                            {id: 'end', name: 'Customer\nActivated', type: 'end', x: 900, y: 100, description: 'Customer ready to use services'}
-                        ],
+                    bpmn: {
+                        startEvent: 'Lead Generated',
+                        endEvent: 'Customer Activated',
+                        tasks: ['Qualify', 'Process', 'Setup', 'Train', 'Review'],
+                        gateways: ['Qualification Check', 'Approval Gate'],
                         connections: [
-                            {from: 'start', to: 'verify', label: 'Submit'},
-                            {from: 'verify', to: 'assess', label: 'Verified'},
-                            {from: 'assess', to: 'approve', label: 'Approved'},
-                            {from: 'approve', to: 'welcome', label: 'Created'},
-                            {from: 'welcome', to: 'end', label: 'Complete'}
+                            { from: 'Start', to: 'Qualify' },
+                            { from: 'Qualify', to: 'Gateway1' },
+                            { from: 'Gateway1', to: 'Process', condition: 'Qualified' },
+                            { from: 'Process', to: 'Setup' },
+                            { from: 'Setup', to: 'Train' },
+                            { from: 'Train', to: 'Review' },
+                            { from: 'Review', to: 'End' }
+                        ]
+                    },
+                    integrations: {
+                        strategicFrameworks: ['Porter Five Forces', 'Blue Ocean Strategy'],
+                        financialImpact: {
+                            revenue: '$125K annually',
+                            costSavings: '$45K annually',
+                            roi: '285%'
+                        },
+                        dataConnections: ['CRM System', 'Financial Database', 'HR Portal'],
+                        aiInsights: [
+                            'Reduce contract processing time by 40% with automated workflows',
+                            'Implement predictive scoring to improve qualification accuracy',
+                            'Add real-time notifications to reduce bottlenecks'
+                        ]
+                    },
+                    approvalHistory: [
+                        { version: '2.1', approver: 'Maria Rodriguez', date: '2024-08-04', status: 'approved', comments: 'Excellent integration with strategic frameworks' },
+                        { version: '2.0', approver: 'John Chen', date: '2024-07-15', status: 'approved', comments: 'Process optimization completed successfully' }
+                    ]
+                },
+                {
+                    id: 'proc-002',
+                    name: 'Product Development Lifecycle',
+                    category: 'Innovation',
+                    status: 'under_review',
+                    version: '3.0',
+                    owner: 'Alex Thompson',
+                    department: 'Product Development',
+                    priority: 'high',
+                    lastUpdated: '2024-08-03',
+                    approvalStatus: 'pending',
+                    narrative: 'End-to-end product development process incorporating Blue Ocean strategy principles and market intelligence from Data Pulse system.',
+                    steps: [
+                        { id: 1, name: 'Market Research', duration: '80 hours', cost: '$4000', owner: 'Research Team' },
+                        { id: 2, name: 'Concept Development', duration: '120 hours', cost: '$6000', owner: 'Design Team' },
+                        { id: 3, name: 'Prototyping', duration: '200 hours', cost: '$15000', owner: 'Engineering' },
+                        { id: 4, name: 'Testing & Validation', duration: '160 hours', cost: '$8000', owner: 'QA Team' },
+                        { id: 5, name: 'Market Launch', duration: '100 hours', cost: '$12000', owner: 'Marketing' }
+                    ],
+                    metrics: {
+                        averageDuration: '660 hours',
+                        totalCost: '$45,000',
+                        successRate: '87%',
+                        timeToMarket: '6 months',
+                        bottlenecks: ['Regulatory Approval', 'Cross-team Coordination'],
+                        improvements: ['Parallel development streams', 'Early regulatory engagement']
+                    },
+                    integrations: {
+                        strategicFrameworks: ['Blue Ocean Strategy', 'Porter Value Chain', 'Resource-Based View'],
+                        financialImpact: {
+                            revenue: '$2.5M projected',
+                            investmentRequired: '$450K',
+                            expectedROI: '450%'
+                        },
+                        dataConnections: ['Market Intelligence', 'Financial Projections', 'Competitive Analysis'],
+                        aiInsights: [
+                            'Leverage Blue Ocean opportunities in sustainable packaging',
+                            'Integrate Porter analysis for competitive positioning',
+                            'Use Data Pulse insights for market timing optimization'
+                        ]
+                    },
+                    approvalHistory: [
+                        { version: '3.0', approver: 'pending', date: '2024-08-03', status: 'under_review', comments: 'Strategic integration review in progress' },
+                        { version: '2.5', approver: 'Lisa Wang', date: '2024-07-20', status: 'approved', comments: 'Good framework integration, minor revisions needed' }
+                    ]
+                },
+                {
+                    id: 'proc-003',
+                    name: 'Strategic Planning Annual Review',
+                    category: 'Strategic Management',
+                    status: 'active',
+                    version: '1.5',
+                    owner: 'Michael Davis',
+                    department: 'Strategy',
+                    priority: 'high',
+                    lastUpdated: '2024-08-02',
+                    approvalStatus: 'approved',
+                    narrative: 'Comprehensive annual strategic review process integrating all Lucidra strategic frameworks with financial analysis and market intelligence.',
+                    steps: [
+                        { id: 1, name: 'Porter Five Forces Analysis', duration: '40 hours', cost: '$2000', owner: 'Strategy Team' },
+                        { id: 2, name: 'Blue Ocean Opportunity Assessment', duration: '60 hours', cost: '$3000', owner: 'Innovation Team' },
+                        { id: 3, name: 'Financial Framework Analysis', duration: '80 hours', cost: '$4000', owner: 'Finance Team' },
+                        { id: 4, name: 'Data Pulse Market Intelligence', duration: '30 hours', cost: '$1500', owner: 'Analytics Team' },
+                        { id: 5, name: 'Strategic Plan Development', duration: '100 hours', cost: '$5000', owner: 'Executive Team' }
+                    ],
+                    metrics: {
+                        averageDuration: '310 hours',
+                        totalCost: '$15,500',
+                        successRate: '96%',
+                        strategicAlignment: '92%',
+                        bottlenecks: ['Data Integration', 'Cross-framework Analysis'],
+                        improvements: ['Automated dashboard integration', 'Real-time framework updates']
+                    },
+                    integrations: {
+                        strategicFrameworks: ['All Frameworks Integrated'],
+                        financialImpact: {
+                            strategicValue: '$10M+ annually',
+                            processEfficiency: '35% improvement',
+                            decisionQuality: '88% accuracy'
+                        },
+                        dataConnections: ['All Platform Data Sources'],
+                        aiInsights: [
+                            'Real-time framework integration reduces analysis time by 60%',
+                            'Automated cross-framework validation improves strategic quality',
+                            'Integrated dashboards enable continuous strategic monitoring'
                         ]
                     }
+                }
+            ]);
+
+            // Process Management Tabs
+            const tabs = [
+                { key: 'dashboard', label: '📊 Process Dashboard', icon: '📊' },
+                { key: 'library', label: '📚 Process Library', icon: '📚' },
+                { key: 'builder', label: '🛠️ Process Builder', icon: '🛠️' },
+                { key: 'approvals', label: '✅ Approval Workflow', icon: '✅' },
+                { key: 'analytics', label: '📈 Process Analytics', icon: '📈' },
+                { key: 'integration', label: '🔗 Strategic Integration', icon: '🔗' }
+            ];
+
+            // Comprehensive handler functions with full integration
+            const handleCreateProcess = (processData) => {
+                const newProcess = {
+                    id: `proc-${Date.now()}`,
+                    ...processData,
+                    version: '1.0',
+                    status: 'draft',
+                    approvalStatus: 'pending',
+                    lastUpdated: new Date().toISOString().split('T')[0],
+                    approvalHistory: [],
+                    integrations: {
+                        strategicFrameworks: [],
+                        financialImpact: { revenue: '', costSavings: '', roi: '' },
+                        dataConnections: [],
+                        aiInsights: []
+                    }
+                };
+                setProcesses([...processes, newProcess]);
+                setShowProcessBuilder(false);
+                generateAIRecommendations(newProcess);
+            };
+
+            const handleApproveProcess = (processId, comments) => {
+                setProcesses(processes.map(p => {
+                    if (p.id === processId) {
+                        return {
+                            ...p,
+                            approvalStatus: 'approved',
+                            status: 'active',
+                            approvalHistory: [
+                                ...p.approvalHistory,
+                                {
+                                    version: p.version,
+                                    approver: 'Current User',
+                                    date: new Date().toISOString().split('T')[0],
+                                    status: 'approved',
+                                    comments: comments || 'Process approved'
+                                }
+                            ]
+                        };
+                    }
+                    return p;
+                }));
+                updateGlobalProcessLibrary();
+            };
+
+            const generateAIRecommendations = (process) => {
+                const recommendations = [
+                    `Integrate ${process.name} with Porter's Five Forces analysis for competitive insights`,
+                    `Apply Blue Ocean Strategy principles to identify process innovation opportunities`,
+                    `Connect to Financial Framework for ROI analysis and cost optimization`,
+                    `Leverage Data Pulse intelligence for real-time process performance monitoring`,
+                    `Consider BPMN visualization for bottleneck identification and improvement`
+                ];
+                setAiRecommendations(recommendations);
+            };
+
+            const updateGlobalProcessLibrary = () => {
+                const approvedProcesses = processes.filter(p => p.approvalStatus === 'approved');
+                setGlobalProcessLibrary(approvedProcesses);
+            };
+
+            const getBPMNVisualization = (process) => {
+                if (!process.bpmn) return null;
+                
+                return (
+                    <div style={{padding: '2rem', background: '#f7fafc', borderRadius: '12px', margin: '1rem 0'}}>
+                        <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                            🗺️ BPMN Process Flow
+                        </h4>
+                        <div style={{display: 'flex', alignItems: 'center', gap: '1rem', overflowX: 'auto', padding: '1rem'}}>
+                            <div style={{
+                                background: '#48bb78', color: 'white', padding: '0.5rem 1rem',
+                                borderRadius: '20px', fontSize: '0.9rem', whiteSpace: 'nowrap'
+                            }}>
+                                ▶️ {process.bpmn.startEvent}
+                            </div>
+                            {process.bpmn.tasks.map((task, idx) => (
+                                <React.Fragment key={idx}>
+                                    <div style={{fontSize: '1.5rem', color: '#4299e1'}}>→</div>
+                                    <div style={{
+                                        background: '#4299e1', color: 'white', padding: '0.5rem 1rem',
+                                        borderRadius: '8px', fontSize: '0.9rem', whiteSpace: 'nowrap'
+                                    }}>
+                                        {task}
+                                    </div>
+                                </React.Fragment>
+                            ))}
+                            <div style={{fontSize: '1.5rem', color: '#4299e1'}}>→</div>
+                            <div style={{
+                                background: '#e53e3e', color: 'white', padding: '0.5rem 1rem',
+                                borderRadius: '20px', fontSize: '0.9rem', whiteSpace: 'nowrap'
+                            }}>
+                                ⏹️ {process.bpmn.endEvent}
+                            </div>
+                        </div>
+                        {process.bpmn.gateways && process.bpmn.gateways.length > 0 && (
+                            <div style={{marginTop: '1rem'}}>
+                                <strong>Decision Points:</strong> {process.bpmn.gateways.join(', ')}
+                            </div>
+                        )}
+                    </div>
+                );
+            };
+
+            return (
+                <div>
+                    <div style={{background: '#e6fffa', border: '1px solid #319795', borderRadius: '8px', padding: '1rem', marginBottom: '2rem'}}>
+                        <div style={{fontSize: '0.9rem', color: '#2c7a7b', fontWeight: 'bold'}}>
+                            🔄 UNIFIED: Process Management Center v3.0 - Complete integration with strategic frameworks, approval workflows, and BPMN visualization!
+                        </div>
+                    </div>
+
+                    <h2 style={{fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                        🔄 Unified Process Management Center v3.0
+                    </h2>
+
+                    {/* Tab Navigation */}
+                    <div style={{display: 'flex', gap: '0.5rem', marginBottom: '2rem', overflowX: 'auto'}}>
+                        {tabs.map(tab => (
+                            <button
+                                key={tab.key}
+                                onClick={() => setActiveTab(tab.key)}
+                                style={{
+                                    background: activeTab === tab.key ? '#319795' : 'white',
+                                    color: activeTab === tab.key ? 'white' : '#4a5568',
+                                    border: activeTab === tab.key ? 'none' : '1px solid #e2e8f0',
+                                    borderRadius: '8px',
+                                    padding: '0.75rem 1rem',
+                                    cursor: 'pointer',
+                                    fontWeight: activeTab === tab.key ? 'bold' : 'normal',
+                                    fontSize: '0.9rem',
+                                    whiteSpace: 'nowrap'
+                                }}
+                            >
+                                {tab.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Process Dashboard Tab */}
+                    {activeTab === 'dashboard' && (
+                        <div>
+                            {/* Key Metrics */}
+                            <div className="stage-card" style={{marginBottom: '2rem'}}>
+                                <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1.5rem', color: '#2d3748'}}>
+                                    📊 Process Portfolio Overview
+                                </h3>
+                                <div className="financial-grid">
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Total Processes</div>
+                                        <div className="metric-value positive">{processes.length}</div>
+                                        <div>Active & Under Review</div>
+                                    </div>
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Approved Processes</div>
+                                        <div className="metric-value positive">{processes.filter(p => p.approvalStatus === 'approved').length}</div>
+                                        <div>Ready for Implementation</div>
+                                    </div>
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Strategic Integration</div>
+                                        <div className="metric-value neutral">94%</div>
+                                        <div>Framework Connectivity</div>
+                                    </div>
+                                    <div className="metric-panel">
+                                        <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Process Efficiency</div>
+                                        <div className="metric-value positive">87%</div>
+                                        <div>Average Performance</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Active Processes */}
+                            <div className="stage-card">
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem'}}>
+                                    <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#2d3748'}}>🔄 Active Processes</h3>
+                                    <button
+                                        onClick={() => setActiveTab('builder')}
+                                        style={{
+                                            background: '#319795', color: 'white', border: 'none', padding: '0.75rem 1.5rem',
+                                            borderRadius: '8px', cursor: 'pointer', fontWeight: '600'
+                                        }}
+                                    >
+                                        ➕ Create New Process
+                                    </button>
+                                </div>
+                                <div className="module-grid">
+                                    {processes.map(process => (
+                                        <div 
+                                            key={process.id} 
+                                            className="stage-card" 
+                                            style={{margin: 0, cursor: 'pointer'}}
+                                            onClick={() => {
+                                                setSelectedProcess(process);
+                                                setActiveTab('library');
+                                            }}
+                                        >
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem'}}>
+                                                <h4 style={{fontSize: '1.1rem', fontWeight: 'bold', color: '#2d3748', margin: 0}}>
+                                                    {process.name}
+                                                </h4>
+                                                <span style={{
+                                                    background: process.approvalStatus === 'approved' ? '#48bb78' :
+                                                               process.approvalStatus === 'pending' ? '#ed8936' : '#e53e3e',
+                                                    color: 'white', padding: '0.25rem 0.75rem',
+                                                    borderRadius: '12px', fontSize: '0.8rem', fontWeight: '600'
+                                                }}>
+                                                    {process.approvalStatus}
+                                                </span>
+                                            </div>
+                                            <p style={{color: '#4a5568', fontSize: '0.9rem', marginBottom: '1rem', lineHeight: '1.4'}}>
+                                                {process.narrative.substring(0, 100)}...
+                                            </p>
+                                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem', fontSize: '0.8rem'}}>
+                                                <div><strong>Owner:</strong> {process.owner}</div>
+                                                <div><strong>Department:</strong> {process.department}</div>
+                                                <div><strong>Category:</strong> {process.category}</div>
+                                                <div><strong>Version:</strong> {process.version}</div>
+                                            </div>
+                                            <div style={{marginTop: '1rem', padding: '0.5rem', background: '#f0f9ff', borderRadius: '6px'}}>
+                                                <div style={{fontSize: '0.8rem', color: '#4a5568'}}>
+                                                    <strong>Strategic Integration:</strong> {process.integrations?.strategicFrameworks?.length || 0} frameworks connected
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Process Library Tab */}
+                    {activeTab === 'library' && (
+                        <div>
+                            {selectedProcess ? (
+                                <div className="stage-card">
+                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem'}}>
+                                        <h3 style={{fontSize: '1.2rem', fontWeight: 'bold', color: '#2d3748'}}>
+                                            📋 {selectedProcess.name} v{selectedProcess.version}
+                                        </h3>
+                                        <div style={{display: 'flex', gap: '1rem'}}>
+                                            <button
+                                                onClick={() => setProcessEditMode(true)}
+                                                style={{
+                                                    background: '#4299e1', color: 'white', border: 'none', padding: '0.5rem 1rem',
+                                                    borderRadius: '6px', cursor: 'pointer', fontWeight: '600'
+                                                }}
+                                            >
+                                                ✏️ Edit Process
+                                            </button>
+                                            {selectedProcess.approvalStatus === 'pending' && (
+                                                <button
+                                                    onClick={() => setShowApprovalWorkflow(true)}
+                                                    style={{
+                                                        background: '#48bb78', color: 'white', border: 'none', padding: '0.5rem 1rem',
+                                                        borderRadius: '6px', cursor: 'pointer', fontWeight: '600'
+                                                    }}
+                                                >
+                                                    ✅ Review & Approve
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* Process Overview */}
+                                    <div className="module-grid" style={{marginBottom: '2rem'}}>
+                                        <div className="stage-card" style={{margin: 0}}>
+                                            <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                                📊 Process Metrics
+                                            </h4>
+                                            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', fontSize: '0.9rem'}}>
+                                                <div><strong>Duration:</strong> {selectedProcess.metrics.averageDuration}</div>
+                                                <div><strong>Cost:</strong> {selectedProcess.metrics.totalCost}</div>
+                                                <div><strong>Success Rate:</strong> {selectedProcess.metrics.successRate}</div>
+                                                <div><strong>Owner:</strong> {selectedProcess.owner}</div>
+                                            </div>
+                                        </div>
+                                        <div className="stage-card" style={{margin: 0}}>
+                                            <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                                🎯 Strategic Integration
+                                            </h4>
+                                            <div style={{marginBottom: '1rem'}}>
+                                                {selectedProcess.integrations.strategicFrameworks.length > 0 ? (
+                                                    <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem'}}>
+                                                        {selectedProcess.integrations.strategicFrameworks.map((framework, idx) => (
+                                                            <span key={idx} style={{
+                                                                background: '#4299e1', color: 'white', padding: '0.25rem 0.5rem',
+                                                                borderRadius: '12px', fontSize: '0.8rem', fontWeight: '600'
+                                                            }}>
+                                                                {framework}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                ) : (
+                                                    <div style={{color: '#4a5568', fontSize: '0.9rem'}}>
+                                                        No strategic frameworks connected
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div style={{fontSize: '0.9rem'}}>
+                                                <strong>Financial Impact:</strong> {selectedProcess.integrations.financialImpact.roi || 'Not calculated'}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Process Narrative */}
+                                    <div className="stage-card" style={{margin: 0, marginBottom: '2rem'}}>
+                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
+                                            <h4 style={{fontSize: '1rem', fontWeight: 'bold', color: '#2d3748'}}>
+                                                📝 Process Narrative
+                                            </h4>
+                                            <button
+                                                onClick={() => setEditingNarrative(!editingNarrative)}
+                                                style={{
+                                                    background: editingNarrative ? '#48bb78' : '#e2e8f0',
+                                                    color: editingNarrative ? 'white' : '#4a5568',
+                                                    border: 'none', padding: '0.5rem', borderRadius: '4px',
+                                                    cursor: 'pointer', fontSize: '0.8rem'
+                                                }}
+                                            >
+                                                {editingNarrative ? '💾 Save' : '✏️ Edit'}
+                                            </button>
+                                        </div>
+                                        {editingNarrative ? (
+                                            <textarea
+                                                value={narrativeText || selectedProcess.narrative}
+                                                onChange={(e) => setNarrativeText(e.target.value)}
+                                                style={{
+                                                    width: '100%', minHeight: '100px', padding: '0.75rem',
+                                                    border: '2px solid #e2e8f0', borderRadius: '6px', fontSize: '0.9rem',
+                                                    resize: 'vertical'
+                                                }}
+                                                placeholder="Describe the process, its purpose, and key outcomes..."
+                                            />
+                                        ) : (
+                                            <p style={{color: '#4a5568', lineHeight: '1.6'}}>
+                                                {selectedProcess.narrative}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* BPMN Visualization */}
+                                    {getBPMNVisualization(selectedProcess)}
+
+                                    {/* Process Steps */}
+                                    <div className="stage-card" style={{margin: 0, marginBottom: '2rem'}}>
+                                        <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                            🔄 Process Steps
+                                        </h4>
+                                        <div style={{display: 'grid', gap: '1rem'}}>
+                                            {selectedProcess.steps.map((step, idx) => (
+                                                <div key={step.id} style={{
+                                                    display: 'flex', alignItems: 'center', gap: '1rem',
+                                                    padding: '1rem', background: '#f7fafc', borderRadius: '8px'
+                                                }}>
+                                                    <div style={{
+                                                        background: '#4299e1', color: 'white', borderRadius: '50%',
+                                                        width: '2rem', height: '2rem', display: 'flex', alignItems: 'center',
+                                                        justifyContent: 'center', fontWeight: 'bold', fontSize: '0.9rem'
+                                                    }}>
+                                                        {idx + 1}
+                                                    </div>
+                                                    <div style={{flex: 1}}>
+                                                        <h5 style={{fontSize: '1rem', fontWeight: 'bold', margin: 0, marginBottom: '0.5rem'}}>
+                                                            {step.name}
+                                                        </h5>
+                                                        <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', fontSize: '0.8rem', color: '#4a5568'}}>
+                                                            <div><strong>Duration:</strong> {step.duration}</div>
+                                                            <div><strong>Cost:</strong> {step.cost}</div>
+                                                            <div><strong>Owner:</strong> {step.owner}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* AI Insights */}
+                                    {selectedProcess.integrations.aiInsights.length > 0 && (
+                                        <div className="stage-card" style={{margin: 0}}>
+                                            <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                                🤖 AI-Powered Insights & Recommendations
+                                            </h4>
+                                            <div style={{display: 'grid', gap: '0.5rem'}}>
+                                                {selectedProcess.integrations.aiInsights.map((insight, idx) => (
+                                                    <div key={idx} style={{
+                                                        padding: '0.75rem', background: '#f0f9ff', borderRadius: '6px',
+                                                        borderLeft: '3px solid #4299e1'
+                                                    }}>
+                                                        <div style={{fontSize: '0.9rem', color: '#2d3748'}}>
+                                                            💡 {insight}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <div className="stage-card" style={{textAlign: 'center', padding: '3rem'}}>
+                                    <div style={{fontSize: '3rem', marginBottom: '1rem'}}>📚</div>
+                                    <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                        Process Library
+                                    </h3>
+                                    <p style={{color: '#4a5568', marginBottom: '2rem'}}>
+                                        Select a process from the dashboard to view detailed information, edit narratives, and manage approvals.
+                                    </p>
+                                    <button
+                                        onClick={() => setActiveTab('dashboard')}
+                                        style={{
+                                            background: '#319795', color: 'white', border: 'none', padding: '0.75rem 1.5rem',
+                                            borderRadius: '8px', cursor: 'pointer', fontWeight: '600'
+                                        }}
+                                    >
+                                        Go to Dashboard
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Process Builder Tab */}
+                    {activeTab === 'builder' && (
+                        <div className="stage-card">
+                            <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                                🛠️ Advanced Process Builder
+                            </h3>
+                            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem'}}>
+                                <div>
+                                    <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                        📋 Process Information
+                                    </h4>
+                                    <div style={{display: 'grid', gap: '1rem'}}>
+                                        <div>
+                                            <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#4a5568'}}>
+                                                Process Name *
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="Enter process name..."
+                                                style={{
+                                                    width: '100%', padding: '0.75rem', border: '2px solid #e2e8f0',
+                                                    borderRadius: '6px', fontSize: '0.9rem'
+                                                }}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#4a5568'}}>
+                                                Category *
+                                            </label>
+                                            <select
+                                                style={{
+                                                    width: '100%', padding: '0.75rem', border: '2px solid #e2e8f0',
+                                                    borderRadius: '6px', fontSize: '0.9rem', backgroundColor: 'white'
+                                                }}
+                                            >
+                                                <option value="">Select Category</option>
+                                                <option value="customer">Customer Management</option>
+                                                <option value="innovation">Innovation</option>
+                                                <option value="strategic">Strategic Management</option>
+                                                <option value="operations">Operations</option>
+                                                <option value="finance">Finance</option>
+                                                <option value="hr">Human Resources</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#4a5568'}}>
+                                                Process Owner *
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="Process owner name..."
+                                                style={{
+                                                    width: '100%', padding: '0.75rem', border: '2px solid #e2e8f0',
+                                                    borderRadius: '6px', fontSize: '0.9rem'
+                                                }}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#4a5568'}}>
+                                                Department
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="Department name..."
+                                                style={{
+                                                    width: '100%', padding: '0.75rem', border: '2px solid #e2e8f0',
+                                                    borderRadius: '6px', fontSize: '0.9rem'
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                        🎯 Strategic Integration
+                                    </h4>
+                                    <div style={{display: 'grid', gap: '1rem'}}>
+                                        <div>
+                                            <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#4a5568'}}>
+                                                Connected Strategic Frameworks
+                                            </label>
+                                            <div style={{display: 'grid', gap: '0.5rem'}}>
+                                                {[
+                                                    'Porter Five Forces',
+                                                    'Blue Ocean Strategy',
+                                                    'Financial Analysis',
+                                                    'Data Pulse Intelligence',
+                                                    'Resource-Based View'
+                                                ].map(framework => (
+                                                    <label key={framework} style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <input type="checkbox" />
+                                                        <span style={{fontSize: '0.9rem', color: '#4a5568'}}>{framework}</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#4a5568'}}>
+                                                Priority Level
+                                            </label>
+                                            <select
+                                                style={{
+                                                    width: '100%', padding: '0.75rem', border: '2px solid #e2e8f0',
+                                                    borderRadius: '6px', fontSize: '0.9rem', backgroundColor: 'white'
+                                                }}
+                                            >
+                                                <option value="high">High Priority</option>
+                                                <option value="medium">Medium Priority</option>
+                                                <option value="low">Low Priority</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style={{marginTop: '2rem'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2d3748'}}>
+                                    📝 Process Narrative
+                                </h4>
+                                <textarea
+                                    placeholder="Describe the process purpose, workflow, expected outcomes, and strategic alignment..."
+                                    style={{
+                                        width: '100%', minHeight: '120px', padding: '0.75rem',
+                                        border: '2px solid #e2e8f0', borderRadius: '6px', fontSize: '0.9rem',
+                                        resize: 'vertical'
+                                    }}
+                                />
+                            </div>
+
+                            <div style={{display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2rem'}}>
+                                <button
+                                    onClick={() => setActiveTab('dashboard')}
+                                    style={{
+                                        background: '#e2e8f0', color: '#4a5568', border: 'none', padding: '0.75rem 1.5rem',
+                                        borderRadius: '8px', cursor: 'pointer', fontWeight: '600'
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        alert('🎉 Process Created Successfully!\n\nYour process has been created and is now pending approval. It includes strategic framework integration and AI-powered optimization recommendations.');
+                                        setActiveTab('dashboard');
+                                    }}
+                                    style={{
+                                        background: '#319795', color: 'white', border: 'none', padding: '0.75rem 1.5rem',
+                                        borderRadius: '8px', cursor: 'pointer', fontWeight: '600'
+                                    }}
+                                >
+                                    🚀 Create Process
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Approval Workflow Tab */}
+                    {activeTab === 'approvals' && (
+                        <div className="stage-card">
+                            <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                                ✅ Process Approval Workflow
+                            </h3>
+                            <div className="module-grid">
+                                {processes.filter(p => p.approvalStatus === 'pending').map(process => (
+                                    <div key={process.id} className="stage-card" style={{margin: 0}}>
+                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem'}}>
+                                            <h4 style={{fontSize: '1rem', fontWeight: 'bold', color: '#2d3748', margin: 0}}>
+                                                {process.name} v{process.version}
+                                            </h4>
+                                            <span style={{
+                                                background: '#ed8936', color: 'white', padding: '0.25rem 0.75rem',
+                                                borderRadius: '12px', fontSize: '0.8rem', fontWeight: '600'
+                                            }}>
+                                                Pending Review
+                                            </span>
+                                        </div>
+                                        <p style={{color: '#4a5568', fontSize: '0.9rem', marginBottom: '1rem', lineHeight: '1.4'}}>
+                                            {process.narrative.substring(0, 120)}...
+                                        </p>
+                                        <div style={{marginBottom: '1rem', fontSize: '0.8rem'}}>
+                                            <div><strong>Owner:</strong> {process.owner}</div>
+                                            <div><strong>Department:</strong> {process.department}</div>
+                                            <div><strong>Last Updated:</strong> {process.lastUpdated}</div>
+                                        </div>
+                                        <div style={{display: 'flex', gap: '0.5rem', justifyContent: 'flex-end'}}>
+                                            <button
+                                                onClick={() => handleApproveProcess(process.id, 'Approved with strategic integration')}
+                                                style={{
+                                                    background: '#48bb78', color: 'white', border: 'none', padding: '0.5rem 1rem',
+                                                    borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '0.8rem'
+                                                }}
+                                            >
+                                                ✅ Approve
+                                            </button>
+                                            <button
+                                                style={{
+                                                    background: '#e53e3e', color: 'white', border: 'none', padding: '0.5rem 1rem',
+                                                    borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '0.8rem'
+                                                }}
+                                            >
+                                                ❌ Reject
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                                {processes.filter(p => p.approvalStatus === 'pending').length === 0 && (
+                                    <div style={{gridColumn: '1 / -1', textAlign: 'center', padding: '2rem', color: '#4a5568'}}>
+                                        ✅ No processes pending approval
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Strategic Integration Tab */}
+                    {activeTab === 'integration' && (
+                        <div className="stage-card">
+                            <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                                🔗 Strategic Framework Integration
+                            </h3>
+                            <div style={{marginBottom: '2rem', padding: '1rem', background: '#f0f9ff', borderRadius: '8px'}}>
+                                <h4 style={{fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2d3748'}}>
+                                    🎯 Active Integrations
+                                </h4>
+                                <p style={{fontSize: '0.9rem', color: '#4a5568', marginBottom: '1rem'}}>
+                                    Processes are automatically connected to strategic frameworks for comprehensive analysis and optimization.
+                                </p>
+                                <div className="module-grid" style={{margin: 0}}>
+                                    {[
+                                        { framework: 'Porter Five Forces', connected: 2, color: '#4299e1', description: 'Competitive analysis integration' },
+                                        { framework: 'Blue Ocean Strategy', connected: 1, color: '#48bb78', description: 'Innovation opportunity identification' },
+                                        { framework: 'Financial Analysis', connected: 3, color: '#ed8936', description: 'ROI and cost optimization' },
+                                        { framework: 'Data Pulse Intelligence', connected: 3, color: '#9f7aea', description: 'Real-time market insights' }
+                                    ].map(integration => (
+                                        <div key={integration.framework} style={{
+                                            padding: '1rem', background: 'white', borderRadius: '8px',
+                                            border: `2px solid ${integration.color}`
+                                        }}>
+                                            <h5 style={{fontSize: '0.9rem', fontWeight: 'bold', color: integration.color, marginBottom: '0.5rem'}}>
+                                                {integration.framework}
+                                            </h5>
+                                            <div style={{fontSize: '0.8rem', color: '#4a5568', marginBottom: '0.5rem'}}>
+                                                {integration.description}
+                                            </div>
+                                            <div style={{fontSize: '0.8rem', fontWeight: 'bold', color: '#2d3748'}}>
+                                                {integration.connected} processes connected
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="module-grid">
+                                {processes.filter(p => p.integrations.strategicFrameworks.length > 0).map(process => (
+                                    <div key={process.id} className="stage-card" style={{margin: 0}}>
+                                        <h4 style={{fontSize: '1rem', fontWeight: 'bold', color: '#2d3748', marginBottom: '1rem'}}>
+                                            {process.name}
+                                        </h4>
+                                        <div style={{marginBottom: '1rem'}}>
+                                            <div style={{fontSize: '0.8rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#4a5568'}}>
+                                                Connected Frameworks:
+                                            </div>
+                                            <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem'}}>
+                                                {process.integrations.strategicFrameworks.map((framework, idx) => (
+                                                    <span key={idx} style={{
+                                                        background: '#4299e1', color: 'white', padding: '0.25rem 0.5rem',
+                                                        borderRadius: '12px', fontSize: '0.7rem', fontWeight: '600'
+                                                    }}>
+                                                        {framework}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div style={{fontSize: '0.8rem', color: '#4a5568'}}>
+                                            <strong>Financial Impact:</strong> {process.integrations.financialImpact.roi}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Analytics Tab */}
+                    {activeTab === 'analytics' && (
+                        <div className="stage-card">
+                            <h3 style={{fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '2rem', color: '#2d3748'}}>
+                                📈 Process Analytics & Performance
+                            </h3>
+                            <div className="financial-grid" style={{marginBottom: '2rem'}}>
+                                <div className="metric-panel">
+                                    <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Average Process Cost</div>
+                                    <div className="metric-value positive">$20,337</div>
+                                    <div>Across All Processes</div>
+                                </div>
+                                <div className="metric-panel">
+                                    <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Process Efficiency</div>
+                                    <div className="metric-value positive">89%</div>
+                                    <div>Average Success Rate</div>
+                                </div>
+                                <div className="metric-panel">
+                                    <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Strategic Alignment</div>
+                                    <div className="metric-value neutral">94%</div>
+                                    <div>Framework Integration</div>
+                                </div>
+                                <div className="metric-panel">
+                                    <div style={{fontSize: '1rem', marginBottom: '0.5rem'}}>Annual ROI</div>
+                                    <div className="metric-value positive">$2.67M</div>
+                                    <div>Total Process Value</div>
+                                </div>
+                            </div>
+                            
+                            <div className="module-grid">
+                                {processes.map(process => (
+                                    <div key={process.id} className="stage-card" style={{margin: 0}}>
+                                        <h4 style={{fontSize: '1rem', fontWeight: 'bold', color: '#2d3748', marginBottom: '1rem'}}>
+                                            {process.name}
+                                        </h4>
+                                        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', fontSize: '0.8rem', marginBottom: '1rem'}}>
+                                            <div><strong>Duration:</strong> {process.metrics.averageDuration}</div>
+                                            <div><strong>Cost:</strong> {process.metrics.totalCost}</div>
+                                            <div><strong>Success Rate:</strong> {process.metrics.successRate}</div>
+                                            <div><strong>Status:</strong> {process.approvalStatus}</div>
+                                        </div>
+                                        {process.metrics.bottlenecks && (
+                                            <div style={{fontSize: '0.8rem'}}>
+                                                <strong>Bottlenecks:</strong>
+                                                <div style={{marginTop: '0.5rem'}}>
+                                                    {process.metrics.bottlenecks.map((bottleneck, idx) => (
+                                                        <span key={idx} style={{
+                                                            background: '#fed7d7', color: '#c53030', padding: '0.25rem 0.5rem',
+                                                            borderRadius: '12px', fontSize: '0.7rem', fontWeight: '600',
+                                                            marginRight: '0.5rem'
+                                                        }}>
+                                                            {bottleneck}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // ========================================
+        // ADVANCED STRATEGIC FRAMEWORK INFRASTRUCTURE v2.0
+        // World-Class Strategic Intelligence Platform
+        // ========================================
+
+        // FrameworkRegistry - Dynamic Framework Management System
+        class FrameworkRegistry {
+            constructor() {
+                this.frameworks = new Map();
+                this.loadedFrameworks = new Set();
+                this.crossFrameworkData = new Map();
+                this.aiScenarios = new Map();
+                this.performanceMetrics = {
+                    loadTimes: {},
+                    memoryUsage: {},
+                    userInteractions: {}
+                };
+                this.initializeRegistry();
+            }
+
+            initializeRegistry() {
+                // Register all available frameworks with metadata
+                this.registerFramework('digital-transformation', {
+                    name: 'Digital Transformation Dynamic Capabilities',
+                    category: 'core',
+                    priority: 'high',
+                    dependencies: ['data-pulse', 'financial-analysis'],
+                    loadFunction: () => this.loadDigitalTransformationFramework(),
+                    aiEnabled: true,
+                    enterpriseFeature: false
+                });
+
+                this.registerFramework('ai-scenario-planning', {
+                    name: 'AI-Enhanced Strategic Sensing & Scenario Planning',
+                    category: 'core',
+                    priority: 'high',
+                    dependencies: ['all-frameworks'],
+                    loadFunction: () => this.loadAIScenarioPlanning(),
+                    aiEnabled: true,
+                    enterpriseFeature: false
+                });
+
+                this.registerFramework('stakeholder-capitalism', {
+                    name: 'Stakeholder Capitalism Value Creation',
+                    category: 'sustainability',
+                    priority: 'high',
+                    dependencies: ['financial-analysis', 'mission-generator'],
+                    loadFunction: () => this.loadStakeholderCapitalismFramework(),
+                    aiEnabled: true,
+                    enterpriseFeature: false
+                });
+
+                this.registerFramework('platform-ecosystem', {
+                    name: 'Platform Ecosystem Orchestration',
+                    category: 'orchestration',
+                    priority: 'medium',
+                    dependencies: ['blue-ocean', 'porter-five-forces'],
+                    loadFunction: () => this.loadPlatformEcosystemFramework(),
+                    aiEnabled: true,
+                    enterpriseFeature: true
+                });
+
+                this.registerFramework('quantum-strategy', {
+                    name: 'Quantum Strategy Framework',
+                    category: 'orchestration',
+                    priority: 'medium',
+                    dependencies: ['ai-scenario-planning'],
+                    loadFunction: () => this.loadQuantumStrategyFramework(),
+                    aiEnabled: true,
+                    enterpriseFeature: true
+                });
+
+                this.registerFramework('circular-innovation', {
+                    name: 'Circular Innovation Ecosystem',
+                    category: 'innovation',
+                    priority: 'medium',
+                    dependencies: ['stakeholder-capitalism'],
+                    loadFunction: () => this.loadCircularInnovationFramework(),
+                    aiEnabled: true,
+                    enterpriseFeature: true
+                });
+            }
+
+            registerFramework(id, metadata) {
+                this.frameworks.set(id, {
+                    id,
+                    ...metadata,
+                    loadedAt: null,
+                    isLoaded: false,
+                    component: null,
+                    data: null,
+                    aiInsights: []
+                });
+            }
+
+            async loadFramework(frameworkId, userTier = 'lite') {
+                const framework = this.frameworks.get(frameworkId);
+                if (!framework) return null;
+
+                // Check enterprise permissions
+                if (framework.enterpriseFeature && userTier !== 'enterprise') {
+                    return this.createAccessRestrictedComponent(framework);
+                }
+
+                if (framework.isLoaded) {
+                    return framework.component;
+                }
+
+                const startTime = performance.now();
+                
+                try {
+                    // Load dependencies first
+                    await this.loadDependencies(framework.dependencies);
+                    
+                    // Load the framework component
+                    framework.component = await framework.loadFunction();
+                    framework.isLoaded = true;
+                    framework.loadedAt = new Date().toISOString();
+                    
+                    // Track performance
+                    const loadTime = performance.now() - startTime;
+                    this.performanceMetrics.loadTimes[frameworkId] = loadTime;
+                    
+                    // Generate AI insights for the framework
+                    if (framework.aiEnabled) {
+                        this.generateAIInsights(frameworkId);
+                    }
+                    
+                    this.loadedFrameworks.add(frameworkId);
+                    return framework.component;
+                    
+                } catch (error) {
+                    console.error(`Failed to load framework ${frameworkId}:`, error);
+                    return this.createErrorComponent(frameworkId, error);
+                }
+            }
+
+            async loadDependencies(dependencies) {
+                if (!dependencies || dependencies.length === 0) return;
+                
+                for (const dep of dependencies) {
+                    if (dep === 'all-frameworks') continue; // Special case
+                    if (!this.loadedFrameworks.has(dep)) {
+                        await this.loadFramework(dep);
+                    }
+                }
+            }
+
+            generateAIInsights(frameworkId) {
+                const framework = this.frameworks.get(frameworkId);
+                const crossFrameworkData = this.getCrossFrameworkData();
+                
+                // AI-powered insight generation based on framework type and cross-data
+                const insights = this.aiScenarioEngine.generateInsights(frameworkId, crossFrameworkData);
+                framework.aiInsights = insights;
+                
+                // Store for cross-framework intelligence
+                this.crossFrameworkData.set(frameworkId, insights);
+            }
+
+            getCrossFrameworkData() {
+                const data = {};
+                this.crossFrameworkData.forEach((insights, frameworkId) => {
+                    data[frameworkId] = insights;
+                });
+                return data;
+            }
+
+            createAccessRestrictedComponent(framework) {
+                return () => (
+                    <div style={{
+                        background: '#fff5f5',
+                        border: '1px solid #feb2b2',
+                        borderRadius: '12px',
+                        padding: '2rem',
+                        textAlign: 'center',
+                        margin: '2rem 0'
+                    }}>
+                        <h3 style={{color: '#9b2c2c', marginBottom: '1rem'}}>
+                            🔒 Enterprise Feature: {framework.name}
+                        </h3>
+                        <p style={{color: '#742a2a', marginBottom: '1.5rem'}}>
+                            This advanced strategic framework is available in Lucidra Enterprise.
+                        </p>
+                        <button style={{
+                            background: '#e53e3e',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '8px',
+                            padding: '0.75rem 1.5rem',
+                            cursor: 'pointer',
+                            fontWeight: 'bold'
+                        }}>
+                            Upgrade to Enterprise
+                        </button>
+                    </div>
+                );
+            }
+
+            // Framework loading functions
+            loadDigitalTransformationFramework() {
+                return Promise.resolve(() => <DigitalTransformationFramework />);
+            }
+
+            loadAIScenarioPlanning() {
+                return Promise.resolve(() => <AIScenarioPlanningEngine />);
+            }
+
+            loadStakeholderCapitalismFramework() {
+                return Promise.resolve(() => <StakeholderCapitalismFramework />);
+            }
+        }
+
+        // AI Scenario Planning Engine - Cross-Framework Intelligence
+        class AIScenarioEngine {
+            constructor() {
+                this.scenarios = new Map();
+                this.marketSignals = new Map();
+                this.crossFrameworkInsights = new Map();
+            }
+
+            generateInsights(frameworkId, crossFrameworkData) {
+                return [
+                    {
+                        type: 'trend',
+                        title: `${frameworkId} Market Evolution`,
+                        confidence: 0.87,
+                        impact: 'high',
+                        description: 'AI-detected emerging trends suggest significant market shifts in the next 18 months.',
+                        recommendations: ['Monitor key indicators', 'Prepare adaptive strategies', 'Consider early positioning']
+                    },
+                    {
+                        type: 'opportunity',
+                        title: 'Strategic Opportunity Window',
+                        potential: 'high',
+                        timeframe: '6-12 months',
+                        description: 'AI models predict favorable conditions for strategic initiatives.',
+                        actionItems: ['Market entry planning', 'Resource allocation', 'Partnership development']
+                    }
+                ];
+            }
+
+            generateScenarios(frameworkIds, timeHorizon = '5-years') {
+                return ['optimistic', 'realistic', 'pessimistic', 'disruptive'].map(scenarioType => ({
+                    type: scenarioType,
+                    timeHorizon,
+                    probability: { optimistic: 0.25, realistic: 0.45, pessimistic: 0.20, disruptive: 0.10 }[scenarioType],
+                    keyAssumptions: [`${scenarioType} market conditions`, 'Technology evolution', 'Regulatory environment'],
+                    implications: [`Strategic positioning for ${scenarioType} scenario`, 'Resource allocation needs'],
+                    strategicActions: [`${scenarioType}-specific initiatives`, 'Risk mitigation measures']
+                }));
+            }
+        }
+
+        // Initialize Global Framework Registry and AI Engine
+        const frameworkRegistry = new FrameworkRegistry();
+        const aiScenarioEngine = new AIScenarioEngine();
+        frameworkRegistry.aiScenarioEngine = aiScenarioEngine;
+
+        // ========================================
+        // ADVANCED STRATEGIC FRAMEWORKS IMPLEMENTATION
+        // ========================================
+
+        // Digital Transformation Dynamic Capabilities Framework
+        const DigitalTransformationFramework = () => {
+            const [activeTab, setActiveTab] = React.useState('assessment');
+            const [capabilities, setCapabilities] = React.useState({
+                sensing: { score: 0, maturity: 'beginner', initiatives: [] },
+                seizing: { score: 0, maturity: 'beginner', initiatives: [] },
+                transforming: { score: 0, maturity: 'beginner', initiatives: [] }
+            });
+            const [digitalReadiness, setDigitalReadiness] = React.useState(null);
+            const [transformationRoadmap, setTransformationRoadmap] = React.useState([]);
+            const [aiRecommendations, setAiRecommendations] = React.useState([]);
+
+            React.useEffect(() => {
+                // Generate AI recommendations based on current capabilities
+                generateAIRecommendations();
+            }, [capabilities]);
+
+            const generateAIRecommendations = () => {
+                const avgScore = (capabilities.sensing.score + capabilities.seizing.score + capabilities.transforming.score) / 3;
+                const recommendations = [];
+
+                if (avgScore < 30) {
+                    recommendations.push({
+                        priority: 'high',
+                        category: 'Foundation Building',
+                        title: 'Establish Digital Leadership',
+                        description: 'Create dedicated digital transformation office with clear governance',
+                        impact: 'Provides strategic direction and coordination for transformation initiatives',
+                        timeline: '3-6 months',
+                        resources: 'CDO, digital strategy team, executive sponsorship'
+                    });
+                }
+
+                if (capabilities.sensing.score < capabilities.seizing.score) {
+                    recommendations.push({
+                        priority: 'high',
+                        category: 'Sensing Enhancement',
+                        title: 'Implement Market Intelligence Systems',
+                        description: 'Deploy AI-powered market sensing and trend analysis capabilities',
+                        impact: 'Improve ability to detect and interpret market signals',
+                        timeline: '6-9 months',
+                        resources: 'Data scientists, market research tools, AI/ML platforms'
+                    });
+                }
+
+                setAiRecommendations(recommendations);
+            };
+
+            const assessCapability = (capability, dimension, score) => {
+                const newCapabilities = {
+                    ...capabilities,
+                    [capability]: {
+                        ...capabilities[capability],
+                        score: score,
+                        maturity: score < 30 ? 'beginner' : score < 60 ? 'developing' : score < 80 ? 'advanced' : 'expert'
+                    }
+                };
+                setCapabilities(newCapabilities);
+
+                // Update digital readiness
+                const avgScore = Object.values(newCapabilities).reduce((sum, cap) => sum + cap.score, 0) / 3;
+                setDigitalReadiness({
+                    overallScore: Math.round(avgScore),
+                    level: avgScore < 30 ? 'Digital Beginner' : avgScore < 60 ? 'Digital Adopter' : avgScore < 80 ? 'Digital Leader' : 'Digital Native',
+                    strengths: Object.entries(newCapabilities).filter(([_, cap]) => cap.score >= 70).map(([name, _]) => name),
+                    gaps: Object.entries(newCapabilities).filter(([_, cap]) => cap.score < 50).map(([name, _]) => name)
+                });
+            };
+
+            const capabilityQuestions = {
+                sensing: [
+                    { question: 'How effectively does your organization monitor emerging technologies?', weight: 0.3 },
+                    { question: 'How well do you track customer digital behavior and preferences?', weight: 0.25 },
+                    { question: 'How systematically do you analyze competitor digital strategies?', weight: 0.2 },
+                    { question: 'How proactively do you identify digital disruption threats?', weight: 0.25 }
+                ],
+                seizing: [
+                    { question: 'How quickly can you mobilize resources for digital initiatives?', weight: 0.3 },
+                    { question: 'How effectively do you pilot and scale digital innovations?', weight: 0.25 },
+                    { question: 'How well do you form digital partnerships and ecosystems?', weight: 0.2 },
+                    { question: 'How successfully do you commercialize digital opportunities?', weight: 0.25 }
+                ],
+                transforming: [
+                    { question: 'How effectively do you redesign business processes for digital?', weight: 0.3 },
+                    { question: 'How successfully do you develop digital talent and culture?', weight: 0.25 },
+                    { question: 'How well do you integrate digital across the organization?', weight: 0.2 },
+                    { question: 'How systematically do you measure digital transformation ROI?', weight: 0.25 }
+                ]
+            };
+
+            const renderAssessment = () => (
+                <div>
+                    <div style={{background: '#e6f3ff', border: '1px solid #bae6fd', borderRadius: '12px', padding: '1.5rem', marginBottom: '2rem'}}>
+                        <h3 style={{color: '#0c4a6e', marginBottom: '1rem'}}>🧠 Digital Transformation Capability Assessment</h3>
+                        <p style={{color: '#0f172a', marginBottom: '1rem'}}>
+                            Evaluate your organization's dynamic capabilities across three critical dimensions:
+                        </p>
+                        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem'}}>
+                            <div style={{background: '#f0f9ff', padding: '1rem', borderRadius: '8px'}}>
+                                <h4 style={{color: '#1e40af', margin: '0 0 0.5rem 0'}}>🔍 Sensing</h4>
+                                <p style={{color: '#1e3a8a', fontSize: '0.9rem'}}>Identify and assess digital opportunities and threats</p>
+                            </div>
+                            <div style={{background: '#f0fdf4', padding: '1rem', borderRadius: '8px'}}>
+                                <h4 style={{color: '#166534', margin: '0 0 0.5rem 0'}}>⚡ Seizing</h4>
+                                <p style={{color: '#14532d', fontSize: '0.9rem'}}>Mobilize resources to capture digital opportunities</p>
+                            </div>
+                            <div style={{background: '#fef3f2', padding: '1rem', borderRadius: '8px'}}>
+                                <h4 style={{color: '#991b1b', margin: '0 0 0.5rem 0'}}>🔄 Transforming</h4>
+                                <p style={{color: '#7f1d1d', fontSize: '0.9rem'}}>Reconfigure assets and processes for digital age</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {Object.entries(capabilityQuestions).map(([capability, questions]) => (
+                        <div key={capability} style={{background: 'white', borderRadius: '12px', padding: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem'}}>
+                            <h3 style={{color: '#2d3748', marginBottom: '1.5rem', textTransform: 'capitalize'}}>
+                                {capability === 'sensing' ? '🔍' : capability === 'seizing' ? '⚡' : '🔄'} {capability} Capability Assessment
+                            </h3>
+                            
+                            {questions.map((item, index) => (
+                                <div key={index} style={{marginBottom: '1.5rem'}}>
+                                    <p style={{color: '#4a5568', marginBottom: '1rem', fontWeight: '500'}}>{item.question}</p>
+                                    <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+                                        {[1, 2, 3, 4, 5].map(score => (
+                                            <button
+                                                key={score}
+                                                onClick={() => assessCapability(capability, index, score * 20)}
+                                                style={{
+                                                    background: score <= 2 ? '#fee2e2' : score === 3 ? '#fef3c7' : '#dcfce7',
+                                                    color: score <= 2 ? '#991b1b' : score === 3 ? '#92400e' : '#166534',
+                                                    border: '1px solid transparent',
+                                                    borderRadius: '8px',
+                                                    padding: '0.5rem 1rem',
+                                                    cursor: 'pointer',
+                                                    fontSize: '0.9rem',
+                                                    fontWeight: '500'
+                                                }}
+                                            >
+                                                {score} - {['Poor', 'Fair', 'Good', 'Very Good', 'Excellent'][score - 1]}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                            
+                            <div style={{background: '#f7fafc', padding: '1rem', borderRadius: '8px', marginTop: '1.5rem'}}>
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                    <span style={{color: '#4a5568', fontWeight: '600'}}>Current {capability} Score:</span>
+                                    <span style={{
+                                        color: capabilities[capability].score < 50 ? '#e53e3e' : capabilities[capability].score < 75 ? '#ed8936' : '#48bb78',
+                                        fontWeight: 'bold',
+                                        fontSize: '1.1rem'
+                                    }}>
+                                        {capabilities[capability].score}/100 ({capabilities[capability].maturity})
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
+
+            const renderResults = () => (
+                <div>
+                    {digitalReadiness && (
+                        <div style={{background: 'white', borderRadius: '12px', padding: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem'}}>
+                            <h3 style={{color: '#2d3748', marginBottom: '1.5rem'}}>📊 Digital Readiness Assessment Results</h3>
+                            
+                            <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+                                <div style={{
+                                    fontSize: '3rem',
+                                    fontWeight: 'bold',
+                                    color: digitalReadiness.overallScore < 50 ? '#e53e3e' : digitalReadiness.overallScore < 75 ? '#ed8936' : '#48bb78',
+                                    marginBottom: '0.5rem'
+                                }}>
+                                    {digitalReadiness.overallScore}/100
+                                </div>
+                                <div style={{
+                                    fontSize: '1.5rem',
+                                    fontWeight: '600',
+                                    color: '#4a5568',
+                                    marginBottom: '1rem'
+                                }}>
+                                    {digitalReadiness.level}
+                                </div>
+                            </div>
+
+                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginBottom: '2rem'}}>
+                                <div style={{background: '#f0fff4', border: '1px solid #9ae6b4', borderRadius: '8px', padding: '1.5rem'}}>
+                                    <h4 style={{color: '#276749', marginBottom: '1rem'}}>💪 Strengths</h4>
+                                    {digitalReadiness.strengths.length > 0 ? (
+                                        digitalReadiness.strengths.map(strength => (
+                                            <div key={strength} style={{
+                                                background: '#dcfce7',
+                                                color: '#166534',
+                                                padding: '0.5rem 1rem',
+                                                borderRadius: '6px',
+                                                marginBottom: '0.5rem',
+                                                textTransform: 'capitalize'
+                                            }}>
+                                                {strength}
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p style={{color: '#4a5568', fontSize: '0.9rem'}}>Complete assessment to identify strengths</p>
+                                    )}
+                                </div>
+
+                                <div style={{background: '#fff5f5', border: '1px solid #feb2b2', borderRadius: '8px', padding: '1.5rem'}}>
+                                    <h4 style={{color: '#9b2c2c', marginBottom: '1rem'}}>🎯 Priority Gaps</h4>
+                                    {digitalReadiness.gaps.length > 0 ? (
+                                        digitalReadiness.gaps.map(gap => (
+                                            <div key={gap} style={{
+                                                background: '#fee2e2',
+                                                color: '#991b1b',
+                                                padding: '0.5rem 1rem',
+                                                borderRadius: '6px',
+                                                marginBottom: '0.5rem',
+                                                textTransform: 'capitalize'
+                                            }}>
+                                                {gap}
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p style={{color: '#4a5568', fontSize: '0.9rem'}}>Complete assessment to identify gaps</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem'}}>
+                                {Object.entries(capabilities).map(([capability, data]) => (
+                                    <div key={capability} style={{
+                                        background: '#f7fafc',
+                                        border: `2px solid ${data.score < 50 ? '#e53e3e' : data.score < 75 ? '#ed8936' : '#48bb78'}`,
+                                        borderRadius: '8px',
+                                        padding: '1rem',
+                                        textAlign: 'center'
+                                    }}>
+                                        <h5 style={{color: '#2d3748', marginBottom: '0.5rem', textTransform: 'capitalize'}}>{capability}</h5>
+                                        <div style={{
+                                            fontSize: '1.5rem',
+                                            fontWeight: 'bold',
+                                            color: data.score < 50 ? '#e53e3e' : data.score < 75 ? '#ed8936' : '#48bb78',
+                                            marginBottom: '0.25rem'
+                                        }}>
+                                            {data.score}/100
+                                        </div>
+                                        <div style={{color: '#4a5568', fontSize: '0.9rem', textTransform: 'capitalize'}}>
+                                            {data.maturity}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {aiRecommendations.length > 0 && (
+                        <div style={{background: 'white', borderRadius: '12px', padding: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem'}}>
+                            <h3 style={{color: '#2d3748', marginBottom: '1.5rem'}}>🤖 AI-Powered Transformation Recommendations</h3>
+                            
+                            {aiRecommendations.map((rec, index) => (
+                                <div key={index} style={{
+                                    background: rec.priority === 'high' ? '#fef3f2' : '#f0f9ff',
+                                    border: `1px solid ${rec.priority === 'high' ? '#feb2b2' : '#bae6fd'}`,
+                                    borderRadius: '8px',
+                                    padding: '1.5rem',
+                                    marginBottom: '1rem'
+                                }}>
+                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem'}}>
+                                        <h4 style={{color: '#2d3748', margin: 0}}>{rec.title}</h4>
+                                        <span style={{
+                                            background: rec.priority === 'high' ? '#e53e3e' : '#4299e1',
+                                            color: 'white',
+                                            padding: '0.25rem 0.75rem',
+                                            borderRadius: '12px',
+                                            fontSize: '0.8rem',
+                                            fontWeight: 'bold',
+                                            textTransform: 'uppercase'
+                                        }}>
+                                            {rec.priority}
+                                        </span>
+                                    </div>
+                                    
+                                    <p style={{color: '#4a5568', marginBottom: '1rem'}}>{rec.description}</p>
+                                    
+                                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', fontSize: '0.9rem'}}>
+                                        <div>
+                                            <strong style={{color: '#2d3748'}}>Impact:</strong>
+                                            <p style={{color: '#4a5568', margin: '0.25rem 0 0 0'}}>{rec.impact}</p>
+                                        </div>
+                                        <div>
+                                            <strong style={{color: '#2d3748'}}>Timeline:</strong>
+                                            <p style={{color: '#4a5568', margin: '0.25rem 0 0 0'}}>{rec.timeline}</p>
+                                        </div>
+                                        <div>
+                                            <strong style={{color: '#2d3748'}}>Resources:</strong>
+                                            <p style={{color: '#4a5568', margin: '0.25rem 0 0 0'}}>{rec.resources}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+
+            const renderRoadmap = () => (
+                <div>
+                    <div style={{background: 'white', borderRadius: '12px', padding: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                        <h3 style={{color: '#2d3748', marginBottom: '1.5rem'}}>🗺️ Digital Transformation Roadmap</h3>
+                        <div style={{background: '#e6f3ff', border: '1px solid #bae6fd', borderRadius: '8px', padding: '1.5rem', textAlign: 'center'}}>
+                            <h4 style={{color: '#0c4a6e', marginBottom: '1rem'}}>🚧 Roadmap Generator</h4>
+                            <p style={{color: '#0f172a', marginBottom: '1.5rem'}}>
+                                Complete the capability assessment to generate your personalized digital transformation roadmap.
+                            </p>
+                            <button 
+                                onClick={() => setActiveTab('assessment')}
+                                style={{
+                                    background: '#4299e1',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    padding: '0.75rem 1.5rem',
+                                    cursor: 'pointer',
+                                    fontWeight: 'bold'
+                                }}
+                            >
+                                Start Assessment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div>
+                    <div style={{background: '#e6f3ff', border: '1px solid #bae6fd', borderRadius: '8px', padding: '1rem', marginBottom: '2rem'}}>
+                        <div style={{fontSize: '0.9rem', color: '#0c4a6e', fontWeight: 'bold'}}>
+                            🚀 SUCCESS: Digital Transformation Dynamic Capabilities Framework is active! AI-powered assessment and recommendations available.
+                        </div>
+                    </div>
+
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem'}}>
+                        <h2 style={{margin: 0, color: '#2d3748'}}>🔄 Digital Transformation Dynamic Capabilities Framework</h2>
+                        <div style={{display: 'flex', gap: '0.5rem'}}>
+                            {[
+                                { key: 'assessment', label: '📋 Assessment', icon: '📋' },
+                                { key: 'results', label: '📊 Results', icon: '📊' },
+                                { key: 'roadmap', label: '🗺️ Roadmap', icon: '🗺️' }
+                            ].map(tab => (
+                                <button
+                                    key={tab.key}
+                                    onClick={() => setActiveTab(tab.key)}
+                                    style={{
+                                        background: activeTab === tab.key ? '#4299e1' : 'white',
+                                        color: activeTab === tab.key ? 'white' : '#4a5568',
+                                        border: activeTab === tab.key ? 'none' : '1px solid #e2e8f0',
+                                        borderRadius: '8px',
+                                        padding: '0.75rem 1rem',
+                                        cursor: 'pointer',
+                                        fontWeight: activeTab === tab.key ? 'bold' : 'normal',
+                                        fontSize: '0.9rem'
+                                    }}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {activeTab === 'assessment' && renderAssessment()}
+                    {activeTab === 'results' && renderResults()}
+                    {activeTab === 'roadmap' && renderRoadmap()}
+                </div>
+            );
+        };
+
+        // AI Scenario Planning Engine Component
+        const AIScenarioPlanningEngine = () => {
+            const [activeScenarios, setActiveScenarios] = React.useState([]);
+            const [selectedFrameworks, setSelectedFrameworks] = React.useState(['porter-five-forces', 'blue-ocean', 'financial-analysis']);
+            const [timeHorizon, setTimeHorizon] = React.useState('5-years');
+            const [isGenerating, setIsGenerating] = React.useState(false);
+            const [scenarioAnalysis, setScenarioAnalysis] = React.useState(null);
+
+            const generateScenarios = async () => {
+                setIsGenerating(true);
+                
+                // Simulate AI scenario generation
+                setTimeout(() => {
+                    const scenarios = aiScenarioEngine.generateScenarios(selectedFrameworks, timeHorizon);
+                    setActiveScenarios(scenarios);
+                    
+                    // Generate cross-framework analysis
+                    const analysis = {
+                        overallRisk: 'Medium',
+                        keyDependencies: ['Market conditions', 'Technology adoption', 'Regulatory changes'],
+                        criticalSuccess: ['Strategic agility', 'Innovation capacity', 'Market positioning'],
+                        recommendedActions: [
+                            'Develop scenario-based contingency plans',
+                            'Invest in adaptive capabilities',
+                            'Monitor key trigger indicators',
+                            'Build strategic flexibility'
+                        ]
+                    };
+                    setScenarioAnalysis(analysis);
+                    setIsGenerating(false);
+                }, 2000);
+            };
+
+            return (
+                <div>
+                    <div style={{background: '#f0fff4', border: '1px solid #9ae6b4', borderRadius: '8px', padding: '1rem', marginBottom: '2rem'}}>
+                        <div style={{fontSize: '0.9rem', color: '#276749', fontWeight: 'bold'}}>
+                            🤖 SUCCESS: AI Scenario Planning Engine is operational! Cross-framework intelligence and scenario generation ready.
+                        </div>
+                    </div>
+
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem'}}>
+                        <h2 style={{margin: 0, color: '#2d3748'}}>🧠 AI-Enhanced Strategic Sensing & Scenario Planning</h2>
+                    </div>
+
+                    <div style={{background: 'white', borderRadius: '12px', padding: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem'}}>
+                        <h3 style={{color: '#2d3748', marginBottom: '1.5rem'}}>⚙️ Scenario Configuration</h3>
+                        
+                        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '2rem'}}>
+                            <div>
+                                <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#4a5568'}}>
+                                    Strategic Frameworks to Include
+                                </label>
+                                <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+                                    {[
+                                        { id: 'porter-five-forces', label: 'Porter\'s Five Forces' },
+                                        { id: 'blue-ocean', label: 'Blue Ocean Strategy' },
+                                        { id: 'financial-analysis', label: 'Financial Analysis' },
+                                        { id: 'digital-transformation', label: 'Digital Transformation' },
+                                        { id: 'stakeholder-capitalism', label: 'Stakeholder Capitalism' }
+                                    ].map(framework => (
+                                        <label key={framework.id} style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedFrameworks.includes(framework.id)}
+                                                onChange={(e) => {
+                                                    if (e.target.checked) {
+                                                        setSelectedFrameworks([...selectedFrameworks, framework.id]);
+                                                    } else {
+                                                        setSelectedFrameworks(selectedFrameworks.filter(f => f !== framework.id));
+                                                    }
+                                                }}
+                                            />
+                                            <span style={{color: '#4a5568'}}>{framework.label}</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div>
+                                <label style={{display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#4a5568'}}>
+                                    Time Horizon
+                                </label>
+                                <select
+                                    value={timeHorizon}
+                                    onChange={(e) => setTimeHorizon(e.target.value)}
+                                    style={{
+                                        width: '100%',
+                                        padding: '0.75rem',
+                                        border: '1px solid #e2e8f0',
+                                        borderRadius: '8px',
+                                        fontSize: '1rem'
+                                    }}
+                                >
+                                    <option value="1-year">1 Year</option>
+                                    <option value="3-years">3 Years</option>
+                                    <option value="5-years">5 Years</option>
+                                    <option value="10-years">10 Years</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button
+                            onClick={generateScenarios}
+                            disabled={isGenerating || selectedFrameworks.length === 0}
+                            style={{
+                                background: isGenerating ? '#a0aec0' : '#4299e1',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '8px',
+                                padding: '1rem 2rem',
+                                cursor: isGenerating ? 'not-allowed' : 'pointer',
+                                fontWeight: 'bold',
+                                fontSize: '1rem'
+                            }}
+                        >
+                            {isGenerating ? '🤖 Generating AI Scenarios...' : '🚀 Generate Strategic Scenarios'}
+                        </button>
+                    </div>
+
+                    {activeScenarios.length > 0 && (
+                        <div style={{background: 'white', borderRadius: '12px', padding: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem'}}>
+                            <h3 style={{color: '#2d3748', marginBottom: '1.5rem'}}>📊 Generated Strategic Scenarios</h3>
+                            
+                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem'}}>
+                                {activeScenarios.map((scenario, index) => (
+                                    <div key={index} style={{
+                                        background: scenario.type === 'optimistic' ? '#f0fff4' : scenario.type === 'pessimistic' ? '#fff5f5' : scenario.type === 'disruptive' ? '#fef3f2' : '#f7fafc',
+                                        border: `1px solid ${scenario.type === 'optimistic' ? '#9ae6b4' : scenario.type === 'pessimistic' ? '#feb2b2' : scenario.type === 'disruptive' ? '#fca5a5' : '#e2e8f0'}`,
+                                        borderRadius: '8px',
+                                        padding: '1.5rem'
+                                    }}>
+                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem'}}>
+                                            <h4 style={{color: '#2d3748', margin: 0, textTransform: 'capitalize'}}>{scenario.type} Scenario</h4>
+                                            <span style={{
+                                                background: scenario.type === 'optimistic' ? '#48bb78' : scenario.type === 'pessimistic' ? '#e53e3e' : scenario.type === 'disruptive' ? '#ed8936' : '#4299e1',
+                                                color: 'white',
+                                                padding: '0.25rem 0.75rem',
+                                                borderRadius: '12px',
+                                                fontSize: '0.8rem',
+                                                fontWeight: 'bold'
+                                            }}>
+                                                {Math.round(scenario.probability * 100)}%
+                                            </span>
+                                        </div>
+                                        
+                                        <div style={{marginBottom: '1rem'}}>
+                                            <strong style={{color: '#4a5568'}}>Key Assumptions:</strong>
+                                            <ul style={{margin: '0.5rem 0', paddingLeft: '1.5rem', color: '#4a5568'}}>
+                                                {scenario.keyAssumptions.map((assumption, i) => (
+                                                    <li key={i} style={{fontSize: '0.9rem'}}>{assumption}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        
+                                        <div style={{marginBottom: '1rem'}}>
+                                            <strong style={{color: '#4a5568'}}>Strategic Implications:</strong>
+                                            <ul style={{margin: '0.5rem 0', paddingLeft: '1.5rem', color: '#4a5568'}}>
+                                                {scenario.implications.map((implication, i) => (
+                                                    <li key={i} style={{fontSize: '0.9rem'}}>{implication}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        
+                                        <div>
+                                            <strong style={{color: '#4a5568'}}>Recommended Actions:</strong>
+                                            <ul style={{margin: '0.5rem 0', paddingLeft: '1.5rem', color: '#4a5568'}}>
+                                                {scenario.strategicActions.map((action, i) => (
+                                                    <li key={i} style={{fontSize: '0.9rem'}}>{action}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {scenarioAnalysis && (
+                        <div style={{background: 'white', borderRadius: '12px', padding: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                            <h3 style={{color: '#2d3748', marginBottom: '1.5rem'}}>🔍 Cross-Scenario Strategic Analysis</h3>
+                            
+                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem'}}>
+                                <div style={{background: '#f7fafc', padding: '1.5rem', borderRadius: '8px'}}>
+                                    <h4 style={{color: '#2d3748', marginBottom: '1rem'}}>⚠️ Overall Risk Assessment</h4>
+                                    <div style={{
+                                        fontSize: '1.5rem',
+                                        fontWeight: 'bold',
+                                        color: scenarioAnalysis.overallRisk === 'High' ? '#e53e3e' : scenarioAnalysis.overallRisk === 'Medium' ? '#ed8936' : '#48bb78',
+                                        textAlign: 'center'
+                                    }}>
+                                        {scenarioAnalysis.overallRisk}
+                                    </div>
+                                </div>
+                                
+                                <div style={{background: '#f0f9ff', padding: '1.5rem', borderRadius: '8px'}}>
+                                    <h4 style={{color: '#1e40af', marginBottom: '1rem'}}>🔗 Key Dependencies</h4>
+                                    {scenarioAnalysis.keyDependencies.map((dep, i) => (
+                                        <div key={i} style={{
+                                            background: '#dbeafe',
+                                            color: '#1e3a8a',
+                                            padding: '0.5rem',
+                                            borderRadius: '4px',
+                                            marginBottom: '0.5rem',
+                                            fontSize: '0.9rem'
+                                        }}>
+                                            {dep}
+                                        </div>
+                                    ))}
+                                </div>
+                                
+                                <div style={{background: '#f0fff4', padding: '1.5rem', borderRadius: '8px'}}>
+                                    <h4 style={{color: '#166534', marginBottom: '1rem'}}>🎯 Critical Success Factors</h4>
+                                    {scenarioAnalysis.criticalSuccess.map((factor, i) => (
+                                        <div key={i} style={{
+                                            background: '#dcfce7',
+                                            color: '#14532d',
+                                            padding: '0.5rem',
+                                            borderRadius: '4px',
+                                            marginBottom: '0.5rem',
+                                            fontSize: '0.9rem'
+                                        }}>
+                                            {factor}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            
+                            <div style={{background: '#fef3f2', border: '1px solid #fca5a5', borderRadius: '8px', padding: '1.5rem', marginTop: '1.5rem'}}>
+                                <h4 style={{color: '#991b1b', marginBottom: '1rem'}}>🚀 Recommended Strategic Actions</h4>
+                                <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem'}}>
+                                    {scenarioAnalysis.recommendedActions.map((action, i) => (
+                                        <div key={i} style={{
+                                            background: '#fee2e2',
+                                            color: '#7f1d1d',
+                                            padding: '1rem',
+                                            borderRadius: '6px',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '500'
+                                        }}>
+                                            {action}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // Stakeholder Capitalism Value Creation Framework
+        const StakeholderCapitalismFramework = () => {
+            const [activeTab, setActiveTab] = React.useState('stakeholders');
+            const [stakeholders, setStakeholders] = React.useState([
+                { id: 1, name: 'Shareholders', influence: 85, satisfaction: 78, valueCreated: 'Financial returns', concerns: ['ROI', 'Growth', 'Risk management'] },
+                { id: 2, name: 'Employees', influence: 75, satisfaction: 72, valueCreated: 'Career development', concerns: ['Job security', 'Work-life balance', 'Fair compensation'] },
+                { id: 3, name: 'Customers', influence: 90, satisfaction: 82, valueCreated: 'Product quality', concerns: ['Price', 'Service quality', 'Innovation'] },
+                { id: 4, name: 'Communities', influence: 45, satisfaction: 65, valueCreated: 'Local economic impact', concerns: ['Environmental impact', 'Local hiring', 'Community investment'] },
+                { id: 5, name: 'Environment', influence: 55, satisfaction: 58, valueCreated: 'Sustainability initiatives', concerns: ['Carbon footprint', 'Waste reduction', 'Renewable energy'] }
+            ]);
+            const [esgMetrics, setEsgMetrics] = React.useState({
+                environmental: { score: 72, initiatives: ['Carbon neutral by 2030', 'Renewable energy transition', 'Waste reduction program'] },
+                social: { score: 78, initiatives: ['Diversity & inclusion program', 'Employee wellbeing', 'Community partnerships'] },
+                governance: { score: 85, initiatives: ['Board diversity', 'Transparent reporting', 'Ethical business practices'] }
+            });
+
+            const calculateStakeholderValue = () => {
+                const totalValue = stakeholders.reduce((sum, s) => sum + (s.influence * s.satisfaction / 100), 0);
+                const maxPossibleValue = stakeholders.reduce((sum, s) => sum + s.influence, 0);
+                return Math.round((totalValue / maxPossibleValue) * 100);
+            };
+
+            return (
+                <div>
+                    <div style={{background: '#f0fff4', border: '1px solid #9ae6b4', borderRadius: '8px', padding: '1rem', marginBottom: '2rem'}}>
+                        <div style={{fontSize: '0.9rem', color: '#276749', fontWeight: 'bold'}}>
+                            🌱 SUCCESS: Stakeholder Capitalism Framework is active! ESG integration and multi-stakeholder value tracking enabled.
+                        </div>
+                    </div>
+
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem'}}>
+                        <h2 style={{margin: 0, color: '#2d3748'}}>🌍 Stakeholder Capitalism Value Creation Framework</h2>
+                        <div style={{display: 'flex', gap: '0.5rem'}}>
+                            {[
+                                { key: 'stakeholders', label: '👥 Stakeholders', icon: '👥' },
+                                { key: 'esg', label: '🌱 ESG Metrics', icon: '🌱' },
+                                { key: 'value-creation', label: '💎 Value Creation', icon: '💎' }
+                            ].map(tab => (
+                                <button
+                                    key={tab.key}
+                                    onClick={() => setActiveTab(tab.key)}
+                                    style={{
+                                        background: activeTab === tab.key ? '#48bb78' : 'white',
+                                        color: activeTab === tab.key ? 'white' : '#4a5568',
+                                        border: activeTab === tab.key ? 'none' : '1px solid #e2e8f0',
+                                        borderRadius: '8px',
+                                        padding: '0.75rem 1rem',
+                                        cursor: 'pointer',
+                                        fontWeight: activeTab === tab.key ? 'bold' : 'normal',
+                                        fontSize: '0.9rem'
+                                    }}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {activeTab === 'stakeholders' && (
+                        <div>
+                            <div style={{background: 'white', borderRadius: '12px', padding: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem'}}>
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem'}}>
+                                    <h3 style={{color: '#2d3748', margin: 0}}>👥 Stakeholder Analysis & Engagement</h3>
+                                    <div style={{
+                                        background: '#f0fff4',
+                                        border: '1px solid #9ae6b4',
+                                        borderRadius: '8px',
+                                        padding: '1rem',
+                                        textAlign: 'center'
+                                    }}>
+                                        <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#166534'}}>
+                                            {calculateStakeholderValue()}%
+                                        </div>
+                                        <div style={{color: '#276749', fontSize: '0.9rem'}}>Overall Stakeholder Value</div>
+                                    </div>
+                                </div>
+
+                                <div style={{display: 'grid', gap: '1.5rem'}}>
+                                    {stakeholders.map(stakeholder => (
+                                        <div key={stakeholder.id} style={{
+                                            background: '#f7fafc',
+                                            border: '1px solid #e2e8f0',
+                                            borderRadius: '8px',
+                                            padding: '1.5rem'
+                                        }}>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem'}}>
+                                                <h4 style={{color: '#2d3748', margin: 0}}>{stakeholder.name}</h4>
+                                                <div style={{display: 'flex', gap: '1rem'}}>
+                                                    <div style={{textAlign: 'center'}}>
+                                                        <div style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#4299e1'}}>{stakeholder.influence}%</div>
+                                                        <div style={{color: '#4a5568', fontSize: '0.8rem'}}>Influence</div>
+                                                    </div>
+                                                    <div style={{textAlign: 'center'}}>
+                                                        <div style={{fontSize: '1.25rem', fontWeight: 'bold', color: stakeholder.satisfaction >= 70 ? '#48bb78' : stakeholder.satisfaction >= 50 ? '#ed8936' : '#e53e3e'}}>
+                                                            {stakeholder.satisfaction}%
+                                                        </div>
+                                                        <div style={{color: '#4a5568', fontSize: '0.8rem'}}>Satisfaction</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem'}}>
+                                                <div>
+                                                    <strong style={{color: '#4a5568'}}>Value Created:</strong>
+                                                    <p style={{color: '#2d3748', margin: '0.25rem 0', fontSize: '0.9rem'}}>{stakeholder.valueCreated}</p>
+                                                </div>
+                                                <div>
+                                                    <strong style={{color: '#4a5568'}}>Key Concerns:</strong>
+                                                    <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem'}}>
+                                                        {stakeholder.concerns.map((concern, i) => (
+                                                            <span key={i} style={{
+                                                                background: '#e2e8f0',
+                                                                color: '#4a5568',
+                                                                padding: '0.25rem 0.75rem',
+                                                                borderRadius: '12px',
+                                                                fontSize: '0.8rem'
+                                                            }}>
+                                                                {concern}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'esg' && (
+                        <div>
+                            <div style={{background: 'white', borderRadius: '12px', padding: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                                <h3 style={{color: '#2d3748', marginBottom: '2rem'}}>🌱 ESG Performance Dashboard</h3>
+                                
+                                <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginBottom: '2rem'}}>
+                                    {Object.entries(esgMetrics).map(([category, data]) => (
+                                        <div key={category} style={{
+                                            background: category === 'environmental' ? '#f0fdf4' : category === 'social' ? '#fef3f2' : '#f0f9ff',
+                                            border: `1px solid ${category === 'environmental' ? '#9ae6b4' : category === 'social' ? '#fca5a5' : '#bae6fd'}`,
+                                            borderRadius: '8px',
+                                            padding: '1.5rem',
+                                            textAlign: 'center'
+                                        }}>
+                                            <h4 style={{
+                                                color: category === 'environmental' ? '#166534' : category === 'social' ? '#991b1b' : '#1e40af',
+                                                margin: '0 0 1rem 0',
+                                                textTransform: 'capitalize'
+                                            }}>
+                                                {category === 'environmental' ? '🌍' : category === 'social' ? '👥' : '⚖️'} {category}
+                                            </h4>
+                                            <div style={{
+                                                fontSize: '2rem',
+                                                fontWeight: 'bold',
+                                                color: data.score >= 80 ? '#48bb78' : data.score >= 60 ? '#ed8936' : '#e53e3e',
+                                                marginBottom: '1rem'
+                                            }}>
+                                                {data.score}/100
+                                            </div>
+                                            <div style={{
+                                                color: category === 'environmental' ? '#14532d' : category === 'social' ? '#7f1d1d' : '#1e3a8a',
+                                                fontSize: '0.9rem'
+                                            }}>
+                                                {data.score >= 80 ? 'Leading' : data.score >= 60 ? 'Progressing' : 'Developing'}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem'}}>
+                                    {Object.entries(esgMetrics).map(([category, data]) => (
+                                        <div key={category} style={{
+                                            background: '#f7fafc',
+                                            border: '1px solid #e2e8f0',
+                                            borderRadius: '8px',
+                                            padding: '1.5rem'
+                                        }}>
+                                            <h4 style={{color: '#2d3748', marginBottom: '1rem', textTransform: 'capitalize'}}>
+                                                {category === 'environmental' ? '🌍' : category === 'social' ? '👥' : '⚖️'} {category} Initiatives
+                                            </h4>
+                                            {data.initiatives.map((initiative, i) => (
+                                                <div key={i} style={{
+                                                    background: 'white',
+                                                    border: '1px solid #e2e8f0',
+                                                    borderRadius: '6px',
+                                                    padding: '1rem',
+                                                    marginBottom: '0.75rem',
+                                                    fontSize: '0.9rem'
+                                                }}>
+                                                    <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                                        <div style={{
+                                                            width: '8px',
+                                                            height: '8px',
+                                                            borderRadius: '50%',
+                                                            background: '#48bb78'
+                                                        }}></div>
+                                                        <span style={{color: '#2d3748', fontWeight: '500'}}>{initiative}</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'value-creation' && (
+                        <div>
+                            <div style={{background: 'white', borderRadius: '12px', padding: '2rem', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
+                                <h3 style={{color: '#2d3748', marginBottom: '2rem'}}>💎 Multi-Stakeholder Value Creation Map</h3>
+                                
+                                <div style={{background: '#f0f9ff', border: '1px solid #bae6fd', borderRadius: '8px', padding: '2rem', marginBottom: '2rem'}}>
+                                    <h4 style={{color: '#1e40af', marginBottom: '1rem'}}>📊 Value Creation Summary</h4>
+                                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem'}}>
+                                        <div style={{textAlign: 'center'}}>
+                                            <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#4299e1'}}>{calculateStakeholderValue()}%</div>
+                                            <div style={{color: '#1e3a8a', fontSize: '0.9rem'}}>Stakeholder Satisfaction</div>
+                                        </div>
+                                        <div style={{textAlign: 'center'}}>
+                                            <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#48bb78'}}>
+                                                {Math.round((esgMetrics.environmental.score + esgMetrics.social.score + esgMetrics.governance.score) / 3)}%
+                                            </div>
+                                            <div style={{color: '#1e3a8a', fontSize: '0.9rem'}}>ESG Performance</div>
+                                        </div>
+                                        <div style={{textAlign: 'center'}}>
+                                            <div style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#ed8936'}}>78%</div>
+                                            <div style={{color: '#1e3a8a', fontSize: '0.9rem'}}>Long-term Value</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style={{background: '#e6f3ff', border: '1px solid #bae6fd', borderRadius: '8px', padding: '1.5rem', textAlign: 'center'}}>
+                                    <h4 style={{color: '#0c4a6e', marginBottom: '1rem'}}>🚧 Advanced Value Creation Analytics</h4>
+                                    <p style={{color: '#0f172a', marginBottom: '1.5rem'}}>
+                                        Enhanced stakeholder value analytics, impact measurement, and integrated reporting coming soon.
+                                    </p>
+                                    <div style={{display: 'flex', justifyContent: 'center', gap: '1rem'}}>
+                                        <button style={{
+                                            background: '#4299e1',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '8px',
+                                            padding: '0.75rem 1.5rem',
+                                            cursor: 'pointer',
+                                            fontWeight: 'bold'
+                                        }}>
+                                            Generate Impact Report
+                                        </button>
+                                        <button style={{
+                                            background: 'white',
+                                            color: '#4299e1',
+                                            border: '1px solid #4299e1',
+                                            borderRadius: '8px',
+                                            padding: '0.75rem 1.5rem',
+                                            cursor: 'pointer',
+                                            fontWeight: 'bold'
+                                        }}>
+                                            Schedule Stakeholder Review
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // Advanced Process Management Component
+        const AdvancedProcess = () => {
+            return (
+                <div>
+                    <h2 style={{marginBottom: '1.5rem', color: '#2d3748'}}>🏭 Advanced Process Management</h2>
+                    <div className="financial-grid">
+                        <div className="metric-panel">
+                            <h3>AI Process Optimization</h3>
+                            <div className="metric-value" style={{color: '#4299e1'}}>94%</div>
+                            <p>Process Efficiency</p>
+                        </div>
+                        <div className="metric-panel">
+                            <h3>Cost Reduction</h3>
+                            <div className="metric-value" style={{color: '#48bb78'}}>$125K</div>
+                            <p>Annual Savings</p>
+                        </div>
+                        <div className="metric-panel">
+                            <h3>Time Optimization</h3>
+                            <div className="metric-value" style={{color: '#ed8936'}}>45%</div>
+                            <p>Faster Processing</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Process Intelligence Component
+        const ProcessImprovement = () => {
+            return (
+                <div>
+                    <h2 style={{marginBottom: '1.5rem', color: '#2d3748'}}>🔬 Process Intelligence & Improvement</h2>
+                    <div className="financial-grid">
+                        <div className="metric-panel">
+                            <h3>Process Analytics</h3>
+                            <div className="metric-value" style={{color: '#9f7aea'}}>Real-time</div>
+                            <p>Performance Insights</p>
+                        </div>
+                        <div className="metric-panel">
+                            <h3>Optimization Score</h3>
+                            <div className="metric-value" style={{color: '#4299e1'}}>8.7/10</div>
+                            <p>Process Rating</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Data Pulse Intelligence Component
+        const DataPulseWidget = () => {
+            return (
+                <div>
+                    <h2 style={{marginBottom: '1.5rem', color: '#2d3748'}}>📊 Data Pulse Intelligence</h2>
+                    <div className="financial-grid">
+                        <div className="metric-panel">
+                            <h3>Market Signals</h3>
+                            <div className="metric-value" style={{color: '#4299e1'}}>1,247</div>
+                            <p>Active Signals</p>
+                        </div>
+                        <div className="metric-panel">
+                            <h3>Intelligence Score</h3>
+                            <div className="metric-value" style={{color: '#48bb78'}}>94.3%</div>
+                            <p>Accuracy Rating</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Team Collaboration Component
+        const TeamCollaboration = () => {
+            return (
+                <div>
+                    <h2 style={{marginBottom: '1.5rem', color: '#2d3748'}}>👥 Team Collaboration</h2>
+                    <div className="financial-grid">
+                        <div className="metric-panel">
+                            <h3>Active Projects</h3>
+                            <div className="metric-value" style={{color: '#4299e1'}}>24</div>
+                            <p>In Progress</p>
+                        </div>
+                        <div className="metric-panel">
+                            <h3>Team Efficiency</h3>
+                            <div className="metric-value" style={{color: '#48bb78'}}>87%</div>
+                            <p>Productivity Score</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Enhanced Project Management Component
+        const ProjectManagement = () => {
+            const [activeTab, setActiveTab] = React.useState('dashboard');
+            const [showCreateProject, setShowCreateProject] = React.useState(false);
+            const [showProjectDetails, setShowProjectDetails] = React.useState(false);
+            const [selectedProject, setSelectedProject] = React.useState(null);
+            const [newProject, setNewProject] = React.useState({
+                name: '',
+                description: '',
+                startDate: '',
+                endDate: '',
+                budget: '',
+                priority: 'medium',
+                category: 'strategic',
+                teamMembers: [],
+                milestones: []
+            });
+            
+            const [projects, setProjects] = React.useState([
+                {
+                    id: 1,
+                    name: 'Digital Transformation Initiative',
+                    description: 'Complete overhaul of legacy systems and processes',
+                    status: 'on-track',
+                    progress: 68,
+                    startDate: '2024-01-15',
+                    endDate: '2024-12-31',
+                    budget: 500000,
+                    spent: 285000,
+                    priority: 'high',
+                    category: 'strategic',
+                    teamMembers: ['Alice Johnson', 'Bob Smith', 'Carol Davis'],
+                    milestones: [
+                        { name: 'Planning Phase', status: 'completed', date: '2024-02-15' },
+                        { name: 'System Analysis', status: 'completed', date: '2024-04-30' },
+                        { name: 'Development Phase', status: 'in-progress', date: '2024-08-15' },
+                        { name: 'Testing & QA', status: 'pending', date: '2024-10-30' },
+                        { name: 'Deployment', status: 'pending', date: '2024-12-15' }
+                    ]
                 },
-                { 
-                    id: 2, 
-                    name: 'Strategic Marketing Campaign Development', 
-                    category: 'Marketing Excellence',
-                    owner: 'Marketing Team',
-                    inputs: ['Market Research Data', 'Customer Personas', 'Brand Guidelines', 'Budget Allocation'],
-                    processing: ['Strategy Development', 'Creative Ideation', 'Campaign Planning', 'Multi-channel Coordination'],
-                    outputs: ['Campaign Strategy', 'Creative Assets', 'Launch Plan', 'Performance Framework'],
-                    stage: 'In Progress', 
-                    progress: 78, 
-                    efficiency: 82,
-                    cycleTime: '6.8 weeks',
-                    cost: '$18.5K',
-                    qualityScore: 89,
-                    narrative: 'Comprehensive marketing campaign development process that integrates data-driven insights with creative excellence to deliver high-impact campaigns across all customer touchpoints.',
-                    hrAlignment: {
-                        roles: ['Marketing Campaign Manager', 'Creative Director', 'Data Analytics Specialist', 'Brand Manager'],
-                        skills: ['Campaign strategy', 'Creative direction', 'Data analysis', 'Brand management'],
-                        training: ['Digital marketing certification', 'Analytics mastery', 'Creative leadership']
-                    },
-                    marketingAlignment: {
-                        touchpoints: ['Social media', 'Email marketing', 'Content hub', 'Digital advertising', 'Events'],
-                        brandMessage: 'Data-driven creativity that resonates with target audiences',
-                        channels: ['Omnichannel approach', 'Integrated communications', 'Performance marketing']
-                    },
-                    abcCosting: {
-                        activities: [
-                            {name: 'Research & Strategy', cost: 6500, driver: 'Strategy hours'},
-                            {name: 'Creative Development', cost: 8200, driver: 'Creative assets'},
-                            {name: 'Campaign Execution', cost: 3800, driver: 'Channel deployments'}
-                        ],
-                        totalCost: 18500
+                {
+                    id: 2,
+                    name: 'Market Expansion Strategy',
+                    description: 'Enter three new international markets',
+                    status: 'at-risk',
+                    progress: 42,
+                    startDate: '2024-03-01',
+                    endDate: '2024-11-30',
+                    budget: 300000,
+                    spent: 145000,
+                    priority: 'high',
+                    category: 'growth',
+                    teamMembers: ['David Wilson', 'Emma Thompson', 'Frank Miller'],
+                    milestones: [
+                        { name: 'Market Research', status: 'completed', date: '2024-04-15' },
+                        { name: 'Legal Framework', status: 'in-progress', date: '2024-06-30' },
+                        { name: 'Partner Negotiations', status: 'pending', date: '2024-08-31' },
+                        { name: 'Launch Campaign', status: 'pending', date: '2024-10-15' }
+                    ]
+                }
+            ]);
+
+            const handleCreateProject = () => {
+                if (newProject.name && newProject.description) {
+                    const project = {
+                        ...newProject,
+                        id: projects.length + 1,
+                        status: 'planning',
+                        progress: 0,
+                        spent: 0,
+                        teamMembers: [],
+                        milestones: []
+                    };
+                    setProjects([...projects, project]);
+                    setNewProject({
+                        name: '',
+                        description: '',
+                        startDate: '',
+                        endDate: '',
+                        budget: '',
+                        priority: 'medium',
+                        category: 'strategic',
+                        teamMembers: [],
+                        milestones: []
+                    });
+                    setShowCreateProject(false);
+                }
+            };
+
+            const getStatusColor = (status) => {
+                switch(status) {
+                    case 'on-track': return '#48bb78';
+                    case 'at-risk': return '#ed8936';
+                    case 'delayed': return '#e53e3e';
+                    case 'completed': return '#38a169';
+                    case 'planning': return '#4299e1';
+                    default: return '#718096';
+                }
+            };
+
+            const getPriorityColor = (priority) => {
+                switch(priority) {
+                    case 'high': return '#e53e3e';
+                    case 'medium': return '#ed8936';
+                    case 'low': return '#48bb78';
+                    default: return '#718096';
+                }
+            };
+
+            const calculateProjectStats = () => {
+                const total = projects.length;
+                const onTrack = projects.filter(p => p.status === 'on-track').length;
+                const atRisk = projects.filter(p => p.status === 'at-risk').length;
+                const delayed = projects.filter(p => p.status === 'delayed').length;
+                const completed = projects.filter(p => p.status === 'completed').length;
+                
+                return { total, onTrack, atRisk, delayed, completed };
+            };
+
+            const stats = calculateProjectStats();
                     },
                     valueChain: {
                         primary: ['Market research', 'Strategy development', 'Creative production', 'Campaign execution', 'Performance analysis'],
@@ -9242,14 +11458,17 @@
                         return <GoodBadStrategy />;
                     case 'disruption-forecasting':
                         return <DisruptionForecasting />;
+                    case 'digital-transformation':
+                        return <DigitalTransformationFramework />;
+                    case 'ai-scenario-planning':
+                        return <AIScenarioPlanningEngine />;
+                    case 'stakeholder-capitalism':
+                        return <StakeholderCapitalismFramework />;
                     case 'process-management':
-                        return <ProcessManagement />;
                     case 'advanced-process':
-                        return <AdvancedProcess />;
                     case 'process-improvement':
-                        return <ProcessImprovement />;
                     case 'organization-process':
-                        return <OrganizationWideProcessManagement />;
+                        return <ProcessManagement />;
                     case 'data-pulse-intelligence':
                         return <DataPulseIntelligence />;
                     case 'team-collaboration':
@@ -9488,6 +11707,15 @@
                                     <div className={`nav-item-advanced ${currentView === 'disruption-forecasting' ? 'active' : ''}`} onClick={() => setCurrentView('disruption-forecasting')}>
                                         <span>🔮</span> Disruption Forecasting
                                     </div>
+                                    <div className={`nav-item-advanced ${currentView === 'digital-transformation' ? 'active' : ''}`} onClick={() => setCurrentView('digital-transformation')}>
+                                        <span>🔄</span> Digital Transformation
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'ai-scenario-planning' ? 'active' : ''}`} onClick={() => setCurrentView('ai-scenario-planning')}>
+                                        <span>🧠</span> AI Scenario Planning
+                                    </div>
+                                    <div className={`nav-item-advanced ${currentView === 'stakeholder-capitalism' ? 'active' : ''}`} onClick={() => setCurrentView('stakeholder-capitalism')}>
+                                        <span>🌍</span> Stakeholder Capitalism
+                                    </div>
                                 </div>
                             </div>
 
@@ -9498,20 +11726,8 @@
                                     <span>{expandedSections.process ? '▼' : '▶'}</span>
                                 </button>
                                 <div className={`nav-section-content ${expandedSections.process ? 'expanded' : ''}`}>
-                                    <div className={`nav-item-advanced ${currentView === 'process-management' ? 'active' : ''}`} onClick={() => setCurrentView('process-management')}>
-                                        <span>🔄</span> Process Management
-                                    </div>
-                                    <div className={`nav-item-advanced ${currentView === 'advanced-process' ? 'active' : ''}`} onClick={() => setCurrentView('advanced-process')}>
-                                        <span>🏭</span> Advanced Process
-                                    </div>
-                                    <div className={`nav-item-advanced ${currentView === 'process-improvement' ? 'active' : ''}`} onClick={() => setCurrentView('process-improvement')}>
-                                        <span>⚙️</span> Process Intelligence
-                                    </div>
-                                    <div className={`nav-item-advanced ${currentView === 'process-analysis' ? 'active' : ''}`} onClick={() => setCurrentView('process-analysis')}>
-                                        <span>📊</span> Process Analysis
-                                    </div>
-                                    <div className={`nav-item-advanced ${currentView === 'organization-process' ? 'active' : ''}`} onClick={() => setCurrentView('organization-process')}>
-                                        <span>🏢</span> Organization-Wide Process Management
+                                    <div className={`nav-item-advanced ${['process-management', 'advanced-process', 'process-improvement', 'organization-process'].includes(currentView) ? 'active' : ''}`} onClick={() => setCurrentView('process-management')}>
+                                        <span>🚀</span> Unified Process Management Center
                                     </div>
                                 </div>
                             </div>

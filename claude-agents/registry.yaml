@@ -1,0 +1,42 @@
+- devops-infrastructure/devops-troubleshooter
+tags: [auto, lucidra]
+- ffmpeg-clip-team/audio-quality-controller
+tags: [auto, lucidra]
+- expert-advisors/agent-expert
+tags: [auto, lucidra]
+- ffmpeg-clip-team/social-media-clip-creator
+tags: [auto, lucidra]
+- documentation/api-documenter
+tags: [auto, lucidra]
+- expert-advisors/architect-review
+tags: [auto, lucidra]
+- obsidian-ops-team/connection-agent
+tags: [auto, lucidra]
+- obsidian-ops-team/moc-agent
+tags: [auto, lucidra]
+- ocr-extraction-team/markdown-syntax-formatter
+tags: [auto, lucidra]
+- performance-testing/performance-engineer
+tags: [auto, lucidra]
+- podcast-creator-team/comprehensive-researcher
+tags: [auto, lucidra]
+- podcast-creator-team/academic-research-synthesizer
+tags: [auto, lucidra]
+- podcast-creator-team/project-supervisor-orchestrator
+tags: [auto, lucidra]
+- programming-languages/javascript-pro
+tags: [auto, lucidra]
+- programming-languages/sql-pro
+tags: [auto, lucidra]
+- programming-languages/python-pro
+tags: [auto, lucidra]
+- programming-languages/php-pro
+tags: [auto, lucidra]
+- programming-languages/c-pro
+tags: [auto, lucidra]
+- programming-languages/cpp-pro
+tags: [auto, lucidra]
+- web-tools/url-link-extractor
+tags: [auto, lucidra]
+- security/incident-responder
+tags: [auto, lucidra]
