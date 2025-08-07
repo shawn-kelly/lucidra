@@ -43,6 +43,10 @@ import HuggingFaceVideoProduction from './components/HuggingFaceVideoProduction'
 // Import all missing functionality from previous working model
 import ComprehensiveBlueOceanStrategy from './components/ComprehensiveBlueOceanStrategy';
 import ProcessImprovementIntelligence from './components/ProcessImprovementIntelligence';
+
+// Import enhanced modules
+import EnhancedBlueOceanModule from './components/EnhancedBlueOceanModule';
+import EnhancedProcessManagement from './components/EnhancedProcessManagement';
 import DataPulseWidget from './components/DataPulseWidget';
 import StartupStageSelector from './components/StartupStageSelector';
 import StrategyFrameworks from './components/StrategyFrameworks';
@@ -95,6 +99,7 @@ function App() {
       items: [
         { id: 'mission', name: 'Mission Generator', icon: '🎯', desc: 'AI-powered mission statements' },
         { id: 'blue-ocean', name: 'Blue Ocean Strategy', icon: '🌊', desc: 'Uncontested market space' },
+        { id: 'enhanced-blue-ocean', name: 'Enhanced Blue Ocean', icon: '🌊', desc: 'Advanced Blue Ocean Workshop' },
         { id: 'strategy-frameworks', name: 'Strategy Frameworks', icon: '📚', desc: 'Complete framework library' },
         { id: 'strategic-planning', name: 'Strategic Planning', icon: '🗺️', desc: 'Comprehensive planning' },
         { id: 'strategic-journey', name: 'Strategic Journey', icon: '🛣️', desc: 'Journey mapping system' },
@@ -108,6 +113,7 @@ function App() {
         { id: 'organization-process', name: 'Organization-Wide Process', icon: '🌐', desc: 'Complete organizational process coordination' },
         { id: 'process-management', name: 'Process Management', icon: '🔄', desc: 'BPMN process design' },
         { id: 'advanced-process', name: 'Advanced Process', icon: '🏭', desc: 'AI process optimization' },
+        { id: 'enhanced-process', name: 'Enhanced Process Management', icon: '⚙️', desc: 'Complete process intelligence suite' },
         { id: 'process-improvement', name: 'Process Intelligence', icon: '⚙️', desc: 'Intelligent optimization' },
         { id: 'process-analysis', name: 'Process Analysis', icon: '📊', desc: 'Analysis framework' },
         { id: 'ai-process-logger', name: 'AI Process Logger', icon: '🤖', desc: 'Automated logging' }
@@ -171,6 +177,9 @@ function App() {
       case 'blue-ocean':
         items.push({ label: 'Blue Ocean Strategy', view: 'blue-ocean', icon: '🌊' });
         break;
+      case 'enhanced-blue-ocean':
+        items.push({ label: 'Enhanced Blue Ocean', view: 'enhanced-blue-ocean', icon: '🌊' });
+        break;
       case 'strategy-frameworks':
         items.push({ label: 'Strategy Frameworks', view: 'strategy-frameworks', icon: '📚' });
         break;
@@ -191,6 +200,9 @@ function App() {
         break;
       case 'advanced-process':
         items.push({ label: 'Advanced Process', view: 'advanced-process', icon: '🏭' });
+        break;
+      case 'enhanced-process':
+        items.push({ label: 'Enhanced Process Management', view: 'enhanced-process', icon: '⚙️' });
         break;
       case 'process-improvement':
         items.push({ label: 'Process Intelligence', view: 'process-improvement', icon: '⚙️' });
@@ -459,6 +471,22 @@ function App() {
               onClick={() => setCurrentView('blue-ocean')}
             >
               🌊 Blue Ocean
+            </Button>
+            <Button
+              variant={currentView === 'enhanced-blue-ocean' ? 'solid' : 'ghost'}
+              colorScheme={currentView === 'enhanced-blue-ocean' ? 'blue' : 'gray'}
+              size="sm"
+              onClick={() => setCurrentView('enhanced-blue-ocean')}
+            >
+              🌊 Enhanced BO
+            </Button>
+            <Button
+              variant={currentView === 'enhanced-process' ? 'solid' : 'ghost'}
+              colorScheme={currentView === 'enhanced-process' ? 'purple' : 'gray'}
+              size="sm"
+              onClick={() => setCurrentView('enhanced-process')}
+            >
+              ⚙️ Enhanced Process
             </Button>
             <Button
               variant={currentView === 'strategy-frameworks' ? 'solid' : 'ghost'}
@@ -797,6 +825,20 @@ function App() {
                 </HStack>
               </CardBody>
             </Card>
+            <Card cursor="pointer" _hover={{ transform: 'translateY(-2px)', shadow: 'lg' }} transition="all 0.2s" onClick={() => setCurrentView('enhanced-blue-ocean')} border="2px solid" borderColor="blue.200">
+              <CardBody py={3}>
+                <HStack>
+                  <Text fontSize="xl">🌊</Text>
+                  <VStack align="start" spacing={0}>
+                    <HStack>
+                      <Text fontWeight="bold" fontSize="sm">Enhanced Blue Ocean</Text>
+                      <Badge colorScheme="blue" size="xs">NEW</Badge>
+                    </HStack>
+                    <Text fontSize="xs" color="gray.600">Advanced workshop with analytics</Text>
+                  </VStack>
+                </HStack>
+              </CardBody>
+            </Card>
             <Card cursor="pointer" _hover={{ transform: 'translateY(-2px)', shadow: 'lg' }} transition="all 0.2s" onClick={() => setCurrentView('strategic-planning')}>
               <CardBody py={3}>
                 <HStack>
@@ -890,6 +932,20 @@ function App() {
                   <VStack align="start" spacing={0}>
                     <Text fontWeight="bold" fontSize="sm">Advanced Process</Text>
                     <Text fontSize="xs" color="gray.600">AI process optimization</Text>
+                  </VStack>
+                </HStack>
+              </CardBody>
+            </Card>
+            <Card cursor="pointer" _hover={{ transform: 'translateY(-2px)', shadow: 'lg' }} transition="all 0.2s" onClick={() => setCurrentView('enhanced-process')} border="2px solid" borderColor="purple.200">
+              <CardBody py={3}>
+                <HStack>
+                  <Text fontSize="xl">⚙️</Text>
+                  <VStack align="start" spacing={0}>
+                    <HStack>
+                      <Text fontWeight="bold" fontSize="sm">Enhanced Process Mgmt</Text>
+                      <Badge colorScheme="purple" size="xs">NEW</Badge>
+                    </HStack>
+                    <Text fontSize="xs" color="gray.600">Complete process intelligence suite</Text>
                   </VStack>
                 </HStack>
               </CardBody>
@@ -1206,6 +1262,8 @@ function App() {
       // Core Strategy & Planning
       case 'blue-ocean':
         return <ComprehensiveBlueOceanStrategy />;
+      case 'enhanced-blue-ocean':
+        return <EnhancedBlueOceanModule />;
       case 'strategy-frameworks':
         return <StrategyFrameworks />;
       case 'strategic-planning':
@@ -1222,6 +1280,8 @@ function App() {
         return <ProcessManagement />;
       case 'advanced-process':
         return <AdvancedProcessManagement />;
+      case 'enhanced-process':
+        return <EnhancedProcessManagement />;
       case 'process-improvement':
         return <ProcessImprovementIntelligence />;
       case 'process-analysis':
