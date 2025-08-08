@@ -148,7 +148,21 @@ const EnhancedBlueOceanModule: React.FC = () => {
     score += blueOceanData.adoptionHurdles.length > 0 ? 5 : 0;
     
     setCompletionScore(Math.min(100, score));
-  }, [blueOceanData]);
+  }, [
+    blueOceanData.canvas.eliminate.length,
+    blueOceanData.canvas.reduce.length, 
+    blueOceanData.canvas.raise.length,
+    blueOceanData.canvas.create.length,
+    blueOceanData.sixPaths.alternativeIndustries.length,
+    blueOceanData.sixPaths.strategicGroups.length,
+    blueOceanData.sixPaths.buyerGroups.length,
+    blueOceanData.sixPaths.complementaryProducts.length,
+    blueOceanData.sixPaths.functionalEmotional.length,
+    blueOceanData.sixPaths.timeTrends.length,
+    blueOceanData.valueProposition,
+    blueOceanData.strategicPrice,
+    blueOceanData.adoptionHurdles.length
+  ]);
 
   const addToCanvas = () => {
     if (currentInput.trim()) {

@@ -322,7 +322,7 @@ const EnhancedProcessManagement: React.FC = () => {
       activeProcesses: activeWorkflows.length,
       averageEfficiency: avgEfficiency
     }));
-  }, [workflows]);
+  }, [workflows.length, workflows.map(wf => `${wf.id}-${wf.status}-${wf.averageEfficiency}`).join(',')]);
 
   const createNewProcess = useCallback(() => {
     if (newProcessName.trim()) {
