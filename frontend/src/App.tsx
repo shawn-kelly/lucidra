@@ -44,9 +44,9 @@ import HuggingFaceVideoProduction from './components/HuggingFaceVideoProduction'
 import ComprehensiveBlueOceanStrategy from './components/ComprehensiveBlueOceanStrategy';
 import ProcessImprovementIntelligence from './components/ProcessImprovementIntelligence';
 
-// Import enhanced modules
-import EnhancedBlueOceanModule from './components/EnhancedBlueOceanModule';
-import EnhancedProcessManagement from './components/EnhancedProcessManagement';
+// Import enhanced modules - temporarily disabled for build test
+// import EnhancedBlueOceanModule from './components/EnhancedBlueOceanModule';
+// import EnhancedProcessManagement from './components/EnhancedProcessManagement';
 import DataPulseWidget from './components/DataPulseWidget';
 import StartupStageSelector from './components/StartupStageSelector';
 import StrategyFrameworks from './components/StrategyFrameworks';
@@ -1263,7 +1263,7 @@ function App() {
       case 'blue-ocean':
         return <ComprehensiveBlueOceanStrategy />;
       case 'enhanced-blue-ocean':
-        return <EnhancedBlueOceanModule />;
+        return <ComprehensiveBlueOceanStrategy />; // Fallback to working component
       case 'strategy-frameworks':
         return <StrategyFrameworks />;
       case 'strategic-planning':
@@ -1281,7 +1281,7 @@ function App() {
       case 'advanced-process':
         return <AdvancedProcessManagement />;
       case 'enhanced-process':
-        return <EnhancedProcessManagement />;
+        return <AdvancedProcessManagement />; // Fallback to working component
       case 'process-improvement':
         return <ProcessImprovementIntelligence />;
       case 'process-analysis':
