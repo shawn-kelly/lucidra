@@ -101,6 +101,14 @@
         
         .status-working { background: #48bb78; color: white; }
         .status-ready { background: #4299e1; color: white; }
+        
+        .error-message {
+            color: red;
+            background: #fed7d7;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -109,217 +117,205 @@
     </div>
     
     <script>
-        const { useState, useEffect } = React;
+        // Add error handling
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript Error:', e.error);
+            document.getElementById('root').innerHTML = '<div class="error-message">Error: ' + e.message + '<br>Check console for details</div>';
+        });
 
-        const LucidraApp = () => {
-            const [currentView, setCurrentView] = useState('dashboard');
-            const [isLoading, setIsLoading] = useState(true);
+        // Check if React loaded
+        if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
+            document.getElementById('root').innerHTML = '<div class="error-message">React libraries failed to load. Check your internet connection.</div>';
+        } else {
+            console.log('React loaded successfully');
+            
+            try {
+                const { useState, useEffect } = React;
 
-            useEffect(() => {
-                // Simulate loading
-                setTimeout(() => setIsLoading(false), 1000);
-            }, []);
+                const LucidraApp = () => {
+                    const [currentView, setCurrentView] = useState('dashboard');
+                    const [isLoading, setIsLoading] = useState(true);
 
-            const features = [
-                {
-                    id: 'strategy-frameworks',
-                    title: '🎯 Strategy Frameworks',
-                    description: 'Blue Ocean Strategy, Porter\'s Five Forces, Resource-Based View',
-                    status: 'working'
-                },
-                {
-                    id: 'financial-analysis', 
-                    title: '📊 Financial Analysis',
-                    description: 'DuPont Analysis, IRR/NPV calculations, Activity-Based Costing',
-                    status: 'working'
-                },
-                {
-                    id: 'ai-assistant',
-                    title: '🧠 AI Assistant', 
-                    description: 'Mission statement generator, strategic planning support',
-                    status: 'working'
-                },
-                {
-                    id: 'market-intelligence',
-                    title: '📈 Market Intelligence',
-                    description: 'Real-time market data, competitive analysis, trend forecasting', 
-                    status: 'working'
-                },
-                {
-                    id: 'project-management',
-                    title: '📋 Project Management',
-                    description: 'Enhanced project lifecycle with timeline, budget, and team analytics',
-                    status: 'working'
-                },
-                {
-                    id: 'global-markets',
-                    title: '🌐 Global Markets',
-                    description: '6-region economic data: Caribbean, Americas, Europe, Asia, Australia, India',
-                    status: 'working'
-                }
-            ];
+                    useEffect(() => {
+                        console.log('App mounted, setting loading timeout');
+                        // Simulate loading
+                        const timer = setTimeout(() => {
+                            console.log('Loading complete, showing app');
+                            setIsLoading(false);
+                        }, 2000);
+                        return () => clearTimeout(timer);
+                    }, []);
 
-            const renderNavigation = () => (
-                <div className="nav-container">
-                    <button 
-                        className={`nav-item ${currentView === 'dashboard' ? 'active' : ''}`}
-                        onClick={() => setCurrentView('dashboard')}
-                    >
-                        🏠 Dashboard
-                    </button>
-                    <button 
-                        className={`nav-item ${currentView === 'strategy' ? 'active' : ''}`}
-                        onClick={() => setCurrentView('strategy')}
-                    >
-                        🎯 Strategy
-                    </button>
-                    <button 
-                        className={`nav-item ${currentView === 'financial' ? 'active' : ''}`}
-                        onClick={() => setCurrentView('financial')}
-                    >
-                        💰 Financial
-                    </button>
-                    <button 
-                        className={`nav-item ${currentView === 'intelligence' ? 'active' : ''}`}
-                        onClick={() => setCurrentView('intelligence')}
-                    >
-                        📊 Intelligence
-                    </button>
-                </div>
-            );
+                    const features = [
+                        {
+                            id: 'strategy-frameworks',
+                            title: '🎯 Strategy Frameworks',
+                            description: 'Blue Ocean Strategy, Porter\'s Five Forces, Resource-Based View',
+                            status: 'working'
+                        },
+                        {
+                            id: 'financial-analysis', 
+                            title: '📊 Financial Analysis',
+                            description: 'DuPont Analysis, IRR/NPV calculations, Activity-Based Costing',
+                            status: 'working'
+                        },
+                        {
+                            id: 'ai-assistant',
+                            title: '🧠 AI Assistant', 
+                            description: 'Mission statement generator, strategic planning support',
+                            status: 'working'
+                        },
+                        {
+                            id: 'market-intelligence',
+                            title: '📈 Market Intelligence',
+                            description: 'Real-time market data, competitive analysis, trend forecasting', 
+                            status: 'working'
+                        },
+                        {
+                            id: 'project-management',
+                            title: '📋 Project Management',
+                            description: 'Enhanced project lifecycle with timeline, budget, and team analytics',
+                            status: 'working'
+                        },
+                        {
+                            id: 'global-markets',
+                            title: '🌐 Global Markets',
+                            description: '6-region economic data: Caribbean, Americas, Europe, Asia, Australia, India',
+                            status: 'working'
+                        }
+                    ];
 
-            const renderDashboard = () => (
-                <div>
-                    <div className="dashboard-card">
-                        <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: '#2d3748' }}>
-                            🚀 Lucidra Platform
-                        </h1>
-                        <p style={{ fontSize: '1.2rem', color: '#718096', marginBottom: '2rem' }}>
-                            Advanced Business Strategy & Intelligence Platform
-                        </p>
-                        <div style={{ 
-                            background: '#c6f6d5', 
-                            color: '#22543d', 
-                            padding: '1rem', 
-                            borderRadius: '8px',
-                            textAlign: 'center',
-                            fontWeight: 'bold'
-                        }}>
-                            ✅ ALL SYSTEMS OPERATIONAL - READY FOR STRATEGIC PLANNING
-                        </div>
-                    </div>
+                    const renderNavigation = () => {
+                        console.log('Rendering navigation');
+                        return React.createElement('div', { className: 'nav-container' },
+                            React.createElement('button', {
+                                className: `nav-item ${currentView === 'dashboard' ? 'active' : ''}`,
+                                onClick: () => {
+                                    console.log('Dashboard clicked');
+                                    setCurrentView('dashboard');
+                                }
+                            }, '🏠 Dashboard'),
+                            React.createElement('button', {
+                                className: `nav-item ${currentView === 'strategy' ? 'active' : ''}`,
+                                onClick: () => {
+                                    console.log('Strategy clicked');
+                                    setCurrentView('strategy');
+                                }
+                            }, '🎯 Strategy'),
+                            React.createElement('button', {
+                                className: `nav-item ${currentView === 'financial' ? 'active' : ''}`,
+                                onClick: () => {
+                                    console.log('Financial clicked');
+                                    setCurrentView('financial');
+                                }
+                            }, '💰 Financial'),
+                            React.createElement('button', {
+                                className: `nav-item ${currentView === 'intelligence' ? 'active' : ''}`,
+                                onClick: () => {
+                                    console.log('Intelligence clicked');
+                                    setCurrentView('intelligence');
+                                }
+                            }, '📊 Intelligence')
+                        );
+                    };
 
-                    <div className="feature-grid">
-                        {features.map(feature => (
-                            <div key={feature.id} className="feature-card">
-                                <h3 style={{ marginBottom: '1rem', color: '#2d3748' }}>
-                                    {feature.title}
-                                </h3>
-                                <p style={{ color: '#718096', marginBottom: '1rem' }}>
-                                    {feature.description}
-                                </p>
-                                <div className={`status-badge status-${feature.status}`}>
-                                    ✅ FUNCTIONAL
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            );
+                    const renderDashboard = () => {
+                        console.log('Rendering dashboard');
+                        return React.createElement('div', null,
+                            React.createElement('div', { className: 'dashboard-card' },
+                                React.createElement('h1', {
+                                    style: { fontSize: '2.5rem', marginBottom: '1rem', color: '#2d3748' }
+                                }, '🚀 Lucidra Platform'),
+                                React.createElement('p', {
+                                    style: { fontSize: '1.2rem', color: '#718096', marginBottom: '2rem' }
+                                }, 'Advanced Business Strategy & Intelligence Platform'),
+                                React.createElement('div', {
+                                    style: {
+                                        background: '#c6f6d5',
+                                        color: '#22543d',
+                                        padding: '1rem',
+                                        borderRadius: '8px',
+                                        textAlign: 'center',
+                                        fontWeight: 'bold'
+                                    }
+                                }, '✅ ALL SYSTEMS OPERATIONAL - READY FOR STRATEGIC PLANNING')
+                            ),
+                            React.createElement('div', { className: 'feature-grid' },
+                                features.map(feature => 
+                                    React.createElement('div', {
+                                        key: feature.id,
+                                        className: 'feature-card'
+                                    },
+                                        React.createElement('h3', {
+                                            style: { marginBottom: '1rem', color: '#2d3748' }
+                                        }, feature.title),
+                                        React.createElement('p', {
+                                            style: { color: '#718096', marginBottom: '1rem' }
+                                        }, feature.description),
+                                        React.createElement('div', {
+                                            className: `status-badge status-${feature.status}`
+                                        }, '✅ FUNCTIONAL')
+                                    )
+                                )
+                            )
+                        );
+                    };
 
-            const renderStrategy = () => (
-                <div className="dashboard-card">
-                    <h2 style={{ marginBottom: '2rem', color: '#2d3748' }}>🎯 Strategy Frameworks</h2>
-                    <div className="feature-grid">
-                        <div className="feature-card">
-                            <h3>🌊 Blue Ocean Strategy</h3>
-                            <p>Create uncontested market space and make competition irrelevant</p>
-                        </div>
-                        <div className="feature-card">
-                            <h3>🏢 Porter's Five Forces</h3>
-                            <p>Analyze competitive forces and industry attractiveness</p>
-                        </div>
-                        <div className="feature-card">
-                            <h3>⛓️ Value Chain Analysis</h3>
-                            <p>Identify sources of competitive advantage in your operations</p>
-                        </div>
-                    </div>
-                </div>
-            );
+                    const renderCurrentView = () => {
+                        console.log('Rendering current view:', currentView);
+                        switch (currentView) {
+                            case 'strategy':
+                                return React.createElement('div', { className: 'dashboard-card' },
+                                    React.createElement('h2', { 
+                                        style: { marginBottom: '2rem', color: '#2d3748' }
+                                    }, '🎯 Strategy Frameworks'),
+                                    React.createElement('p', null, 'Strategy framework modules will be available here.')
+                                );
+                            case 'financial':
+                                return React.createElement('div', { className: 'dashboard-card' },
+                                    React.createElement('h2', { 
+                                        style: { marginBottom: '2rem', color: '#2d3748' }
+                                    }, '💰 Financial Analysis'),
+                                    React.createElement('p', null, 'Financial analysis tools will be available here.')
+                                );
+                            case 'intelligence':
+                                return React.createElement('div', { className: 'dashboard-card' },
+                                    React.createElement('h2', { 
+                                        style: { marginBottom: '2rem', color: '#2d3748' }
+                                    }, '📊 Market Intelligence'),
+                                    React.createElement('p', null, 'Market intelligence dashboard will be available here.')
+                                );
+                            default:
+                                return renderDashboard();
+                        }
+                    };
 
-            const renderFinancial = () => (
-                <div className="dashboard-card">
-                    <h2 style={{ marginBottom: '2rem', color: '#2d3748' }}>💰 Financial Analysis</h2>
-                    <div className="feature-grid">
-                        <div className="feature-card">
-                            <h3>📊 DuPont Analysis</h3>
-                            <p>Break down ROE into its component parts for deeper insights</p>
-                        </div>
-                        <div className="feature-card">
-                            <h3>💵 IRR & NPV</h3>
-                            <p>Investment analysis with discounted cash flow modeling</p>
-                        </div>
-                        <div className="feature-card">
-                            <h3>🏭 Activity-Based Costing</h3>
-                            <p>Allocate costs based on activities that drive expenses</p>
-                        </div>
-                    </div>
-                </div>
-            );
+                    console.log('App rendering, isLoading:', isLoading);
 
-            const renderIntelligence = () => (
-                <div className="dashboard-card">
-                    <h2 style={{ marginBottom: '2rem', color: '#2d3748' }}>📊 Market Intelligence</h2>
-                    <div className="feature-grid">
-                        <div className="feature-card">
-                            <h3>🌍 Global Markets</h3>
-                            <p>Economic data and insights from 6 global regions</p>
-                        </div>
-                        <div className="feature-card">
-                            <h3>📈 Trend Analysis</h3>
-                            <p>Real-time market trends and competitive intelligence</p>
-                        </div>
-                        <div className="feature-card">
-                            <h3>🎯 Strategic Insights</h3>
-                            <p>AI-powered recommendations for strategic decisions</p>
-                        </div>
-                    </div>
-                </div>
-            );
+                    if (isLoading) {
+                        return React.createElement('div', { className: 'app-loading' },
+                            '🚀 Loading Lucidra Platform...'
+                        );
+                    }
 
-            const renderCurrentView = () => {
-                switch (currentView) {
-                    case 'strategy':
-                        return renderStrategy();
-                    case 'financial':
-                        return renderFinancial();
-                    case 'intelligence':
-                        return renderIntelligence();
-                    default:
-                        return renderDashboard();
-                }
-            };
+                    return React.createElement('div', null,
+                        renderNavigation(),
+                        React.createElement('div', { className: 'main-content' },
+                            renderCurrentView()
+                        )
+                    );
+                };
 
-            if (isLoading) {
-                return (
-                    <div className="app-loading">
-                        🚀 Loading Lucidra Platform...
-                    </div>
-                );
+                console.log('About to render app');
+                // Render the app
+                ReactDOM.render(React.createElement(LucidraApp), document.getElementById('root'));
+                console.log('App render initiated');
+
+            } catch (error) {
+                console.error('Error creating app:', error);
+                document.getElementById('root').innerHTML = '<div class="error-message">Failed to initialize app: ' + error.message + '</div>';
             }
-
-            return (
-                <div>
-                    {renderNavigation()}
-                    <div className="main-content">
-                        {renderCurrentView()}
-                    </div>
-                </div>
-            );
-        };
-
-        // Render the app
-        ReactDOM.render(React.createElement(LucidraApp), document.getElementById('root'));
+        }
     </script>
 </body>
 </html>
