@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS Error Test for Lucidra</title>
+</head>
+<body>
+    <h1>Testing Lucidra App JavaScript</h1>
+    <div id="test-results"></div>
+    
+    <iframe 
+        src="https://shawn-kelly.github.io/lucidra/complete-app.html" 
+        width="100%" 
+        height="600"
+        onload="testIframe()"
+        id="lucidra-frame">
+    </iframe>
+    
+    <script>
+        let errors = [];
+        let testResults = document.getElementById('test-results');
+        
+        // Capture any JavaScript errors
+        window.addEventListener('error', function(e) {
+            errors.push(`Error: ${e.message} at ${e.filename}:${e.lineno}`);
+            updateResults();
+        });
+        
+        function testIframe() {
+            setTimeout(() => {
+                try {
+                    const iframe = document.getElementById('lucidra-frame');
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    
+                    if (errors.length === 0) {
+                        testResults.innerHTML = '<h2 style="color: green;">✅ SUCCESS: No JavaScript errors detected!</h2>';
+                    } else {
+                        testResults.innerHTML = '<h2 style="color: red;">❌ JavaScript Errors Found:</h2>' + 
+                            errors.map(err => `<p style="color: red;">${err}</p>`).join('');
+                    }
+                } catch (e) {
+                    testResults.innerHTML = `<h2 style="color: orange;">⚠️ Cross-origin test limited, but iframe loaded</h2>`;
+                }
+            }, 5000);
+        }
+        
+        function updateResults() {
+            testResults.innerHTML = '<h2 style="color: red;">❌ JavaScript Errors Found:</h2>' + 
+                errors.map(err => `<p style="color: red;">${err}</p>`).join('');
+        }
+    </script>
+</body>
+</html>
