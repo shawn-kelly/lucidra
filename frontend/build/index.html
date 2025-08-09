@@ -3,37 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucidra - Advanced Business Strategy Platform</title>
-    <meta http-equiv="refresh" content="0; url=complete-app.html">
+    <title>Lucidra - Business Strategy Platform</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
             text-align: center;
         }
-        .loading {
-            font-size: 1.5rem;
-        }
-        a {
-            color: white;
-            text-decoration: underline;
+        .container { max-width: 800px; padding: 2rem; }
+        h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        .feature { background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 12px; }
+        .btn { 
+            display: inline-block; 
+            background: #48bb78; 
+            padding: 1rem 2rem; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            color: white; 
+            margin: 0.5rem;
         }
     </style>
 </head>
 <body>
-    <div class="loading">
-        🚀 Redirecting to Advanced Lucidra Platform...<br><br>
-        <a href="complete-app.html">Click here if not redirected automatically</a>
+    <div class="container">
+        <h1>🚀 Lucidra Platform</h1>
+        <p>Advanced Business Strategy & Intelligence Platform</p>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🎯 Strategy Frameworks</h3>
+                <p>Blue Ocean, Porter's Five Forces, and more</p>
+            </div>
+            <div class="feature">
+                <h3>📊 Market Intelligence</h3>
+                <p>Real-time data and competitive analysis</p>
+            </div>
+            <div class="feature">
+                <h3>🧠 AI Assistant</h3>
+                <p>Intelligent business planning support</p>
+            </div>
+            <div class="feature">
+                <h3>📈 Financial Analysis</h3>
+                <p>DuPont, IRR, NPV, and break-even tools</p>
+            </div>
+        </div>
+        
+        <a href="complete-app.html" class="btn">🚀 Launch Full Platform</a>
+        <a href="app.html" class="btn">📱 Mobile Version</a>
+        
+        <p style="margin-top: 2rem; opacity: 0.8;">
+            ✅ Platform Status: Online<br>
+            🌐 Ready for Strategic Planning
+        </p>
     </div>
-    
-    <script>
-        // Immediate redirect
-        window.location.href = 'complete-app.html';
-    </script>
 </body>
 </html>
