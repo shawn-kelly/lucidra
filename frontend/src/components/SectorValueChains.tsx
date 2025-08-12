@@ -1,3 +1,5 @@
+import { Box, VStack, HStack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
+import { AddIcon, EditIcon, DeleteIcon, DownloadIcon, CheckIcon } from '@chakra-ui/icons';
 import React, { useState } from 'react';
 import {
   Box,
@@ -46,7 +48,6 @@ import {
   Th,
   Td
 } from '@chakra-ui/react';
-import { CheckIcon, InfoIcon, DownloadIcon } from '@chakra-ui/icons';
 
 interface ValueChainActivity {
   id: string;

@@ -1,3 +1,5 @@
+import { Box, VStack, HStack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
+import { AddIcon, EditIcon, DeleteIcon, DownloadIcon, CheckIcon } from '@chakra-ui/icons';
 import React, { useState } from 'react';
 import {
   Box,
@@ -43,7 +45,6 @@ import {
   SliderThumb,
   Divider
 } from '@chakra-ui/react';
-import { StarIcon, CheckIcon, InfoIcon } from '@chakra-ui/icons';
 
 interface FrameworkModule {
   id: string;

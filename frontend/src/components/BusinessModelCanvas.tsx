@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import {
+import { Box, VStack, HStack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
+import { AddIcon, EditIcon, DeleteIcon, DownloadIcon, CheckIcon } from '@chakra-ui/icons';
   Box,
   VStack,
   HStack,

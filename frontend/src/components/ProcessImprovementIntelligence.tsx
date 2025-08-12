@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {
+import { Box, VStack, HStack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
+import { AddIcon, EditIcon, DeleteIcon, DownloadIcon, CheckIcon } from '@chakra-ui/icons';
   Box,
   VStack,
   HStack,
@@ -65,7 +65,6 @@ import {
   SliderThumb,
   SliderMark
 } from '@chakra-ui/react';
-import { AddIcon, EditIcon, DeleteIcon, TimeIcon, TrendingUpIcon, TrendingDownIcon } from '@chakra-ui/icons';
 
 interface Process {
   id: string;

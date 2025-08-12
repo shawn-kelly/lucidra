@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import {
+import { Box, VStack, HStack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
+import { AddIcon, EditIcon, DeleteIcon, DownloadIcon, CheckIcon } from '@chakra-ui/icons';
   Box,
   VStack,
   HStack,
@@ -93,7 +93,7 @@ import {
   EmailIcon,
   PhoneIcon,
   AttachmentIcon,
-  TrendingUpIcon,
+  ArrowUpIcon,
   TrendingDownIcon
 } from '@chakra-ui/icons';
 
@@ -1624,7 +1624,7 @@ const EnhancedHRModule: React.FC = () => {
                         <MenuItem icon={<StarIcon />} onClick={onDevelopmentModalOpen}>
                           Development Plan
                         </MenuItem>
-                        <MenuItem icon={<TrendingUpIcon />} onClick={onSuccessionModalOpen}>
+                        <MenuItem icon={<ArrowUpIcon />} onClick={onSuccessionModalOpen}>
                           Succession Planning
                         </MenuItem>
                         <MenuDivider />
@@ -1989,7 +1989,7 @@ const EnhancedHRModule: React.FC = () => {
                                     <MenuItem icon={<ViewIcon />}>View Profile</MenuItem>
                                     <MenuItem icon={<EditIcon />}>Edit Employee</MenuItem>
                                     <MenuItem icon={<StarIcon />}>Performance Review</MenuItem>
-                                    <MenuItem icon={<TrendingUpIcon />}>Development Plan</MenuItem>
+                                    <MenuItem icon={<ArrowUpIcon />}>Development Plan</MenuItem>
                                   </MenuList>
                                 </Menu>
                               </Td>

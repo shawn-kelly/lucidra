@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import {
+import { Box, VStack, HStack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
+import { AddIcon, EditIcon, DeleteIcon, DownloadIcon, CheckIcon } from '@chakra-ui/icons';
   Box,
   VStack,
   HStack,
@@ -85,7 +85,7 @@ import {
   ChevronDownIcon,
   SearchIcon,
   TimeIcon,
-  TrendingUpIcon,
+  ArrowUpIcon,
   TrendingDownIcon
 } from '@chakra-ui/icons';
 
@@ -1236,7 +1236,7 @@ const BudgetingModule: React.FC = () => {
                             )}
                             {item.drivers.length > 0 && (
                               <HStack spacing={1}>
-                                <TrendingUpIcon color="blue.500" />
+                                <ArrowUpIcon color="blue.500" />
                                 <Text color="gray.600">{item.drivers.length} driver{item.drivers.length !== 1 ? 's' : ''}</Text>
                               </HStack>
                             )}

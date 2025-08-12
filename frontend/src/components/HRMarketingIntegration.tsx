@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import {
+import { Box, VStack, HStack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
+import { AddIcon, EditIcon, DeleteIcon, DownloadIcon, CheckIcon } from '@chakra-ui/icons';
   Box,
   VStack,
   HStack,
@@ -99,7 +99,7 @@ import {
   EmailIcon,
   PhoneIcon,
   AttachmentIcon,
-  TrendingUpIcon,
+  ArrowUpIcon,
   TrendingDownIcon,
   DragHandleIcon,
   CopyIcon,
@@ -1885,7 +1885,7 @@ const HRMarketingIntegration: React.FC = () => {
                         <MenuItem icon={<ViewIcon />} onClick={onInsightsModalOpen}>
                           View Insights
                         </MenuItem>
-                        <MenuItem icon={<TrendingUpIcon />} onClick={onCorrelationModalOpen}>
+                        <MenuItem icon={<ArrowUpIcon />} onClick={onCorrelationModalOpen}>
                           Correlation Analysis
                         </MenuItem>
                         <MenuItem icon={<CheckIcon />} onClick={onRecommendationsModalOpen}>
@@ -1902,7 +1902,7 @@ const HRMarketingIntegration: React.FC = () => {
                     </Menu>
                     
                     <Button 
-                      leftIcon={<TrendingUpIcon />} 
+                      leftIcon={<ArrowUpIcon />} 
                       colorScheme="purple" 
                       size="sm"
                       onClick={onCorrelationModalOpen}
