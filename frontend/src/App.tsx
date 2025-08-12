@@ -40,6 +40,7 @@ import MissionStatementGenerator from './components/MissionStatementGenerator';
 import InteractivePortersFiveForces from './components/InteractivePortersFiveForces';
 import StrategyExecutionTracker from './components/StrategyExecutionTracker';
 import BusinessModelCanvasFixed from './components/BusinessModelCanvasFixed';
+import VisualProcessArchitect from './components/VisualProcessArchitect';
 
 // Lazy load component chunks to optimize build and runtime performance
 const ChunkStrategy = React.lazy(() => import('./components/ComprehensiveBlueOceanStrategy'));
@@ -117,6 +118,7 @@ function App() {
       color: "purple.500",
       items: [
         { id: 'organization-process', name: 'Organization-Wide Process', icon: '🌐', desc: 'Complete organizational process coordination' },
+        { id: 'visual-process-architect', name: 'Visual Process Architect', icon: '🎨', desc: 'Advanced visual process designer with BPMN modeling' },
         { id: 'process-management', name: 'Process Management', icon: '🔄', desc: 'BPMN process design' },
         { id: 'advanced-process', name: 'Advanced Process', icon: '🏭', desc: 'AI process optimization' },
         { id: 'enhanced-process', name: 'Enhanced Process Management', icon: '⚙️', desc: 'Complete process intelligence suite' },
@@ -200,6 +202,9 @@ function App() {
         break;
       case 'organization-process':
         items.push({ label: 'Organization-Wide Process', view: 'organization-process', icon: '🌐' });
+        break;
+      case 'visual-process-architect':
+        items.push({ label: 'Visual Process Architect', view: 'visual-process-architect', icon: '🎨' });
         break;
       case 'process-management':
         items.push({ label: 'Process Management', view: 'process-management', icon: '🔄' });
@@ -4136,6 +4141,8 @@ function App() {
       // Process Management Suite (chunked)
       case 'organization-process':
         return renderWithSuspense(ChunkOrganizationProcess);
+      case 'visual-process-architect':
+        return <VisualProcessArchitect />;
       case 'process-management':
         return <ComprehensiveProcessManagement />;
       case 'advanced-process':
