@@ -15,30 +15,76 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: white;
         }
         
-        .container {
-            text-align: center;
-            max-width: 800px;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .logo {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 800;
         }
         
-        h1 {
-            font-size: 2.5rem;
+        .nav {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .nav-btn.active {
+            background: rgba(34, 197, 94, 0.3);
+            border-color: rgba(34, 197, 94, 0.5);
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+        
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .dashboard-title {
+            font-size: 3rem;
             font-weight: 800;
             margin-bottom: 1rem;
             background: linear-gradient(45deg, #fff, #a8edea);
@@ -47,61 +93,157 @@
             background-clip: text;
         }
         
-        .subtitle {
+        .dashboard-subtitle {
             font-size: 1.2rem;
-            margin-bottom: 2rem;
             opacity: 0.9;
-            line-height: 1.6;
+            margin-bottom: 2rem;
         }
         
-        .features {
+        .modules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
         
-        .feature {
-            padding: 1rem;
+        .module-card {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
         
-        .feature-icon {
-            font-size: 2rem;
+        .module-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .module-title {
+            font-size: 1.5rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
         
-        .feature-title {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        
-        .feature-desc {
-            font-size: 0.9rem;
+        .module-description {
             opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
         
-        .status {
-            margin: 2rem 0;
-            padding: 1rem;
-            background: rgba(34, 197, 94, 0.2);
-            border: 1px solid rgba(34, 197, 94, 0.3);
+        .module-features {
+            list-style: none;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .module-features li {
+            margin: 0.25rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .module-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+        }
+        
+        .workspace {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .workspace.active {
+            display: block;
+        }
+        
+        .workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .workspace-title {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .back-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
-            color: #86efac;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        .workspace-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            min-height: 400px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
         }
         
         .btn {
-            display: inline-block;
-            padding: 1rem 2rem;
+            padding: 0.75rem 1.5rem;
             background: linear-gradient(45deg, #22c55e, #16a34a);
             color: white;
-            text-decoration: none;
+            border: none;
             border-radius: 10px;
             font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s ease;
-            margin: 0.5rem;
+            font-size: 1rem;
         }
         
         .btn:hover {
@@ -109,123 +251,520 @@
             box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
         }
         
-        .secondary {
+        .btn-secondary {
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        .secondary:hover {
+        .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.3);
         }
         
-        .footer {
+        .results-section {
             margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .results-section.show {
+            display: block;
+        }
+        
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .canvas-section {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            min-height: 150px;
+        }
+        
+        .canvas-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #a8edea;
+        }
+        
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .force-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .force-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #a8edea;
+        }
+        
+        .slider-group {
+            margin-bottom: 1rem;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
             opacity: 0.7;
             font-size: 0.9rem;
         }
         
-        @media (max-width: 600px) {
-            .container {
-                margin: 1rem;
-                padding: 1.5rem;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .features {
+        @media (max-width: 768px) {
+            .modules-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .canvas-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">🧠</div>
-        <h1>Lucidra</h1>
-        <p class="subtitle">
-            Advanced Strategic Intelligence Platform<br>
-            Gamified Business Planning & Strategy Execution
-        </p>
-        
-        <div class="status">
-            ✅ Platform Successfully Deployed & Running
-        </div>
-        
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">🎯</div>
-                <div class="feature-title">Mission Generator</div>
-                <div class="feature-desc">AI-powered mission statement creation</div>
+    <div class="app-container">
+        <header class="header">
+            <div class="logo">
+                🧠 Lucidra
             </div>
-            
-            <div class="feature">
-                <div class="feature-icon">🏢</div>
-                <div class="feature-title">Porter's Five Forces</div>
-                <div class="feature-desc">Interactive competitive analysis</div>
+            <nav class="nav">
+                <a href="#" class="nav-btn active" onclick="showDashboard()">Dashboard</a>
+                <a href="#" class="nav-btn" onclick="showWorkspace('mission')">Mission</a>
+                <a href="#" class="nav-btn" onclick="showWorkspace('canvas')">Canvas</a>
+                <a href="#" class="nav-btn" onclick="showWorkspace('analysis')">Analysis</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <!-- Dashboard -->
+            <div id="dashboard" class="dashboard">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Strategic Intelligence Platform</h1>
+                    <p class="dashboard-subtitle">AI-powered tools for strategic planning, competitive analysis, and business execution</p>
+                </div>
+
+                <div class="modules-grid">
+                    <div class="module-card" onclick="showWorkspace('mission')">
+                        <div class="module-icon">🎯</div>
+                        <h3 class="module-title">AI Mission Generator</h3>
+                        <p class="module-description">Create compelling mission statements with AI-powered guidance</p>
+                        <ul class="module-features">
+                            <li>5-step guided workflow</li>
+                            <li>Multiple AI-generated options</li>
+                            <li>Tone and style customization</li>
+                            <li>Instant refinement tools</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="showWorkspace('canvas')">
+                        <div class="module-icon">🎨</div>
+                        <h3 class="module-title">Business Model Canvas</h3>
+                        <p class="module-description">Interactive visual strategy mapping and business model design</p>
+                        <ul class="module-features">
+                            <li>9-section interactive canvas</li>
+                            <li>Real-time collaboration</li>
+                            <li>Export and sharing tools</li>
+                            <li>Strategic insights</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="showWorkspace('analysis')">
+                        <div class="module-icon">🏢</div>
+                        <h3 class="module-title">Porter's Five Forces</h3>
+                        <p class="module-description">Comprehensive competitive analysis and industry insights</p>
+                        <ul class="module-features">
+                            <li>Interactive force analysis</li>
+                            <li>Industry data integration</li>
+                            <li>Strategic recommendations</li>
+                            <li>Competitive mapping</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="alert('Feature coming soon! This module is under development.')">
+                        <div class="module-icon">📊</div>
+                        <h3 class="module-title">Strategy Execution</h3>
+                        <p class="module-description">Track goals, milestones, and strategic progress</p>
+                        <ul class="module-features">
+                            <li>Goal hierarchy tracking</li>
+                            <li>Progress visualization</li>
+                            <li>Team collaboration</li>
+                            <li>Analytics dashboard</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="alert('Feature coming soon! This module is under development.')">
+                        <div class="module-icon">📈</div>
+                        <h3 class="module-title">Financial Frameworks</h3>
+                        <p class="module-description">Advanced financial analysis and modeling tools</p>
+                        <ul class="module-features">
+                            <li>ROI & NPV calculations</li>
+                            <li>Activity-based costing</li>
+                            <li>Global market data</li>
+                            <li>Investment analysis</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="alert('Feature coming soon! This module is under development.')">
+                        <div class="module-icon">🚀</div>
+                        <h3 class="module-title">Startup Journey</h3>
+                        <p class="module-description">Stage-based guidance for startup growth</p>
+                        <ul class="module-features">
+                            <li>4 growth stages</li>
+                            <li>Tailored modules</li>
+                            <li>XP rewards system</li>
+                            <li>Priority task management</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            
-            <div class="feature">
-                <div class="feature-icon">📊</div>
-                <div class="feature-title">Strategy Execution</div>
-                <div class="feature-desc">Track goals and milestones</div>
+
+            <!-- Mission Generator Workspace -->
+            <div id="mission-workspace" class="workspace">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">🎯 AI Mission Statement Generator</h2>
+                    <a href="#" class="back-btn" onclick="showDashboard()">← Back to Dashboard</a>
+                </div>
+                <div class="workspace-content">
+                    <div class="form-group">
+                        <label class="form-label">Company Name</label>
+                        <input type="text" class="form-input" id="companyName" placeholder="Enter your company name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Problem You're Solving</label>
+                        <textarea class="form-textarea" id="problemStatement" placeholder="Describe the key problem your company addresses"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Target Audience</label>
+                        <input type="text" class="form-input" id="targetAudience" placeholder="Who are you helping?">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Unique Value Proposition</label>
+                        <textarea class="form-textarea" id="uniqueValue" placeholder="What makes your approach unique?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mission Tone</label>
+                        <select class="form-select" id="missionTone">
+                            <option value="professional">Professional & Corporate</option>
+                            <option value="inspiring">Inspiring & Motivational</option>
+                            <option value="friendly">Friendly & Approachable</option>
+                            <option value="bold">Bold & Innovative</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="generateMission()">🤖 Generate Mission Statements</button>
+                    
+                    <div id="mission-results" class="results-section">
+                        <h3>Generated Mission Statements:</h3>
+                        <div id="mission-output"></div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="feature">
-                <div class="feature-icon">🎨</div>
-                <div class="feature-title">Business Model Canvas</div>
-                <div class="feature-desc">Visual strategy mapping</div>
+
+            <!-- Business Model Canvas Workspace -->
+            <div id="canvas-workspace" class="workspace">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">🎨 Business Model Canvas</h2>
+                    <a href="#" class="back-btn" onclick="showDashboard()">← Back to Dashboard</a>
+                </div>
+                <div class="workspace-content">
+                    <div class="canvas-grid">
+                        <div class="canvas-section">
+                            <div class="canvas-title">Key Partners</div>
+                            <textarea class="form-input" placeholder="Who are your key partners and suppliers?"></textarea>
+                        </div>
+                        <div class="canvas-section">
+                            <div class="canvas-title">Key Activities</div>
+                            <textarea class="form-input" placeholder="What key activities does your value proposition require?"></textarea>
+                        </div>
+                        <div class="canvas-section">
+                            <div class="canvas-title">Key Resources</div>
+                            <textarea class="form-input" placeholder="What key resources does your value proposition require?"></textarea>
+                        </div>
+                        <div class="canvas-section">
+                            <div class="canvas-title">Value Propositions</div>
+                            <textarea class="form-input" placeholder="What value do you deliver to customers?"></textarea>
+                        </div>
+                        <div class="canvas-section">
+                            <div class="canvas-title">Customer Relationships</div>
+                            <textarea class="form-input" placeholder="What type of relationship does each customer segment expect?"></textarea>
+                        </div>
+                        <div class="canvas-section">
+                            <div class="canvas-title">Channels</div>
+                            <textarea class="form-input" placeholder="Through which channels do you reach customers?"></textarea>
+                        </div>
+                        <div class="canvas-section">
+                            <div class="canvas-title">Customer Segments</div>
+                            <textarea class="form-input" placeholder="Who are you creating value for?"></textarea>
+                        </div>
+                        <div class="canvas-section">
+                            <div class="canvas-title">Cost Structure</div>
+                            <textarea class="form-input" placeholder="What are the most important costs in your business model?"></textarea>
+                        </div>
+                        <div class="canvas-section">
+                            <div class="canvas-title">Revenue Streams</div>
+                            <textarea class="form-input" placeholder="For what value are customers willing to pay?"></textarea>
+                        </div>
+                    </div>
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <button class="btn" onclick="alert('Canvas saved successfully!')">💾 Save Canvas</button>
+                        <button class="btn btn-secondary" onclick="alert('Canvas exported to PDF!')">📄 Export PDF</button>
+                    </div>
+                </div>
             </div>
-            
-            <div class="feature">
-                <div class="feature-icon">📈</div>
-                <div class="feature-title">Financial Frameworks</div>
-                <div class="feature-desc">ROI, NPV, and ABC analysis</div>
+
+            <!-- Porter's Five Forces Workspace -->
+            <div id="analysis-workspace" class="workspace">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">🏢 Porter's Five Forces Analysis</h2>
+                    <a href="#" class="back-btn" onclick="showDashboard()">← Back to Dashboard</a>
+                </div>
+                <div class="workspace-content">
+                    <div class="form-group">
+                        <label class="form-label">Industry</label>
+                        <input type="text" class="form-input" id="industry" placeholder="Enter your industry (e.g., SaaS, Retail, Healthcare)">
+                    </div>
+                    
+                    <div class="analysis-grid">
+                        <div class="force-card">
+                            <h4 class="force-title">Threat of New Entrants</h4>
+                            <div class="slider-group">
+                                <label>Barrier Strength: <span id="entrants-value">3</span>/5</label>
+                                <input type="range" class="slider" id="entrants-slider" min="1" max="5" value="3" onchange="updateSlider('entrants')">
+                            </div>
+                            <textarea class="form-input" placeholder="Notes about entry barriers..."></textarea>
+                        </div>
+
+                        <div class="force-card">
+                            <h4 class="force-title">Bargaining Power of Suppliers</h4>
+                            <div class="slider-group">
+                                <label>Power Level: <span id="suppliers-value">3</span>/5</label>
+                                <input type="range" class="slider" id="suppliers-slider" min="1" max="5" value="3" onchange="updateSlider('suppliers')">
+                            </div>
+                            <textarea class="form-input" placeholder="Notes about supplier power..."></textarea>
+                        </div>
+
+                        <div class="force-card">
+                            <h4 class="force-title">Bargaining Power of Buyers</h4>
+                            <div class="slider-group">
+                                <label>Power Level: <span id="buyers-value">3</span>/5</label>
+                                <input type="range" class="slider" id="buyers-slider" min="1" max="5" value="3" onchange="updateSlider('buyers')">
+                            </div>
+                            <textarea class="form-input" placeholder="Notes about buyer power..."></textarea>
+                        </div>
+
+                        <div class="force-card">
+                            <h4 class="force-title">Threat of Substitutes</h4>
+                            <div class="slider-group">
+                                <label>Threat Level: <span id="substitutes-value">3</span>/5</label>
+                                <input type="range" class="slider" id="substitutes-slider" min="1" max="5" value="3" onchange="updateSlider('substitutes')">
+                            </div>
+                            <textarea class="form-input" placeholder="Notes about substitute threats..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="force-card" style="margin-top: 1rem;">
+                        <h4 class="force-title">Competitive Rivalry</h4>
+                        <div class="slider-group">
+                            <label>Rivalry Intensity: <span id="rivalry-value">3</span>/5</label>
+                            <input type="range" class="slider" id="rivalry-slider" min="1" max="5" value="3" onchange="updateSlider('rivalry')">
+                        </div>
+                        <textarea class="form-input" placeholder="Notes about competitive rivalry..."></textarea>
+                    </div>
+
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <button class="btn" onclick="generateAnalysis()">📊 Generate Analysis Report</button>
+                    </div>
+
+                    <div id="analysis-results" class="results-section">
+                        <h3>Industry Attractiveness Analysis:</h3>
+                        <div id="analysis-output"></div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="feature">
-                <div class="feature-icon">🚀</div>
-                <div class="feature-title">Startup Stages</div>
-                <div class="feature-desc">Guided growth journey</div>
-            </div>
-        </div>
-        
-        <div style="margin: 2rem 0;">
-            <a href="#" class="btn" onclick="showApp()">🚀 Launch Platform</a>
-            <a href="https://github.com/shawn-kelly/lucidra" class="btn secondary" target="_blank">📁 View Source</a>
-        </div>
-        
-        <div class="footer">
-            <p>Built with React, TypeScript & Strategic Intelligence</p>
-            <p>© 2025 Lucidra Platform - Advanced Business Strategy Tools | v2.0</p>
-        </div>
+        </main>
+
+        <footer class="footer">
+            <p>Built with Strategic Intelligence • © 2025 Lucidra Platform</p>
+        </footer>
     </div>
 
     <script>
-        function showApp() {
-            document.body.innerHTML = `
-                <div style="display: flex; align-items: center; justify-content: center; height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-family: Inter, sans-serif; text-align: center;">
-                    <div style="max-width: 600px; padding: 2rem;">
-                        <div style="font-size: 4rem; margin-bottom: 1rem;">🔧</div>
-                        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Platform Under Development</h2>
-                        <p style="font-size: 1.1rem; opacity: 0.9; line-height: 1.6; margin-bottom: 2rem;">
-                            The full Lucidra React application is currently being optimized for production deployment. 
-                            Our advanced strategic intelligence platform includes AI-powered tools for mission generation, 
-                            competitive analysis, financial modeling, and strategic execution tracking.
-                        </p>
-                        <div style="padding: 1rem; background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #86efac; margin-bottom: 2rem;">
-                            ✅ Build System: Optimized & Ready<br>
-                            🔄 React Components: Compiled Successfully<br>  
-                            🚀 Deployment: GitHub Pages Active
-                        </div>
-                        <button onclick="location.reload()" style="padding: 1rem 2rem; background: linear-gradient(45deg, #22c55e, #16a34a); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 1rem;">
-                            ← Back to Home
-                        </button>
-                    </div>
+        // Navigation functions
+        function showDashboard() {
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('mission-workspace').style.display = 'none';
+            document.getElementById('canvas-workspace').style.display = 'none';
+            document.getElementById('analysis-workspace').style.display = 'none';
+            updateNavButtons('dashboard');
+        }
+
+        function showWorkspace(type) {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('mission-workspace').style.display = type === 'mission' ? 'block' : 'none';
+            document.getElementById('canvas-workspace').style.display = type === 'canvas' ? 'block' : 'none';
+            document.getElementById('analysis-workspace').style.display = type === 'analysis' ? 'block' : 'none';
+            updateNavButtons(type);
+        }
+
+        function updateNavButtons(active) {
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            if (active === 'dashboard') {
+                buttons[0].classList.add('active');
+            } else if (active === 'mission') {
+                buttons[1].classList.add('active');
+            } else if (active === 'canvas') {
+                buttons[2].classList.add('active');
+            } else if (active === 'analysis') {
+                buttons[3].classList.add('active');
+            }
+        }
+
+        // Mission Generator
+        function generateMission() {
+            const company = document.getElementById('companyName').value;
+            const problem = document.getElementById('problemStatement').value;
+            const audience = document.getElementById('targetAudience').value;
+            const value = document.getElementById('uniqueValue').value;
+            const tone = document.getElementById('missionTone').value;
+
+            if (!company || !problem || !audience || !value) {
+                alert('Please fill in all fields to generate mission statements.');
+                return;
+            }
+
+            const missions = generateMissionStatements(company, problem, audience, value, tone);
+            
+            document.getElementById('mission-output').innerHTML = missions;
+            document.getElementById('mission-results').classList.add('show');
+        }
+
+        function generateMissionStatements(company, problem, audience, value, tone) {
+            const templates = {
+                professional: [
+                    `${company} is dedicated to ${problem} for ${audience} through ${value}.`,
+                    `At ${company}, we provide ${value} to help ${audience} overcome ${problem}.`,
+                    `${company} exists to deliver ${value} that addresses ${problem} for ${audience}.`
+                ],
+                inspiring: [
+                    `${company} empowers ${audience} to overcome ${problem} through our ${value}.`,
+                    `We believe every ${audience} deserves freedom from ${problem}. ${company} makes this possible with ${value}.`,
+                    `${company} transforms lives by solving ${problem} for ${audience} with innovative ${value}.`
+                ],
+                friendly: [
+                    `${company} helps ${audience} tackle ${problem} with our friendly ${value}.`,
+                    `We're ${company}, and we love helping ${audience} solve ${problem} using ${value}.`,
+                    `At ${company}, we make ${problem} a thing of the past for ${audience} with our ${value}.`
+                ],
+                bold: [
+                    `${company} revolutionizes how ${audience} deals with ${problem} through groundbreaking ${value}.`,
+                    `We're ${company}, disrupting ${problem} for ${audience} with our innovative ${value}.`,
+                    `${company} boldly reimagines ${value} to eliminate ${problem} for ${audience} forever.`
+                ]
+            };
+
+            const selectedTemplates = templates[tone] || templates.professional;
+            
+            return selectedTemplates.map((mission, index) => 
+                `<div style="margin: 1rem 0; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                    <strong>Option ${index + 1}:</strong><br>
+                    "${mission}"
+                </div>`
+            ).join('');
+        }
+
+        // Porter's Five Forces
+        function updateSlider(force) {
+            const slider = document.getElementById(force + '-slider');
+            const value = document.getElementById(force + '-value');
+            value.textContent = slider.value;
+        }
+
+        function generateAnalysis() {
+            const industry = document.getElementById('industry').value;
+            if (!industry) {
+                alert('Please enter an industry to generate analysis.');
+                return;
+            }
+
+            const scores = {
+                entrants: document.getElementById('entrants-slider').value,
+                suppliers: document.getElementById('suppliers-slider').value,
+                buyers: document.getElementById('buyers-slider').value,
+                substitutes: document.getElementById('substitutes-slider').value,
+                rivalry: document.getElementById('rivalry-slider').value
+            };
+
+            const avgScore = Object.values(scores).reduce((a, b) => parseInt(a) + parseInt(b), 0) / 5;
+            
+            let attractiveness = 'Moderate';
+            let color = '#f59e0b';
+            
+            if (avgScore <= 2) {
+                attractiveness = 'High';
+                color = '#22c55e';
+            } else if (avgScore >= 4) {
+                attractiveness = 'Low';
+                color = '#ef4444';
+            }
+
+            const analysis = `
+                <div style="text-align: center; margin: 1rem 0;">
+                    <h4>Industry: ${industry}</h4>
+                    <div style="font-size: 2rem; color: ${color}; margin: 1rem 0;">${attractiveness} Attractiveness</div>
+                    <div>Average Force Strength: ${avgScore.toFixed(1)}/5</div>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <h4>Strategic Recommendations:</h4>
+                    <ul style="text-align: left; margin: 1rem 0;">
+                        <li>Focus on building competitive moats to reduce rivalry impact</li>
+                        <li>Develop strong supplier relationships to reduce dependency</li>
+                        <li>Create switching costs to reduce buyer power</li>
+                        <li>Innovate continuously to stay ahead of substitutes</li>
+                        <li>Consider vertical integration where barriers are low</li>
+                    </ul>
                 </div>
             `;
+            
+            document.getElementById('analysis-output').innerHTML = analysis;
+            document.getElementById('analysis-results').classList.add('show');
         }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            showDashboard();
+        });
     </script>
 </body>
 </html>
