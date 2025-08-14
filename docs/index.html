@@ -44,7 +44,8 @@
         
         .nav {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
         
         .nav-btn {
@@ -56,6 +57,7 @@
             text-decoration: none;
             transition: all 0.3s ease;
             cursor: pointer;
+            font-size: 0.9rem;
         }
         
         .nav-btn:hover {
@@ -71,10 +73,11 @@
         .main-content {
             flex: 1;
             padding: 2rem;
+            overflow-y: auto;
         }
         
         .dashboard {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
@@ -101,52 +104,53 @@
         
         .modules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
             margin-bottom: 3rem;
         }
         
         .module-card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
+            border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 2rem;
+            padding: 1.5rem;
             transition: all 0.3s ease;
             cursor: pointer;
         }
         
         .module-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
         .module-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
         }
         
         .module-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
         
         .module-description {
             opacity: 0.8;
-            line-height: 1.6;
+            line-height: 1.5;
             margin-bottom: 1rem;
+            font-size: 0.95rem;
         }
         
         .module-features {
             list-style: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             opacity: 0.7;
         }
         
         .module-features li {
-            margin: 0.25rem 0;
+            margin: 0.2rem 0;
             padding-left: 1rem;
             position: relative;
         }
@@ -160,7 +164,7 @@
         
         .workspace {
             display: none;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
@@ -202,7 +206,41 @@
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 2rem;
-            min-height: 400px;
+            min-height: 500px;
+        }
+        
+        .tabs {
+            margin-bottom: 2rem;
+        }
+        
+        .tab-list {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: rgba(34, 197, 94, 0.3);
+            border-color: rgba(34, 197, 94, 0.5);
+        }
+        
+        .tab-panel {
+            display: none;
+        }
+        
+        .tab-panel.active {
+            display: block;
         }
         
         .form-group {
@@ -244,6 +282,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1rem;
+            margin: 0.25rem;
         }
         
         .btn:hover {
@@ -273,6 +312,75 @@
             display: block;
         }
         
+        .process-canvas {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            min-height: 400px;
+            padding: 2rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+        
+        .process-element {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            margin: 0.5rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+        }
+        
+        .process-element:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .bpmn-toolbar {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .element-category {
+            margin-bottom: 1rem;
+        }
+        
+        .category-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #a8edea;
+        }
+        
+        .slider-container {
+            margin: 1rem 0;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            margin: 0.5rem 0;
+        }
+        
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .strategy-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
         .canvas-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -294,38 +402,6 @@
             color: #a8edea;
         }
         
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-        
-        .force-card {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 1.5rem;
-        }
-        
-        .force-title {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #a8edea;
-        }
-        
-        .slider-group {
-            margin-bottom: 1rem;
-        }
-        
-        .slider {
-            width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(255, 255, 255, 0.2);
-            outline: none;
-        }
-        
         .footer {
             text-align: center;
             padding: 2rem;
@@ -342,12 +418,16 @@
                 grid-template-columns: 1fr;
             }
             
-            .analysis-grid {
+            .strategy-grid {
                 grid-template-columns: 1fr;
             }
             
             .nav {
                 display: none;
+            }
+            
+            .dashboard-title {
+                font-size: 2rem;
             }
         }
     </style>
@@ -359,10 +439,14 @@
                 🧠 Lucidra
             </div>
             <nav class="nav">
-                <a href="#" class="nav-btn active" onclick="showDashboard()">Dashboard</a>
-                <a href="#" class="nav-btn" onclick="showWorkspace('mission')">Mission</a>
-                <a href="#" class="nav-btn" onclick="showWorkspace('canvas')">Canvas</a>
-                <a href="#" class="nav-btn" onclick="showWorkspace('analysis')">Analysis</a>
+                <a href="#" class="nav-btn active" onclick="showView('dashboard')">Dashboard</a>
+                <a href="#" class="nav-btn" onclick="showView('blue-ocean')">Blue Ocean</a>
+                <a href="#" class="nav-btn" onclick="showView('porters')">Porter's</a>
+                <a href="#" class="nav-btn" onclick="showView('process-mgmt')">Process</a>
+                <a href="#" class="nav-btn" onclick="showView('mission')">Mission</a>
+                <a href="#" class="nav-btn" onclick="showView('canvas')">Canvas</a>
+                <a href="#" class="nav-btn" onclick="showView('financial')">Financial</a>
+                <a href="#" class="nav-btn" onclick="showView('strategy-exec')">Execution</a>
             </nav>
         </header>
 
@@ -371,11 +455,72 @@
             <div id="dashboard" class="dashboard">
                 <div class="dashboard-header">
                     <h1 class="dashboard-title">Strategic Intelligence Platform</h1>
-                    <p class="dashboard-subtitle">AI-powered tools for strategic planning, competitive analysis, and business execution</p>
+                    <p class="dashboard-subtitle">Comprehensive AI-powered tools for strategic planning, process management, and business execution</p>
                 </div>
 
                 <div class="modules-grid">
-                    <div class="module-card" onclick="showWorkspace('mission')">
+                    <!-- Strategic Frameworks -->
+                    <div class="module-card" onclick="showView('blue-ocean')">
+                        <div class="module-icon">🌊</div>
+                        <h3 class="module-title">Blue Ocean Strategy</h3>
+                        <p class="module-description">Create uncontested market space through value innovation and strategic differentiation</p>
+                        <ul class="module-features">
+                            <li>Strategy Canvas Analysis</li>
+                            <li>Four Actions Framework</li>
+                            <li>Buyer Utility Map</li>
+                            <li>Pioneer-Migrator-Settler Map</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="showView('porters')">
+                        <div class="module-icon">🏢</div>
+                        <h3 class="module-title">Porter's Frameworks</h3>
+                        <p class="module-description">Comprehensive competitive analysis with Five Forces, Value Chain, and Generic Strategies</p>
+                        <ul class="module-features">
+                            <li>Five Forces Analysis</li>
+                            <li>Value Chain Mapping</li>
+                            <li>Generic Strategies</li>
+                            <li>Competitive Positioning</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="showView('process-mgmt')">
+                        <div class="module-icon">⚙️</div>
+                        <h3 class="module-title">Advanced Process Management</h3>
+                        <p class="module-description">BPMN modeling, process narratives, and organizational process mapping</p>
+                        <ul class="module-features">
+                            <li>BPMN Process Designer</li>
+                            <li>Process Narrative Builder</li>
+                            <li>Organization Process Maps</li>
+                            <li>Performance Analytics</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="showView('seeing-whats-next')">
+                        <div class="module-icon">🔮</div>
+                        <h3 class="module-title">Seeing What's Next</h3>
+                        <p class="module-description">Christensen's innovation framework for predicting disruption and market evolution</p>
+                        <ul class="module-features">
+                            <li>Signals of Change</li>
+                            <li>Disruption Patterns</li>
+                            <li>Innovation Readiness</li>
+                            <li>Market Evolution Maps</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="showView('good-bad-strategy')">
+                        <div class="module-icon">🎯</div>
+                        <h3 class="module-title">Good Strategy Bad Strategy</h3>
+                        <p class="module-description">Rumelt's framework for diagnosing and building coherent strategy</p>
+                        <ul class="module-features">
+                            <li>Strategy Kernel</li>
+                            <li>Bad Strategy Detection</li>
+                            <li>Sources of Power</li>
+                            <li>Strategic Coherence</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card" onclick="showView('mission')">
                         <div class="module-icon">🎯</div>
                         <h3 class="module-title">AI Mission Generator</h3>
                         <p class="module-description">Create compelling mission statements with AI-powered guidance</p>
@@ -387,7 +532,7 @@
                         </ul>
                     </div>
 
-                    <div class="module-card" onclick="showWorkspace('canvas')">
+                    <div class="module-card" onclick="showView('canvas')">
                         <div class="module-icon">🎨</div>
                         <h3 class="module-title">Business Model Canvas</h3>
                         <p class="module-description">Interactive visual strategy mapping and business model design</p>
@@ -399,31 +544,7 @@
                         </ul>
                     </div>
 
-                    <div class="module-card" onclick="showWorkspace('analysis')">
-                        <div class="module-icon">🏢</div>
-                        <h3 class="module-title">Porter's Five Forces</h3>
-                        <p class="module-description">Comprehensive competitive analysis and industry insights</p>
-                        <ul class="module-features">
-                            <li>Interactive force analysis</li>
-                            <li>Industry data integration</li>
-                            <li>Strategic recommendations</li>
-                            <li>Competitive mapping</li>
-                        </ul>
-                    </div>
-
-                    <div class="module-card" onclick="alert('Feature coming soon! This module is under development.')">
-                        <div class="module-icon">📊</div>
-                        <h3 class="module-title">Strategy Execution</h3>
-                        <p class="module-description">Track goals, milestones, and strategic progress</p>
-                        <ul class="module-features">
-                            <li>Goal hierarchy tracking</li>
-                            <li>Progress visualization</li>
-                            <li>Team collaboration</li>
-                            <li>Analytics dashboard</li>
-                        </ul>
-                    </div>
-
-                    <div class="module-card" onclick="alert('Feature coming soon! This module is under development.')">
+                    <div class="module-card" onclick="showView('financial')">
                         <div class="module-icon">📈</div>
                         <h3 class="module-title">Financial Frameworks</h3>
                         <p class="module-description">Advanced financial analysis and modeling tools</p>
@@ -435,16 +556,1024 @@
                         </ul>
                     </div>
 
-                    <div class="module-card" onclick="alert('Feature coming soon! This module is under development.')">
-                        <div class="module-icon">🚀</div>
-                        <h3 class="module-title">Startup Journey</h3>
-                        <p class="module-description">Stage-based guidance for startup growth</p>
+                    <div class="module-card" onclick="showView('strategy-exec')">
+                        <div class="module-icon">📊</div>
+                        <h3 class="module-title">Strategy Execution</h3>
+                        <p class="module-description">Track goals, milestones, and strategic progress</p>
                         <ul class="module-features">
-                            <li>4 growth stages</li>
-                            <li>Tailored modules</li>
-                            <li>XP rewards system</li>
-                            <li>Priority task management</li>
+                            <li>Goal hierarchy tracking</li>
+                            <li>Progress visualization</li>
+                            <li>Team collaboration</li>
+                            <li>Analytics dashboard</li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blue Ocean Strategy Workspace -->
+            <div id="blue-ocean-workspace" class="workspace">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">🌊 Blue Ocean Strategy</h2>
+                    <a href="#" class="back-btn" onclick="showView('dashboard')">← Back to Dashboard</a>
+                </div>
+                <div class="workspace-content">
+                    <div class="tabs">
+                        <div class="tab-list">
+                            <div class="tab active" onclick="showTab('blue-ocean', 'strategy-canvas')">Strategy Canvas</div>
+                            <div class="tab" onclick="showTab('blue-ocean', 'four-actions')">Four Actions</div>
+                            <div class="tab" onclick="showTab('blue-ocean', 'buyer-utility')">Buyer Utility</div>
+                            <div class="tab" onclick="showTab('blue-ocean', 'pioneer-migrator')">Pioneer-Migrator-Settler</div>
+                        </div>
+                        
+                        <div id="blue-ocean-strategy-canvas" class="tab-panel active">
+                            <h3>Strategy Canvas Analysis</h3>
+                            <div class="form-group">
+                                <label class="form-label">Industry</label>
+                                <input type="text" class="form-input" placeholder="Enter your industry">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Key Competing Factors</label>
+                                <textarea class="form-textarea" placeholder="List the factors that companies compete on in your industry"></textarea>
+                            </div>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>Price</h4>
+                                    <div class="slider-container">
+                                        <input type="range" class="slider" min="1" max="10" value="5">
+                                        <div>Your Company: <span>5</span>/10</div>
+                                    </div>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>Quality</h4>
+                                    <div class="slider-container">
+                                        <input type="range" class="slider" min="1" max="10" value="7">
+                                        <div>Your Company: <span>7</span>/10</div>
+                                    </div>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>Customer Service</h4>
+                                    <div class="slider-container">
+                                        <input type="range" class="slider" min="1" max="10" value="8">
+                                        <div>Your Company: <span>8</span>/10</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="generateStrategyCanvas()">📊 Generate Strategy Canvas</button>
+                        </div>
+                        
+                        <div id="blue-ocean-four-actions" class="tab-panel">
+                            <h3>Four Actions Framework</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4 style="color: #ef4444;">🗑️ Eliminate</h4>
+                                    <textarea class="form-input" placeholder="Which factors should be eliminated?"></textarea>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4 style="color: #f59e0b;">📉 Reduce</h4>
+                                    <textarea class="form-input" placeholder="Which factors should be reduced below industry standard?"></textarea>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4 style="color: #10b981;">📈 Raise</h4>
+                                    <textarea class="form-input" placeholder="Which factors should be raised above industry standard?"></textarea>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4 style="color: #3b82f6;">✨ Create</h4>
+                                    <textarea class="form-input" placeholder="Which factors should be created that the industry has never offered?"></textarea>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="generateFourActions()">🎯 Generate New Value Curve</button>
+                        </div>
+                        
+                        <div id="blue-ocean-buyer-utility" class="tab-panel">
+                            <h3>Buyer Utility Map</h3>
+                            <div class="form-group">
+                                <label class="form-label">Customer Journey Stage</label>
+                                <select class="form-select">
+                                    <option>Purchase</option>
+                                    <option>Delivery</option>
+                                    <option>Use</option>
+                                    <option>Supplements</option>
+                                    <option>Maintenance</option>
+                                    <option>Disposal</option>
+                                </select>
+                            </div>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>Customer Productivity</h4>
+                                    <textarea class="form-input" placeholder="How can you help customers get the job done faster or better?"></textarea>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>Simplicity</h4>
+                                    <textarea class="form-input" placeholder="How can you make it easier to use?"></textarea>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>Convenience</h4>
+                                    <textarea class="form-input" placeholder="How can you make it more convenient?"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="blue-ocean-pioneer-migrator" class="tab-panel">
+                            <h3>Pioneer-Migrator-Settler Map</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4 style="color: #22c55e;">🚀 Pioneers</h4>
+                                    <p>Value innovations creating new market space</p>
+                                    <textarea class="form-input" placeholder="List your pioneer initiatives"></textarea>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4 style="color: #f59e0b;">🚶 Migrators</h4>
+                                    <p>Improvements over competition</p>
+                                    <textarea class="form-input" placeholder="List your migrator initiatives"></textarea>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4 style="color: #ef4444;">🏠 Settlers</h4>
+                                    <p>Me-too offerings following industry practices</p>
+                                    <textarea class="form-input" placeholder="List your settler initiatives"></textarea>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="analyzePMS()">📊 Analyze Portfolio</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process Management Workspace -->
+            <div id="process-mgmt-workspace" class="workspace">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">⚙️ Advanced Process Management</h2>
+                    <a href="#" class="back-btn" onclick="showView('dashboard')">← Back to Dashboard</a>
+                </div>
+                <div class="workspace-content">
+                    <div class="tabs">
+                        <div class="tab-list">
+                            <div class="tab active" onclick="showTab('process', 'bpmn-designer')">BPMN Designer</div>
+                            <div class="tab" onclick="showTab('process', 'process-narrative')">Process Narrative</div>
+                            <div class="tab" onclick="showTab('process', 'org-maps')">Organization Maps</div>
+                            <div class="tab" onclick="showTab('process', 'performance')">Performance</div>
+                        </div>
+                        
+                        <div id="process-bpmn-designer" class="tab-panel active">
+                            <h3>BPMN Process Designer</h3>
+                            <div class="bpmn-toolbar">
+                                <div class="element-category">
+                                    <div class="category-title">Events</div>
+                                    <div class="process-element" draggable="true">● Start Event</div>
+                                    <div class="process-element" draggable="true">● End Event</div>
+                                    <div class="process-element" draggable="true">◐ Intermediate Event</div>
+                                    <div class="process-element" draggable="true">⏰ Timer Event</div>
+                                </div>
+                                
+                                <div class="element-category">
+                                    <div class="category-title">Activities</div>
+                                    <div class="process-element" draggable="true">□ Task</div>
+                                    <div class="process-element" draggable="true">⊞ Sub-Process</div>
+                                    <div class="process-element" draggable="true">👤 User Task</div>
+                                    <div class="process-element" draggable="true">⚙️ Service Task</div>
+                                </div>
+                                
+                                <div class="element-category">
+                                    <div class="category-title">Gateways</div>
+                                    <div class="process-element" draggable="true">◇ Exclusive Gateway</div>
+                                    <div class="process-element" draggable="true">⬟ Parallel Gateway</div>
+                                    <div class="process-element" draggable="true">◈ Inclusive Gateway</div>
+                                </div>
+                            </div>
+                            
+                            <div class="process-canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                <p style="text-align: center; opacity: 0.5; margin-top: 150px;">
+                                    Drag and drop BPMN elements here to design your process
+                                </p>
+                            </div>
+                            
+                            <button class="btn" onclick="saveProcess()">💾 Save Process</button>
+                            <button class="btn btn-secondary" onclick="exportBPMN()">📄 Export BPMN</button>
+                        </div>
+                        
+                        <div id="process-process-narrative" class="tab-panel">
+                            <h3>Process Narrative Builder</h3>
+                            <div class="form-group">
+                                <label class="form-label">Process Name</label>
+                                <input type="text" class="form-input" placeholder="Enter process name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Process Owner</label>
+                                <input type="text" class="form-input" placeholder="Who owns this process?">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Process Purpose</label>
+                                <textarea class="form-textarea" placeholder="What is the purpose of this process?"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Input Requirements</label>
+                                <textarea class="form-textarea" placeholder="What inputs are required to start this process?"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Process Steps</label>
+                                <textarea class="form-textarea" style="min-height: 200px;" placeholder="Describe the detailed steps of this process..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Expected Outcomes</label>
+                                <textarea class="form-textarea" placeholder="What are the expected outcomes and deliverables?"></textarea>
+                            </div>
+                            <button class="btn" onclick="generateNarrative()">📖 Generate Process Documentation</button>
+                        </div>
+                        
+                        <div id="process-org-maps" class="tab-panel">
+                            <h3>Organization Process Maps</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>📋 Core Processes</h4>
+                                    <ul style="list-style: none; padding: 0;">
+                                        <li>• Customer Acquisition</li>
+                                        <li>• Order Fulfillment</li>
+                                        <li>• Product Development</li>
+                                        <li>• Customer Support</li>
+                                    </ul>
+                                    <button class="btn btn-secondary" onclick="editProcessCategory('core')">Edit</button>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>🔧 Support Processes</h4>
+                                    <ul style="list-style: none; padding: 0;">
+                                        <li>• Human Resources</li>
+                                        <li>• IT Management</li>
+                                        <li>• Finance & Accounting</li>
+                                        <li>• Legal & Compliance</li>
+                                    </ul>
+                                    <button class="btn btn-secondary" onclick="editProcessCategory('support')">Edit</button>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>📊 Management Processes</h4>
+                                    <ul style="list-style: none; padding: 0;">
+                                        <li>• Strategic Planning</li>
+                                        <li>• Performance Management</li>
+                                        <li>• Risk Management</li>
+                                        <li>• Quality Assurance</li>
+                                    </ul>
+                                    <button class="btn btn-secondary" onclick="editProcessCategory('management')">Edit</button>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="generateOrgMap()">🗺️ Generate Organization Map</button>
+                        </div>
+                        
+                        <div id="process-performance" class="tab-panel">
+                            <h3>Process Performance Analytics</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>📈 Efficiency Metrics</h4>
+                                    <div class="slider-container">
+                                        <label>Overall Efficiency: 82%</label>
+                                        <div style="background: #22c55e; height: 20px; width: 82%; border-radius: 10px;"></div>
+                                    </div>
+                                    <div style="margin-top: 1rem;">
+                                        <div>Customer Management: 85%</div>
+                                        <div>Operations: 78%</div>
+                                        <div>Innovation: 92%</div>
+                                        <div>Finance: 75%</div>
+                                    </div>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>⚠️ Process Bottlenecks</h4>
+                                    <ul style="list-style: none; padding: 0;">
+                                        <li style="color: #ef4444;">• Approval Workflows (45min avg)</li>
+                                        <li style="color: #f59e0b;">• Data Entry Tasks (30min avg)</li>
+                                        <li style="color: #f59e0b;">• Cross-department Handoffs (25min avg)</li>
+                                    </ul>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>🎯 Improvement Opportunities</h4>
+                                    <ul style="list-style: none; padding: 0;">
+                                        <li>• Automate approval workflows</li>
+                                        <li>• Implement digital forms</li>
+                                        <li>• Create shared dashboards</li>
+                                        <li>• Streamline handoff procedures</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Porter's Frameworks Workspace -->
+            <div id="porters-workspace" class="workspace">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">🏢 Porter's Strategic Frameworks</h2>
+                    <a href="#" class="back-btn" onclick="showView('dashboard')">← Back to Dashboard</a>
+                </div>
+                <div class="workspace-content">
+                    <div class="tabs">
+                        <div class="tab-list">
+                            <div class="tab active" onclick="showTab('porters', 'five-forces')">Five Forces</div>
+                            <div class="tab" onclick="showTab('porters', 'value-chain')">Value Chain</div>
+                            <div class="tab" onclick="showTab('porters', 'generic-strategies')">Generic Strategies</div>
+                            <div class="tab" onclick="showTab('porters', 'competitive-positioning')">Positioning</div>
+                        </div>
+                        
+                        <div id="porters-five-forces" class="tab-panel active">
+                            <h3>Five Forces Analysis</h3>
+                            <div class="form-group">
+                                <label class="form-label">Industry</label>
+                                <input type="text" class="form-input" id="industry" placeholder="Enter your industry (e.g., SaaS, Retail, Healthcare)">
+                            </div>
+                            
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>Threat of New Entrants</h4>
+                                    <div class="slider-container">
+                                        <label>Barrier Strength: <span id="entrants-value">3</span>/5</label>
+                                        <input type="range" class="slider" id="entrants-slider" min="1" max="5" value="3" onchange="updateSlider('entrants')">
+                                    </div>
+                                    <textarea class="form-input" placeholder="Notes about entry barriers..."></textarea>
+                                </div>
+
+                                <div class="strategy-card">
+                                    <h4>Bargaining Power of Suppliers</h4>
+                                    <div class="slider-container">
+                                        <label>Power Level: <span id="suppliers-value">3</span>/5</label>
+                                        <input type="range" class="slider" id="suppliers-slider" min="1" max="5" value="3" onchange="updateSlider('suppliers')">
+                                    </div>
+                                    <textarea class="form-input" placeholder="Notes about supplier power..."></textarea>
+                                </div>
+
+                                <div class="strategy-card">
+                                    <h4>Bargaining Power of Buyers</h4>
+                                    <div class="slider-container">
+                                        <label>Power Level: <span id="buyers-value">3</span>/5</label>
+                                        <input type="range" class="slider" id="buyers-slider" min="1" max="5" value="3" onchange="updateSlider('buyers')">
+                                    </div>
+                                    <textarea class="form-input" placeholder="Notes about buyer power..."></textarea>
+                                </div>
+
+                                <div class="strategy-card">
+                                    <h4>Threat of Substitutes</h4>
+                                    <div class="slider-container">
+                                        <label>Threat Level: <span id="substitutes-value">3</span>/5</label>
+                                        <input type="range" class="slider" id="substitutes-slider" min="1" max="5" value="3" onchange="updateSlider('substitutes')">
+                                    </div>
+                                    <textarea class="form-input" placeholder="Notes about substitute threats..."></textarea>
+                                </div>
+
+                                <div class="strategy-card">
+                                    <h4>Competitive Rivalry</h4>
+                                    <div class="slider-container">
+                                        <label>Rivalry Intensity: <span id="rivalry-value">3</span>/5</label>
+                                        <input type="range" class="slider" id="rivalry-slider" min="1" max="5" value="3" onchange="updateSlider('rivalry')">
+                                    </div>
+                                    <textarea class="form-input" placeholder="Notes about competitive rivalry..."></textarea>
+                                </div>
+                            </div>
+
+                            <button class="btn" onclick="generatePortersAnalysis()">📊 Generate Five Forces Analysis</button>
+                        </div>
+                        
+                        <div id="porters-value-chain" class="tab-panel">
+                            <h3>Value Chain Analysis</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4 style="color: #22c55e;">🔧 Primary Activities</h4>
+                                    <div class="form-group">
+                                        <label>Inbound Logistics</label>
+                                        <textarea class="form-input" placeholder="Raw materials, inventory management..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Operations</label>
+                                        <textarea class="form-input" placeholder="Manufacturing, assembly, production..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Outbound Logistics</label>
+                                        <textarea class="form-input" placeholder="Distribution, delivery, fulfillment..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Marketing & Sales</label>
+                                        <textarea class="form-input" placeholder="Promotion, sales force, channel selection..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Service</label>
+                                        <textarea class="form-input" placeholder="Installation, repair, training..."></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4 style="color: #3b82f6;">🎯 Support Activities</h4>
+                                    <div class="form-group">
+                                        <label>Infrastructure</label>
+                                        <textarea class="form-input" placeholder="Planning, finance, quality management..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Human Resource Management</label>
+                                        <textarea class="form-input" placeholder="Recruiting, training, compensation..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Technology Development</label>
+                                        <textarea class="form-input" placeholder="R&D, product design, IT systems..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Procurement</label>
+                                        <textarea class="form-input" placeholder="Purchasing, supplier management..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="analyzeValueChain()">🔗 Analyze Value Chain</button>
+                        </div>
+                        
+                        <div id="porters-generic-strategies" class="tab-panel">
+                            <h3>Generic Strategies Framework</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4 style="color: #22c55e;">💰 Cost Leadership</h4>
+                                    <p>Lowest cost producer in the industry</p>
+                                    <div class="form-group">
+                                        <label>Cost Advantages</label>
+                                        <textarea class="form-input" placeholder="Economies of scale, efficient operations..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cost Structure</label>
+                                        <textarea class="form-input" placeholder="Fixed costs, variable costs, overhead..."></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4 style="color: #3b82f6;">✨ Differentiation</h4>
+                                    <p>Unique value proposition</p>
+                                    <div class="form-group">
+                                        <label>Differentiation Factors</label>
+                                        <textarea class="form-input" placeholder="Quality, features, brand, service..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Value Drivers</label>
+                                        <textarea class="form-input" placeholder="What makes your offering unique?"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4 style="color: #f59e0b;">🎯 Focus Strategy</h4>
+                                    <p>Narrow target market segment</p>
+                                    <div class="form-group">
+                                        <label>Target Segment</label>
+                                        <textarea class="form-input" placeholder="Specific customer group or geographic area..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Focus Approach</label>
+                                        <select class="form-select">
+                                            <option>Cost Focus</option>
+                                            <option>Differentiation Focus</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="evaluateStrategy()">📈 Evaluate Strategic Position</button>
+                        </div>
+                        
+                        <div id="porters-competitive-positioning" class="tab-panel">
+                            <h3>Competitive Positioning Map</h3>
+                            <div class="form-group">
+                                <label class="form-label">X-Axis Dimension</label>
+                                <select class="form-select">
+                                    <option>Price (Low to High)</option>
+                                    <option>Quality (Low to High)</option>
+                                    <option>Innovation (Low to High)</option>
+                                    <option>Service Level (Low to High)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Y-Axis Dimension</label>
+                                <select class="form-select">
+                                    <option>Market Share (Low to High)</option>
+                                    <option>Brand Recognition (Low to High)</option>
+                                    <option>Geographic Reach (Local to Global)</option>
+                                    <option>Customer Loyalty (Low to High)</option>
+                                </select>
+                            </div>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>📍 Your Position</h4>
+                                    <div class="slider-container">
+                                        <label>X-Axis Position: <span>5</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="5">
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Y-Axis Position: <span>6</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="6">
+                                    </div>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>🏆 Key Competitors</h4>
+                                    <div class="form-group">
+                                        <input type="text" class="form-input" placeholder="Competitor 1 name">
+                                        <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                                            <input type="range" class="slider" min="1" max="10" value="7" style="flex: 1;">
+                                            <input type="range" class="slider" min="1" max="10" value="8" style="flex: 1;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="generatePositioningMap()">🗺️ Generate Positioning Map</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seeing What's Next Workspace -->
+            <div id="seeing-whats-next-workspace" class="workspace">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">🔮 Seeing What's Next</h2>
+                    <a href="#" class="back-btn" onclick="showView('dashboard')">← Back to Dashboard</a>
+                </div>
+                <div class="workspace-content">
+                    <div class="tabs">
+                        <div class="tab-list">
+                            <div class="tab active" onclick="showTab('seeing', 'signals')">Signals of Change</div>
+                            <div class="tab" onclick="showTab('seeing', 'disruption')">Disruption Patterns</div>
+                            <div class="tab" onclick="showTab('seeing', 'readiness')">Innovation Readiness</div>
+                            <div class="tab" onclick="showTab('seeing', 'evolution')">Market Evolution</div>
+                        </div>
+                        
+                        <div id="seeing-signals" class="tab-panel active">
+                            <h3>Signals of Change Detection</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4 style="color: #22c55e;">📊 Performance Signals</h4>
+                                    <textarea class="form-input" placeholder="What performance gaps or improvement needs are emerging?"></textarea>
+                                    <div class="slider-container">
+                                        <label>Signal Strength: <span>5</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="5">
+                                    </div>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4 style="color: #3b82f6;">👥 Customer Signals</h4>
+                                    <textarea class="form-input" placeholder="What job-to-be-done patterns are customers expressing?"></textarea>
+                                    <div class="slider-container">
+                                        <label>Signal Strength: <span>6</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="6">
+                                    </div>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4 style="color: #f59e0b;">🔬 Technology Signals</h4>
+                                    <textarea class="form-input" placeholder="What technological capabilities are becoming available?"></textarea>
+                                    <div class="slider-container">
+                                        <label>Signal Strength: <span>7</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="7">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="analyzeSignals()">🔍 Analyze Change Signals</button>
+                        </div>
+                        
+                        <div id="seeing-disruption" class="tab-panel">
+                            <h3>Disruption Patterns Analysis</h3>
+                            <div class="form-group">
+                                <label class="form-label">Current Business Model</label>
+                                <select class="form-select">
+                                    <option>Solution Shop</option>
+                                    <option>Value-Adding Process</option>
+                                    <option>Facilitated Network</option>
+                                </select>
+                            </div>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>🎯 Disruption Type</h4>
+                                    <div class="form-group">
+                                        <label>Predicted Disruption</label>
+                                        <select class="form-select">
+                                            <option>Low-end Disruption</option>
+                                            <option>New Market Disruption</option>
+                                            <option>Big Bang Disruption</option>
+                                        </select>
+                                    </div>
+                                    <textarea class="form-input" placeholder="Describe the disruption pattern you're seeing..."></textarea>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>⏱️ Timeline Assessment</h4>
+                                    <div class="slider-container">
+                                        <label>Time to Impact: <span>3</span> years</label>
+                                        <input type="range" class="slider" min="1" max="10" value="3">
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Certainty Level: <span>70</span>%</label>
+                                        <input type="range" class="slider" min="0" max="100" value="70">
+                                    </div>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>🛡️ Defense Strategy</h4>
+                                    <textarea class="form-input" placeholder="How can you defend against or embrace this disruption?"></textarea>
+                                    <div class="form-group">
+                                        <label>Response Type</label>
+                                        <select class="form-select">
+                                            <option>Defensive Innovation</option>
+                                            <option>Market Expansion</option>
+                                            <option>Business Model Innovation</option>
+                                            <option>Strategic Partnerships</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="generateDisruptionMap()">🗺️ Generate Disruption Map</button>
+                        </div>
+                        
+                        <div id="seeing-readiness" class="tab-panel">
+                            <h3>Innovation Readiness Assessment</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>🏗️ Organizational Capabilities</h4>
+                                    <div class="form-group">
+                                        <label>Innovation Culture</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>6</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="6">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Resource Flexibility</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>5</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="5">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Learning Agility</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>7</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="7">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>🎯 Strategic Positioning</h4>
+                                    <div class="form-group">
+                                        <label>Market Position Strength</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>6</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="6">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Customer Relationships</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>8</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="8">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Technology Readiness</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>5</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="5">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>💡 Innovation Portfolio</h4>
+                                    <div class="form-group">
+                                        <label>Core Innovation (70%)</label>
+                                        <div style="background: #3b82f6; height: 20px; width: 70%; border-radius: 10px;"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Adjacent Innovation (20%)</label>
+                                        <div style="background: #f59e0b; height: 20px; width: 20%; border-radius: 10px;"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Transformational Innovation (10%)</label>
+                                        <div style="background: #ef4444; height: 20px; width: 10%; border-radius: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="assessReadiness()">📊 Generate Readiness Report</button>
+                        </div>
+                        
+                        <div id="seeing-evolution" class="tab-panel">
+                            <h3>Market Evolution Mapping</h3>
+                            <div class="form-group">
+                                <label class="form-label">Industry/Market</label>
+                                <input type="text" class="form-input" placeholder="Enter the market you want to analyze">
+                            </div>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>📈 Evolution Stage</h4>
+                                    <div class="form-group">
+                                        <label>Current Stage</label>
+                                        <select class="form-select">
+                                            <option>Genesis (Innovation)</option>
+                                            <option>Custom-Built (Early Adoption)</option>
+                                            <option>Product/Service (Growth)</option>
+                                            <option>Commodity/Utility (Maturity)</option>
+                                        </select>
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Evolution Progress: <span>60</span>%</label>
+                                        <input type="range" class="slider" min="0" max="100" value="60">
+                                    </div>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>🔄 Evolution Drivers</h4>
+                                    <div class="form-group">
+                                        <input type="checkbox" checked> Competition
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" checked> Supply & Demand
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox"> User Feedback
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Technology Enablers
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Regulatory Changes
+                                    </div>
+                                </div>
+                                <div class="strategy-card">
+                                    <h4>🎯 Strategic Response</h4>
+                                    <textarea class="form-input" placeholder="What strategic moves should you make based on this evolution stage?"></textarea>
+                                    <div class="form-group">
+                                        <label>Recommended Strategy</label>
+                                        <select class="form-select">
+                                            <option>Pioneer (Build ecosystem)</option>
+                                            <option>Settler (Optimize efficiency)</option>
+                                            <option>Town Planner (Industrialize)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="generateEvolutionMap()">🗺️ Generate Evolution Map</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Good Strategy Bad Strategy Workspace -->
+            <div id="good-bad-strategy-workspace" class="workspace">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">🎯 Good Strategy Bad Strategy</h2>
+                    <a href="#" class="back-btn" onclick="showView('dashboard')">← Back to Dashboard</a>
+                </div>
+                <div class="workspace-content">
+                    <div class="tabs">
+                        <div class="tab-list">
+                            <div class="tab active" onclick="showTab('strategy', 'kernel')">Strategy Kernel</div>
+                            <div class="tab" onclick="showTab('strategy', 'bad-strategy')">Bad Strategy Detection</div>
+                            <div class="tab" onclick="showTab('strategy', 'sources-power')">Sources of Power</div>
+                            <div class="tab" onclick="showTab('strategy', 'coherence')">Strategic Coherence</div>
+                        </div>
+                        
+                        <div id="strategy-kernel" class="tab-panel active">
+                            <h3>Strategy Kernel Framework</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4 style="color: #ef4444;">🔍 Diagnosis</h4>
+                                    <p>What is the challenge?</p>
+                                    <div class="form-group">
+                                        <label>Critical Challenge</label>
+                                        <textarea class="form-input" placeholder="Define the critical challenge or problem your organization faces..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Root Causes</label>
+                                        <textarea class="form-input" placeholder="What are the underlying causes of this challenge?"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Constraints</label>
+                                        <textarea class="form-input" placeholder="What constraints limit your options?"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4 style="color: #f59e0b;">🎯 Guiding Policy</h4>
+                                    <p>How will you approach the challenge?</p>
+                                    <div class="form-group">
+                                        <label>Strategic Approach</label>
+                                        <textarea class="form-input" placeholder="What is your overall approach to addressing the challenge?"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Key Principles</label>
+                                        <textarea class="form-input" placeholder="What principles will guide your decisions?"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Trade-offs</label>
+                                        <textarea class="form-input" placeholder="What will you NOT do? What trade-offs are you making?"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4 style="color: #22c55e;">⚡ Coherent Actions</h4>
+                                    <p>What specific actions will you take?</p>
+                                    <div class="form-group">
+                                        <label>Action 1</label>
+                                        <input type="text" class="form-input" placeholder="Specific action that supports your guiding policy">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Action 2</label>
+                                        <input type="text" class="form-input" placeholder="Specific action that supports your guiding policy">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Action 3</label>
+                                        <input type="text" class="form-input" placeholder="Specific action that supports your guiding policy">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Resource Allocation</label>
+                                        <textarea class="form-input" placeholder="How will you allocate resources to support these actions?"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="validateKernel()">✅ Validate Strategy Kernel</button>
+                        </div>
+                        
+                        <div id="strategy-bad-strategy" class="tab-panel">
+                            <h3>Bad Strategy Detection</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4 style="color: #ef4444;">🚫 Fluff</h4>
+                                    <p>Superficial restatement of the obvious</p>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Contains vague language without substance
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Uses trendy buzzwords instead of clear thinking
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Restates goals as strategy
+                                    </div>
+                                    <textarea class="form-input" placeholder="Identify any fluff in your current strategy..."></textarea>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4 style="color: #f59e0b;">⚠️ Failure to Face Challenge</h4>
+                                    <p>Avoiding hard choices and difficult problems</p>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Ignores obvious problems
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Avoids making difficult trade-offs
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Lists everything as equally important
+                                    </div>
+                                    <textarea class="form-input" placeholder="What challenges is your strategy avoiding?"></textarea>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4 style="color: #a855f7;">🎭 Mistaking Goals for Strategy</h4>
+                                    <p>Goals ≠ Strategy</p>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Confuses desired outcomes with strategy
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Lacks clear path to achieve goals
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Missing coherent actions
+                                    </div>
+                                    <textarea class="form-input" placeholder="Are you mistaking any goals for strategy?"></textarea>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4 style="color: #06b6d4;">📊 Bad Strategic Objectives</h4>
+                                    <p>Poorly chosen or unrealistic objectives</p>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Objectives are conflicting
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Objectives are impossible to achieve
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox"> Too many priorities
+                                    </div>
+                                    <textarea class="form-input" placeholder="Assess the quality of your strategic objectives..."></textarea>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="auditStrategy()">🔍 Audit Strategy Quality</button>
+                        </div>
+                        
+                        <div id="strategy-sources-power" class="tab-panel">
+                            <h3>Sources of Strategic Power</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>🔧 Leverage</h4>
+                                    <p>Finding and applying concentrated effort</p>
+                                    <textarea class="form-input" placeholder="Where can you concentrate your efforts for maximum impact?"></textarea>
+                                    <div class="slider-container">
+                                        <label>Leverage Potential: <span>6</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="6">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🏔️ Proximate Objectives</h4>
+                                    <p>Feasible objectives that can be accomplished</p>
+                                    <textarea class="form-input" placeholder="What near-term objectives can build momentum toward your larger goals?"></textarea>
+                                    <div class="slider-container">
+                                        <label>Objective Clarity: <span>7</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="7">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>⛓️ Chain-Link Systems</h4>
+                                    <p>Strength depends on weakest link</p>
+                                    <textarea class="form-input" placeholder="What are the critical links in your value system?"></textarea>
+                                    <div class="slider-container">
+                                        <label>System Strength: <span>5</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="5">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🎨 Design</h4>
+                                    <p>Elegant coordination of policies and actions</p>
+                                    <textarea class="form-input" placeholder="How do your policies and actions work together elegantly?"></textarea>
+                                    <div class="slider-container">
+                                        <label>Design Quality: <span>6</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="6">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🎯 Focus</h4>
+                                    <p>Concentration of effort on critical points</p>
+                                    <textarea class="form-input" placeholder="What are you choosing NOT to do to maintain focus?"></textarea>
+                                    <div class="slider-container">
+                                        <label>Focus Level: <span>7</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="7">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🌟 Growth</h4>
+                                    <p>Creating conditions for organic growth</p>
+                                    <textarea class="form-input" placeholder="How does your strategy create conditions for sustainable growth?"></textarea>
+                                    <div class="slider-container">
+                                        <label>Growth Potential: <span>6</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="6">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="analyzePowerSources()">⚡ Analyze Power Sources</button>
+                        </div>
+                        
+                        <div id="strategy-coherence" class="tab-panel">
+                            <h3>Strategic Coherence Assessment</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>🔗 Internal Coherence</h4>
+                                    <p>Do your policies and actions fit together?</p>
+                                    <div class="form-group">
+                                        <label>Policy Alignment</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>7</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="7">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Action Consistency</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>6</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="6">
+                                        </div>
+                                    </div>
+                                    <textarea class="form-input" placeholder="Describe how your policies and actions support each other..."></textarea>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🎯 External Coherence</h4>
+                                    <p>Does your strategy fit external realities?</p>
+                                    <div class="form-group">
+                                        <label>Market Fit</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>8</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="8">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Competitive Response</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>5</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="5">
+                                        </div>
+                                    </div>
+                                    <textarea class="form-input" placeholder="How well does your strategy match external realities?"></textarea>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>⏱️ Dynamic Coherence</h4>
+                                    <p>Can your strategy adapt to change?</p>
+                                    <div class="form-group">
+                                        <label>Adaptability</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>6</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="6">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Learning Capability</label>
+                                        <div class="slider-container">
+                                            <label>Score: <span>7</span>/10</label>
+                                            <input type="range" class="slider" min="1" max="10" value="7">
+                                        </div>
+                                    </div>
+                                    <textarea class="form-input" placeholder="How does your strategy enable learning and adaptation?"></textarea>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="assessCoherence()">📊 Generate Coherence Report</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -453,7 +1582,7 @@
             <div id="mission-workspace" class="workspace">
                 <div class="workspace-header">
                     <h2 class="workspace-title">🎯 AI Mission Statement Generator</h2>
-                    <a href="#" class="back-btn" onclick="showDashboard()">← Back to Dashboard</a>
+                    <a href="#" class="back-btn" onclick="showView('dashboard')">← Back to Dashboard</a>
                 </div>
                 <div class="workspace-content">
                     <div class="form-group">
@@ -494,7 +1623,7 @@
             <div id="canvas-workspace" class="workspace">
                 <div class="workspace-header">
                     <h2 class="workspace-title">🎨 Business Model Canvas</h2>
-                    <a href="#" class="back-btn" onclick="showDashboard()">← Back to Dashboard</a>
+                    <a href="#" class="back-btn" onclick="showView('dashboard')">← Back to Dashboard</a>
                 </div>
                 <div class="workspace-content">
                     <div class="canvas-grid">
@@ -542,75 +1671,558 @@
                 </div>
             </div>
 
-            <!-- Porter's Five Forces Workspace -->
-            <div id="analysis-workspace" class="workspace">
+            <!-- Financial Frameworks Workspace -->
+            <div id="financial-workspace" class="workspace">
                 <div class="workspace-header">
-                    <h2 class="workspace-title">🏢 Porter's Five Forces Analysis</h2>
-                    <a href="#" class="back-btn" onclick="showDashboard()">← Back to Dashboard</a>
+                    <h2 class="workspace-title">📈 Financial Frameworks</h2>
+                    <a href="#" class="back-btn" onclick="showView('dashboard')">← Back to Dashboard</a>
                 </div>
                 <div class="workspace-content">
-                    <div class="form-group">
-                        <label class="form-label">Industry</label>
-                        <input type="text" class="form-input" id="industry" placeholder="Enter your industry (e.g., SaaS, Retail, Healthcare)">
-                    </div>
-                    
-                    <div class="analysis-grid">
-                        <div class="force-card">
-                            <h4 class="force-title">Threat of New Entrants</h4>
-                            <div class="slider-group">
-                                <label>Barrier Strength: <span id="entrants-value">3</span>/5</label>
-                                <input type="range" class="slider" id="entrants-slider" min="1" max="5" value="3" onchange="updateSlider('entrants')">
+                    <div class="tabs">
+                        <div class="tab-list">
+                            <div class="tab active" onclick="showTab('financial', 'roi-npv')">ROI & NPV</div>
+                            <div class="tab" onclick="showTab('financial', 'abc-costing')">ABC Costing</div>
+                            <div class="tab" onclick="showTab('financial', 'market-data')">Market Data</div>
+                            <div class="tab" onclick="showTab('financial', 'investment')">Investment Analysis</div>
+                        </div>
+                        
+                        <div id="financial-roi-npv" class="tab-panel active">
+                            <h3>ROI & NPV Analysis</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>💰 Investment Details</h4>
+                                    <div class="form-group">
+                                        <label>Initial Investment</label>
+                                        <input type="number" class="form-input" placeholder="Enter initial investment amount">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Project Duration (years)</label>
+                                        <input type="number" class="form-input" value="5" min="1" max="10">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Discount Rate (%)</label>
+                                        <input type="number" class="form-input" value="10" step="0.1">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>📊 Cash Flows</h4>
+                                    <div class="form-group">
+                                        <label>Year 1 Cash Flow</label>
+                                        <input type="number" class="form-input" placeholder="Expected cash flow">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Year 2 Cash Flow</label>
+                                        <input type="number" class="form-input" placeholder="Expected cash flow">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Year 3 Cash Flow</label>
+                                        <input type="number" class="form-input" placeholder="Expected cash flow">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Year 4 Cash Flow</label>
+                                        <input type="number" class="form-input" placeholder="Expected cash flow">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Year 5 Cash Flow</label>
+                                        <input type="number" class="form-input" placeholder="Expected cash flow">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>📈 Results</h4>
+                                    <div class="form-group">
+                                        <label>Net Present Value (NPV)</label>
+                                        <div style="font-size: 1.5rem; color: #22c55e; font-weight: bold;">$XXX,XXX</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Return on Investment (ROI)</label>
+                                        <div style="font-size: 1.5rem; color: #3b82f6; font-weight: bold;">XX.X%</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Payback Period</label>
+                                        <div style="font-size: 1.5rem; color: #f59e0b; font-weight: bold;">X.X years</div>
+                                    </div>
+                                </div>
                             </div>
-                            <textarea class="form-input" placeholder="Notes about entry barriers..."></textarea>
+                            <button class="btn" onclick="calculateROINPV()">🧮 Calculate Financial Metrics</button>
                         </div>
-
-                        <div class="force-card">
-                            <h4 class="force-title">Bargaining Power of Suppliers</h4>
-                            <div class="slider-group">
-                                <label>Power Level: <span id="suppliers-value">3</span>/5</label>
-                                <input type="range" class="slider" id="suppliers-slider" min="1" max="5" value="3" onchange="updateSlider('suppliers')">
+                        
+                        <div id="financial-abc-costing" class="tab-panel">
+                            <h3>Activity-Based Costing</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>🏭 Production Activities</h4>
+                                    <div class="form-group">
+                                        <label>Direct Labor Hours</label>
+                                        <input type="number" class="form-input" placeholder="Total hours">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Machine Hours</label>
+                                        <input type="number" class="form-input" placeholder="Total machine hours">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Setup Activities</label>
+                                        <input type="number" class="form-input" placeholder="Number of setups">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🔍 Quality Control</h4>
+                                    <div class="form-group">
+                                        <label>Inspection Hours</label>
+                                        <input type="number" class="form-input" placeholder="Quality control hours">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Testing Activities</label>
+                                        <input type="number" class="form-input" placeholder="Number of tests">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Rework Hours</label>
+                                        <input type="number" class="form-input" placeholder="Rework hours">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>📦 Support Activities</h4>
+                                    <div class="form-group">
+                                        <label>Material Handling</label>
+                                        <input type="number" class="form-input" placeholder="Handling transactions">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Order Processing</label>
+                                        <input type="number" class="form-input" placeholder="Number of orders">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Customer Service</label>
+                                        <input type="number" class="form-input" placeholder="Service hours">
+                                    </div>
+                                </div>
                             </div>
-                            <textarea class="form-input" placeholder="Notes about supplier power..."></textarea>
+                            <button class="btn" onclick="calculateABC()">📊 Calculate Activity Costs</button>
                         </div>
-
-                        <div class="force-card">
-                            <h4 class="force-title">Bargaining Power of Buyers</h4>
-                            <div class="slider-group">
-                                <label>Power Level: <span id="buyers-value">3</span>/5</label>
-                                <input type="range" class="slider" id="buyers-slider" min="1" max="5" value="3" onchange="updateSlider('buyers')">
+                        
+                        <div id="financial-market-data" class="tab-panel">
+                            <h3>Global Market Data</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>🌎 Americas</h4>
+                                    <div>GDP: $24.8T</div>
+                                    <div>Growth: 2.8%</div>
+                                    <div>Inflation: 3.2%</div>
+                                    <div>Interest Rate: 5.25%</div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🇪🇺 Europe</h4>
+                                    <div>GDP: $18.2T</div>
+                                    <div>Growth: 1.9%</div>
+                                    <div>Inflation: 2.8%</div>
+                                    <div>Interest Rate: 4.5%</div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🇨🇳 Asia Pacific</h4>
+                                    <div>GDP: $28.6T</div>
+                                    <div>Growth: 5.2%</div>
+                                    <div>Inflation: 2.1%</div>
+                                    <div>Interest Rate: 3.8%</div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🇮🇳 India</h4>
+                                    <div>GDP: $3.7T</div>
+                                    <div>Growth: 6.8%</div>
+                                    <div>Inflation: 4.5%</div>
+                                    <div>Interest Rate: 6.5%</div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🇦🇺 Australia</h4>
+                                    <div>GDP: $1.4T</div>
+                                    <div>Growth: 3.1%</div>
+                                    <div>Inflation: 3.8%</div>
+                                    <div>Interest Rate: 4.35%</div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🏝️ Caribbean</h4>
+                                    <div>GDP: $890B</div>
+                                    <div>Growth: 4.2%</div>
+                                    <div>Inflation: 5.1%</div>
+                                    <div>Interest Rate: 7.25%</div>
+                                </div>
                             </div>
-                            <textarea class="form-input" placeholder="Notes about buyer power..."></textarea>
+                            <button class="btn" onclick="refreshMarketData()">🔄 Refresh Market Data</button>
                         </div>
-
-                        <div class="force-card">
-                            <h4 class="force-title">Threat of Substitutes</h4>
-                            <div class="slider-group">
-                                <label>Threat Level: <span id="substitutes-value">3</span>/5</label>
-                                <input type="range" class="slider" id="substitutes-slider" min="1" max="5" value="3" onchange="updateSlider('substitutes')">
+                        
+                        <div id="financial-investment" class="tab-panel">
+                            <h3>Investment Analysis</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>💼 Investment Options</h4>
+                                    <div class="form-group">
+                                        <label>Investment Type</label>
+                                        <select class="form-select">
+                                            <option>Equity Investment</option>
+                                            <option>Bond Investment</option>
+                                            <option>Real Estate</option>
+                                            <option>Private Equity</option>
+                                            <option>Infrastructure</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Risk Level</label>
+                                        <select class="form-select">
+                                            <option>Conservative</option>
+                                            <option>Moderate</option>
+                                            <option>Aggressive</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Time Horizon</label>
+                                        <select class="form-select">
+                                            <option>Short-term (1-3 years)</option>
+                                            <option>Medium-term (3-7 years)</option>
+                                            <option>Long-term (7+ years)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>📊 Risk Assessment</h4>
+                                    <div class="slider-container">
+                                        <label>Market Risk: <span>6</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="6">
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Credit Risk: <span>4</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="4">
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Liquidity Risk: <span>3</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="3">
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Operational Risk: <span>5</span>/10</label>
+                                        <input type="range" class="slider" min="1" max="10" value="5">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>🎯 Portfolio Allocation</h4>
+                                    <div class="form-group">
+                                        <label>Equities (60%)</label>
+                                        <div style="background: #3b82f6; height: 20px; width: 60%; border-radius: 10px;"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Bonds (25%)</label>
+                                        <div style="background: #22c55e; height: 20px; width: 25%; border-radius: 10px;"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Alternatives (10%)</label>
+                                        <div style="background: #f59e0b; height: 20px; width: 10%; border-radius: 10px;"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cash (5%)</label>
+                                        <div style="background: #6b7280; height: 20px; width: 5%; border-radius: 10px;"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <textarea class="form-input" placeholder="Notes about substitute threats..."></textarea>
+                            <button class="btn" onclick="optimizePortfolio()">📈 Optimize Portfolio</button>
                         </div>
-                    </div>
-
-                    <div class="force-card" style="margin-top: 1rem;">
-                        <h4 class="force-title">Competitive Rivalry</h4>
-                        <div class="slider-group">
-                            <label>Rivalry Intensity: <span id="rivalry-value">3</span>/5</label>
-                            <input type="range" class="slider" id="rivalry-slider" min="1" max="5" value="3" onchange="updateSlider('rivalry')">
-                        </div>
-                        <textarea class="form-input" placeholder="Notes about competitive rivalry..."></textarea>
-                    </div>
-
-                    <div style="margin-top: 2rem; text-align: center;">
-                        <button class="btn" onclick="generateAnalysis()">📊 Generate Analysis Report</button>
-                    </div>
-
-                    <div id="analysis-results" class="results-section">
-                        <h3>Industry Attractiveness Analysis:</h3>
-                        <div id="analysis-output"></div>
                     </div>
                 </div>
             </div>
+
+            <!-- Strategy Execution Workspace -->
+            <div id="strategy-exec-workspace" class="workspace">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">📊 Strategy Execution Tracker</h2>
+                    <a href="#" class="back-btn" onclick="showView('dashboard')">← Back to Dashboard</a>
+                </div>
+                <div class="workspace-content">
+                    <div class="tabs">
+                        <div class="tab-list">
+                            <div class="tab active" onclick="showTab('execution', 'goals')">Goals & Objectives</div>
+                            <div class="tab" onclick="showTab('execution', 'milestones')">Milestones</div>
+                            <div class="tab" onclick="showTab('execution', 'kpis')">KPIs & Metrics</div>
+                            <div class="tab" onclick="showTab('execution', 'progress')">Progress Tracking</div>
+                        </div>
+                        
+                        <div id="execution-goals" class="tab-panel active">
+                            <h3>Strategic Goals & Objectives</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4 style="color: #22c55e;">🎯 Strategic Goal 1</h4>
+                                    <div class="form-group">
+                                        <label>Goal Title</label>
+                                        <input type="text" class="form-input" placeholder="Enter strategic goal">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea class="form-input" placeholder="Describe the goal in detail"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Target Date</label>
+                                        <input type="date" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Owner</label>
+                                        <input type="text" class="form-input" placeholder="Goal owner">
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Progress: <span>65</span>%</label>
+                                        <input type="range" class="slider" min="0" max="100" value="65">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4 style="color: #3b82f6;">🎯 Strategic Goal 2</h4>
+                                    <div class="form-group">
+                                        <label>Goal Title</label>
+                                        <input type="text" class="form-input" placeholder="Enter strategic goal">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea class="form-input" placeholder="Describe the goal in detail"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Target Date</label>
+                                        <input type="date" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Owner</label>
+                                        <input type="text" class="form-input" placeholder="Goal owner">
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Progress: <span>40</span>%</label>
+                                        <input type="range" class="slider" min="0" max="100" value="40">
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4 style="color: #f59e0b;">🎯 Strategic Goal 3</h4>
+                                    <div class="form-group">
+                                        <label>Goal Title</label>
+                                        <input type="text" class="form-input" placeholder="Enter strategic goal">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea class="form-input" placeholder="Describe the goal in detail"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Target Date</label>
+                                        <input type="date" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Owner</label>
+                                        <input type="text" class="form-input" placeholder="Goal owner">
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Progress: <span>80</span>%</label>
+                                        <input type="range" class="slider" min="0" max="100" value="80">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="addGoal()">➕ Add New Goal</button>
+                            <button class="btn btn-secondary" onclick="exportGoals()">📄 Export Goals</button>
+                        </div>
+                        
+                        <div id="execution-milestones" class="tab-panel">
+                            <h3>Key Milestones</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>📅 Q1 2025 Milestones</h4>
+                                    <div style="margin: 1rem 0;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                                            <input type="checkbox" checked>
+                                            <span>Complete market research</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                                            <input type="checkbox" checked>
+                                            <span>Launch beta product</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                                            <input type="checkbox">
+                                            <span>Secure Series A funding</span>
+                                        </div>
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Q1 Progress: <span>67</span>%</label>
+                                        <div style="background: #22c55e; height: 20px; width: 67%; border-radius: 10px;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>📅 Q2 2025 Milestones</h4>
+                                    <div style="margin: 1rem 0;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                                            <input type="checkbox">
+                                            <span>Scale customer acquisition</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                                            <input type="checkbox">
+                                            <span>Expand to new markets</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                                            <input type="checkbox">
+                                            <span>Achieve profitability</span>
+                                        </div>
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Q2 Progress: <span>25</span>%</label>
+                                        <div style="background: #f59e0b; height: 20px; width: 25%; border-radius: 10px;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>📅 Q3 2025 Milestones</h4>
+                                    <div style="margin: 1rem 0;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                                            <input type="checkbox">
+                                            <span>International expansion</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                                            <input type="checkbox">
+                                            <span>Strategic partnerships</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                                            <input type="checkbox">
+                                            <span>Product 2.0 launch</span>
+                                        </div>
+                                    </div>
+                                    <div class="slider-container">
+                                        <label>Q3 Progress: <span>10</span>%</label>
+                                        <div style="background: #ef4444; height: 20px; width: 10%; border-radius: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="addMilestone()">📅 Add Milestone</button>
+                        </div>
+                        
+                        <div id="execution-kpis" class="tab-panel">
+                            <h3>Key Performance Indicators</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>📈 Financial KPIs</h4>
+                                    <div style="margin: 1rem 0;">
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>Revenue Growth</span>
+                                            <span style="color: #22c55e; font-weight: bold;">+25%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>Gross Margin</span>
+                                            <span style="color: #22c55e; font-weight: bold;">68%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>Customer LTV</span>
+                                            <span style="color: #3b82f6; font-weight: bold;">$2,400</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>CAC Payback</span>
+                                            <span style="color: #f59e0b; font-weight: bold;">14 months</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>👥 Customer KPIs</h4>
+                                    <div style="margin: 1rem 0;">
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>NPS Score</span>
+                                            <span style="color: #22c55e; font-weight: bold;">72</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>Churn Rate</span>
+                                            <span style="color: #22c55e; font-weight: bold;">3.2%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>Customer Satisfaction</span>
+                                            <span style="color: #22c55e; font-weight: bold;">4.6/5</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>Support Response</span>
+                                            <span style="color: #3b82f6; font-weight: bold;">2.4hrs</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>⚙️ Operational KPIs</h4>
+                                    <div style="margin: 1rem 0;">
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>Process Efficiency</span>
+                                            <span style="color: #22c55e; font-weight: bold;">87%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>Quality Score</span>
+                                            <span style="color: #22c55e; font-weight: bold;">94%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>Team Productivity</span>
+                                            <span style="color: #3b82f6; font-weight: bold;">+12%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>Innovation Rate</span>
+                                            <span style="color: #f59e0b; font-weight: bold;">5.2/month</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="customizeKPIs()">⚙️ Customize KPIs</button>
+                        </div>
+                        
+                        <div id="execution-progress" class="tab-panel">
+                            <h3>Overall Progress Dashboard</h3>
+                            <div class="strategy-grid">
+                                <div class="strategy-card">
+                                    <h4>🎯 Strategic Objectives</h4>
+                                    <div class="slider-container">
+                                        <label>Overall Progress: <span>62</span>%</label>
+                                        <div style="background: #22c55e; height: 30px; width: 62%; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">62%</div>
+                                    </div>
+                                    <div style="margin-top: 1rem;">
+                                        <div>✅ 3 objectives completed</div>
+                                        <div>🔄 5 objectives in progress</div>
+                                        <div>⏳ 2 objectives pending</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>📅 Timeline Performance</h4>
+                                    <div style="margin: 1rem 0;">
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>On Track</span>
+                                            <span style="color: #22c55e; font-weight: bold;">60%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>At Risk</span>
+                                            <span style="color: #f59e0b; font-weight: bold;">25%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+                                            <span>Behind Schedule</span>
+                                            <span style="color: #ef4444; font-weight: bold;">15%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="strategy-card">
+                                    <h4>💡 Key Insights</h4>
+                                    <div style="margin: 1rem 0; font-size: 0.9rem;">
+                                        <div style="margin: 0.5rem 0;">• Customer acquisition ahead of target</div>
+                                        <div style="margin: 0.5rem 0;">• Product development on schedule</div>
+                                        <div style="margin: 0.5rem 0;">• Market expansion needs attention</div>
+                                        <div style="margin: 0.5rem 0;">• Team capacity at optimal level</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn" onclick="generateReport()">📊 Generate Full Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
 
         <footer class="footer">
@@ -619,39 +2231,155 @@
     </div>
 
     <script>
-        // Navigation functions
-        function showDashboard() {
-            document.getElementById('dashboard').style.display = 'block';
-            document.getElementById('mission-workspace').style.display = 'none';
-            document.getElementById('canvas-workspace').style.display = 'none';
-            document.getElementById('analysis-workspace').style.display = 'none';
-            updateNavButtons('dashboard');
-        }
-
-        function showWorkspace(type) {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('mission-workspace').style.display = type === 'mission' ? 'block' : 'none';
-            document.getElementById('canvas-workspace').style.display = type === 'canvas' ? 'block' : 'none';
-            document.getElementById('analysis-workspace').style.display = type === 'analysis' ? 'block' : 'none';
-            updateNavButtons(type);
-        }
-
-        function updateNavButtons(active) {
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
+        // Navigation and UI Management
+        function showView(viewName) {
+            // Hide all views
+            document.querySelectorAll('.dashboard, .workspace').forEach(view => {
+                view.style.display = 'none';
+            });
             
-            if (active === 'dashboard') {
-                buttons[0].classList.add('active');
-            } else if (active === 'mission') {
-                buttons[1].classList.add('active');
-            } else if (active === 'canvas') {
-                buttons[2].classList.add('active');
-            } else if (active === 'analysis') {
-                buttons[3].classList.add('active');
+            // Show selected view
+            if (viewName === 'dashboard') {
+                document.getElementById('dashboard').style.display = 'block';
+            } else {
+                const workspace = document.getElementById(viewName + '-workspace');
+                if (workspace) {
+                    workspace.style.display = 'block';
+                }
             }
+            
+            // Update navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
         }
 
-        // Mission Generator
+        function showTab(workspace, tabName) {
+            // Hide all tab panels for this workspace
+            document.querySelectorAll(`#${workspace}-workspace .tab-panel`).forEach(panel => {
+                panel.classList.remove('active');
+            });
+            
+            // Show selected tab panel
+            document.getElementById(`${workspace}-${tabName}`).classList.add('active');
+            
+            // Update tab buttons
+            document.querySelectorAll(`#${workspace}-workspace .tab`).forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Porter's Five Forces Functions
+        function updateSlider(force) {
+            const slider = document.getElementById(force + '-slider');
+            const value = document.getElementById(force + '-value');
+            value.textContent = slider.value;
+        }
+
+        function generatePortersAnalysis() {
+            const industry = document.getElementById('industry').value;
+            if (!industry) {
+                alert('Please enter an industry to generate analysis.');
+                return;
+            }
+
+            const scores = {
+                entrants: document.getElementById('entrants-slider').value,
+                suppliers: document.getElementById('suppliers-slider').value,
+                buyers: document.getElementById('buyers-slider').value,
+                substitutes: document.getElementById('substitutes-slider').value,
+                rivalry: document.getElementById('rivalry-slider').value
+            };
+
+            const avgScore = Object.values(scores).reduce((a, b) => parseInt(a) + parseInt(b), 0) / 5;
+            
+            let attractiveness = 'Moderate';
+            let color = '#f59e0b';
+            
+            if (avgScore <= 2) {
+                attractiveness = 'High';
+                color = '#22c55e';
+            } else if (avgScore >= 4) {
+                attractiveness = 'Low';
+                color = '#ef4444';
+            }
+
+            alert(`Industry Analysis Complete!\n\nIndustry: ${industry}\nAttractiveness: ${attractiveness}\nAverage Force Strength: ${avgScore.toFixed(1)}/5\n\nStrategic Recommendations:\n• Focus on building competitive moats\n• Develop strong supplier relationships\n• Create switching costs to reduce buyer power\n• Innovate continuously to stay ahead of substitutes`);
+        }
+
+        // Blue Ocean Strategy Functions
+        function generateStrategyCanvas() {
+            alert('Strategy Canvas generated! This would show a visual comparison of your company vs competitors across all competing factors.');
+        }
+
+        function generateFourActions() {
+            alert('New Value Curve created! This would generate a new strategic profile based on your Four Actions Framework inputs.');
+        }
+
+        function analyzePMS() {
+            alert('Portfolio Analysis complete! This would show the distribution of your initiatives across Pioneer-Migrator-Settler categories with strategic recommendations.');
+        }
+
+        // Process Management Functions
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.innerHTML);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            const element = document.createElement('div');
+            element.innerHTML = data;
+            element.style.position = 'absolute';
+            element.style.left = (ev.offsetX - 50) + 'px';
+            element.style.top = (ev.offsetY - 20) + 'px';
+            element.style.background = 'rgba(255,255,255,0.2)';
+            element.style.padding = '0.5rem';
+            element.style.borderRadius = '5px';
+            element.style.cursor = 'move';
+            ev.target.appendChild(element);
+        }
+
+        function saveProcess() {
+            alert('Process saved successfully! This would save your BPMN diagram to the system.');
+        }
+
+        function exportBPMN() {
+            alert('BPMN exported! This would generate a downloadable BPMN 2.0 XML file.');
+        }
+
+        function generateNarrative() {
+            alert('Process Documentation generated! This would create comprehensive process documentation based on your inputs.');
+        }
+
+        function editProcessCategory(category) {
+            alert(`Editing ${category} processes. This would open a detailed editor for ${category} process management.`);
+        }
+
+        function generateOrgMap() {
+            alert('Organization Process Map generated! This would create a visual map of all organizational processes and their relationships.');
+        }
+
+        // Value Chain Functions
+        function analyzeValueChain() {
+            alert('Value Chain Analysis complete! This would identify cost drivers, value drivers, and optimization opportunities across all activities.');
+        }
+
+        function evaluateStrategy() {
+            alert('Strategic Position evaluated! This would assess your current strategy against Porter\'s Generic Strategies framework and provide recommendations.');
+        }
+
+        function generatePositioningMap() {
+            alert('Positioning Map generated! This would create a visual competitive positioning chart showing your company vs competitors.');
+        }
+
+        // Mission Generator Functions
         function generateMission() {
             const company = document.getElementById('companyName').value;
             const problem = document.getElementById('problemStatement').value;
@@ -704,66 +2432,81 @@
             ).join('');
         }
 
-        // Porter's Five Forces
-        function updateSlider(force) {
-            const slider = document.getElementById(force + '-slider');
-            const value = document.getElementById(force + '-value');
-            value.textContent = slider.value;
+        // Seeing What's Next Functions
+        function analyzeSignals() {
+            alert('Change Signals Analysis complete! This would identify emerging patterns across performance, customer, and technology signals with strategic recommendations.');
         }
 
-        function generateAnalysis() {
-            const industry = document.getElementById('industry').value;
-            if (!industry) {
-                alert('Please enter an industry to generate analysis.');
-                return;
-            }
+        function generateDisruptionMap() {
+            alert('Disruption Map generated! This would create a visual timeline showing predicted disruption patterns and strategic response options.');
+        }
 
-            const scores = {
-                entrants: document.getElementById('entrants-slider').value,
-                suppliers: document.getElementById('suppliers-slider').value,
-                buyers: document.getElementById('buyers-slider').value,
-                substitutes: document.getElementById('substitutes-slider').value,
-                rivalry: document.getElementById('rivalry-slider').value
-            };
+        function assessReadiness() {
+            alert('Innovation Readiness Report generated! This would assess organizational capabilities and provide recommendations for innovation strategy.');
+        }
 
-            const avgScore = Object.values(scores).reduce((a, b) => parseInt(a) + parseInt(b), 0) / 5;
-            
-            let attractiveness = 'Moderate';
-            let color = '#f59e0b';
-            
-            if (avgScore <= 2) {
-                attractiveness = 'High';
-                color = '#22c55e';
-            } else if (avgScore >= 4) {
-                attractiveness = 'Low';
-                color = '#ef4444';
-            }
+        function generateEvolutionMap() {
+            alert('Market Evolution Map created! This would show the evolution stage and recommended strategic positioning for your market.');
+        }
 
-            const analysis = `
-                <div style="text-align: center; margin: 1rem 0;">
-                    <h4>Industry: ${industry}</h4>
-                    <div style="font-size: 2rem; color: ${color}; margin: 1rem 0;">${attractiveness} Attractiveness</div>
-                    <div>Average Force Strength: ${avgScore.toFixed(1)}/5</div>
-                </div>
-                <div style="margin-top: 1rem;">
-                    <h4>Strategic Recommendations:</h4>
-                    <ul style="text-align: left; margin: 1rem 0;">
-                        <li>Focus on building competitive moats to reduce rivalry impact</li>
-                        <li>Develop strong supplier relationships to reduce dependency</li>
-                        <li>Create switching costs to reduce buyer power</li>
-                        <li>Innovate continuously to stay ahead of substitutes</li>
-                        <li>Consider vertical integration where barriers are low</li>
-                    </ul>
-                </div>
-            `;
-            
-            document.getElementById('analysis-output').innerHTML = analysis;
-            document.getElementById('analysis-results').classList.add('show');
+        // Good Strategy Bad Strategy Functions
+        function validateKernel() {
+            alert('Strategy Kernel validated! This would assess the coherence and strength of your diagnosis, guiding policy, and actions.');
+        }
+
+        function auditStrategy() {
+            alert('Strategy Quality Audit complete! This would identify areas of bad strategy and provide improvement recommendations.');
+        }
+
+        function analyzePowerSources() {
+            alert('Strategic Power Sources analyzed! This would assess your leverage, focus, design, and other sources of strategic advantage.');
+        }
+
+        function assessCoherence() {
+            alert('Strategic Coherence Report generated! This would evaluate internal, external, and dynamic coherence of your strategy.');
+        }
+
+        // Financial Framework Functions
+        function calculateROINPV() {
+            alert('Financial Metrics calculated! This would compute NPV, ROI, IRR, and payback period based on your inputs.');
+        }
+
+        function calculateABC() {
+            alert('Activity-Based Costing analysis complete! This would allocate costs across activities and identify cost optimization opportunities.');
+        }
+
+        function refreshMarketData() {
+            alert('Market Data refreshed! This would update global economic indicators from real-time data sources.');
+        }
+
+        function optimizePortfolio() {
+            alert('Portfolio optimized! This would recommend optimal asset allocation based on risk tolerance and investment goals.');
+        }
+
+        // Strategy Execution Functions
+        function addGoal() {
+            alert('New Goal added! This would create a new strategic goal with tracking capabilities.');
+        }
+
+        function exportGoals() {
+            alert('Goals exported! This would generate a comprehensive report of all strategic goals and their progress.');
+        }
+
+        function addMilestone() {
+            alert('Milestone added! This would create a new milestone with dependencies and tracking.');
+        }
+
+        function customizeKPIs() {
+            alert('KPIs customized! This would allow you to define custom metrics and tracking parameters.');
+        }
+
+        function generateReport() {
+            alert('Full Strategy Report generated! This would create a comprehensive strategy execution report with insights and recommendations.');
         }
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            showDashboard();
+            showView('dashboard');
         });
     </script>
 </body>
