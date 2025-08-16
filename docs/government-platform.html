@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucidra Government Suite - Public Sector Strategic Intelligence</title>
+    <script src="integration-framework.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #FFB74D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gov-badge {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        
+        .main-dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .primary-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .governance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value.excellent { color: #4CAF50; }
+        .metric-value.good { color: #8BC34A; }
+        .metric-value.moderate { color: #FFC107; }
+        .metric-value.needs-improvement { color: #FF9800; }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .metric-trend {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+        
+        .frameworks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .framework-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .framework-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .framework-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .framework-icon {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+            border-radius: 15px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .framework-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .gov-focus {
+            background: rgba(255, 152, 0, 0.2);
+            border: 1px solid rgba(255, 152, 0, 0.5);
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+        
+        .framework-features {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        
+        .framework-features li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .framework-features li::before {
+            content: '🏛️';
+            position: absolute;
+            left: 0;
+        }
+        
+        .action-btn {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .action-btn.primary {
+            background: linear-gradient(45deg, #F57C00, #E65100);
+        }
+        
+        .action-btn.success {
+            background: linear-gradient(45deg, #4CAF50, #2E7D32);
+        }
+        
+        .governance-dashboard {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .governance-score {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .score-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #FF9800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: rgba(255, 152, 0, 0.1);
+        }
+        
+        .governance-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .governance-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .governance-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+        
+        .governance-icon.excellent {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .governance-icon.good {
+            background: #8BC34A;
+            color: white;
+        }
+        
+        .governance-icon.needs-improvement {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .policy-tracker {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .policy-stages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .policy-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid #FF9800;
+        }
+        
+        .policy-status {
+            background: #FF9800;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        
+        .stakeholder-management {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .stakeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stakeholder-sector {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .stakeholder-sector h4 {
+            color: #FFB74D;
+            margin-bottom: 10px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            color: white;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        
+        .modal-close:hover {
+            opacity: 1;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            border-bottom-color: #FF9800;
+            background: rgba(255, 152, 0, 0.2);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .main-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .governance-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .frameworks-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏛️ Lucidra Government Suite</h1>
+            <div class="gov-badge">Public Sector Strategic Intelligence</div>
+            <p>Comprehensive policy development and governance optimization for public service excellence</p>
+        </div>
+        
+        <div class="main-dashboard">
+            <!-- Primary Dashboard -->
+            <div class="primary-panel">
+                <h2 style="margin-bottom: 20px;">📊 Governance Excellence Dashboard</h2>
+                
+                <!-- Key Governance Metrics -->
+                <div class="governance-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value excellent" id="citizenSatisfaction">78%</div>
+                        <div class="metric-label">Citizen Satisfaction</div>
+                        <div class="metric-trend">↗ +5% YoY</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value good" id="serviceEfficiency">84%</div>
+                        <div class="metric-label">Service Efficiency</div>
+                        <div class="metric-trend">↗ +7% improved</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value moderate" id="policyCompliance">91%</div>
+                        <div class="metric-label">Policy Compliance</div>
+                        <div class="metric-trend">→ Stable</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value excellent" id="transparencyScore">4.1</div>
+                        <div class="metric-label">Transparency Score</div>
+                        <div class="metric-trend">↗ +0.3 points</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value good" id="digitalAdoption">67%</div>
+                        <div class="metric-label">Digital Adoption</div>
+                        <div class="metric-trend">↗ +12% YoY</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value needs-improvement" id="budgetEfficiency">73%</div>
+                        <div class="metric-label">Budget Efficiency</div>
+                        <div class="metric-trend">↗ +2% improved</div>
+                    </div>
+                </div>
+                
+                <!-- Policy Development Tracker -->
+                <div class="policy-tracker">
+                    <h3 style="margin-bottom: 20px;">📋 Policy Development Pipeline</h3>
+                    <div class="policy-stages">
+                        <div class="policy-card">
+                            <div class="policy-status">RESEARCH</div>
+                            <h4>Digital Services Act</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9; margin: 8px 0;">Comprehensive digital transformation policy</p>
+                            <div style="background: rgba(255,255,255,0.2); height: 4px; border-radius: 2px; margin: 8px 0;">
+                                <div style="background: #2196F3; height: 100%; width: 35%; border-radius: 2px;"></div>
+                            </div>
+                            <small>35% complete • Est. Q2 2025</small>
+                        </div>
+                        
+                        <div class="policy-card">
+                            <div class="policy-status">CONSULTATION</div>
+                            <h4>Climate Action Framework</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9; margin: 8px 0;">Environmental sustainability initiatives</p>
+                            <div style="background: rgba(255,255,255,0.2); height: 4px; border-radius: 2px; margin: 8px 0;">
+                                <div style="background: #FF9800; height: 100%; width: 65%; border-radius: 2px;"></div>
+                            </div>
+                            <small>65% complete • Public consultation phase</small>
+                        </div>
+                        
+                        <div class="policy-card">
+                            <div class="policy-status">IMPLEMENTATION</div>
+                            <h4>Healthcare Modernization</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9; margin: 8px 0;">Digital health services rollout</p>
+                            <div style="background: rgba(255,255,255,0.2); height: 4px; border-radius: 2px; margin: 8px 0;">
+                                <div style="background: #4CAF50; height: 100%; width: 85%; border-radius: 2px;"></div>
+                            </div>
+                            <small>85% complete • Pilot program active</small>
+                        </div>
+                        
+                        <div class="policy-card">
+                            <div class="policy-status">EVALUATION</div>
+                            <h4>Education Technology</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9; margin: 8px 0;">EdTech integration in public schools</p>
+                            <div style="background: rgba(255,255,255,0.2); height: 4px; border-radius: 2px; margin: 8px 0;">
+                                <div style="background: #9C27B0; height: 100%; width: 92%; border-radius: 2px;"></div>
+                            </div>
+                            <small>92% complete • Impact assessment</small>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; text-align: center;">
+                        <button class="action-btn primary" onclick="managePolicies()">📋 Manage Policy Pipeline</button>
+                        <button class="action-btn" onclick="generatePolicyReport()">📊 Generate Policy Report</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Side Panel -->
+            <div>
+                <!-- Governance Excellence Score -->
+                <div class="governance-dashboard">
+                    <h3 style="margin-bottom: 20px;">🎯 Governance Excellence</h3>
+                    <div class="governance-score">
+                        <div>
+                            <h4>Overall Score</h4>
+                            <p style="opacity: 0.8;">Based on 8 key areas</p>
+                        </div>
+                        <div class="score-circle" id="governanceScore">79%</div>
+                    </div>
+                    
+                    <div class="governance-areas">
+                        <div class="governance-item">
+                            <div class="governance-icon excellent">✓</div>
+                            <span>Policy Compliance</span>
+                        </div>
+                        <div class="governance-item">
+                            <div class="governance-icon good">✓</div>
+                            <span>Service Delivery</span>
+                        </div>
+                        <div class="governance-item">
+                            <div class="governance-icon excellent">✓</div>
+                            <span>Transparency</span>
+                        </div>
+                        <div class="governance-item">
+                            <div class="governance-icon needs-improvement">△</div>
+                            <span>Digital Integration</span>
+                        </div>
+                        <div class="governance-item">
+                            <div class="governance-icon good">✓</div>
+                            <span>Stakeholder Engagement</span>
+                        </div>
+                        <div class="governance-item">
+                            <div class="governance-icon needs-improvement">△</div>
+                            <span>Budget Optimization</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Multi-Stakeholder Coordination -->
+                <div class="stakeholder-management">
+                    <h3 style="margin-bottom: 20px;">🤝 Stakeholder Coordination</h3>
+                    <div class="stakeholder-grid">
+                        <div class="stakeholder-sector">
+                            <h4>Citizens & Communities</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">2.3M constituents</p>
+                            <div style="background: #4CAF50; height: 4px; border-radius: 2px; margin: 5px 0;"></div>
+                            <small>High engagement</small>
+                        </div>
+                        <div class="stakeholder-sector">
+                            <h4>Private Sector</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">1,247 partnerships</p>
+                            <div style="background: #FF9800; height: 4px; border-radius: 2px; margin: 5px 0;"></div>
+                            <small>Active collaboration</small>
+                        </div>
+                        <div class="stakeholder-sector">
+                            <h4>Civil Society</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">89 NGO partnerships</p>
+                            <div style="background: #4CAF50; height: 4px; border-radius: 2px; margin: 5px 0;"></div>
+                            <small>Strong relationships</small>
+                        </div>
+                        <div class="stakeholder-sector">
+                            <h4>International Bodies</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">23 agreements</p>
+                            <div style="background: #2196F3; height: 4px; border-radius: 2px; margin: 5px 0;"></div>
+                            <small>Cooperative</small>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <button class="action-btn" onclick="coordinateStakeholders()">🌐 Coordinate Stakeholders</button>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div style="background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 20px;">
+                    <h4 style="margin-bottom: 15px;">⚡ Quick Actions</h4>
+                    <button class="action-btn" onclick="assessCitizenNeeds()" style="margin-bottom: 10px;">👥 Assess Citizen Needs</button>
+                    <button class="action-btn" onclick="optimizeBudget()" style="margin-bottom: 10px;">💰 Optimize Budget</button>
+                    <button class="action-btn" onclick="monitorCompliance()">⚖️ Monitor Compliance</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Strategic Frameworks Grid -->
+        <div class="frameworks-grid">
+            <!-- Policy Development Framework -->
+            <div class="framework-card" onclick="openFramework('policy-development')">
+                <div class="framework-header">
+                    <div class="framework-icon">📋</div>
+                    <div>
+                        <div class="framework-title">Policy Development</div>
+                        <div class="gov-focus">Evidence-Based</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Policy research and analysis</li>
+                    <li>Stakeholder consultation framework</li>
+                    <li>Impact assessment methodology</li>
+                    <li>Implementation planning</li>
+                </ul>
+                <button class="action-btn">📋 Develop Policy</button>
+            </div>
+            
+            <!-- Public Service Optimization -->
+            <div class="framework-card" onclick="openFramework('service-optimization')">
+                <div class="framework-header">
+                    <div class="framework-icon">⚙️</div>
+                    <div>
+                        <div class="framework-title">Service Optimization</div>
+                        <div class="gov-focus">Citizen-Centric</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Service delivery analysis</li>
+                    <li>Process improvement methods</li>
+                    <li>Digital transformation roadmap</li>
+                    <li>Performance measurement</li>
+                </ul>
+                <button class="action-btn primary">⚙️ Optimize Services</button>
+            </div>
+            
+            <!-- Citizen Impact Measurement -->
+            <div class="framework-card" onclick="openFramework('citizen-impact')">
+                <div class="framework-header">
+                    <div class="framework-icon">📊</div>
+                    <div>
+                        <div class="framework-title">Citizen Impact</div>
+                        <div class="gov-focus">Outcome-Focused</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Citizen satisfaction surveys</li>
+                    <li>Social outcome indicators</li>
+                    <li>Quality of life metrics</li>
+                    <li>Public value assessment</li>
+                </ul>
+                <button class="action-btn">📊 Measure Impact</button>
+            </div>
+            
+            <!-- Multi-Stakeholder Coordination -->
+            <div class="framework-card" onclick="openFramework('stakeholder-coordination')">
+                <div class="framework-header">
+                    <div class="framework-icon">🤝</div>
+                    <div>
+                        <div class="framework-title">Stakeholder Coordination</div>
+                        <div class="gov-focus">Collaborative</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Stakeholder mapping and analysis</li>
+                    <li>Multi-sector partnership models</li>
+                    <li>Conflict resolution frameworks</li>
+                    <li>Consensus building methods</li>
+                </ul>
+                <button class="action-btn">🤝 Coordinate Stakeholders</button>
+            </div>
+            
+            <!-- Governance & Compliance -->
+            <div class="framework-card" onclick="openFramework('governance-compliance')">
+                <div class="framework-header">
+                    <div class="framework-icon">⚖️</div>
+                    <div>
+                        <div class="framework-title">Governance & Compliance</div>
+                        <div class="gov-focus">Regulatory</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Compliance monitoring systems</li>
+                    <li>Risk assessment frameworks</li>
+                    <li>Audit and oversight protocols</li>
+                    <li>Transparency mechanisms</li>
+                </ul>
+                <button class="action-btn success">⚖️ Ensure Compliance</button>
+            </div>
+            
+            <!-- Digital Government -->
+            <div class="framework-card" onclick="openFramework('digital-government')">
+                <div class="framework-header">
+                    <div class="framework-icon">💻</div>
+                    <div>
+                        <div class="framework-title">Digital Government</div>
+                        <div class="gov-focus">Innovation</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Digital transformation strategy</li>
+                    <li>E-government service design</li>
+                    <li>Data governance frameworks</li>
+                    <li>Cybersecurity protocols</li>
+                </ul>
+                <button class="action-btn">💻 Digitize Government</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Framework Modal -->
+    <div id="frameworkModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">Government Framework</h3>
+            <div class="tabs">
+                <div class="tab active" onclick="showTab('overview')">Overview</div>
+                <div class="tab" onclick="showTab('methodology')">Methodology</div>
+                <div class="tab" onclick="showTab('implementation')">Implementation</div>
+                <div class="tab" onclick="showTab('compliance')">Compliance</div>
+            </div>
+            <div id="modalContent">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Government Platform State Management
+        let governmentState = {
+            governanceMetrics: {
+                citizenSatisfaction: 78,
+                serviceEfficiency: 84,
+                policyCompliance: 91,
+                transparencyScore: 4.1,
+                digitalAdoption: 67,
+                budgetEfficiency: 73
+            },
+            policyPipeline: [
+                { name: "Digital Services Act", status: "research", progress: 35 },
+                { name: "Climate Action Framework", status: "consultation", progress: 65 },
+                { name: "Healthcare Modernization", status: "implementation", progress: 85 },
+                { name: "Education Technology", status: "evaluation", progress: 92 }
+            ],
+            governanceScore: 79,
+            stakeholderEngagement: {
+                citizens: 'high',
+                privateSector: 'medium',
+                civilSociety: 'high',
+                international: 'good'
+            }
+        };
+
+        // Framework Functions
+        function openFramework(framework) {
+            const frameworks = {
+                'policy-development': {
+                    title: '📋 Policy Development Framework',
+                    overview: `
+                        <h4 style="color: #FFB74D; margin-bottom: 15px;">🎯 Evidence-Based Policy Creation</h4>
+                        <p>Comprehensive framework for developing effective public policies through systematic research and stakeholder engagement.</p>
+                        <ul style="margin: 15px 0; padding-left: 20px;">
+                            <li>Policy research and evidence gathering</li>
+                            <li>Multi-stakeholder consultation processes</li>
+                            <li>Regulatory impact assessment (RIA)</li>
+                            <li>Implementation planning and monitoring</li>
+                            <li>Evaluation and review mechanisms</li>
+                        </ul>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                            <strong>Current Policy Compliance: ${governmentState.governanceMetrics.policyCompliance}%</strong><br>
+                            <small>Active policies in pipeline: ${governmentState.policyPipeline.length}</small>
+                        </div>
+                    `,
+                    methodology: `
+                        <h4 style="color: #FFB74D; margin-bottom: 15px;">📊 Policy Development Methodology</h4>
+                        <div style="margin: 15px 0;">
+                            <strong>Stage 1: Research & Analysis</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Problem identification and definition</li>
+                                <li>Literature review and best practice analysis</li>
+                                <li>Stakeholder mapping and needs assessment</li>
+                                <li>Data collection and evidence gathering</li>
+                            </ul>
+                            
+                            <strong>Stage 2: Policy Options Development</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Alternative policy options generation</li>
+                                <li>Cost-benefit analysis</li>
+                                <li>Risk assessment and mitigation planning</li>
+                                <li>Legal and constitutional review</li>
+                            </ul>
+                            
+                            <strong>Stage 3: Consultation & Refinement</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Public consultation process</li>
+                                <li>Expert panel reviews</li>
+                                <li>Parliamentary committee input</li>
+                                <li>Policy refinement and finalization</li>
+                            </ul>
+                        </div>
+                    `,
+                    implementation: `
+                        <h4 style="color: #FFB74D; margin-bottom: 15px;">🚀 Implementation Strategy</h4>
+                        <div style="margin: 15px 0;">
+                            <strong>Phase 1: Pre-Implementation (Months 1-3)</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Develop implementation guidelines</li>
+                                <li>Establish monitoring and evaluation framework</li>
+                                <li>Train implementation teams</li>
+                                <li>Set up communication strategy</li>
+                            </ul>
+                            
+                            <strong>Phase 2: Pilot Implementation (Months 4-6)</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Launch pilot programs</li>
+                                <li>Monitor early indicators</li>
+                                <li>Gather stakeholder feedback</li>
+                                <li>Make necessary adjustments</li>
+                            </ul>
+                            
+                            <strong>Phase 3: Full Rollout (Months 7-12)</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Scale implementation nationwide</li>
+                                <li>Continue monitoring and evaluation</li>
+                                <li>Provide ongoing support and training</li>
+                                <li>Regular review and optimization</li>
+                            </ul>
+                        </div>
+                    `,
+                    compliance: `
+                        <h4 style="color: #FFB74D; margin-bottom: 15px;">⚖️ Compliance & Governance</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
+                            <div style="background: rgba(76,175,80,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>Policy Compliance</strong><br>
+                                <span style="font-size: 1.5rem; color: #4CAF50;">${governmentState.governanceMetrics.policyCompliance}%</span><br>
+                                <small>Regulatory adherence</small>
+                            </div>
+                            <div style="background: rgba(255,152,0,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>Transparency Score</strong><br>
+                                <span style="font-size: 1.5rem; color: #FF9800;">${governmentState.governanceMetrics.transparencyScore}/5</span><br>
+                                <small>Public accountability</small>
+                            </div>
+                            <div style="background: rgba(33,150,243,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>Audit Score</strong><br>
+                                <span style="font-size: 1.5rem; color: #2196F3;">87%</span><br>
+                                <small>Compliance rating</small>
+                            </div>
+                        </div>
+                    `
+                },
+                'service-optimization': {
+                    title: '⚙️ Public Service Optimization',
+                    overview: `
+                        <h4 style="color: #FFB74D; margin-bottom: 15px;">⚙️ Citizen-Centric Service Excellence</h4>
+                        <p>Systematic approach to optimizing public service delivery for maximum citizen value and operational efficiency.</p>
+                        <ul style="margin: 15px 0; padding-left: 20px;">
+                            <li>Service journey mapping and analysis</li>
+                            <li>Process improvement and automation</li>
+                            <li>Digital transformation roadmap</li>
+                            <li>Performance measurement and KPIs</li>
+                            <li>Continuous improvement culture</li>
+                        </ul>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                            <strong>Service Efficiency: ${governmentState.governanceMetrics.serviceEfficiency}%</strong><br>
+                            <small>Digital adoption rate: ${governmentState.governanceMetrics.digitalAdoption}%</small>
+                        </div>
+                    `,
+                    methodology: `
+                        <h4 style="color: #FFB74D; margin-bottom: 15px;">📋 Service Optimization Methodology</h4>
+                        <div style="margin: 15px 0;">
+                            <strong>1. Service Assessment & Mapping</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Current state service mapping</li>
+                                <li>Citizen journey analysis</li>
+                                <li>Pain point identification</li>
+                                <li>Performance baseline establishment</li>
+                            </ul>
+                            
+                            <strong>2. Optimization Design</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Future state design</li>
+                                <li>Process reengineering</li>
+                                <li>Technology integration planning</li>
+                                <li>Change management strategy</li>
+                            </ul>
+                            
+                            <strong>3. Implementation & Monitoring</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Phased implementation approach</li>
+                                <li>Staff training and development</li>
+                                <li>Performance monitoring</li>
+                                <li>Continuous improvement cycles</li>
+                            </ul>
+                        </div>
+                    `,
+                    implementation: `
+                        <h4 style="color: #FFB74D; margin-bottom: 15px;">🎯 Implementation Roadmap</h4>
+                        <div style="margin: 15px 0;">
+                            <strong>Quick Wins (0-3 months)</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Eliminate redundant steps</li>
+                                <li>Digitize paper-based processes</li>
+                                <li>Improve communication channels</li>
+                                <li>Staff training programs</li>
+                            </ul>
+                            
+                            <strong>Medium-term (3-12 months)</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Implement digital service platforms</li>
+                                <li>Integrate departmental systems</li>
+                                <li>Establish citizen feedback loops</li>
+                                <li>Deploy performance dashboards</li>
+                            </ul>
+                            
+                            <strong>Long-term (12+ months)</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Advanced AI and automation</li>
+                                <li>Predictive service delivery</li>
+                                <li>Cross-government integration</li>
+                                <li>Innovation lab establishment</li>
+                            </ul>
+                        </div>
+                    `,
+                    compliance: `
+                        <h4 style="color: #FFB74D; margin-bottom: 15px;">📊 Service Performance Metrics</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
+                            <div style="background: rgba(76,175,80,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>Service Efficiency</strong><br>
+                                <span style="font-size: 1.5rem; color: #4CAF50;">${governmentState.governanceMetrics.serviceEfficiency}%</span><br>
+                                <small>Process optimization</small>
+                            </div>
+                            <div style="background: rgba(33,150,243,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>Citizen Satisfaction</strong><br>
+                                <span style="font-size: 1.5rem; color: #2196F3;">${governmentState.governanceMetrics.citizenSatisfaction}%</span><br>
+                                <small>Service quality</small>
+                            </div>
+                            <div style="background: rgba(255,193,7,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>Digital Adoption</strong><br>
+                                <span style="font-size: 1.5rem; color: #FFC107;">${governmentState.governanceMetrics.digitalAdoption}%</span><br>
+                                <small>Online services</small>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+
+            const frameworkData = frameworks[framework] || frameworks['policy-development'];
+            document.getElementById('modalTitle').textContent = frameworkData.title;
+            
+            // Set initial content to overview
+            showFrameworkTab('overview', frameworkData);
+            document.getElementById('frameworkModal').style.display = 'block';
+        }
+
+        function showFrameworkTab(tabName, frameworkData) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Update content based on tab
+            const content = frameworkData[tabName] || frameworkData.overview;
+            document.getElementById('modalContent').innerHTML = content;
+        }
+
+        function showTab(tabName) {
+            // This is a simplified version for when framework data isn't available
+            const defaultContent = {
+                overview: '<h4>Framework Overview</h4><p>Select a specific framework to see detailed information.</p>',
+                methodology: '<h4>Methodology</h4><p>Step-by-step methodology and best practices.</p>',
+                implementation: '<h4>Implementation Guide</h4><p>Implementation strategies and timelines.</p>',
+                compliance: '<h4>Compliance & Governance</h4><p>Regulatory compliance and governance requirements.</p>'
+            };
+            
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('modalContent').innerHTML = defaultContent[tabName];
+        }
+
+        function closeModal() {
+            document.getElementById('frameworkModal').style.display = 'none';
+        }
+
+        // Quick Action Functions
+        function managePolicies() {
+            alert('📋 Policy Pipeline Management\n\nCurrent Policy Status:\n\n🔬 Research Phase:\n• Digital Services Act (35% complete)\n\n💬 Consultation Phase:\n• Climate Action Framework (65% complete)\n\n🚀 Implementation Phase:\n• Healthcare Modernization (85% complete)\n\n📊 Evaluation Phase:\n• Education Technology (92% complete)\n\nNext actions and recommendations provided.');
+        }
+
+        function generatePolicyReport() {
+            alert('📊 Comprehensive Policy Report Generated\n\nReport includes:\n\n📈 Policy Performance Dashboard\n• Implementation progress across all policies\n• Stakeholder engagement metrics\n• Compliance and regulatory status\n\n📋 Detailed Analysis\n• Policy impact assessment\n• Resource utilization analysis\n• Risk and mitigation strategies\n\n📊 Recommendations\n• Priority actions for each policy\n• Resource reallocation suggestions\n• Timeline optimizations\n\nReport ready for download and stakeholder distribution.');
+        }
+
+        function coordinateStakeholders() {
+            alert('🌐 Multi-Stakeholder Coordination Platform\n\nStakeholder Engagement Summary:\n\n👥 Citizens & Communities: 2.3M constituents (High engagement)\n🏢 Private Sector: 1,247 active partnerships\n🤝 Civil Society: 89 NGO collaborations\n🌍 International Bodies: 23 cooperative agreements\n\n🎯 Coordination Activities:\n• Weekly multi-sector meetings\n• Quarterly stakeholder forums\n• Annual strategic planning sessions\n• Real-time feedback systems\n\nCoordination dashboard activated.');
+        }
+
+        function assessCitizenNeeds() {
+            alert('👥 Citizen Needs Assessment\n\nComprehensive needs analysis:\n\n📊 Survey Results (12,450 responses):\n• Top Priority: Healthcare access (78%)\n• Second Priority: Digital services (65%)\n• Third Priority: Transportation (58%)\n\n📈 Satisfaction Levels:\n• Overall satisfaction: 78%\n• Service accessibility: 82%\n• Response time: 74%\n\n💡 Recommendations:\n• Expand telehealth services\n• Accelerate digital transformation\n• Improve public transport connectivity');
+        }
+
+        function optimizeBudget() {
+            alert('💰 Budget Optimization Analysis\n\n📊 Current Budget Efficiency: 73%\n\n🎯 Optimization Opportunities:\n• Reduce administrative overhead by 12%\n• Reallocate 8% to high-impact programs\n• Implement shared services for 15% savings\n\n💡 Recommendations:\n• Consolidate back-office functions\n• Invest in automation technology\n• Establish performance-based budgeting\n\nProjected efficiency improvement: +18% within 12 months');
+        }
+
+        function monitorCompliance() {
+            alert('⚖️ Compliance Monitoring Dashboard\n\n📊 Overall Compliance Score: 91%\n\n✅ High Compliance Areas:\n• Financial regulations: 96%\n• Data protection: 94%\n• Environmental standards: 89%\n\n⚠️ Areas for Improvement:\n• Procurement processes: 85%\n• Information disclosure: 82%\n\n🎯 Action Items:\n• Update procurement guidelines\n• Enhance transparency protocols\n• Schedule compliance training\n\nMonitoring alerts activated for real-time tracking.');
+        }
+
+        // Simulate real-time metric updates
+        function updateMetrics() {
+            const fluctuation = () => (Math.random() - 0.5) * 0.01; // ±0.5% change
+            
+            governmentState.governanceMetrics.citizenSatisfaction = Math.max(70, Math.min(85, governmentState.governanceMetrics.citizenSatisfaction * (1 + fluctuation())));
+            governmentState.governanceMetrics.serviceEfficiency = Math.max(80, Math.min(90, governmentState.governanceMetrics.serviceEfficiency * (1 + fluctuation())));
+            
+            // Update display
+            document.getElementById('citizenSatisfaction').textContent = Math.floor(governmentState.governanceMetrics.citizenSatisfaction) + '%';
+            document.getElementById('serviceEfficiency').textContent = Math.floor(governmentState.governanceMetrics.serviceEfficiency) + '%';
+        }
+
+        // Initialize government platform
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🏛️ Government Strategic Suite initialized');
+            
+            // Update metrics every 90 seconds
+            setInterval(updateMetrics, 90000);
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('frameworkModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
