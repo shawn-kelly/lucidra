@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucidra Micro - Streamlined Strategy for Small Teams</title>
+    <script src="integration-framework.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, #fff, #64B5F6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .micro-badge {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 8px 0;
+            font-size: 0.8rem;
+        }
+        
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #64B5F6;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+        
+        .essential-tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .tool-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .tool-icon {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            border-radius: 10px;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tool-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .tool-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+        
+        .action-btn {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .action-btn.primary {
+            background: linear-gradient(45deg, #1976D2, #0D47A1);
+        }
+        
+        .action-btn.success {
+            background: linear-gradient(45deg, #4CAF50, #2E7D32);
+        }
+        
+        .quick-setup {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .setup-progress {
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: #4CAF50;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .setup-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .setup-step {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .step-number {
+            background: #2196F3;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .step-description {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .mobile-optimized {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .feature-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .feature-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            margin: 5% auto;
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            color: white;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        
+        .modal-close:hover {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .quick-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .essential-tools {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏘️ Lucidra Micro</h1>
+            <div class="micro-badge">Streamlined Strategy for Small Teams</div>
+            <p>Essential strategy tools optimized for simplicity and speed</p>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <div class="stat-card">
+                <div class="stat-value">5</div>
+                <div class="stat-label">Team Members</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">85%</div>
+                <div class="stat-label">Setup Complete</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Active Tools</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">12min</div>
+                <div class="stat-label">Avg. Session</div>
+            </div>
+        </div>
+        
+        <!-- Essential Tools -->
+        <div class="essential-tools">
+            <!-- One-Page Strategy -->
+            <div class="tool-card" onclick="openTool('one-page-strategy')">
+                <div class="tool-header">
+                    <div class="tool-icon">📋</div>
+                    <div class="tool-title">One-Page Strategy</div>
+                </div>
+                <div class="tool-description">
+                    Complete strategic overview on a single page. Perfect for small teams to align quickly on vision, goals, and priorities.
+                </div>
+                <button class="action-btn">📋 Build Strategy</button>
+            </div>
+            
+            <!-- Quick Goals -->
+            <div class="tool-card" onclick="openTool('quick-goals')">
+                <div class="tool-header">
+                    <div class="tool-icon">🎯</div>
+                    <div class="tool-title">Quick Goals</div>
+                </div>
+                <div class="tool-description">
+                    Set and track 3-5 essential goals. Simple progress tracking with visual indicators for immediate team alignment.
+                </div>
+                <button class="action-btn">🎯 Set Goals</button>
+            </div>
+            
+            <!-- Market Pulse -->
+            <div class="tool-card" onclick="openTool('market-pulse')">
+                <div class="tool-header">
+                    <div class="tool-icon">📊</div>
+                    <div class="tool-title">Market Pulse</div>
+                </div>
+                <div class="tool-description">
+                    Essential market insights in 5 minutes. Customer feedback, competitive positioning, and opportunity spotting.
+                </div>
+                <button class="action-btn primary">📊 Check Pulse</button>
+            </div>
+            
+            <!-- Resource Tracker -->
+            <div class="tool-card" onclick="openTool('resource-tracker')">
+                <div class="tool-header">
+                    <div class="tool-icon">💰</div>
+                    <div class="tool-title">Resource Tracker</div>
+                </div>
+                <div class="tool-description">
+                    Monitor budget, time, and team capacity. Simple resource allocation with automated alerts and recommendations.
+                </div>
+                <button class="action-btn">💰 Track Resources</button>
+            </div>
+            
+            <!-- Growth Actions -->
+            <div class="tool-card" onclick="openTool('growth-actions')">
+                <div class="tool-header">
+                    <div class="tool-icon">🚀</div>
+                    <div class="tool-title">Growth Actions</div>
+                </div>
+                <div class="tool-description">
+                    Prioritized action list for growth. AI-suggested next steps based on your business stage and available resources.
+                </div>
+                <button class="action-btn success">🚀 Get Actions</button>
+            </div>
+            
+            <!-- Quick Check-in -->
+            <div class="tool-card" onclick="openTool('quick-checkin')">
+                <div class="tool-header">
+                    <div class="tool-icon">✅</div>
+                    <div class="tool-title">Quick Check-in</div>
+                </div>
+                <div class="tool-description">
+                    Weekly 5-minute team check-in. Progress updates, blockers, and next week's priorities in a streamlined format.
+                </div>
+                <button class="action-btn">✅ Check In</button>
+            </div>
+        </div>
+        
+        <!-- Quick Setup Section -->
+        <div class="quick-setup">
+            <h3 style="margin-bottom: 15px;">⚡ 5-Minute Setup</h3>
+            <p style="opacity: 0.9; margin-bottom: 20px;">Get your team's strategy aligned in minutes, not hours</p>
+            
+            <div class="setup-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85%;"></div>
+                </div>
+                <p style="font-size: 0.9rem; opacity: 0.8;">Setup Progress: 85% Complete</p>
+            </div>
+            
+            <div class="setup-steps">
+                <div class="setup-step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Team Info</div>
+                    <div class="step-description">Basic team details and roles (2 min)</div>
+                </div>
+                <div class="setup-step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Core Goals</div>
+                    <div class="step-description">3 main objectives for next quarter (2 min)</div>
+                </div>
+                <div class="setup-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Quick Launch</div>
+                    <div class="step-description">Activate tools and start tracking (1 min)</div>
+                </div>
+            </div>
+            
+            <button class="action-btn primary" onclick="completeSetup()" style="max-width: 200px; margin-top: 20px;">⚡ Complete Setup</button>
+        </div>
+        
+        <!-- Mobile-Optimized Features -->
+        <div class="mobile-optimized">
+            <h3 style="margin-bottom: 15px;">📱 Mobile-First Design</h3>
+            <p style="opacity: 0.9; margin-bottom: 15px;">Access your strategy anywhere, update on the go</p>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-name">Mobile Dashboard</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-name">Quick Updates</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-name">Auto Sync</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔔</div>
+                    <div class="feature-name">Smart Alerts</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-name">Visual Progress</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-name">Focus Mode</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Lean Methodology Integration -->
+        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 20px; margin: 20px 0;">
+            <h3 style="margin-bottom: 15px;">💡 Lean Methodology Built-In</h3>
+            <p style="opacity: 0.9; margin-bottom: 20px;">Eliminate waste, focus on value, iterate quickly</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                <div style="background: rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 15px;">
+                    <h4 style="color: #64B5F6; margin-bottom: 10px;">🎯 Value Focus</h4>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">Every tool focuses on creating customer value with minimal complexity</p>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 15px;">
+                    <h4 style="color: #64B5F6; margin-bottom: 10px;">🔄 Rapid Iteration</h4>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">Quick feedback loops and continuous improvement cycles</p>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 15px;">
+                    <h4 style="color: #64B5F6; margin-bottom: 10px;">📏 Waste Elimination</h4>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">Streamlined processes that eliminate unnecessary complexity</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="action-btn" onclick="learnLean()">💡 Learn Lean Principles</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tool Modal -->
+    <div id="toolModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">Micro Tool</h3>
+            <div id="modalContent">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Micro Organization State Management
+        let microState = {
+            teamSize: 5,
+            setupProgress: 85,
+            activeTools: 3,
+            avgSessionTime: 12,
+            tools: {
+                'one-page-strategy': { completed: false, lastUsed: null },
+                'quick-goals': { completed: true, lastUsed: '2025-01-14' },
+                'market-pulse': { completed: true, lastUsed: '2025-01-15' },
+                'resource-tracker': { completed: true, lastUsed: '2025-01-16' },
+                'growth-actions': { completed: false, lastUsed: null },
+                'quick-checkin': { completed: false, lastUsed: null }
+            }
+        };
+
+        // Tool Functions
+        function openTool(tool) {
+            const tools = {
+                'one-page-strategy': {
+                    title: '📋 One-Page Strategy Canvas',
+                    content: `
+                        <div style="margin: 20px 0;">
+                            <h4 style="color: #64B5F6; margin-bottom: 15px;">🎯 Strategic Overview</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                                    <strong>Vision (What)</strong><br>
+                                    <textarea style="width: 100%; height: 60px; margin-top: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; color: white; padding: 8px;" placeholder="What do we want to achieve?"></textarea>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                                    <strong>Mission (Why)</strong><br>
+                                    <textarea style="width: 100%; height: 60px; margin-top: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; color: white; padding: 8px;" placeholder="Why does this matter?"></textarea>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                                    <strong>Values (How)</strong><br>
+                                    <textarea style="width: 100%; height: 60px; margin-top: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; color: white; padding: 8px;" placeholder="How do we behave?"></textarea>
+                                </div>
+                            </div>
+                            
+                            <h4 style="color: #64B5F6; margin: 20px 0 15px;">🎯 Core Objectives (Next 90 Days)</h4>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                                <div style="margin-bottom: 10px;">
+                                    <strong>1. Primary Goal:</strong>
+                                    <input type="text" style="width: 100%; margin-top: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; color: white; padding: 8px;" placeholder="Most important outcome for the quarter">
+                                </div>
+                                <div style="margin-bottom: 10px;">
+                                    <strong>2. Supporting Goal:</strong>
+                                    <input type="text" style="width: 100%; margin-top: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; color: white; padding: 8px;" placeholder="Key supporting objective">
+                                </div>
+                                <div style="margin-bottom: 10px;">
+                                    <strong>3. Growth Goal:</strong>
+                                    <input type="text" style="width: 100%; margin-top: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; color: white; padding: 8px;" placeholder="Stretch or innovation goal">
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 20px;">
+                                <button onclick="saveStrategy()" style="background: linear-gradient(45deg, #4CAF50, #2E7D32); border: none; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; margin-right: 10px;">💾 Save Strategy</button>
+                                <button onclick="shareStrategy()" style="background: linear-gradient(45deg, #2196F3, #1976D2); border: none; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer;">📤 Share with Team</button>
+                            </div>
+                        </div>
+                    `
+                },
+                'quick-goals': {
+                    title: '🎯 Quick Goals Dashboard',
+                    content: `
+                        <div style="margin: 20px 0;">
+                            <h4 style="color: #64B5F6; margin-bottom: 15px;">📊 Current Goals Progress</h4>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <strong>Increase monthly revenue to $25K</strong>
+                                        <span style="color: #4CAF50; font-weight: 600;">78%</span>
+                                    </div>
+                                    <div style="background: rgba(255,255,255,0.2); height: 6px; border-radius: 3px;">
+                                        <div style="background: #4CAF50; height: 100%; width: 78%; border-radius: 3px;"></div>
+                                    </div>
+                                    <small style="opacity: 0.8;">Target: End of month | Current: $19.5K</small>
+                                </div>
+                                
+                                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <strong>Launch new product feature</strong>
+                                        <span style="color: #FF9800; font-weight: 600;">45%</span>
+                                    </div>
+                                    <div style="background: rgba(255,255,255,0.2); height: 6px; border-radius: 3px;">
+                                        <div style="background: #FF9800; height: 100%; width: 45%; border-radius: 3px;"></div>
+                                    </div>
+                                    <small style="opacity: 0.8;">Target: Next Friday | Status: Development phase</small>
+                                </div>
+                                
+                                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <strong>Improve customer satisfaction to 4.5/5</strong>
+                                        <span style="color: #4CAF50; font-weight: 600;">90%</span>
+                                    </div>
+                                    <div style="background: rgba(255,255,255,0.2); height: 6px; border-radius: 3px;">
+                                        <div style="background: #4CAF50; height: 100%; width: 90%; border-radius: 3px;"></div>
+                                    </div>
+                                    <small style="opacity: 0.8;">Target: Ongoing | Current: 4.4/5</small>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <button onclick="addGoal()" style="background: linear-gradient(45deg, #2196F3, #1976D2); border: none; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; margin-right: 10px;">➕ Add Goal</button>
+                                <button onclick="reviewGoals()" style="background: linear-gradient(45deg, #4CAF50, #2E7D32); border: none; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer;">📋 Weekly Review</button>
+                            </div>
+                        </div>
+                    `
+                },
+                'market-pulse': {
+                    title: '📊 Market Pulse Check',
+                    content: `
+                        <div style="margin: 20px 0;">
+                            <h4 style="color: #64B5F6; margin-bottom: 15px;">🎯 5-Minute Market Insight</h4>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                                <div style="background: rgba(76,175,80,0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                                    <h4>Customer Satisfaction</h4>
+                                    <div style="font-size: 2rem; font-weight: 700; color: #4CAF50;">4.4/5</div>
+                                    <small>↗ +0.2 this week</small>
+                                </div>
+                                <div style="background: rgba(255,193,7,0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                                    <h4>Market Position</h4>
+                                    <div style="font-size: 2rem; font-weight: 700; color: #FFC107;">#3</div>
+                                    <small>in local market</small>
+                                </div>
+                                <div style="background: rgba(33,150,243,0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                                    <h4>Growth Rate</h4>
+                                    <div style="font-size: 2rem; font-weight: 700; color: #2196F3;">12%</div>
+                                    <small>monthly</small>
+                                </div>
+                            </div>
+                            
+                            <h4 style="color: #64B5F6; margin-bottom: 10px;">🔍 Quick Insights</h4>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                                <div style="margin-bottom: 10px;">
+                                    <strong>✅ What's Working:</strong>
+                                    <p style="margin: 5px 0; font-size: 0.9rem;">Customer service improvements leading to higher satisfaction scores</p>
+                                </div>
+                                <div style="margin-bottom: 10px;">
+                                    <strong>⚠️ Needs Attention:</strong>
+                                    <p style="margin: 5px 0; font-size: 0.9rem;">Competitor launched similar feature - need to differentiate</p>
+                                </div>
+                                <div>
+                                    <strong>🎯 Opportunity:</strong>
+                                    <p style="margin: 5px 0; font-size: 0.9rem;">Underserved market segment identified through customer feedback</p>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <button onclick="updatePulse()" style="background: linear-gradient(45deg, #2196F3, #1976D2); border: none; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; margin-right: 10px;">🔄 Update Pulse</button>
+                                <button onclick="detailedAnalysis()" style="background: linear-gradient(45deg, #4CAF50, #2E7D32); border: none; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer;">📊 Detailed Analysis</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+
+            const toolData = tools[tool] || { title: 'Tool', content: '<p>Tool content will be loaded here.</p>' };
+            document.getElementById('modalTitle').textContent = toolData.title;
+            document.getElementById('modalContent').innerHTML = toolData.content;
+            document.getElementById('toolModal').style.display = 'block';
+            
+            // Mark tool as used
+            microState.tools[tool].lastUsed = new Date().toISOString().split('T')[0];
+        }
+
+        function closeModal() {
+            document.getElementById('toolModal').style.display = 'none';
+        }
+
+        // Tool-specific functions
+        function saveStrategy() {
+            alert('📋 Strategy Saved!\n\nYour one-page strategy has been saved and shared with your team. Everyone will receive a notification with the updated strategic overview.');
+            closeModal();
+        }
+
+        function shareStrategy() {
+            alert('📤 Strategy Shared!\n\nYour team members have been notified:\n• Link sent via email and Slack\n• Available in mobile app\n• Printable PDF generated\n\nTeam can now align on the updated strategy.');
+        }
+
+        function addGoal() {
+            alert('➕ Add New Goal\n\nSimple goal creation:\n1. Goal description (what)\n2. Target date (when)\n3. Success metric (how to measure)\n4. Assign owner (who)\n\nKeep it simple - focus on outcomes, not activities.');
+        }
+
+        function reviewGoals() {
+            alert('📋 Weekly Goal Review\n\n5-minute team check:\n✅ What did we accomplish?\n⚠️ What blocked us?\n🎯 What are next week\'s priorities?\n\nUpdate progress and adjust targets as needed.');
+        }
+
+        function updatePulse() {
+            alert('🔄 Market Pulse Updated!\n\nLatest insights:\n• Customer feedback analyzed\n• Competitor activity monitored\n• Market trends identified\n• Opportunities highlighted\n\nRecommendations generated for next actions.');
+        }
+
+        function detailedAnalysis() {
+            alert('📊 Detailed Market Analysis\n\nComprehensive report includes:\n• Customer segment analysis\n• Competitive positioning\n• Market opportunity sizing\n• Risk assessment\n• Action recommendations\n\nReport will be ready in 2 minutes.');
+        }
+
+        function completeSetup() {
+            if (microState.setupProgress < 100) {
+                microState.setupProgress = 100;
+                document.querySelector('.progress-fill').style.width = '100%';
+                
+                alert('🎉 Setup Complete!\n\nYour Lucidra Micro platform is ready:\n\n✅ Team information configured\n✅ Core goals established\n✅ Tools activated\n✅ Mobile access enabled\n\nYou can now start using all strategy tools!');
+                
+                // Update UI
+                document.querySelector('.progress-bar + p').textContent = 'Setup Progress: 100% Complete';
+            }
+        }
+
+        function learnLean() {
+            alert('💡 Lean Principles for Small Teams\n\n🎯 Value Focus:\n• Identify what customers truly value\n• Eliminate activities that don\'t add value\n• Measure impact, not just activity\n\n🔄 Rapid Iteration:\n• Plan → Build → Measure → Learn\n• Short feedback cycles (weekly)\n• Quick adjustments based on data\n\n📏 Waste Elimination:\n• Reduce unnecessary meetings\n• Streamline approval processes\n• Focus on essential features only');
+        }
+
+        // Initialize micro platform
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🏘️ Lucidra Micro Platform initialized');
+            
+            // Update active tools count
+            const activeCount = Object.values(microState.tools).filter(tool => tool.completed).length;
+            document.querySelector('.stat-card:nth-child(3) .stat-value').textContent = activeCount;
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('toolModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

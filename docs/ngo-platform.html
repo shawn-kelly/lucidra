@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucidra NGO Suite - Mission-Driven Strategic Intelligence</title>
+    <script src="integration-framework.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #9C27B0 0%, #673AB7 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #CE93D8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .ngo-badge {
+            background: linear-gradient(45deg, #9C27B0, #673AB7);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        
+        .main-dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .primary-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value.high-impact { color: #4CAF50; }
+        .metric-value.growing { color: #8BC34A; }
+        .metric-value.stable { color: #FFC107; }
+        .metric-value.needs-focus { color: #FF9800; }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .metric-trend {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+        
+        .frameworks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .framework-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .framework-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .framework-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .framework-icon {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #9C27B0, #673AB7);
+            border-radius: 15px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .framework-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .ngo-focus {
+            background: rgba(156, 39, 176, 0.2);
+            border: 1px solid rgba(156, 39, 176, 0.5);
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+        
+        .framework-features {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        
+        .framework-features li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .framework-features li::before {
+            content: '🌍';
+            position: absolute;
+            left: 0;
+        }
+        
+        .action-btn {
+            background: linear-gradient(45deg, #9C27B0, #673AB7);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .action-btn.primary {
+            background: linear-gradient(45deg, #673AB7, #512DA8);
+        }
+        
+        .action-btn.success {
+            background: linear-gradient(45deg, #4CAF50, #2E7D32);
+        }
+        
+        .impact-dashboard {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .impact-score {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .score-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #9C27B0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: rgba(156, 39, 176, 0.1);
+        }
+        
+        .impact-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .impact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .impact-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+        
+        .impact-icon.high {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .impact-icon.medium {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .impact-icon.developing {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .sustainability-tracker {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .sustainability-goals {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .sdg-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border-left: 4px solid #9C27B0;
+        }
+        
+        .sdg-number {
+            background: #9C27B0;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin: 0 auto 10px;
+        }
+        
+        .stakeholder-engagement {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .stakeholder-map {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stakeholder-group {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .stakeholder-group h4 {
+            color: #CE93D8;
+            margin-bottom: 10px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #9C27B0 0%, #673AB7 100%);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            color: white;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        
+        .modal-close:hover {
+            opacity: 1;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            border-bottom-color: #9C27B0;
+            background: rgba(156, 39, 176, 0.2);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .main-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .impact-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .frameworks-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Lucidra NGO Suite</h1>
+            <div class="ngo-badge">Mission-Driven Strategic Intelligence</div>
+            <p>Comprehensive strategic frameworks optimized for social impact and sustainability</p>
+        </div>
+        
+        <div class="main-dashboard">
+            <!-- Primary Dashboard -->
+            <div class="primary-panel">
+                <h2 style="margin-bottom: 20px;">📊 Social Impact Dashboard</h2>
+                
+                <!-- Key Impact Metrics -->
+                <div class="impact-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value high-impact" id="beneficiariesReached">15,420</div>
+                        <div class="metric-label">Beneficiaries Reached</div>
+                        <div class="metric-trend">↗ +18% YoY</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value growing" id="programsActive">12</div>
+                        <div class="metric-label">Active Programs</div>
+                        <div class="metric-trend">↗ +3 this year</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value high-impact" id="fundingEfficiency">87%</div>
+                        <div class="metric-label">Funding Efficiency</div>
+                        <div class="metric-trend">↗ +5% improved</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value stable" id="volunteerHours">2,840</div>
+                        <div class="metric-label">Volunteer Hours/Month</div>
+                        <div class="metric-trend">→ Stable</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value growing" id="partnershipCount">28</div>
+                        <div class="metric-label">Active Partnerships</div>
+                        <div class="metric-trend">↗ +7 new</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value high-impact" id="sustainabilityScore">4.2</div>
+                        <div class="metric-label">Sustainability Score</div>
+                        <div class="metric-trend">↗ +0.3 points</div>
+                    </div>
+                </div>
+                
+                <!-- Sustainability Development Goals Tracker -->
+                <div class="sustainability-tracker">
+                    <h3 style="margin-bottom: 20px;">🎯 SDG Alignment & Progress</h3>
+                    <div class="sustainability-goals">
+                        <div class="sdg-card">
+                            <div class="sdg-number">1</div>
+                            <h4>No Poverty</h4>
+                            <div style="background: rgba(255,255,255,0.2); height: 6px; border-radius: 3px; margin: 10px 0;">
+                                <div style="background: #4CAF50; height: 100%; width: 78%; border-radius: 3px;"></div>
+                            </div>
+                            <small>78% alignment</small>
+                        </div>
+                        
+                        <div class="sdg-card">
+                            <div class="sdg-number">4</div>
+                            <h4>Quality Education</h4>
+                            <div style="background: rgba(255,255,255,0.2); height: 6px; border-radius: 3px; margin: 10px 0;">
+                                <div style="background: #4CAF50; height: 100%; width: 85%; border-radius: 3px;"></div>
+                            </div>
+                            <small>85% alignment</small>
+                        </div>
+                        
+                        <div class="sdg-card">
+                            <div class="sdg-number">8</div>
+                            <h4>Decent Work</h4>
+                            <div style="background: rgba(255,255,255,0.2); height: 6px; border-radius: 3px; margin: 10px 0;">
+                                <div style="background: #FF9800; height: 100%; width: 62%; border-radius: 3px;"></div>
+                            </div>
+                            <small>62% alignment</small>
+                        </div>
+                        
+                        <div class="sdg-card">
+                            <div class="sdg-number">17</div>
+                            <h4>Partnerships</h4>
+                            <div style="background: rgba(255,255,255,0.2); height: 6px; border-radius: 3px; margin: 10px 0;">
+                                <div style="background: #4CAF50; height: 100%; width: 92%; border-radius: 3px;"></div>
+                            </div>
+                            <small>92% alignment</small>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; text-align: center;">
+                        <button class="action-btn primary" onclick="assessSDGAlignment()">🎯 Assess SDG Alignment</button>
+                        <button class="action-btn" onclick="generateImpactReport()">📊 Generate Impact Report</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Side Panel -->
+            <div>
+                <!-- Impact Effectiveness Score -->
+                <div class="impact-dashboard">
+                    <h3 style="margin-bottom: 20px;">🎯 Impact Effectiveness</h3>
+                    <div class="impact-score">
+                        <div>
+                            <h4>Overall Score</h4>
+                            <p style="opacity: 0.8;">Based on 6 key areas</p>
+                        </div>
+                        <div class="score-circle" id="impactScore">82%</div>
+                    </div>
+                    
+                    <div class="impact-areas">
+                        <div class="impact-item">
+                            <div class="impact-icon high">✓</div>
+                            <span>Program Delivery</span>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-icon high">✓</div>
+                            <span>Beneficiary Satisfaction</span>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-icon medium">△</div>
+                            <span>Financial Transparency</span>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-icon developing">○</div>
+                            <span>Digital Engagement</span>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-icon high">✓</div>
+                            <span>Partnership Quality</span>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-icon high">✓</div>
+                            <span>Sustainability Planning</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stakeholder Engagement Map -->
+                <div class="stakeholder-engagement">
+                    <h3 style="margin-bottom: 20px;">🤝 Stakeholder Engagement</h3>
+                    <div class="stakeholder-map">
+                        <div class="stakeholder-group">
+                            <h4>Beneficiaries</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">15,420 active</p>
+                            <div style="background: #4CAF50; height: 4px; border-radius: 2px; margin: 5px 0;"></div>
+                            <small>High engagement</small>
+                        </div>
+                        <div class="stakeholder-group">
+                            <h4>Donors</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">847 supporters</p>
+                            <div style="background: #4CAF50; height: 4px; border-radius: 2px; margin: 5px 0;"></div>
+                            <small>Strong relationship</small>
+                        </div>
+                        <div class="stakeholder-group">
+                            <h4>Volunteers</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">156 active</p>
+                            <div style="background: #FF9800; height: 4px; border-radius: 2px; margin: 5px 0;"></div>
+                            <small>Needs attention</small>
+                        </div>
+                        <div class="stakeholder-group">
+                            <h4>Partners</h4>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">28 organizations</p>
+                            <div style="background: #4CAF50; height: 4px; border-radius: 2px; margin: 5px 0;"></div>
+                            <small>Collaborative</small>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <button class="action-btn" onclick="mapStakeholders()">🗺️ Map All Stakeholders</button>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div style="background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 20px;">
+                    <h4 style="margin-bottom: 15px;">⚡ Quick Actions</h4>
+                    <button class="action-btn" onclick="assessProgram()" style="margin-bottom: 10px;">📋 Assess Program Impact</button>
+                    <button class="action-btn" onclick="planFundraising()" style="margin-bottom: 10px;">💰 Plan Fundraising</button>
+                    <button class="action-btn" onclick="engageVolunteers()">🤝 Engage Volunteers</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Strategic Frameworks Grid -->
+        <div class="frameworks-grid">
+            <!-- Impact Measurement Framework -->
+            <div class="framework-card" onclick="openFramework('impact-measurement')">
+                <div class="framework-header">
+                    <div class="framework-icon">📊</div>
+                    <div>
+                        <div class="framework-title">Impact Measurement</div>
+                        <div class="ngo-focus">Evidence-Based</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Theory of Change development</li>
+                    <li>Logic model construction</li>
+                    <li>Outcome and impact indicators</li>
+                    <li>Data collection and analysis</li>
+                </ul>
+                <button class="action-btn">📊 Measure Impact</button>
+            </div>
+            
+            <!-- Grant & Funding Strategy -->
+            <div class="framework-card" onclick="openFramework('funding-strategy')">
+                <div class="framework-header">
+                    <div class="framework-icon">💰</div>
+                    <div>
+                        <div class="framework-title">Grant & Funding Strategy</div>
+                        <div class="ngo-focus">Sustainable</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Funding landscape analysis</li>
+                    <li>Grant proposal optimization</li>
+                    <li>Donor relationship management</li>
+                    <li>Diversified revenue streams</li>
+                </ul>
+                <button class="action-btn primary">💰 Optimize Funding</button>
+            </div>
+            
+            <!-- Stakeholder Engagement Strategy -->
+            <div class="framework-card" onclick="openFramework('stakeholder-engagement')">
+                <div class="framework-header">
+                    <div class="framework-icon">🤝</div>
+                    <div>
+                        <div class="framework-title">Stakeholder Engagement</div>
+                        <div class="ngo-focus">Collaborative</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Stakeholder mapping and analysis</li>
+                    <li>Engagement strategy development</li>
+                    <li>Communication planning</li>
+                    <li>Partnership framework</li>
+                </ul>
+                <button class="action-btn">🤝 Engage Stakeholders</button>
+            </div>
+            
+            <!-- Program Design & Evaluation -->
+            <div class="framework-card" onclick="openFramework('program-design')">
+                <div class="framework-header">
+                    <div class="framework-icon">🎯</div>
+                    <div>
+                        <div class="framework-title">Program Design</div>
+                        <div class="ngo-focus">Results-Focused</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Needs assessment methodology</li>
+                    <li>Program logic development</li>
+                    <li>Risk assessment and mitigation</li>
+                    <li>Evaluation framework design</li>
+                </ul>
+                <button class="action-btn">🎯 Design Programs</button>
+            </div>
+            
+            <!-- Sustainability Planning -->
+            <div class="framework-card" onclick="openFramework('sustainability-planning')">
+                <div class="framework-header">
+                    <div class="framework-icon">🌱</div>
+                    <div>
+                        <div class="framework-title">Sustainability Planning</div>
+                        <div class="ngo-focus">Long-term</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Financial sustainability modeling</li>
+                    <li>Capacity building strategies</li>
+                    <li>Environmental impact assessment</li>
+                    <li>Social sustainability frameworks</li>
+                </ul>
+                <button class="action-btn success">🌱 Plan Sustainability</button>
+            </div>
+            
+            <!-- Advocacy & Policy -->
+            <div class="framework-card" onclick="openFramework('advocacy-policy')">
+                <div class="framework-header">
+                    <div class="framework-icon">📢</div>
+                    <div>
+                        <div class="framework-title">Advocacy & Policy</div>
+                        <div class="ngo-focus">Systemic Change</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Policy analysis and research</li>
+                    <li>Advocacy strategy development</li>
+                    <li>Coalition building</li>
+                    <li>Campaign planning and execution</li>
+                </ul>
+                <button class="action-btn">📢 Drive Change</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Framework Modal -->
+    <div id="frameworkModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">NGO Framework</h3>
+            <div class="tabs">
+                <div class="tab active" onclick="showTab('overview')">Overview</div>
+                <div class="tab" onclick="showTab('implementation')">Implementation</div>
+                <div class="tab" onclick="showTab('measurement')">Measurement</div>
+                <div class="tab" onclick="showTab('resources')">Resources</div>
+            </div>
+            <div id="modalContent">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // NGO Platform State Management
+        let ngoState = {
+            impactMetrics: {
+                beneficiariesReached: 15420,
+                programsActive: 12,
+                fundingEfficiency: 87,
+                volunteerHours: 2840,
+                partnershipCount: 28,
+                sustainabilityScore: 4.2
+            },
+            sdgAlignment: {
+                1: 78, // No Poverty
+                4: 85, // Quality Education
+                8: 62, // Decent Work
+                17: 92 // Partnerships
+            },
+            impactScore: 82,
+            stakeholderEngagement: {
+                beneficiaries: 'high',
+                donors: 'high',
+                volunteers: 'medium',
+                partners: 'high'
+            }
+        };
+
+        // Framework Functions
+        function openFramework(framework) {
+            const frameworks = {
+                'impact-measurement': {
+                    title: '📊 Impact Measurement Framework',
+                    overview: `
+                        <h4 style="color: #CE93D8; margin-bottom: 15px;">🎯 Evidence-Based Impact Assessment</h4>
+                        <p>Comprehensive framework for measuring and demonstrating social impact effectively.</p>
+                        <ul style="margin: 15px 0; padding-left: 20px;">
+                            <li>Theory of Change (ToC) development</li>
+                            <li>Logic model construction and validation</li>
+                            <li>SMART outcome and impact indicators</li>
+                            <li>Data collection methodology design</li>
+                            <li>Impact analysis and reporting</li>
+                        </ul>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                            <strong>Current Impact Score: ${ngoState.impactScore}%</strong><br>
+                            <small>Based on program delivery, beneficiary satisfaction, and outcome achievement</small>
+                        </div>
+                    `,
+                    implementation: `
+                        <h4 style="color: #CE93D8; margin-bottom: 15px;">📋 Implementation Roadmap</h4>
+                        <div style="margin: 15px 0;">
+                            <strong>Phase 1 (Month 1-2): Foundation Setting</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Develop Theory of Change for each program</li>
+                                <li>Create logic models with clear inputs-outputs-outcomes</li>
+                                <li>Define SMART indicators for short and long-term outcomes</li>
+                            </ul>
+                            
+                            <strong>Phase 2 (Month 3-4): Data Systems</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Design data collection tools and protocols</li>
+                                <li>Train staff on measurement methodologies</li>
+                                <li>Establish baseline measurements</li>
+                            </ul>
+                            
+                            <strong>Phase 3 (Month 5-6): Monitoring & Analysis</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Implement regular data collection cycles</li>
+                                <li>Develop analysis and reporting frameworks</li>
+                                <li>Create impact dashboards for stakeholders</li>
+                            </ul>
+                        </div>
+                    `,
+                    measurement: `
+                        <h4 style="color: #CE93D8; margin-bottom: 15px;">📈 Key Performance Indicators</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
+                            <div style="background: rgba(76,175,80,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>Beneficiary Outcomes</strong><br>
+                                <span style="font-size: 1.5rem; color: #4CAF50;">${ngoState.impactMetrics.beneficiariesReached.toLocaleString()}</span><br>
+                                <small>Lives impacted</small>
+                            </div>
+                            <div style="background: rgba(156,39,176,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>Program Effectiveness</strong><br>
+                                <span style="font-size: 1.5rem; color: #9C27B0;">${ngoState.impactMetrics.fundingEfficiency}%</span><br>
+                                <small>Efficiency rate</small>
+                            </div>
+                            <div style="background: rgba(33,150,243,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>SDG Alignment</strong><br>
+                                <span style="font-size: 1.5rem; color: #2196F3;">4</span><br>
+                                <small>Goals addressed</small>
+                            </div>
+                        </div>
+                    `,
+                    resources: `
+                        <h4 style="color: #CE93D8; margin-bottom: 15px;">🛠️ Resources & Tools</h4>
+                        <div style="margin: 15px 0;">
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                                <strong>📚 Frameworks & Methodologies</strong>
+                                <ul style="margin-top: 5px; padding-left: 15px;">
+                                    <li>Social Return on Investment (SROI)</li>
+                                    <li>Outcome Harvesting</li>
+                                    <li>Most Significant Change (MSC)</li>
+                                    <li>Results-Based Accountability (RBA)</li>
+                                </ul>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                                <strong>📊 Data Collection Tools</strong>
+                                <ul style="margin-top: 5px; padding-left: 15px;">
+                                    <li>Beneficiary feedback surveys</li>
+                                    <li>Focus group discussion guides</li>
+                                    <li>Key informant interview protocols</li>
+                                    <li>Observation checklists</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                'funding-strategy': {
+                    title: '💰 Grant & Funding Strategy',
+                    overview: `
+                        <h4 style="color: #CE93D8; margin-bottom: 15px;">💰 Sustainable Funding Strategy</h4>
+                        <p>Comprehensive approach to diversifying and optimizing funding sources for long-term sustainability.</p>
+                        <ul style="margin: 15px 0; padding-left: 20px;">
+                            <li>Funding landscape analysis and mapping</li>
+                            <li>Grant proposal optimization and success tracking</li>
+                            <li>Donor relationship management and stewardship</li>
+                            <li>Revenue diversification strategies</li>
+                            <li>Corporate partnership development</li>
+                        </ul>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                            <strong>Current Funding Efficiency: ${ngoState.impactMetrics.fundingEfficiency}%</strong><br>
+                            <small>Percentage of funds directly supporting program delivery</small>
+                        </div>
+                    `,
+                    implementation: `
+                        <h4 style="color: #CE93D8; margin-bottom: 15px;">🎯 Funding Strategy Implementation</h4>
+                        <div style="margin: 15px 0;">
+                            <strong>Quarter 1: Assessment & Planning</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Map current funding sources and analyze dependencies</li>
+                                <li>Research new grant opportunities and foundation priorities</li>
+                                <li>Develop funding calendar and application timeline</li>
+                            </ul>
+                            
+                            <strong>Quarter 2: Diversification</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Launch individual donor campaign</li>
+                                <li>Develop corporate partnership proposals</li>
+                                <li>Create social enterprise revenue streams</li>
+                            </ul>
+                            
+                            <strong>Quarter 3-4: Optimization</strong>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                                <li>Implement donor stewardship program</li>
+                                <li>Launch major gifts initiative</li>
+                                <li>Evaluate and optimize funding mix</li>
+                            </ul>
+                        </div>
+                    `,
+                    measurement: `
+                        <h4 style="color: #CE93D8; margin-bottom: 15px;">📊 Funding Performance Metrics</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;">
+                            <div style="background: rgba(76,175,80,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>Grant Success Rate</strong><br>
+                                <span style="font-size: 1.5rem; color: #4CAF50;">73%</span><br>
+                                <small>Applications approved</small>
+                            </div>
+                            <div style="background: rgba(255,193,7,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>Donor Retention</strong><br>
+                                <span style="font-size: 1.5rem; color: #FFC107;">68%</span><br>
+                                <small>Year-over-year</small>
+                            </div>
+                            <div style="background: rgba(156,39,176,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                                <strong>Revenue Diversity</strong><br>
+                                <span style="font-size: 1.5rem; color: #9C27B0;">7</span><br>
+                                <small>Funding sources</small>
+                            </div>
+                        </div>
+                    `,
+                    resources: `
+                        <h4 style="color: #CE93D8; margin-bottom: 15px;">📋 Funding Resources</h4>
+                        <div style="margin: 15px 0;">
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                                <strong>💰 Grant Databases & Platforms</strong>
+                                <ul style="margin-top: 5px; padding-left: 15px;">
+                                    <li>Foundation Directory Online</li>
+                                    <li>Grants.gov (government grants)</li>
+                                    <li>GrantSpace resources</li>
+                                    <li>Regional foundation directories</li>
+                                </ul>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                                <strong>📝 Proposal Templates & Tools</strong>
+                                <ul style="margin-top: 5px; padding-left: 15px;">
+                                    <li>Grant proposal templates</li>
+                                    <li>Budget planning worksheets</li>
+                                    <li>Donor stewardship calendars</li>
+                                    <li>Impact reporting templates</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+
+            const frameworkData = frameworks[framework] || frameworks['impact-measurement'];
+            document.getElementById('modalTitle').textContent = frameworkData.title;
+            
+            // Set initial content to overview
+            showFrameworkTab('overview', frameworkData);
+            document.getElementById('frameworkModal').style.display = 'block';
+        }
+
+        function showFrameworkTab(tabName, frameworkData) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Update content based on tab
+            const content = frameworkData[tabName] || frameworkData.overview;
+            document.getElementById('modalContent').innerHTML = content;
+        }
+
+        function showTab(tabName) {
+            // This is a simplified version for when framework data isn't available
+            const defaultContent = {
+                overview: '<h4>Framework Overview</h4><p>Select a specific framework to see detailed information.</p>',
+                implementation: '<h4>Implementation Guide</h4><p>Step-by-step implementation guidance will be shown here.</p>',
+                measurement: '<h4>Impact Measurement</h4><p>Key performance indicators and measurement tools.</p>',
+                resources: '<h4>Resources & Tools</h4><p>Supporting resources and implementation tools.</p>'
+            };
+            
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('modalContent').innerHTML = defaultContent[tabName];
+        }
+
+        function closeModal() {
+            document.getElementById('frameworkModal').style.display = 'none';
+        }
+
+        // Quick Action Functions
+        function assessSDGAlignment() {
+            alert('🎯 SDG Alignment Assessment\n\nAnalyzing your organization\'s alignment with UN Sustainable Development Goals:\n\n✅ Strong Alignment:\n• SDG 17 (Partnerships): 92%\n• SDG 4 (Education): 85%\n• SDG 1 (Poverty): 78%\n\n⚠️ Improvement Opportunities:\n• SDG 8 (Decent Work): 62%\n\nRecommendations generated for enhancing SDG integration.');
+        }
+
+        function generateImpactReport() {
+            alert('📊 Impact Report Generated\n\nComprehensive social impact report created:\n\n📈 Key Highlights:\n• 15,420 beneficiaries reached (+18% YoY)\n• 87% funding efficiency achieved\n• 4 SDGs actively addressed\n• 28 active partnerships\n\n📋 Report Sections:\n• Executive Summary\n• Program Outcomes\n• Financial Transparency\n• Stakeholder Feedback\n• Future Planning\n\nReport ready for download and sharing.');
+        }
+
+        function mapStakeholders() {
+            alert('🗺️ Stakeholder Mapping Complete\n\nComprehensive stakeholder analysis:\n\n🎯 Primary Stakeholders:\n• Beneficiaries: 15,420 (High engagement)\n• Donors: 847 (Strong relationships)\n• Staff & Volunteers: 156 (Medium engagement)\n\n🤝 Secondary Stakeholders:\n• Partner Organizations: 28\n• Government Agencies: 12\n• Media & Advocates: 8\n\nEngagement strategies developed for each group.');
+        }
+
+        function assessProgram() {
+            alert('📋 Program Impact Assessment\n\nQuick program evaluation results:\n\n✅ High Performing Programs:\n• Education Initiative: 85% success rate\n• Skills Training: 78% job placement\n\n⚠️ Programs Needing Attention:\n• Community Outreach: 62% engagement\n\n📊 Recommendations:\n• Increase community involvement\n• Enhance participant follow-up\n• Strengthen partnerships');
+        }
+
+        function planFundraising() {
+            alert('💰 Fundraising Strategy Plan\n\n🎯 12-Month Fundraising Goals:\n• Target: $2.5M total funding\n• Grant funding: $1.8M (72%)\n• Individual donors: $500K (20%)\n• Corporate partnerships: $200K (8%)\n\n📅 Key Activities:\n• Q1: Major grant applications\n• Q2: Individual donor campaign\n• Q3: Corporate partnership drive\n• Q4: Year-end giving campaign');
+        }
+
+        function engageVolunteers() {
+            alert('🤝 Volunteer Engagement Strategy\n\n📊 Current Status:\n• 156 active volunteers\n• 2,840 hours/month contribution\n• Medium engagement level\n\n🎯 Improvement Plan:\n• Skills-based volunteer matching\n• Recognition and appreciation program\n• Professional development opportunities\n• Flexible scheduling options\n\nTarget: Increase to 200 volunteers by year-end');
+        }
+
+        // Simulate real-time metric updates
+        function updateMetrics() {
+            const fluctuation = () => (Math.random() - 0.5) * 0.02; // ±1% change
+            
+            ngoState.impactMetrics.beneficiariesReached = Math.max(15000, Math.floor(ngoState.impactMetrics.beneficiariesReached * (1 + fluctuation())));
+            ngoState.impactMetrics.fundingEfficiency = Math.max(80, Math.min(95, ngoState.impactMetrics.fundingEfficiency * (1 + fluctuation())));
+            
+            // Update display
+            document.getElementById('beneficiariesReached').textContent = ngoState.impactMetrics.beneficiariesReached.toLocaleString();
+            document.getElementById('fundingEfficiency').textContent = Math.floor(ngoState.impactMetrics.fundingEfficiency) + '%';
+        }
+
+        // Initialize NGO platform
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🌍 NGO Strategic Suite initialized');
+            
+            // Update metrics every 60 seconds
+            setInterval(updateMetrics, 60000);
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('frameworkModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
