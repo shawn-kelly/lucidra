@@ -2414,11 +2414,16 @@
                 }
             }
             
-            // Update navigation
+            // Update navigation - safely handle event
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            
+            // Find and activate the correct navigation button
+            const targetBtn = document.querySelector(`[onclick="showView('${viewName}')"]`);
+            if (targetBtn) {
+                targetBtn.classList.add('active');
+            }
         }
 
         function showTab(workspace, tabName) {
@@ -2428,13 +2433,21 @@
             });
             
             // Show selected tab panel
-            document.getElementById(`${workspace}-${tabName}`).classList.add('active');
+            const targetPanel = document.getElementById(`${workspace}-${tabName}`);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
             
-            // Update tab buttons
+            // Update tab buttons - safely handle event
             document.querySelectorAll(`#${workspace}-workspace .tab`).forEach(tab => {
                 tab.classList.remove('active');
             });
-            event.target.classList.add('active');
+            
+            // Find and activate the correct tab button
+            const targetTab = document.querySelector(`[onclick="showTab('${workspace}', '${tabName}')"]`);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
         }
 
         // Porter's Five Forces Functions
@@ -3076,23 +3089,53 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
 
         // Platform Stratification Functions
         function openStartupIntelligence() {
-            window.open('startup-intelligence.html', '_blank');
+            console.log('🚀 Opening Startup Intelligence Platform...');
+            try {
+                window.open('startup-intelligence.html', '_blank');
+            } catch (error) {
+                console.error('❌ Error opening Startup Intelligence:', error);
+                alert('Error opening Startup Intelligence platform. Please try again.');
+            }
         }
         
         function openSMEPlatform() {
-            window.open('sme-platform.html', '_blank');
+            console.log('🏭 Opening SME Platform...');
+            try {
+                window.open('sme-platform.html', '_blank');
+            } catch (error) {
+                console.error('❌ Error opening SME Platform:', error);
+                alert('Error opening SME platform. Please try again.');
+            }
         }
         
         function openMicroOrganization() {
-            window.open('micro-org.html', '_blank');
+            console.log('🏘️ Opening Micro Organization Platform...');
+            try {
+                window.open('micro-org.html', '_blank');
+            } catch (error) {
+                console.error('❌ Error opening Micro Organization:', error);
+                alert('Error opening Micro Organization platform. Please try again.');
+            }
         }
         
         function openNGOFrameworks() {
-            window.open('ngo-platform.html', '_blank');
+            console.log('🌍 Opening NGO Frameworks...');
+            try {
+                window.open('ngo-platform.html', '_blank');
+            } catch (error) {
+                console.error('❌ Error opening NGO Frameworks:', error);
+                alert('Error opening NGO platform. Please try again.');
+            }
         }
         
         function openGovernmentModules() {
-            window.open('government-platform.html', '_blank');
+            console.log('🏛️ Opening Government Modules...');
+            try {
+                window.open('government-platform.html', '_blank');
+            } catch (error) {
+                console.error('❌ Error opening Government Modules:', error);
+                alert('Error opening Government platform. Please try again.');
+            }
         }
         
         function openEnterpriseHub() {
@@ -3156,10 +3199,55 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
             }, 800);
         }
 
+        // Error handling and debugging
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript Error:', e.error);
+            console.error('Error details:', {
+                message: e.message,
+                filename: e.filename,
+                lineno: e.lineno,
+                colno: e.colno
+            });
+        });
+        
+        // Debug function to test all buttons
+        window.debugButtons = function() {
+            console.log('🔍 Testing button functionality...');
+            
+            // Test navigation buttons
+            const navButtons = document.querySelectorAll('.nav-btn');
+            console.log(`Found ${navButtons.length} navigation buttons`);
+            
+            // Test module cards
+            const moduleCards = document.querySelectorAll('.module-card');
+            console.log(`Found ${moduleCards.length} module cards`);
+            
+            // Test organization type buttons
+            const orgTypeButtons = document.querySelectorAll('[onclick*="open"]');
+            console.log(`Found ${orgTypeButtons.length} organization type buttons`);
+            
+            console.log('✅ Debug complete - check console for any errors');
+        };
+        
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            showView('dashboard');
-            console.log('🚀 Lucidra Strategic Intelligence Platform v3.0 with Organization Types Loaded');
+            try {
+                showView('dashboard');
+                console.log('🚀 Lucidra Strategic Intelligence Platform v3.0 with Organization Types Loaded');
+                console.log('💡 Type debugButtons() in console to test all button functionality');
+                
+                // Verify critical elements exist
+                const dashboard = document.getElementById('dashboard');
+                if (!dashboard) {
+                    console.error('❌ Dashboard element not found!');
+                }
+                
+                const navButtons = document.querySelectorAll('.nav-btn');
+                console.log(`✅ Found ${navButtons.length} navigation buttons`);
+                
+            } catch (error) {
+                console.error('❌ Initialization error:', error);
+            }
         });
     </script>
 </body>

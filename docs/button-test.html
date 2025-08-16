@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucidra Button Functionality Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .info {
+            color: #17a2b8;
+            font-weight: bold;
+        }
+        #results {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Lucidra Button Functionality Test Suite</h1>
+    
+    <div class="test-section">
+        <h2>🎯 Navigation Test</h2>
+        <p>Test the main navigation functions:</p>
+        <button class="test-button" onclick="testNavigation()">Test Navigation Functions</button>
+        <button class="test-button" onclick="window.open('index.html', '_blank')">Open Main Platform</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>🏢 Organization Platform Test</h2>
+        <p>Test organization type platform links:</p>
+        <button class="test-button" onclick="testPlatformLinks()">Test Platform Links</button>
+        <button class="test-button" onclick="testFileExistence()">Check File Existence</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔍 JavaScript Error Test</h2>
+        <p>Test for JavaScript errors and console output:</p>
+        <button class="test-button" onclick="testJavaScriptErrors()">Test Error Handling</button>
+        <button class="test-button" onclick="clearResults()">Clear Results</button>
+    </div>
+    
+    <div id="results"></div>
+    
+    <script>
+        let testResults = [];
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const formattedMessage = `[${timestamp}] ${message}`;
+            testResults.push(formattedMessage);
+            
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = testResults.join('\n');
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+            
+            // Also log to console
+            console.log(formattedMessage);
+        }
+        
+        function testNavigation() {
+            log('🔍 Testing Navigation Functions...', 'info');
+            
+            // Test if critical functions exist
+            const functions = [
+                'showView', 'showTab', 'openStartupIntelligence', 
+                'openSMEPlatform', 'openMicroOrganization', 
+                'openNGOFrameworks', 'openGovernmentModules', 'startAIAnalysis'
+            ];
+            
+            let successCount = 0;
+            
+            functions.forEach(funcName => {
+                try {
+                    // Open the main page in an iframe to test functions
+                    const iframe = document.createElement('iframe');
+                    iframe.src = 'index.html';
+                    iframe.style.display = 'none';
+                    document.body.appendChild(iframe);
+                    
+                    iframe.onload = function() {
+                        const func = iframe.contentWindow[funcName];
+                        if (typeof func === 'function') {
+                            log(`✅ ${funcName} - Function exists`, 'success');
+                            successCount++;
+                        } else {
+                            log(`❌ ${funcName} - Function missing`, 'error');
+                        }
+                        
+                        if (successCount === functions.length) {
+                            log(`🎉 Navigation test complete: ${successCount}/${functions.length} functions found`, 'success');
+                        }
+                        
+                        document.body.removeChild(iframe);
+                    };
+                } catch (error) {
+                    log(`❌ ${funcName} - Error: ${error.message}`, 'error');
+                }
+            });
+        }
+        
+        function testPlatformLinks() {
+            log('🔍 Testing Platform Links...', 'info');
+            
+            const platformFiles = [
+                'startup-intelligence.html',
+                'sme-platform.html', 
+                'micro-org.html',
+                'ngo-platform.html',
+                'government-platform.html'
+            ];
+            
+            platformFiles.forEach(file => {
+                fetch(file)
+                    .then(response => {
+                        if (response.ok) {
+                            log(`✅ ${file} - File accessible`, 'success');
+                        } else {
+                            log(`❌ ${file} - HTTP ${response.status}`, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        log(`❌ ${file} - Error: ${error.message}`, 'error');
+                    });
+            });
+        }
+        
+        function testFileExistence() {
+            log('🔍 Testing File Existence...', 'info');
+            
+            const requiredFiles = [
+                'index.html',
+                'startup-intelligence.html',
+                'sme-platform.html',
+                'micro-org.html', 
+                'ngo-platform.html',
+                'government-platform.html',
+                'enhanced-frameworks.html',
+                'organizational-intelligence.html'
+            ];
+            
+            Promise.all(
+                requiredFiles.map(file => 
+                    fetch(file, { method: 'HEAD' })
+                        .then(response => ({
+                            file,
+                            exists: response.ok,
+                            status: response.status
+                        }))
+                        .catch(error => ({
+                            file,
+                            exists: false,
+                            error: error.message
+                        }))
+                )
+            ).then(results => {
+                results.forEach(result => {
+                    if (result.exists) {
+                        log(`✅ ${result.file} - Exists`, 'success');
+                    } else {
+                        log(`❌ ${result.file} - Missing (${result.status || result.error})`, 'error');
+                    }
+                });
+                
+                const existingFiles = results.filter(r => r.exists).length;
+                log(`📊 File existence test: ${existingFiles}/${results.length} files found`, 'info');
+            });
+        }
+        
+        function testJavaScriptErrors() {
+            log('🔍 Testing JavaScript Error Handling...', 'info');
+            
+            // Test error handling
+            window.addEventListener('error', function(e) {
+                log(`❌ JavaScript Error Caught: ${e.message} at ${e.filename}:${e.lineno}`, 'error');
+            });
+            
+            // Test console override
+            const originalLog = console.log;
+            console.log = function(...args) {
+                log(`📝 Console: ${args.join(' ')}`, 'info');
+                originalLog.apply(console, args);
+            };
+            
+            // Open main page to test
+            setTimeout(() => {
+                const testWindow = window.open('index.html', 'test', 'width=800,height=600');
+                
+                setTimeout(() => {
+                    if (testWindow && !testWindow.closed) {
+                        try {
+                            // Test some functions
+                            if (testWindow.debugButtons) {
+                                testWindow.debugButtons();
+                                log('✅ debugButtons() function executed successfully', 'success');
+                            } else {
+                                log('❌ debugButtons() function not found', 'error');
+                            }
+                        } catch (error) {
+                            log(`❌ Error testing functions: ${error.message}`, 'error');
+                        }
+                        
+                        testWindow.close();
+                    }
+                }, 2000);
+            }, 1000);
+            
+            log('🎯 JavaScript error test initiated - check for any errors above', 'info');
+        }
+        
+        function clearResults() {
+            testResults = [];
+            document.getElementById('results').innerHTML = '';
+            log('🧹 Results cleared', 'info');
+        }
+        
+        // Initialize
+        window.addEventListener('DOMContentLoaded', function() {
+            log('🚀 Button Test Suite Loaded', 'success');
+            log('💡 Click buttons above to test Lucidra platform functionality', 'info');
+        });
+    </script>
+</body>
+</html>
