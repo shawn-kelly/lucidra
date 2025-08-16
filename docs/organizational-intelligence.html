@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizational Intelligence Hub - Lucidra</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/org-chart@3"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #a8edea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .control-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .control-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .control-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-level-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .level-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .level-btn.junior {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+        
+        .level-btn.middle {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            color: white;
+        }
+        
+        .level-btn.senior {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+            color: white;
+        }
+        
+        .level-btn.executive {
+            background: linear-gradient(45deg, #9C27B0, #7B1FA2);
+            color: white;
+        }
+        
+        .level-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .level-btn.active {
+            box-shadow: 0 0 0 2px #fff;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .textarea-field {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 600px;
+            color: #333;
+        }
+        
+        .org-chart-node {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .org-chart-node:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .node-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #1a237e;
+            margin-bottom: 5px;
+        }
+        
+        .node-name {
+            font-size: 0.9rem;
+            color: #424242;
+            margin-bottom: 3px;
+        }
+        
+        .node-department {
+            font-size: 0.8rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .level-junior { border-left: 4px solid #4CAF50; }
+        .level-middle { border-left: 4px solid #2196F3; }
+        .level-senior { border-left: 4px solid #FF9800; }
+        .level-executive { border-left: 4px solid #9C27B0; }
+        
+        .job-description-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .ai-suggestions {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .ai-suggestions h4 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .suggestion-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 8px 12px;
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+        
+        .upload-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .upload-zone:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .upload-zone.dragover {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        
+        .authorization-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .auth-role {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .auth-role.active {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+        
+        .notification.info {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .tab.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .control-panel {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-level-selector {
+                justify-content: center;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        .integration-status {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        
+        .status-indicator {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .status-connected {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+        
+        .status-pending {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+        }
+        
+        .export-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 Organizational Intelligence Hub</h1>
+            <p>Comprehensive organizational design with AI-powered insights and multi-level user journeys</p>
+            
+            <div class="integration-status">
+                <div class="status-indicator status-connected">
+                    <span>🔗</span> Strategic Frameworks
+                </div>
+                <div class="status-indicator status-connected">
+                    <span>🤖</span> AI Assistant
+                </div>
+                <div class="status-indicator status-connected">
+                    <span>👥</span> User Management
+                </div>
+                <div class="status-indicator status-pending">
+                    <span>📊</span> HR Systems
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('org-chart')">🏗️ Org Chart Builder</div>
+            <div class="tab" onclick="showTab('job-descriptions')">📋 Job Descriptions</div>
+            <div class="tab" onclick="showTab('user-journeys')">🛤️ User Journeys</div>
+            <div class="tab" onclick="showTab('data-management')">📁 Data Management</div>
+            <div class="tab" onclick="showTab('ai-assistant')">🤖 AI Assistant</div>
+            <div class="tab" onclick="showTab('authorization')">🔐 Authorization</div>
+        </div>
+        
+        <!-- Org Chart Builder Tab -->
+        <div id="org-chart-tab" class="tab-content active">
+            <div class="control-panel">
+                <!-- User Level Selector -->
+                <div class="control-card">
+                    <div class="control-title">👤 User Level View</div>
+                    <div class="user-level-selector">
+                        <button class="level-btn junior active" onclick="setUserLevel('junior')">
+                            👨‍💼 Junior
+                        </button>
+                        <button class="level-btn middle" onclick="setUserLevel('middle')">
+                            👩‍💼 Middle Management
+                        </button>
+                        <button class="level-btn senior" onclick="setUserLevel('senior')">
+                            👨‍💻 Senior Management
+                        </button>
+                        <button class="level-btn executive" onclick="setUserLevel('executive')">
+                            👩‍💼 Executive
+                        </button>
+                    </div>
+                    <div id="level-description" class="suggestion-item">
+                        Junior Level: View direct reporting relationships and immediate team structure
+                    </div>
+                </div>
+                
+                <!-- Organization Builder -->
+                <div class="control-card">
+                    <div class="control-title">🏗️ Add Position</div>
+                    <div class="input-group">
+                        <label class="input-label">Position Title</label>
+                        <input type="text" class="input-field" id="positionTitle" placeholder="e.g., Senior Software Engineer">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Employee Name</label>
+                        <input type="text" class="input-field" id="employeeName" placeholder="e.g., John Smith">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Department</label>
+                        <input type="text" class="input-field" id="department" placeholder="e.g., Engineering">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Reports To</label>
+                        <select class="input-field" id="reportsTo">
+                            <option value="">Select Manager</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Level</label>
+                        <select class="input-field" id="employeeLevel">
+                            <option value="junior">Junior</option>
+                            <option value="middle">Middle Management</option>
+                            <option value="senior">Senior Management</option>
+                            <option value="executive">Executive</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-success" onclick="addPosition()">➕ Add Position</button>
+                    <button class="btn btn-primary" onclick="generateAIStructure()">🤖 AI Generate Structure</button>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="control-card">
+                    <div class="control-title">⚡ Quick Actions</div>
+                    <button class="btn btn-primary" onclick="showFullOrganization()">🔍 Show Full Org</button>
+                    <button class="btn btn-warning" onclick="showDepartment()">🏢 Filter by Department</button>
+                    <button class="btn btn-success" onclick="exportOrgChart()">📤 Export Chart</button>
+                    <button class="btn btn-primary" onclick="importStructure()">📥 Import Structure</button>
+                    
+                    <div class="export-options">
+                        <button class="btn btn-primary" onclick="exportFormat('pdf')">📄 PDF</button>
+                        <button class="btn btn-primary" onclick="exportFormat('excel')">📊 Excel</button>
+                        <button class="btn btn-primary" onclick="exportFormat('json')">📋 JSON</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Organizational Chart Display -->
+            <div class="chart-container">
+                <h3 style="color: #333; margin-bottom: 20px;">Interactive Organizational Chart</h3>
+                <div id="org-chart-display">
+                    <!-- Organization chart will be rendered here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Job Descriptions Tab -->
+        <div id="job-descriptions-tab" class="tab-content">
+            <div class="control-panel">
+                <div class="control-card">
+                    <div class="control-title">📋 Job Description Manager</div>
+                    <div class="input-group">
+                        <label class="input-label">Select Position</label>
+                        <select class="input-field" id="jobPosition">
+                            <option value="">Choose position to edit</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="loadJobDescription()">📖 Load Description</button>
+                    <button class="btn btn-success" onclick="generateAIJobDescription()">🤖 AI Generate</button>
+                </div>
+                
+                <div class="control-card">
+                    <div class="control-title">🎯 Job Description Components</div>
+                    <div class="input-group">
+                        <label class="input-label">Job Summary</label>
+                        <textarea class="input-field textarea-field" id="jobSummary" placeholder="Brief overview of the role..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Key Responsibilities</label>
+                        <textarea class="input-field textarea-field" id="keyResponsibilities" placeholder="Main duties and responsibilities..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Required Qualifications</label>
+                        <textarea class="input-field textarea-field" id="qualifications" placeholder="Education, experience, skills required..."></textarea>
+                    </div>
+                    <button class="btn btn-success" onclick="saveJobDescription()">💾 Save Description</button>
+                </div>
+            </div>
+            
+            <div class="job-description-panel">
+                <h3>AI-Powered Job Description Assistant</h3>
+                <div class="ai-suggestions">
+                    <h4>🤖 AI Suggestions</h4>
+                    <div id="ai-job-suggestions">
+                        <div class="suggestion-item">Click "AI Generate" to get intelligent job description suggestions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- User Journeys Tab -->
+        <div id="user-journeys-tab" class="tab-content">
+            <div class="control-panel">
+                <div class="control-card">
+                    <div class="control-title">🛤️ User Journey Mapping</div>
+                    <p style="margin-bottom: 15px;">Map transparent user journeys across all organizational levels</p>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Select User Level</label>
+                        <select class="input-field" id="journeyLevel">
+                            <option value="junior">Junior Employee</option>
+                            <option value="middle">Middle Management</option>
+                            <option value="senior">Senior Management</option>
+                            <option value="executive">Executive Level</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Journey Type</label>
+                        <select class="input-field" id="journeyType">
+                            <option value="onboarding">Onboarding Process</option>
+                            <option value="performance">Performance Review</option>
+                            <option value="promotion">Promotion Path</option>
+                            <option value="decision">Decision Making</option>
+                            <option value="communication">Communication Flow</option>
+                            <option value="project">Project Workflow</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="generateUserJourney()">🗺️ Generate Journey</button>
+                    <button class="btn btn-success" onclick="customizeJourney()">✏️ Customize</button>
+                </div>
+                
+                <div class="control-card">
+                    <div class="control-title">🔗 Journey Integration</div>
+                    <p style="margin-bottom: 15px;">Connect user journeys to strategic frameworks</p>
+                    
+                    <div class="integration-status">
+                        <div class="status-indicator status-connected">🏢 Porter's Framework</div>
+                        <div class="status-indicator status-connected">🌊 Blue Ocean</div>
+                        <div class="status-indicator status-connected">📊 Process Management</div>
+                        <div class="status-indicator status-pending">📈 Performance KPIs</div>
+                    </div>
+                    
+                    <button class="btn btn-warning" onclick="integrateFrameworks()">🔄 Update Integrations</button>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h3 style="color: #333;">User Journey Visualization</h3>
+                <div id="user-journey-display">
+                    <p style="color: #666; text-align: center; padding: 50px;">Select user level and journey type to visualize the process flow</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Data Management Tab -->
+        <div id="data-management-tab" class="tab-content">
+            <div class="control-panel">
+                <div class="control-card">
+                    <div class="control-title">📁 Data Upload & Import</div>
+                    <div class="upload-zone" onclick="triggerFileUpload()" ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
+                        <p>📤 Drag & drop files here or click to upload</p>
+                        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">
+                            Supported: CSV, Excel, JSON, XML
+                        </p>
+                    </div>
+                    <input type="file" id="fileUpload" multiple accept=".csv,.xlsx,.json,.xml" style="display: none;" onchange="handleFileUpload(event)">
+                    
+                    <div class="input-group" style="margin-top: 20px;">
+                        <label class="input-label">Narrative Input (AI-Powered)</label>
+                        <textarea class="input-field textarea-field" id="narrativeInput" 
+                                  placeholder="Describe your organization structure in natural language. For example: 'We have a CEO who oversees three departments: Engineering with 2 teams, Sales with 3 regions, and Operations with 4 specialists...'"></textarea>
+                    </div>
+                    
+                    <button class="btn btn-success" onclick="processNarrativeInput()">🤖 Process with AI</button>
+                    <button class="btn btn-primary" onclick="validateData()">✅ Validate Data</button>
+                </div>
+                
+                <div class="control-card">
+                    <div class="control-title">🔄 Data Synchronization</div>
+                    <p style="margin-bottom: 15px;">Connect with external HR and business systems</p>
+                    
+                    <div class="input-group">
+                        <label class="input-label">HR System Integration</label>
+                        <select class="input-field" id="hrSystem">
+                            <option value="">Select HR System</option>
+                            <option value="workday">Workday</option>
+                            <option value="successfactors">SuccessFactors</option>
+                            <option value="bamboohr">BambooHR</option>
+                            <option value="adp">ADP</option>
+                            <option value="custom">Custom API</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Sync Frequency</label>
+                        <select class="input-field" id="syncFreq">
+                            <option value="realtime">Real-time</option>
+                            <option value="hourly">Hourly</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="manual">Manual</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="configureSync()">⚙️ Configure Sync</button>
+                    <button class="btn btn-success" onclick="testConnection()">🔗 Test Connection</button>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h3 style="color: #333;">Data Management Dashboard</h3>
+                <div id="data-management-display">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; color: #333;">
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; text-align: center;">
+                            <h4>Total Employees</h4>
+                            <div style="font-size: 2rem; font-weight: bold; color: #667eea;" id="totalEmployees">0</div>
+                        </div>
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; text-align: center;">
+                            <h4>Departments</h4>
+                            <div style="font-size: 2rem; font-weight: bold; color: #4CAF50;" id="totalDepartments">0</div>
+                        </div>
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; text-align: center;">
+                            <h4>Management Levels</h4>
+                            <div style="font-size: 2rem; font-weight: bold; color: #FF9800;" id="managementLevels">4</div>
+                        </div>
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; text-align: center;">
+                            <h4>Data Quality</h4>
+                            <div style="font-size: 2rem; font-weight: bold; color: #9C27B0;" id="dataQuality">95%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI Assistant Tab -->
+        <div id="ai-assistant-tab" class="tab-content">
+            <div class="control-panel">
+                <div class="control-card">
+                    <div class="control-title">🤖 AI Organizational Assistant</div>
+                    <div class="ai-suggestions">
+                        <h4>🧠 Best Practice Recommendations</h4>
+                        <div id="ai-recommendations">
+                            <div class="suggestion-item">Span of control: Optimal ratio is 5-7 direct reports for managers</div>
+                            <div class="suggestion-item">Organizational depth: Consider flattening if more than 6 levels</div>
+                            <div class="suggestion-item">Department size: Engineering teams work best with 5-9 members</div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Ask AI Assistant</label>
+                        <textarea class="input-field textarea-field" id="aiQuery" 
+                                  placeholder="Ask about organizational design, best practices, or structure optimization..."></textarea>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="queryAI()">💬 Ask AI</button>
+                    <button class="btn btn-success" onclick="generateOptimizations()">🎯 Get Optimizations</button>
+                </div>
+                
+                <div class="control-card">
+                    <div class="control-title">📊 AI Analytics</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px;">
+                            <h4>Span of Control</h4>
+                            <div style="font-size: 1.5rem; color: #4CAF50;">Optimal</div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px;">
+                            <h4>Hierarchy Depth</h4>
+                            <div style="font-size: 1.5rem; color: #FF9800;">Review Needed</div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px;">
+                            <h4>Communication Flow</h4>
+                            <div style="font-size: 1.5rem; color: #4CAF50;">Efficient</div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px;">
+                            <h4>Role Clarity</h4>
+                            <div style="font-size: 1.5rem; color: #2196F3;">Good</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h3 style="color: #333;">AI-Powered Insights</h3>
+                <div id="ai-insights-display">
+                    <div id="ai-response" style="color: #333; line-height: 1.6;">
+                        <p>Welcome to the AI Organizational Assistant! I can help you with:</p>
+                        <ul style="margin: 15px 0; padding-left: 20px;">
+                            <li>Organizational structure optimization</li>
+                            <li>Best practice recommendations</li>
+                            <li>Role and responsibility clarity</li>
+                            <li>Communication flow analysis</li>
+                            <li>Succession planning guidance</li>
+                            <li>Performance management integration</li>
+                        </ul>
+                        <p>Ask me anything about organizational design!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Authorization Tab -->
+        <div id="authorization-tab" class="tab-content">
+            <div class="control-panel">
+                <div class="control-card">
+                    <div class="control-title">🔐 Role-Based Access Control</div>
+                    <p style="margin-bottom: 15px;">Manage who can contribute and update organizational data</p>
+                    
+                    <div class="authorization-panel">
+                        <div class="auth-role active" onclick="toggleRole('hr-admin')">
+                            <h4>👩‍💼 HR Administrator</h4>
+                            <p>Full access to all organizational data</p>
+                        </div>
+                        <div class="auth-role" onclick="toggleRole('dept-manager')">
+                            <h4>👨‍💼 Department Manager</h4>
+                            <p>Manage department structure and roles</p>
+                        </div>
+                        <div class="auth-role" onclick="toggleRole('team-lead')">
+                            <h4>👩‍💻 Team Lead</h4>
+                            <p>Update team member information</p>
+                        </div>
+                        <div class="auth-role" onclick="toggleRole('employee')">
+                            <h4>👨‍💻 Employee</h4>
+                            <p>View organizational structure only</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-card">
+                    <div class="control-title">👥 Authorized Contributors</div>
+                    <div class="input-group">
+                        <label class="input-label">Add New Contributor</label>
+                        <input type="email" class="input-field" id="contributorEmail" placeholder="Enter email address">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Assign Role</label>
+                        <select class="input-field" id="contributorRole">
+                            <option value="hr-admin">HR Administrator</option>
+                            <option value="dept-manager">Department Manager</option>
+                            <option value="team-lead">Team Lead</option>
+                            <option value="employee">Employee</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-success" onclick="addContributor()">➕ Add Contributor</button>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h3 style="color: #333;">Authorization Management</h3>
+                <div id="authorization-display">
+                    <table style="width: 100%; color: #333; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f5f5f5;">
+                                <th style="padding: 12px; border: 1px solid #ddd;">Email</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Role</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Permissions</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contributors-table">
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #ddd;">admin@lucidra.com</td>
+                                <td style="padding: 12px; border: 1px solid #ddd;">HR Administrator</td>
+                                <td style="padding: 12px; border: 1px solid #ddd;">Full Access</td>
+                                <td style="padding: 12px; border: 1px solid #ddd;">
+                                    <button class="btn btn-warning" style="padding: 5px 10px; font-size: 0.8rem;">Edit</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification Element -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+        // Global variables
+        let currentUserLevel = 'junior';
+        let organizationData = [];
+        let currentTab = 'org-chart';
+        let authorizedRoles = ['hr-admin'];
+        
+        // Sample organization data
+        const sampleOrgData = [
+            {
+                id: 1,
+                name: "Sarah Johnson",
+                title: "Chief Executive Officer",
+                department: "Executive",
+                level: "executive",
+                reportsTo: null,
+                email: "sarah.johnson@company.com"
+            },
+            {
+                id: 2,
+                name: "Michael Chen",
+                title: "VP Engineering",
+                department: "Engineering",
+                level: "senior",
+                reportsTo: 1,
+                email: "michael.chen@company.com"
+            },
+            {
+                id: 3,
+                name: "Lisa Rodriguez",
+                title: "VP Sales",
+                department: "Sales",
+                level: "senior",
+                reportsTo: 1,
+                email: "lisa.rodriguez@company.com"
+            },
+            {
+                id: 4,
+                name: "David Kim",
+                title: "Engineering Manager",
+                department: "Engineering",
+                level: "middle",
+                reportsTo: 2,
+                email: "david.kim@company.com"
+            },
+            {
+                id: 5,
+                name: "Anna Thompson",
+                title: "Senior Developer",
+                department: "Engineering",
+                level: "junior",
+                reportsTo: 4,
+                email: "anna.thompson@company.com"
+            }
+        ];
+        
+        // Initialize the application
+        function initializeApp() {
+            organizationData = [...sampleOrgData];
+            updateOrgChart();
+            updateReportsToDropdown();
+            updateJobPositionsDropdown();
+            updateDashboardStats();
+            showNotification('Organizational Intelligence Hub initialized!', 'success');
+        }
+        
+        // Tab Management
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Add active class to selected tab
+            event.target.classList.add('active');
+            
+            currentTab = tabName;
+        }
+        
+        // User Level Management
+        function setUserLevel(level) {
+            currentUserLevel = level;
+            
+            // Update button states
+            document.querySelectorAll('.level-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update level description
+            const descriptions = {
+                junior: "Junior Level: View direct reporting relationships and immediate team structure",
+                middle: "Middle Management: Access department overview and team management functions",
+                senior: "Senior Management: Full departmental visibility and strategic planning access", 
+                executive: "Executive Level: Complete organizational oversight and strategic decision-making"
+            };
+            
+            document.getElementById('level-description').textContent = descriptions[level];
+            
+            // Update organizational chart view based on level
+            updateOrgChartForLevel(level);
+            
+            showNotification(`Switched to ${level} level view`, 'info');
+        }
+        
+        // Organization Chart Functions
+        function updateOrgChart() {
+            const container = document.getElementById('org-chart-display');
+            container.innerHTML = '';
+            
+            if (organizationData.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; padding: 50px;">No organizational data yet. Add positions to build your chart.</p>';
+                return;
+            }
+            
+            // Create hierarchical structure
+            const hierarchy = buildHierarchy(organizationData);
+            renderOrgChart(container, hierarchy);
+        }
+        
+        function buildHierarchy(data) {
+            const hierarchy = {};
+            const lookup = {};
+            
+            // Create lookup table
+            data.forEach(person => {
+                lookup[person.id] = { ...person, children: [] };
+            });
+            
+            // Build hierarchy
+            data.forEach(person => {
+                if (person.reportsTo === null) {
+                    hierarchy[person.id] = lookup[person.id];
+                } else if (lookup[person.reportsTo]) {
+                    lookup[person.reportsTo].children.push(lookup[person.id]);
+                }
+            });
+            
+            return hierarchy;
+        }
+        
+        function renderOrgChart(container, hierarchy) {
+            Object.values(hierarchy).forEach(root => {
+                const chartHTML = createNodeHTML(root, 0);
+                container.innerHTML += chartHTML;
+            });
+        }
+        
+        function createNodeHTML(person, depth) {
+            const levelClass = `level-${person.level}`;
+            let html = `
+                <div class="org-chart-node ${levelClass}" onclick="selectPerson(${person.id})" style="margin-left: ${depth * 30}px; margin-bottom: 15px;">
+                    <div class="node-title">${person.title}</div>
+                    <div class="node-name">${person.name}</div>
+                    <div class="node-department">${person.department}</div>
+                </div>
+            `;
+            
+            // Add children
+            if (person.children && person.children.length > 0) {
+                person.children.forEach(child => {
+                    html += createNodeHTML(child, depth + 1);
+                });
+            }
+            
+            return html;
+        }
+        
+        function updateOrgChartForLevel(level) {
+            // Filter org chart based on user level
+            // This would implement different views based on authorization level
+            updateOrgChart();
+        }
+        
+        // Position Management
+        function addPosition() {
+            const title = document.getElementById('positionTitle').value;
+            const name = document.getElementById('employeeName').value;
+            const department = document.getElementById('department').value;
+            const reportsTo = document.getElementById('reportsTo').value;
+            const level = document.getElementById('employeeLevel').value;
+            
+            if (!title || !name || !department) {
+                showNotification('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            const newPosition = {
+                id: Date.now(),
+                name: name,
+                title: title,
+                department: department,
+                level: level,
+                reportsTo: reportsTo ? parseInt(reportsTo) : null,
+                email: `${name.toLowerCase().replace(' ', '.')}@company.com`
+            };
+            
+            organizationData.push(newPosition);
+            
+            // Clear form
+            document.getElementById('positionTitle').value = '';
+            document.getElementById('employeeName').value = '';
+            document.getElementById('department').value = '';
+            document.getElementById('reportsTo').value = '';
+            
+            // Update displays
+            updateOrgChart();
+            updateReportsToDropdown();
+            updateJobPositionsDropdown();
+            updateDashboardStats();
+            
+            showNotification(`Added ${title} position successfully!`, 'success');
+        }
+        
+        function updateReportsToDropdown() {
+            const select = document.getElementById('reportsTo');
+            select.innerHTML = '<option value="">Select Manager</option>';
+            
+            organizationData.forEach(person => {
+                if (person.level === 'middle' || person.level === 'senior' || person.level === 'executive') {
+                    select.innerHTML += `<option value="${person.id}">${person.name} (${person.title})</option>`;
+                }
+            });
+        }
+        
+        function updateJobPositionsDropdown() {
+            const select = document.getElementById('jobPosition');
+            select.innerHTML = '<option value="">Choose position to edit</option>';
+            
+            organizationData.forEach(person => {
+                select.innerHTML += `<option value="${person.id}">${person.title} - ${person.name}</option>`;
+            });
+        }
+        
+        // AI Functions
+        function generateAIStructure() {
+            showNotification('Generating AI-powered organizational structure...', 'info');
+            
+            // Simulate AI generation
+            setTimeout(() => {
+                const aiGeneratedPositions = [
+                    {
+                        id: Date.now() + 1,
+                        name: "Alex Manager",
+                        title: "Product Manager",
+                        department: "Product",
+                        level: "middle",
+                        reportsTo: 1,
+                        email: "alex.manager@company.com"
+                    },
+                    {
+                        id: Date.now() + 2,
+                        name: "Jordan Developer",
+                        title: "Frontend Developer",
+                        department: "Engineering",
+                        level: "junior",
+                        reportsTo: 4,
+                        email: "jordan.developer@company.com"
+                    }
+                ];
+                
+                organizationData.push(...aiGeneratedPositions);
+                updateOrgChart();
+                updateReportsToDropdown();
+                updateJobPositionsDropdown();
+                updateDashboardStats();
+                
+                showNotification('AI structure generation complete!', 'success');
+            }, 2000);
+        }
+        
+        function generateAIJobDescription() {
+            const selectedPosition = document.getElementById('jobPosition').value;
+            if (!selectedPosition) {
+                showNotification('Please select a position first', 'error');
+                return;
+            }
+            
+            const person = organizationData.find(p => p.id == selectedPosition);
+            if (!person) return;
+            
+            // AI-generated job description
+            const aiJobDescription = generateJobDescriptionContent(person);
+            
+            document.getElementById('jobSummary').value = aiJobDescription.summary;
+            document.getElementById('keyResponsibilities').value = aiJobDescription.responsibilities;
+            document.getElementById('qualifications').value = aiJobDescription.qualifications;
+            
+            // Update AI suggestions
+            const suggestionsContainer = document.getElementById('ai-job-suggestions');
+            suggestionsContainer.innerHTML = `
+                <div class="suggestion-item">✅ Job description generated using best practices</div>
+                <div class="suggestion-item">📊 Aligned with industry standards for ${person.level} level</div>
+                <div class="suggestion-item">🎯 Optimized for ${person.department} department requirements</div>
+            `;
+            
+            showNotification('AI job description generated!', 'success');
+        }
+        
+        function generateJobDescriptionContent(person) {
+            const templates = {
+                'Software Engineer': {
+                    summary: `We are seeking a talented Software Engineer to join our ${person.department} team. This role involves designing, developing, and maintaining high-quality software solutions.`,
+                    responsibilities: `• Design and develop software applications\n• Collaborate with cross-functional teams\n• Write clean, maintainable code\n• Participate in code reviews\n• Debug and resolve technical issues`,
+                    qualifications: `• Bachelor's degree in Computer Science or related field\n• 2+ years of software development experience\n• Proficiency in relevant programming languages\n• Strong problem-solving skills\n• Excellent communication abilities`
+                },
+                'Product Manager': {
+                    summary: `We are looking for an experienced Product Manager to drive product strategy and execution in our ${person.department} team.`,
+                    responsibilities: `• Define product roadmap and strategy\n• Gather and prioritize requirements\n• Coordinate with engineering and design teams\n• Analyze market trends and user feedback\n• Manage product launches`,
+                    qualifications: `• MBA or equivalent experience\n• 3+ years in product management\n• Strong analytical skills\n• Experience with agile methodologies\n• Excellent stakeholder management`
+                }
+            };
+            
+            // Default template or match by title
+            const template = templates[person.title] || templates['Software Engineer'];
+            return template;
+        }
+        
+        // User Journey Functions
+        function generateUserJourney() {
+            const level = document.getElementById('journeyLevel').value;
+            const type = document.getElementById('journeyType').value;
+            
+            const journeyContainer = document.getElementById('user-journey-display');
+            journeyContainer.innerHTML = '';
+            
+            const journeyData = createUserJourneyData(level, type);
+            renderUserJourney(journeyContainer, journeyData);
+            
+            showNotification(`Generated ${type} journey for ${level} level`, 'success');
+        }
+        
+        function createUserJourneyData(level, type) {
+            const journeys = {
+                'junior': {
+                    'onboarding': [
+                        'Welcome orientation',
+                        'IT setup and access',
+                        'Meet immediate team',
+                        'Role-specific training',
+                        'First project assignment',
+                        '30-day check-in'
+                    ],
+                    'performance': [
+                        'Self-assessment completion',
+                        'Manager review meeting',
+                        'Goal setting session',
+                        'Development plan creation',
+                        'Performance feedback'
+                    ]
+                },
+                'middle': {
+                    'onboarding': [
+                        'Leadership orientation',
+                        'Department overview',
+                        'Team introductions',
+                        'Budget and resource briefing',
+                        'Strategic planning session',
+                        '60-day review'
+                    ],
+                    'performance': [
+                        'Team performance review',
+                        'Strategic goal assessment',
+                        'Leadership feedback session',
+                        'Succession planning',
+                        'Development opportunities'
+                    ]
+                }
+            };
+            
+            return journeys[level]?.[type] || ['Step 1', 'Step 2', 'Step 3'];
+        }
+        
+        function renderUserJourney(container, steps) {
+            let html = '<div style="display: flex; flex-direction: column; gap: 20px; color: #333;">';
+            
+            steps.forEach((step, index) => {
+                html += `
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="background: #667eea; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                            ${index + 1}
+                        </div>
+                        <div style="background: #f5f5f5; padding: 15px; border-radius: 10px; flex: 1;">
+                            ${step}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        
+        // Data Management Functions
+        function handleFileUpload(event) {
+            const files = event.target.files;
+            if (files.length === 0) return;
+            
+            showNotification(`Processing ${files.length} file(s)...`, 'info');
+            
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        if (file.name.endsWith('.json')) {
+                            const data = JSON.parse(e.target.result);
+                            processImportedData(data);
+                        } else if (file.name.endsWith('.csv')) {
+                            const data = parseCSV(e.target.result);
+                            processImportedData(data);
+                        }
+                        showNotification(`Successfully imported ${file.name}`, 'success');
+                    } catch (error) {
+                        showNotification(`Error importing ${file.name}: ${error.message}`, 'error');
+                    }
+                };
+                reader.readAsText(file);
+            });
+        }
+        
+        function processImportedData(data) {
+            // Process and merge imported data with existing organization data
+            if (Array.isArray(data)) {
+                organizationData.push(...data);
+                updateOrgChart();
+                updateReportsToDropdown();
+                updateJobPositionsDropdown();
+                updateDashboardStats();
+            }
+        }
+        
+        function processNarrativeInput() {
+            const narrative = document.getElementById('narrativeInput').value;
+            if (!narrative.trim()) {
+                showNotification('Please enter an organizational description', 'error');
+                return;
+            }
+            
+            showNotification('Processing narrative with AI...', 'info');
+            
+            // Simulate AI processing
+            setTimeout(() => {
+                const extractedData = parseNarrativeToOrgData(narrative);
+                organizationData.push(...extractedData);
+                
+                updateOrgChart();
+                updateReportsToDropdown();
+                updateJobPositionsDropdown();
+                updateDashboardStats();
+                
+                showNotification('Narrative successfully processed and organization created!', 'success');
+            }, 3000);
+        }
+        
+        function parseNarrativeToOrgData(narrative) {
+            // This would use AI to parse narrative input into structured data
+            // For now, return sample data
+            return [
+                {
+                    id: Date.now() + Math.random(),
+                    name: "Jane Smith",
+                    title: "Operations Director",
+                    department: "Operations",
+                    level: "senior",
+                    reportsTo: 1,
+                    email: "jane.smith@company.com"
+                }
+            ];
+        }
+        
+        // Utility Functions
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        function updateDashboardStats() {
+            document.getElementById('totalEmployees').textContent = organizationData.length;
+            
+            const departments = new Set(organizationData.map(p => p.department));
+            document.getElementById('totalDepartments').textContent = departments.size;
+        }
+        
+        function exportOrgChart() {
+            showNotification('Preparing organizational chart export...', 'info');
+            // Implementation for various export formats
+        }
+        
+        function selectPerson(personId) {
+            const person = organizationData.find(p => p.id === personId);
+            if (person) {
+                showNotification(`Selected: ${person.name} (${person.title})`, 'info');
+                
+                // Show detailed information or edit options
+                // This could open a modal or sidebar with person details
+            }
+        }
+        
+        // Initialize the application when page loads
+        document.addEventListener('DOMContentLoaded', initializeApp);
+        
+        // Additional placeholder functions for buttons
+        function showFullOrganization() { showNotification('Showing full organization view', 'info'); }
+        function showDepartment() { showNotification('Department filter applied', 'info'); }
+        function importStructure() { document.getElementById('fileUpload').click(); }
+        function exportFormat(format) { showNotification(`Exporting to ${format.toUpperCase()}...`, 'info'); }
+        function loadJobDescription() { showNotification('Loading job description...', 'info'); }
+        function saveJobDescription() { showNotification('Job description saved!', 'success'); }
+        function customizeJourney() { showNotification('Journey customization opened', 'info'); }
+        function integrateFrameworks() { showNotification('Framework integration updated', 'success'); }
+        function validateData() { showNotification('Data validation complete - 95% quality score', 'success'); }
+        function configureSync() { showNotification('Sync configuration saved', 'success'); }
+        function testConnection() { showNotification('Connection test successful!', 'success'); }
+        function queryAI() { 
+            const query = document.getElementById('aiQuery').value;
+            if (query.trim()) {
+                showNotification('AI is analyzing your query...', 'info');
+                setTimeout(() => {
+                    document.getElementById('ai-response').innerHTML += `<div style="margin: 15px 0; padding: 10px; background: #f0f8ff; border-radius: 5px;"><strong>Q:</strong> ${query}<br><strong>AI:</strong> Based on organizational best practices, I recommend...</div>`;
+                    showNotification('AI response generated', 'success');
+                }, 2000);
+            }
+        }
+        function generateOptimizations() { showNotification('AI optimization analysis complete', 'success'); }
+        function toggleRole(role) { showNotification(`Role ${role} permissions updated`, 'info'); }
+        function addContributor() { 
+            const email = document.getElementById('contributorEmail').value;
+            if (email) {
+                showNotification(`Contributor ${email} added successfully`, 'success');
+                document.getElementById('contributorEmail').value = '';
+            }
+        }
+        
+        // Drag and drop handlers
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.currentTarget.classList.add('dragover');
+        }
+        
+        function handleDrop(event) {
+            event.preventDefault();
+            event.currentTarget.classList.remove('dragover');
+            const files = event.dataTransfer.files;
+            handleFileUpload({ target: { files: files } });
+        }
+        
+        function triggerFileUpload() {
+            document.getElementById('fileUpload').click();
+        }
+        
+        // CSV parser helper
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n');
+            const headers = lines[0].split(',');
+            const data = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim()) {
+                    const values = lines[i].split(',');
+                    const item = {};
+                    headers.forEach((header, index) => {
+                        item[header.trim()] = values[index]?.trim();
+                    });
+                    data.push(item);
+                }
+            }
+            
+            return data;
+        }
+    </script>
+</body>
+</html>

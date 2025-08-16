@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucidra - Strategic Intelligence Platform</title>
+    <script src="integration-framework.js"></script>
     <style>
         * {
             margin: 0;
@@ -445,6 +446,10 @@
                     🚀 Enhanced Hub
                     <span style="position: absolute; top: -5px; right: -5px; background: #ff4444; border-radius: 50%; width: 12px; height: 12px; font-size: 8px; display: flex; align-items: center; justify-content: center;">•</span>
                 </a>
+                <a href="organizational-intelligence.html" class="nav-btn" style="background: linear-gradient(45deg, #9C27B0, #7B1FA2); position: relative;">
+                    🏢 Org Intelligence
+                    <span style="position: absolute; top: -5px; right: -5px; background: #ff4444; border-radius: 50%; width: 12px; height: 12px; font-size: 8px; display: flex; align-items: center; justify-content: center;">•</span>
+                </a>
                 <a href="#" class="nav-btn" onclick="showView('porters')">Porter's</a>
                 <a href="#" class="nav-btn" onclick="showView('process-mgmt')">Process</a>
                 <a href="#" class="nav-btn" onclick="showView('mission')">Mission</a>
@@ -487,6 +492,19 @@
                             <li>Live Market Intelligence</li>
                         </ul>
                         <div style="position: absolute; top: 10px; right: 10px; background: #4CAF50; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">NEW</div>
+                    </div>
+                    
+                    <div class="module-card" onclick="window.open('organizational-intelligence.html', '_blank')" style="border: 2px solid #9C27B0; position: relative; background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(123, 31, 162, 0.1));">
+                        <div class="module-icon">🏢</div>
+                        <h3 class="module-title">Organizational Intelligence</h3>
+                        <p class="module-description">Comprehensive organizational design with AI-powered insights and multi-level user journeys</p>
+                        <ul class="module-features">
+                            <li>Interactive Organizational Charts</li>
+                            <li>AI-powered Job Descriptions</li>
+                            <li>Multi-level User Journeys</li>
+                            <li>Authorization & Data Management</li>
+                        </ul>
+                        <div style="position: absolute; top: 10px; right: 10px; background: #9C27B0; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">NEW</div>
                     </div>
 
                     <div class="module-card" onclick="showView('porters')">
@@ -2302,33 +2320,256 @@
                 return;
             }
 
-            const scores = {
-                entrants: document.getElementById('entrants-slider').value,
-                suppliers: document.getElementById('suppliers-slider').value,
-                buyers: document.getElementById('buyers-slider').value,
-                substitutes: document.getElementById('substitutes-slider').value,
-                rivalry: document.getElementById('rivalry-slider').value
-            };
+            // Get organizational data from integration framework
+            if (window.LucidraIntegration) {
+                const porterData = window.LucidraIntegration.getPorterAnalysisData();
+                const orgContext = porterData.organizationalContext;
+                
+                const scores = {
+                    entrants: document.getElementById('entrants-slider').value,
+                    suppliers: document.getElementById('suppliers-slider').value,
+                    buyers: document.getElementById('buyers-slider').value,
+                    substitutes: document.getElementById('substitutes-slider').value,
+                    rivalry: document.getElementById('rivalry-slider').value
+                };
 
-            const avgScore = Object.values(scores).reduce((a, b) => parseInt(a) + parseInt(b), 0) / 5;
-            
-            let attractiveness = 'Moderate';
-            let color = '#f59e0b';
-            
-            if (avgScore <= 2) {
-                attractiveness = 'High';
-                color = '#22c55e';
-            } else if (avgScore >= 4) {
-                attractiveness = 'Low';
-                color = '#ef4444';
+                const avgScore = Object.values(scores).reduce((a, b) => parseInt(a) + parseInt(b), 0) / 5;
+                
+                let attractiveness = 'Moderate';
+                let color = '#f59e0b';
+                
+                if (avgScore <= 2) {
+                    attractiveness = 'High';
+                    color = '#22c55e';
+                } else if (avgScore >= 4) {
+                    attractiveness = 'Low';
+                    color = '#ef4444';
+                }
+
+                // Enhanced analysis with organizational context
+                const analysis = `🏢 PORTER'S FIVE FORCES ANALYSIS
+                
+Industry: ${industry}
+Market Attractiveness: ${attractiveness}
+Average Force Strength: ${avgScore.toFixed(1)}/5
+
+📊 ORGANIZATIONAL INTELLIGENCE INSIGHTS:
+• Total Employees: ${orgContext.totalEmployees}
+• Departments: ${orgContext.departments.join(', ')}
+• Avg Team Size: ${orgContext.avgTeamSize.toFixed(1)}
+• Organizational Complexity: ${orgContext.organizationalComplexity.toFixed(1)}
+
+🎯 FORCE ANALYSIS WITH ORG DATA:
+• Competitive Rivalry: ${porterData.competitiveRivalry.intensity} (${porterData.competitiveRivalry.score.toFixed(1)}/5)
+  ${porterData.competitiveRivalry.factors.join('\n  ')}
+
+• Supplier Power: ${porterData.supplierPower.intensity} (${porterData.supplierPower.score.toFixed(1)}/5)
+  ${porterData.supplierPower.factors.join('\n  ')}
+
+• Buyer Power: ${porterData.buyerPower.intensity} (${porterData.buyerPower.score.toFixed(1)}/5)
+  ${porterData.buyerPower.factors.join('\n  ')}
+
+• Entry Barriers: ${porterData.entryBarriers.intensity} (${porterData.entryBarriers.score.toFixed(1)}/5)
+  ${porterData.entryBarriers.factors.join('\n  ')}
+
+• Substitute Threat: ${porterData.substituteThreat.intensity} (${porterData.substituteThreat.score.toFixed(1)}/5)
+  ${porterData.substituteThreat.factors.join('\n  ')}
+
+🚀 STRATEGIC RECOMMENDATIONS:
+• Leverage ${orgContext.departments.includes('Engineering') ? 'strong technical team' : 'expand technical capabilities'}
+• ${orgContext.totalEmployees > 50 ? 'Optimize large team coordination' : 'Consider strategic hiring for growth'}
+• Focus on ${porterData.competitiveRivalry.intensity === 'High' ? 'differentiation strategies' : 'market expansion'}
+• ${porterData.entryBarriers.intensity === 'Low' ? 'Build stronger competitive moats' : 'Maintain current advantages'}`;
+
+                // Create a modal or detailed view instead of alert
+                showAnalysisModal('Porter\'s Five Forces Analysis', analysis);
+            } else {
+                // Fallback to basic analysis
+                alert('Organizational intelligence not available. Please ensure the integration framework is loaded.');
             }
+        }
 
-            alert(`Industry Analysis Complete!\n\nIndustry: ${industry}\nAttractiveness: ${attractiveness}\nAverage Force Strength: ${avgScore.toFixed(1)}/5\n\nStrategic Recommendations:\n• Focus on building competitive moats\n• Develop strong supplier relationships\n• Create switching costs to reduce buyer power\n• Innovate continuously to stay ahead of substitutes`);
+        // Analysis Modal Function
+        function showAnalysisModal(title, content) {
+            // Create modal if it doesn't exist
+            let modal = document.getElementById('analysisModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'analysisModal';
+                modal.className = 'analysis-modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="modalTitle">${title}</h2>
+                            <span class="modal-close" onclick="closeAnalysisModal()">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <pre id="modalContent">${content}</pre>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" onclick="exportAnalysis()">📤 Export Analysis</button>
+                            <button class="btn" onclick="shareAnalysis()">🔗 Share</button>
+                            <button class="btn" onclick="closeAnalysisModal()">Close</button>
+                        </div>
+                    </div>
+                `;
+                
+                // Add modal styles
+                const modalStyles = `
+                    .analysis-modal {
+                        display: block;
+                        position: fixed;
+                        z-index: 1000;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0,0,0,0.8);
+                        backdrop-filter: blur(5px);
+                    }
+                    .modal-content {
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        margin: 5% auto;
+                        padding: 0;
+                        border-radius: 15px;
+                        width: 90%;
+                        max-width: 800px;
+                        max-height: 80vh;
+                        overflow: hidden;
+                        color: white;
+                        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                    }
+                    .modal-header {
+                        padding: 20px;
+                        border-bottom: 1px solid rgba(255,255,255,0.2);
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                    .modal-close {
+                        font-size: 28px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        opacity: 0.7;
+                        transition: opacity 0.3s;
+                    }
+                    .modal-close:hover {
+                        opacity: 1;
+                    }
+                    .modal-body {
+                        padding: 20px;
+                        max-height: 50vh;
+                        overflow-y: auto;
+                    }
+                    .modal-body pre {
+                        white-space: pre-wrap;
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        line-height: 1.6;
+                        margin: 0;
+                    }
+                    .modal-footer {
+                        padding: 20px;
+                        border-top: 1px solid rgba(255,255,255,0.2);
+                        display: flex;
+                        gap: 10px;
+                        justify-content: flex-end;
+                    }
+                `;
+                
+                const styleSheet = document.createElement('style');
+                styleSheet.textContent = modalStyles;
+                document.head.appendChild(styleSheet);
+                document.body.appendChild(modal);
+            } else {
+                document.getElementById('modalTitle').textContent = title;
+                document.getElementById('modalContent').textContent = content;
+                modal.style.display = 'block';
+            }
+        }
+        
+        function closeAnalysisModal() {
+            const modal = document.getElementById('analysisModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        function exportAnalysis() {
+            const content = document.getElementById('modalContent').textContent;
+            const title = document.getElementById('modalTitle').textContent;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function shareAnalysis() {
+            const content = document.getElementById('modalContent').textContent;
+            if (navigator.share) {
+                navigator.share({
+                    title: document.getElementById('modalTitle').textContent,
+                    text: content
+                });
+            } else {
+                navigator.clipboard.writeText(content).then(() => {
+                    alert('Analysis copied to clipboard!');
+                });
+            }
         }
 
         // Blue Ocean Strategy Functions
         function generateStrategyCanvas() {
-            alert('Strategy Canvas generated! This would show a visual comparison of your company vs competitors across all competing factors.');
+            if (window.LucidraIntegration) {
+                const blueOceanData = window.LucidraIntegration.getBlueOceanOpportunities();
+                const orgContext = window.LucidraIntegration.getOrganizationalContext();
+                
+                const analysis = `🌊 BLUE OCEAN STRATEGY ANALYSIS
+                
+📊 ORGANIZATIONAL CONTEXT:
+• Total Employees: ${orgContext.totalEmployees}
+• Departments: ${orgContext.departments.join(', ')}
+• Innovation Capacity: ${blueOceanData.innovationAreas.length} areas identified
+
+🔍 ORGANIZATIONAL GAPS ANALYSIS:
+${blueOceanData.organizationalGaps.map(gap => `• ${gap.department}: ${gap.opportunity}`).join('\n')}
+
+💡 SKILL OPPORTUNITIES:
+${blueOceanData.skillOpportunities.map(skill => `• ${skill.skill}: ${skill.opportunity}`).join('\n')}
+
+🚀 INNOVATION AREAS:
+${blueOceanData.innovationAreas.map(area => `• ${area.area}: ${area.opportunity}`).join('\n')}
+
+🎯 STRATEGIC CANVAS RECOMMENDATIONS:
+${blueOceanData.strategicRecommendations.map(rec => `• ${rec}`).join('\n')}
+
+📈 FOUR ACTIONS FRAMEWORK:
+ELIMINATE:
+• Redundant departmental overlaps
+• Underutilized skill sets
+• Inefficient organizational processes
+
+REDUCE:
+• Management layers (current complexity: ${orgContext.organizationalComplexity.toFixed(1)})
+• Administrative overhead
+• Cross-departmental friction
+
+RAISE:
+• Innovation team capacity
+• Cross-functional collaboration
+• Employee skill development
+
+CREATE:
+• New market-oriented departments
+• Innovation labs and R&D initiatives  
+• Customer co-creation programs`;
+
+                showAnalysisModal('Blue Ocean Strategy Canvas', analysis);
+            } else {
+                alert('Strategy Canvas generated! This would show a visual comparison of your company vs competitors across all competing factors.');
+            }
         }
 
         function generateFourActions() {
@@ -2360,6 +2601,187 @@
             element.style.padding = '0.5rem';
             element.style.borderRadius = '5px';
             element.style.cursor = 'move';
+            ev.target.appendChild(element);
+        }
+        
+        function generateOrganizationalProcessMap() {
+            if (window.LucidraIntegration) {
+                const processData = window.LucidraIntegration.getProcessManagementData();
+                const orgContext = window.LucidraIntegration.getOrganizationalContext();
+                
+                const analysis = `⚙️ ORGANIZATIONAL PROCESS ANALYSIS
+                
+📊 ORGANIZATIONAL CONTEXT:
+• Total Employees: ${orgContext.totalEmployees}
+• Departments: ${orgContext.departments.join(', ')}
+• Management Levels: ${orgContext.managementLevels.join(', ')}
+• Average Team Size: ${orgContext.avgTeamSize.toFixed(1)}
+
+🔄 CORE ORGANIZATIONAL PROCESSES:
+${Object.entries(processData.organizationalProcesses).map(([name, process]) => 
+`• ${name}:
+  Owner: ${process.owner}
+  Stakeholders: ${process.stakeholders.join(', ')}
+  Steps: ${process.steps.join(' → ')}`).join('\n\n')}
+
+👥 ROLE RESPONSIBILITIES MATRIX:
+${processData.roleResponsibilities.map(role => 
+`• ${role.name} (${role.title}):
+  Department: ${role.department}
+  Key Responsibilities: ${role.responsibilities.slice(0, 3).join(', ')}
+  KPIs: ${role.kpis.slice(0, 2).join(', ')}`).join('\n\n')}
+
+📡 COMMUNICATION FLOWS:
+${processData.communicationFlows.map(flow => 
+`• ${flow.from} → ${flow.to} (${flow.type}, ${flow.frequency})`).join('\n')}
+
+🏛️ DECISION MAKING AUTHORITY:
+${processData.decisionMakingPaths.map(path => 
+`• ${path.name}: ${path.authority} (up to ${path.approvalLimit})`).join('\n')}
+
+🎯 PROCESS OPTIMIZATION RECOMMENDATIONS:
+• Streamline communication flows between ${orgContext.departments.length} departments
+• Implement automated approval workflows for decisions under $5K
+• Create cross-functional process improvement teams
+• Establish clear escalation paths for complex decisions
+• Regular process audits and optimization cycles`;
+
+                showAnalysisModal('Organizational Process Map', analysis);
+            } else {
+                alert('Process map generated! This would show your organizational process flows.');
+            }
+        }
+        
+        function generateProcessNarrative() {
+            if (window.LucidraIntegration) {
+                const processData = window.LucidraIntegration.getProcessManagementData();
+                const analytics = window.LucidraIntegration.getAnalytics();
+                
+                const narrative = `📖 ORGANIZATIONAL PROCESS NARRATIVE
+
+🏢 ORGANIZATIONAL OVERVIEW:
+Our organization operates with ${analytics.organization.totalEmployees} employees across ${Object.keys(analytics.organization.departmentDistribution).length} departments. The organizational structure reflects a ${analytics.performance.organizationalHealth.level.toLowerCase()} health score of ${analytics.performance.organizationalHealth.score.toFixed(1)}%, indicating ${analytics.performance.organizationalHealth.score > 70 ? 'strong operational efficiency' : 'opportunities for improvement'}.
+
+📊 DEPARTMENTAL STRUCTURE:
+${Object.entries(analytics.organization.departmentDistribution).map(([dept, count]) => 
+`The ${dept} department consists of ${count} team members, representing ${((count / analytics.organization.totalEmployees) * 100).toFixed(1)}% of our workforce.`).join(' ')}
+
+⚡ OPERATIONAL FLOW:
+Our core processes are designed around three primary workflows:
+
+1. STRATEGIC DECISION MAKING:
+Executive leadership (${analytics.organization.levelDistribution.executive || 0} members) drives strategic decisions through structured governance. Senior management (${analytics.organization.levelDistribution.senior || 0} members) translates strategy into departmental objectives, while middle management (${analytics.organization.levelDistribution.middle || 0} members) ensures operational execution.
+
+2. OPERATIONAL PROCESSES:
+Day-to-day operations flow through established channels with clear accountability. Our average span of control of ${analytics.organization.spanOfControl.toFixed(1)} ensures effective management oversight while maintaining agility.
+
+3. COMMUNICATION & COLLABORATION:
+Information flows both vertically and horizontally through formal reporting structures and cross-functional collaboration. With ${analytics.organization.avgTeamSize.toFixed(1)} average team size, we maintain optimal collaboration while ensuring accountability.
+
+🎯 PROCESS EFFECTIVENESS:
+Current metrics indicate:
+• KPI Coverage: ${analytics.performance.kpiCoverage.coverage.toFixed(1)}% of roles have defined performance indicators
+• Responsibility Clarity: ${analytics.performance.responsibilityCoverage.coverage.toFixed(1)}% of positions have clear responsibilities
+• Organizational Depth: ${analytics.organization.organizationalDepth} levels ensuring efficient decision-making
+
+🚀 CONTINUOUS IMPROVEMENT:
+Our process framework emphasizes continuous improvement through regular review cycles, stakeholder feedback, and performance optimization. The organizational design supports both efficiency and adaptability in our dynamic business environment.`;
+
+                showAnalysisModal('Process Narrative', narrative);
+            } else {
+                alert('Process narrative generated! This would create a detailed story of your organizational processes.');
+            }
+        }
+        
+        function addProcessNode() {
+            if (window.LucidraIntegration) {
+                const orgData = window.LucidraIntegration.organizationData;
+                const departments = window.LucidraIntegration.getDepartments();
+                
+                const nodeInfo = `🔧 PROCESS NODE BUILDER
+
+Available Organizational Elements:
+
+👥 DEPARTMENTS (${departments.length}):
+${departments.map(dept => `• ${dept}`).join('\n')}
+
+👤 KEY ROLES:
+${orgData.filter(emp => emp.level === 'senior' || emp.level === 'executive').map(emp => 
+`• ${emp.title} (${emp.name}) - ${emp.department}`).join('\n')}
+
+⚙️ SUGGESTED PROCESS NODES:
+• Department Approval (${departments.join(' | ')})
+• Manager Review (${orgData.filter(emp => emp.level === 'middle').length} managers available)
+• Executive Decision (${orgData.filter(emp => emp.level === 'executive').length} executives)
+• Cross-functional Collaboration
+• Quality Assurance Gateway
+• Customer Feedback Loop
+
+🎯 NODE CONFIGURATION:
+Select a department or role to automatically configure:
+- Responsible parties
+- Approval authority levels  
+- Escalation paths
+- Performance metrics
+- Communication requirements`;
+
+                showAnalysisModal('Add Process Node', nodeInfo);
+            } else {
+                alert('Process node added! You can drag and drop elements to build your process map.');
+            }
+        }
+        
+        function generateBPMNDiagram() {
+            if (window.LucidraIntegration) {
+                const processData = window.LucidraIntegration.getProcessManagementData();
+                const orgContext = window.LucidraIntegration.getOrganizationalContext();
+                
+                const bpmnAnalysis = `🔄 BPMN DIAGRAM ANALYSIS
+
+📋 PROCESS MAPPING SUMMARY:
+Organization: ${orgContext.totalEmployees} employees across ${orgContext.departments.length} departments
+Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-10)
+
+🎯 CORE BUSINESS PROCESSES IDENTIFIED:
+
+1. HIRING & ONBOARDING PROCESS:
+   Start → Job Posting → Resume Review → Interview → Decision → Onboarding → End
+   Swimlanes: HR Department, Hiring Manager, Candidate
+   Decision Points: Resume Screening, Interview Assessment, Final Approval
+   
+2. PERFORMANCE MANAGEMENT PROCESS:
+   Start → Self Assessment → Manager Review → Goal Setting → Development Plan → End
+   Swimlanes: Employee, Manager, HR Department
+   Decision Points: Performance Rating, Development Needs Assessment
+
+3. PROJECT DELIVERY PROCESS:
+   Start → Planning → Development → Testing → Deployment → Review → End
+   Swimlanes: Project Team, QA Team, Stakeholders
+   Decision Points: Go/No-Go Gates, Quality Checkpoints
+
+🏗️ BPMN ELEMENTS CONFIGURED:
+• Start Events: ${Object.keys(processData.organizationalProcesses).length}
+• Tasks: ${processData.roleResponsibilities.length} role-based activities
+• Decision Gateways: Authority-based approval points
+• End Events: Process completion states
+• Swimlanes: ${orgContext.departments.length} departmental boundaries
+
+📊 PROCESS METRICS:
+• Average Process Duration: Varies by complexity
+• Approval Levels: ${orgContext.managementLevels.length} hierarchical levels
+• Cross-functional Touchpoints: ${processData.communicationFlows.length} identified flows
+
+🔧 OPTIMIZATION OPPORTUNITIES:
+• Reduce approval cycles where possible
+• Implement parallel processing for independent tasks
+• Automate routine decision points
+• Establish clear escalation procedures`;
+
+                showAnalysisModal('BPMN Diagram Generated', bpmnAnalysis);
+            } else {
+                alert('BPMN diagram generated! This would create a detailed business process model.');
+            }
+        }
             ev.target.appendChild(element);
         }
 
