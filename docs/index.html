@@ -3139,7 +3139,13 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
         }
         
         function openEnterpriseHub() {
-            alert('🏢 Enterprise Hub\n\nAdvanced strategic intelligence for large organizations:\n\n🔄 Multi-division coordination\n🌐 Global market intelligence\n📊 Advanced analytics suite\n🎯 Cross-functional alignment\n🔧 Custom framework development\n\nOptimized for scale and complexity.');
+            console.log('🏢 Opening Enterprise Hub...');
+            try {
+                window.open('enterprise-platform.html', '_blank');
+            } catch (error) {
+                console.error('❌ Error opening Enterprise Hub:', error);
+                alert('Error opening Enterprise platform. Please try again.');
+            }
         }
         
         function startAIAnalysis() {
