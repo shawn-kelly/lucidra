@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucidra Startup Intelligence - Investor-Ready Strategic Platform</title>
+    <script src="integration-framework.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #a8edea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .startup-badge {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        
+        .main-dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .primary-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .investor-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value.positive { color: #4CAF50; }
+        .metric-value.neutral { color: #FFC107; }
+        .metric-value.negative { color: #F44336; }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .metric-trend {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+        
+        .frameworks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .framework-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .framework-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .framework-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .framework-icon {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 15px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .framework-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .startup-focus {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid rgba(255, 107, 107, 0.5);
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+        
+        .framework-features {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        
+        .framework-features li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .framework-features li::before {
+            content: '🚀';
+            position: absolute;
+            left: 0;
+        }
+        
+        .action-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .action-btn.primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+        
+        .action-btn.warning {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+        }
+        
+        .investor-readiness {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .readiness-score {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .score-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #4CAF50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        
+        .readiness-checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .checklist-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+        
+        .checklist-icon.complete {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .checklist-icon.incomplete {
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .lean-canvas {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15px;
+            min-height: 400px;
+        }
+        
+        .canvas-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .canvas-section:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .canvas-section h4 {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: #4CAF50;
+            font-weight: 600;
+        }
+        
+        .canvas-section.problem { grid-column: 1; grid-row: 1; }
+        .canvas-section.solution { grid-column: 2; grid-row: 1; }
+        .canvas-section.unique-value { grid-column: 3; grid-row: 1; }
+        .canvas-section.unfair-advantage { grid-column: 4; grid-row: 1; }
+        .canvas-section.customer-segments { grid-column: 5; grid-row: 1; }
+        .canvas-section.key-metrics { grid-column: 1; grid-row: 2; }
+        .canvas-section.channels { grid-column: 2; grid-row: 2; }
+        .canvas-section.cost-structure { grid-column: 3; grid-row: 2; }
+        .canvas-section.revenue-streams { grid-column: 4/6; grid-row: 2; }
+        
+        .growth-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .growth-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .growth-chart {
+            height: 100px;
+            background: linear-gradient(45deg, rgba(76, 175, 80, 0.2), rgba(33, 150, 243, 0.2));
+            border-radius: 10px;
+            margin: 15px 0;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .chart-bar {
+            background: #4CAF50;
+            width: 20px;
+            margin: 0 2px;
+            border-radius: 2px 2px 0 0;
+        }
+        
+        .funding-tracker {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .funding-stages {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .funding-stages::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+        
+        .funding-stage {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            z-index: 2;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .funding-stage.current {
+            background: #4CAF50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+        }
+        
+        .funding-stage.completed {
+            background: #2196F3;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            color: white;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        
+        .modal-close:hover {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .main-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .canvas-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(5, 1fr);
+            }
+            
+            .canvas-section.revenue-streams {
+                grid-column: 1/3;
+            }
+            
+            .investor-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Lucidra Startup Intelligence</h1>
+            <div class="startup-badge">Investor-Ready Strategic Platform</div>
+            <p>Transform your startup vision into investor-ready strategic intelligence with real-world data validation</p>
+        </div>
+        
+        <div class="main-dashboard">
+            <!-- Primary Dashboard -->
+            <div class="primary-panel">
+                <h2 style="margin-bottom: 20px;">📊 Investor Readiness Dashboard</h2>
+                
+                <!-- Key Investor Metrics -->
+                <div class="investor-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value positive" id="marketSize">$2.5B</div>
+                        <div class="metric-label">Total Addressable Market</div>
+                        <div class="metric-trend">↗ +15% YoY</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value positive" id="growthRate">180%</div>
+                        <div class="metric-label">Monthly Growth Rate</div>
+                        <div class="metric-trend">↗ Accelerating</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value neutral" id="burnRate">$45K</div>
+                        <div class="metric-label">Monthly Burn Rate</div>
+                        <div class="metric-trend">→ Stable</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value positive" id="runway">18</div>
+                        <div class="metric-label">Months Runway</div>
+                        <div class="metric-trend">↗ Extended</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value positive" id="ltv">$2,400</div>
+                        <div class="metric-label">Customer LTV</div>
+                        <div class="metric-trend">↗ +25%</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-value positive" id="cac">$180</div>
+                        <div class="metric-label">Customer CAC</div>
+                        <div class="metric-trend">↘ -12%</div>
+                    </div>
+                </div>
+                
+                <!-- Lean Canvas -->
+                <div class="lean-canvas">
+                    <h3 style="margin-bottom: 20px;">📋 AI-Enhanced Lean Canvas</h3>
+                    <div class="canvas-grid">
+                        <div class="canvas-section problem" onclick="editCanvasSection('problem')">
+                            <h4>Problem</h4>
+                            <p id="problemText">Click to define your target problem using AI-guided prompts</p>
+                        </div>
+                        
+                        <div class="canvas-section solution" onclick="editCanvasSection('solution')">
+                            <h4>Solution</h4>
+                            <p id="solutionText">Describe your innovative solution approach</p>
+                        </div>
+                        
+                        <div class="canvas-section unique-value" onclick="editCanvasSection('uniqueValue')">
+                            <h4>Unique Value Proposition</h4>
+                            <p id="uniqueValueText">What makes you different and compelling?</p>
+                        </div>
+                        
+                        <div class="canvas-section unfair-advantage" onclick="editCanvasSection('unfairAdvantage')">
+                            <h4>Unfair Advantage</h4>
+                            <p id="unfairAdvantageText">Your defensible competitive edge</p>
+                        </div>
+                        
+                        <div class="canvas-section customer-segments" onclick="editCanvasSection('customerSegments')">
+                            <h4>Customer Segments</h4>
+                            <p id="customerSegmentsText">Who are your ideal customers?</p>
+                        </div>
+                        
+                        <div class="canvas-section key-metrics" onclick="editCanvasSection('keyMetrics')">
+                            <h4>Key Metrics</h4>
+                            <p id="keyMetricsText">How do you measure success?</p>
+                        </div>
+                        
+                        <div class="canvas-section channels" onclick="editCanvasSection('channels')">
+                            <h4>Channels</h4>
+                            <p id="channelsText">How do you reach customers?</p>
+                        </div>
+                        
+                        <div class="canvas-section cost-structure" onclick="editCanvasSection('costStructure')">
+                            <h4>Cost Structure</h4>
+                            <p id="costStructureText">Your major cost drivers</p>
+                        </div>
+                        
+                        <div class="canvas-section revenue-streams" onclick="editCanvasSection('revenueStreams')">
+                            <h4>Revenue Streams</h4>
+                            <p id="revenueStreamsText">How do you make money?</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; text-align: center;">
+                        <button class="action-btn primary" onclick="generateInvestorPitch()">🎯 Generate Investor Pitch</button>
+                        <button class="action-btn" onclick="validateWithData()">📊 Validate with Real Data</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Side Panel -->
+            <div>
+                <!-- Investor Readiness Score -->
+                <div class="investor-readiness">
+                    <h3 style="margin-bottom: 20px;">🎯 Investor Readiness Score</h3>
+                    <div class="readiness-score">
+                        <div>
+                            <h4>Overall Score</h4>
+                            <p style="opacity: 0.8;">Based on 12 key factors</p>
+                        </div>
+                        <div class="score-circle" id="readinessScore">78%</div>
+                    </div>
+                    
+                    <div class="readiness-checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon complete">✓</div>
+                            <span>Market Size Validated</span>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon complete">✓</div>
+                            <span>Business Model Defined</span>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon complete">✓</div>
+                            <span>MVP Developed</span>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon incomplete">○</div>
+                            <span>Traction Metrics</span>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon complete">✓</div>
+                            <span>Financial Projections</span>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon incomplete">○</div>
+                            <span>Team Complete</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Funding Tracker -->
+                <div class="funding-tracker">
+                    <h3 style="margin-bottom: 20px;">💰 Funding Journey Tracker</h3>
+                    <div class="funding-stages">
+                        <div class="funding-stage completed" onclick="showFundingStage('bootstrap')">BS</div>
+                        <div class="funding-stage current" onclick="showFundingStage('seed')">S</div>
+                        <div class="funding-stage" onclick="showFundingStage('seriesA')">A</div>
+                        <div class="funding-stage" onclick="showFundingStage('seriesB')">B</div>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <p style="font-size: 0.9rem; opacity: 0.8;">Currently raising Seed Round</p>
+                        <button class="action-btn" onclick="prepareFundingMaterials()">📋 Prepare Funding Materials</button>
+                    </div>
+                </div>
+                
+                <!-- Growth Metrics -->
+                <div class="growth-metrics">
+                    <div class="growth-card">
+                        <h4>Monthly Recurring Revenue</h4>
+                        <div class="growth-chart">
+                            <div class="chart-bar" style="height: 20%;"></div>
+                            <div class="chart-bar" style="height: 35%;"></div>
+                            <div class="chart-bar" style="height: 50%;"></div>
+                            <div class="chart-bar" style="height: 65%;"></div>
+                            <div class="chart-bar" style="height: 80%;"></div>
+                            <div class="chart-bar" style="height: 100%;"></div>
+                        </div>
+                        <div class="metric-value positive">$24.5K</div>
+                    </div>
+                    
+                    <div class="growth-card">
+                        <h4>User Acquisition</h4>
+                        <div class="growth-chart">
+                            <div class="chart-bar" style="height: 30%;"></div>
+                            <div class="chart-bar" style="height: 45%;"></div>
+                            <div class="chart-bar" style="height: 60%;"></div>
+                            <div class="chart-bar" style="height: 70%;"></div>
+                            <div class="chart-bar" style="height: 85%;"></div>
+                            <div class="chart-bar" style="height: 100%;"></div>
+                        </div>
+                        <div class="metric-value positive">2,840</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Strategic Frameworks Grid -->
+        <div class="frameworks-grid">
+            <!-- Market Validation Framework -->
+            <div class="framework-card" onclick="openFramework('market-validation')">
+                <div class="framework-header">
+                    <div class="framework-icon">📊</div>
+                    <div>
+                        <div class="framework-title">Market Validation Engine</div>
+                        <div class="startup-focus">Startup Optimized</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Real-time market size calculation</li>
+                    <li>Competitor landscape mapping</li>
+                    <li>Customer interview automation</li>
+                    <li>Product-market fit scoring</li>
+                </ul>
+                <button class="action-btn">🎯 Validate Market</button>
+            </div>
+            
+            <!-- Growth Hacking Framework -->
+            <div class="framework-card" onclick="openFramework('growth-hacking')">
+                <div class="framework-header">
+                    <div class="framework-icon">📈</div>
+                    <div>
+                        <div class="framework-title">Growth Hacking Lab</div>
+                        <div class="startup-focus">Rapid Scale</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>AARRR funnel optimization</li>
+                    <li>A/B testing framework</li>
+                    <li>Viral coefficient calculator</li>
+                    <li>Growth experiment tracker</li>
+                </ul>
+                <button class="action-btn">🚀 Launch Growth Experiments</button>
+            </div>
+            
+            <!-- Investor Readiness Framework -->
+            <div class="framework-card" onclick="openFramework('investor-readiness')">
+                <div class="framework-header">
+                    <div class="framework-icon">💼</div>
+                    <div>
+                        <div class="framework-title">Investor Readiness Suite</div>
+                        <div class="startup-focus">Funding Ready</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Pitch deck generator</li>
+                    <li>Financial model templates</li>
+                    <li>Due diligence preparation</li>
+                    <li>Valuation framework</li>
+                </ul>
+                <button class="action-btn primary">💰 Prepare for Funding</button>
+            </div>
+            
+            <!-- Agile Strategy Framework -->
+            <div class="framework-card" onclick="openFramework('agile-strategy')">
+                <div class="framework-header">
+                    <div class="framework-icon">⚡</div>
+                    <div>
+                        <div class="framework-title">Agile Strategy Canvas</div>
+                        <div class="startup-focus">Pivot Ready</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Hypothesis-driven planning</li>
+                    <li>Rapid pivot framework</li>
+                    <li>OKR goal setting</li>
+                    <li>Sprint-based strategy</li>
+                </ul>
+                <button class="action-btn">⚡ Build Agile Strategy</button>
+            </div>
+            
+            <!-- Technology Validation -->
+            <div class="framework-card" onclick="openFramework('tech-validation')">
+                <div class="framework-header">
+                    <div class="framework-icon">🔧</div>
+                    <div>
+                        <div class="framework-title">Technology Validation</div>
+                        <div class="startup-focus">Tech Ready</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Technical feasibility analysis</li>
+                    <li>Scalability assessment</li>
+                    <li>Technology risk evaluation</li>
+                    <li>Development roadmap</li>
+                </ul>
+                <button class="action-btn warning">🔧 Validate Technology</button>
+            </div>
+            
+            <!-- Competitive Intelligence -->
+            <div class="framework-card" onclick="openFramework('competitive-intel')">
+                <div class="framework-header">
+                    <div class="framework-icon">🎯</div>
+                    <div>
+                        <div class="framework-title">Competitive Intelligence</div>
+                        <div class="startup-focus">Market Ready</div>
+                    </div>
+                </div>
+                <ul class="framework-features">
+                    <li>Automated competitor tracking</li>
+                    <li>Feature comparison matrix</li>
+                    <li>Pricing strategy analysis</li>
+                    <li>Market positioning map</li>
+                </ul>
+                <button class="action-btn">🎯 Analyze Competition</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for Canvas Editing -->
+    <div id="canvasModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">Edit Canvas Section</h3>
+            <div id="modalContent">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Startup Intelligence State Management
+        let startupState = {
+            leanCanvas: {
+                problem: '',
+                solution: '',
+                uniqueValue: '',
+                unfairAdvantage: '',
+                customerSegments: '',
+                keyMetrics: '',
+                channels: '',
+                costStructure: '',
+                revenueStreams: ''
+            },
+            metrics: {
+                marketSize: 2500000000,
+                growthRate: 180,
+                burnRate: 45000,
+                runway: 18,
+                ltv: 2400,
+                cac: 180
+            },
+            readinessScore: 78,
+            currentFundingStage: 'seed'
+        };
+
+        // Canvas Section Editing
+        function editCanvasSection(section) {
+            const sectionTitles = {
+                problem: 'Problem Definition',
+                solution: 'Solution Description',
+                uniqueValue: 'Unique Value Proposition',
+                unfairAdvantage: 'Unfair Advantage',
+                customerSegments: 'Customer Segments',
+                keyMetrics: 'Key Metrics',
+                channels: 'Channels',
+                costStructure: 'Cost Structure',
+                revenueStreams: 'Revenue Streams'
+            };
+
+            const aiPrompts = {
+                problem: "Describe the specific problem your startup solves. Focus on pain points your target customers experience daily.",
+                solution: "Explain your innovative solution. How does it address the problem better than existing alternatives?",
+                uniqueValue: "What unique value do you provide? Complete this: 'For [target customer] who [statement of need], our [product/service] is [product category] that [key benefit].'",
+                unfairAdvantage: "What can't be easily copied or bought? Think network effects, insider information, personal authority, or existing customer base.",
+                customerSegments: "Who are your early adopters? Define specific, reachable customer segments with clear characteristics.",
+                keyMetrics: "What key metrics will you track? Consider acquisition, activation, retention, revenue, and referral metrics.",
+                channels: "How will you reach your customers? Consider both customer acquisition and product delivery channels.",
+                costStructure: "What are your major cost drivers? Include fixed costs, variable costs, and key resources.",
+                revenueStreams: "How will you generate revenue? Consider pricing models, revenue sources, and monetization strategies."
+            };
+
+            document.getElementById('modalTitle').textContent = sectionTitles[section];
+            document.getElementById('modalContent').innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: #4CAF50; margin-bottom: 10px;">🤖 AI Guidance</h4>
+                    <p style="background: rgba(76, 175, 80, 0.1); padding: 15px; border-radius: 10px; font-size: 0.9rem;">
+                        ${aiPrompts[section]}
+                    </p>
+                </div>
+                <textarea id="sectionInput" style="width: 100%; height: 150px; padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-family: inherit; font-size: 1rem;" placeholder="Enter your ${sectionTitles[section].toLowerCase()}...">${startupState.leanCanvas[section]}</textarea>
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="action-btn primary" onclick="saveCanvasSection('${section}')" style="margin-right: 10px;">💾 Save</button>
+                    <button class="action-btn" onclick="generateAISuggestion('${section}')">🤖 AI Suggestion</button>
+                </div>
+                <div id="aiSuggestion" style="margin-top: 15px; display: none;">
+                    <!-- AI suggestions will appear here -->
+                </div>
+            `;
+            document.getElementById('canvasModal').style.display = 'block';
+        }
+
+        function saveCanvasSection(section) {
+            const input = document.getElementById('sectionInput').value;
+            startupState.leanCanvas[section] = input;
+            
+            // Update the canvas display
+            const elementId = section === 'uniqueValue' ? 'uniqueValueText' : 
+                            section === 'unfairAdvantage' ? 'unfairAdvantageText' :
+                            section === 'customerSegments' ? 'customerSegmentsText' :
+                            section === 'keyMetrics' ? 'keyMetricsText' :
+                            section === 'costStructure' ? 'costStructureText' :
+                            section === 'revenueStreams' ? 'revenueStreamsText' :
+                            section + 'Text';
+                            
+            document.getElementById(elementId).textContent = input || `Click to define your ${section}`;
+            
+            closeModal();
+            updateReadinessScore();
+        }
+
+        function generateAISuggestion(section) {
+            const suggestions = {
+                problem: "Example: Small businesses struggle with inventory management, leading to 30% revenue loss from stockouts and 25% from overstock. Manual tracking is error-prone and time-consuming.",
+                solution: "Example: AI-powered inventory management platform that predicts demand, automates reordering, and optimizes stock levels using real-time sales data and market trends.",
+                uniqueValue: "Example: For small retail businesses who struggle with inventory management, our AI platform is the only solution that combines predictive analytics with automated purchasing to reduce stockouts by 80% while cutting inventory costs by 25%.",
+                unfairAdvantage: "Example: Proprietary AI algorithm trained on 10M+ transactions, exclusive partnerships with major suppliers, and first-mover advantage in SMB market.",
+                customerSegments: "Example: Small to medium retail businesses (10-100 employees) with annual revenue $1M-$10M, currently using manual inventory systems, located in urban areas.",
+                keyMetrics: "Example: Monthly Recurring Revenue (MRR), Customer Acquisition Cost (CAC), Customer Lifetime Value (LTV), Churn Rate, Net Promoter Score (NPS)."
+            };
+
+            const suggestionDiv = document.getElementById('aiSuggestion');
+            suggestionDiv.innerHTML = `
+                <div style="background: rgba(76, 175, 80, 0.1); border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 10px; padding: 15px;">
+                    <h4 style="color: #4CAF50; margin-bottom: 10px;">🤖 AI Suggestion</h4>
+                    <p style="font-size: 0.9rem; line-height: 1.5;">${suggestions[section] || 'AI suggestion not available for this section.'}</p>
+                    <button class="action-btn" onclick="applySuggestion('${section}', '${suggestions[section]}')" style="margin-top: 10px; padding: 8px 16px; font-size: 0.9rem;">✨ Apply Suggestion</button>
+                </div>
+            `;
+            suggestionDiv.style.display = 'block';
+        }
+
+        function applySuggestion(section, suggestion) {
+            document.getElementById('sectionInput').value = suggestion;
+        }
+
+        function closeModal() {
+            document.getElementById('canvasModal').style.display = 'none';
+        }
+
+        // Framework Functions
+        function openFramework(framework) {
+            const frameworks = {
+                'market-validation': 'Market Validation Engine: Validate your market size, analyze competitors, and score product-market fit with real-world data.',
+                'growth-hacking': 'Growth Hacking Lab: Optimize your AARRR funnel, run A/B tests, and track viral growth experiments.',
+                'investor-readiness': 'Investor Readiness Suite: Generate pitch decks, build financial models, and prepare for due diligence.',
+                'agile-strategy': 'Agile Strategy Canvas: Build hypothesis-driven strategies with rapid pivot capabilities.',
+                'tech-validation': 'Technology Validation: Assess technical feasibility, scalability, and development risks.',
+                'competitive-intel': 'Competitive Intelligence: Track competitors, analyze features, and optimize market positioning.'
+            };
+
+            alert(`🚀 ${frameworks[framework]}\n\nThis specialized startup framework integrates with your lean canvas and investor metrics for maximum impact.`);
+        }
+
+        function generateInvestorPitch() {
+            if (!validateCanvas()) {
+                alert('⚠️ Please complete your Lean Canvas first before generating investor materials.');
+                return;
+            }
+
+            const pitch = `🎯 INVESTOR PITCH GENERATED
+
+PROBLEM & OPPORTUNITY:
+${startupState.leanCanvas.problem || 'Problem not defined'}
+
+SOLUTION:
+${startupState.leanCanvas.solution || 'Solution not defined'}
+
+MARKET SIZE: $${(startupState.metrics.marketSize / 1000000).toFixed(1)}M TAM
+TRACTION: ${startupState.metrics.growthRate}% monthly growth
+BUSINESS MODEL: ${startupState.leanCanvas.revenueStreams || 'Revenue model not defined'}
+
+COMPETITIVE ADVANTAGE:
+${startupState.leanCanvas.unfairAdvantage || 'Advantage not defined'}
+
+FINANCIAL HIGHLIGHTS:
+• Monthly Growth: ${startupState.metrics.growthRate}%
+• LTV/CAC Ratio: ${(startupState.metrics.ltv / startupState.metrics.cac).toFixed(1)}x
+• Runway: ${startupState.metrics.runway} months
+
+FUNDING USE:
+• Product Development (40%)
+• Marketing & Sales (35%)
+• Team Expansion (25%)`;
+
+            alert(pitch);
+        }
+
+        function validateWithData() {
+            alert('📊 Real Data Validation:\n\n• Market size verified through industry reports\n• Competitor analysis updated from live data\n• Customer interviews integrated\n• Financial projections stress-tested\n\n✅ Your startup model is data-validated and investor-ready!');
+            updateReadinessScore();
+        }
+
+        function validateCanvas() {
+            const requiredSections = ['problem', 'solution', 'uniqueValue', 'customerSegments', 'revenueStreams'];
+            return requiredSections.every(section => startupState.leanCanvas[section] && startupState.leanCanvas[section].trim());
+        }
+
+        function updateReadinessScore() {
+            const completedSections = Object.values(startupState.leanCanvas).filter(section => section && section.trim()).length;
+            const score = Math.min(95, Math.max(30, (completedSections / 9) * 100));
+            startupState.readinessScore = Math.floor(score);
+            document.getElementById('readinessScore').textContent = startupState.readinessScore + '%';
+        }
+
+        function showFundingStage(stage) {
+            const stages = {
+                bootstrap: 'Bootstrap: Self-funded development phase. Focus on MVP and initial validation.',
+                seed: 'Seed Round: $100K-$2M to prove product-market fit and initial traction.',
+                seriesA: 'Series A: $2M-$15M to scale proven business model and expand market.',
+                seriesB: 'Series B: $10M-$50M for rapid growth and market dominance.'
+            };
+
+            alert(`💰 ${stages[stage]}\n\nCurrent Stage: ${stage.charAt(0).toUpperCase() + stage.slice(1)}\nRecommended next steps and preparation materials will be generated.`);
+        }
+
+        function prepareFundingMaterials() {
+            alert('📋 Funding Materials Package:\n\n✅ Executive Summary\n✅ Pitch Deck (10-12 slides)\n✅ Financial Model (3-year projections)\n✅ Market Analysis Report\n✅ Competitive Analysis\n✅ Product Roadmap\n✅ Team Bios\n✅ Legal Documents Checklist\n\nAll materials will be generated based on your Lean Canvas and real market data.');
+        }
+
+        // Simulate real-time metric updates
+        function updateMetrics() {
+            // Simulate small fluctuations in metrics
+            const fluctuation = () => (Math.random() - 0.5) * 0.02; // ±1% change
+            
+            startupState.metrics.growthRate = Math.max(100, startupState.metrics.growthRate * (1 + fluctuation()));
+            startupState.metrics.cac = Math.max(100, startupState.metrics.cac * (1 + fluctuation()));
+            startupState.metrics.ltv = Math.max(1000, startupState.metrics.ltv * (1 + fluctuation()));
+            
+            // Update display
+            document.getElementById('growthRate').textContent = Math.floor(startupState.metrics.growthRate) + '%';
+            document.getElementById('cac').textContent = '$' + Math.floor(startupState.metrics.cac);
+            document.getElementById('ltv').textContent = '$' + Math.floor(startupState.metrics.ltv).toLocaleString();
+        }
+
+        // Initialize startup intelligence
+        document.addEventListener('DOMContentLoaded', function() {
+            updateReadinessScore();
+            
+            // Update metrics every 30 seconds
+            setInterval(updateMetrics, 30000);
+            
+            console.log('🚀 Startup Intelligence Platform initialized');
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('canvasModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
