@@ -2430,8 +2430,8 @@
     </div>
 
     <script>
-        // Navigation and UI Management - Global function
-        window.showView = function showView(viewName) {
+        // Ensure showView is globally accessible
+        window.showView = function(viewName) {
             // Hide all views
             document.querySelectorAll('.dashboard, .workspace').forEach(view => {
                 view.style.display = 'none';
@@ -2459,10 +2459,21 @@
             }
         };
 
-        // Also make it available as a regular function for compatibility
+        // Make showView available globally for onclick handlers
         function showView(viewName) {
             return window.showView(viewName);
         }
+        
+        // Additional safety for button clicks
+        window.onclick = function(event) {
+            if (event.target.getAttribute('onclick') && event.target.getAttribute('onclick').includes('showView')) {
+                event.preventDefault();
+                const match = event.target.getAttribute('onclick').match(/showView\('([^']+)'\)/);
+                if (match) {
+                    window.showView(match[1]);
+                }
+            }
+        };
 
         function showTab(workspace, tabName) {
             // Hide all tab panels for this workspace
@@ -4005,6 +4016,29 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
                 }
             }
         });
+
+        // CRITICAL FIX: Ensure showView is always available
+        if (!window.showView) {
+            window.showView = function(viewName) {
+                console.log(`🔧 Emergency showView called for: ${viewName}`);
+                document.querySelectorAll('.dashboard, .workspace').forEach(view => {
+                    view.style.display = 'none';
+                });
+                const target = document.getElementById(viewName === 'dashboard' ? 'dashboard' : viewName + '-workspace');
+                if (target) target.style.display = 'block';
+            };
+        }
+        
+        // Make sure it's also available as a regular function
+        if (typeof showView === 'undefined') {
+            function showView(viewName) {
+                return window.showView(viewName);
+            }
+        }
+        
+        console.log('🚀 Final verification: showView available =', typeof window.showView);
     </script>
+    
+    <script src="integration-framework.js"></script>
 </body>
 </html>
