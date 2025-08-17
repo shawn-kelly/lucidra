@@ -490,6 +490,7 @@
                 <a href="#" class="nav-btn" onclick="showView('financial')">Financial</a>
                 <a href="#" class="nav-btn" onclick="showView('strategy-exec')">Execution</a>
                 <a href="#" class="nav-btn" onclick="showView('platform-types')" style="background: linear-gradient(45deg, #FF6B6B, #FF8E53);">🏢 Organization Types</a>
+                <a href="#" class="nav-btn" onclick="showFinancialDashboard()" style="background: linear-gradient(45deg, #32CD32, #228B22);">💰 Financial Hub</a>
             </nav>
         </header>
 
@@ -4039,6 +4040,345 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
         console.log('🚀 Final verification: showView available =', typeof window.showView);
     </script>
     
+    <!-- Financial Integration System -->
     <script src="integration-framework.js"></script>
+    <script src="organizational-journey-framework.js"></script>
+    <script src="financial-integration-api.js"></script>
+    <script src="real-time-financial-engine.js"></script>
+    <script src="financial-export-manager.js"></script>
+    
+    <script>
+        // Initialize comprehensive financial and organizational system
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Initializing Lucidra Advanced Platform...');
+            
+            try {
+                // Initialize organizational framework
+                window.organizationalFramework = new LucidraOrganizationalFramework();
+                
+                // Initialize financial integration hub
+                window.financialHub = new LucidraFinancialIntegrationHub();
+                
+                // Initialize financial export manager
+                window.exportManager = new FinancialExportManager();
+                
+                // Setup cross-system integration
+                setupAdvancedIntegration();
+                
+                console.log('✅ Lucidra Advanced Platform fully initialized');
+                console.log('📊 Available systems:', {
+                    organizational: !!window.organizationalFramework,
+                    financial: !!window.financialHub,
+                    export: !!window.exportManager,
+                    integration: !!window.LucidraIntegration
+                });
+                
+            } catch (error) {
+                console.error('❌ Platform initialization error:', error);
+            }
+        });
+        
+        // Setup advanced cross-system integration
+        function setupAdvancedIntegration() {
+            // Connect organizational journey to financial systems
+            if (window.organizationalFramework && window.financialHub) {
+                console.log('🔗 Setting up organizational-financial integration...');
+                
+                // Add financial integration recommendations based on organization type
+                window.getFinancialRecommendations = function(organizationType) {
+                    return window.financialHub.getRecommendedSystems(organizationType);
+                };
+                
+                // Enhanced organization setup with financial integration
+                window.setupOrganizationWithFinancials = function(orgType, userRole, financialSystem = null) {
+                    const journey = window.organizationalFramework.initializeOrganization(orgType, userRole);
+                    
+                    if (financialSystem) {
+                        console.log(`💰 Setting up ${financialSystem} integration for ${orgType}...`);
+                        // Setup financial integration based on organization type
+                        const recommendations = window.getFinancialRecommendations(orgType);
+                        console.log('📊 Financial recommendations:', recommendations);
+                    }
+                    
+                    return journey;
+                };
+                
+                // Real-time financial statement generation for current organization
+                window.generateLiveFinancialStatements = async function(statementTypes = ['balance_sheet', 'income_statement', 'cash_flow'], scenario = 'current') {
+                    if (!window.organizationalFramework.currentOrganization) {
+                        throw new Error('No organization initialized');
+                    }
+                    
+                    const orgId = window.organizationalFramework.currentOrganization.type;
+                    return await window.financialHub.generateFinancialStatements(orgId, {
+                        statementTypes: statementTypes,
+                        scenarioId: scenario,
+                        format: 'json'
+                    });
+                };
+                
+                // Export financial statements in various formats
+                window.exportFinancialStatements = async function(format = 'pdf', options = {}) {
+                    try {
+                        const statements = await window.generateLiveFinancialStatements();
+                        if (statements.success) {
+                            return await window.exportManager.exportStatements(statements.statements, format, options);
+                        } else {
+                            throw new Error(statements.error);
+                        }
+                    } catch (error) {
+                        console.error('Export failed:', error);
+                        return { success: false, error: error.message };
+                    }
+                };
+                
+                console.log('✅ Advanced integration setup complete');
+            }
+        }
+        
+        // Enhanced navigation functions with financial integration
+        window.showFinancialDashboard = function() {
+            if (!window.organizationalFramework.currentOrganization) {
+                alert('Please select an organization type first');
+                return;
+            }
+            
+            const orgType = window.organizationalFramework.currentOrganization.type;
+            const recommendations = window.getFinancialRecommendations(orgType);
+            
+            // Show financial integration modal
+            showModal('Financial Integration Dashboard', `
+                <div class="financial-dashboard">
+                    <h3>💰 Financial Integration for ${orgType.toUpperCase()}</h3>
+                    <div class="recommendations">
+                        <h4>Recommended Accounting Systems:</h4>
+                        <ul>
+                            ${recommendations.primary.map(system => `<li>${system.toUpperCase()}</li>`).join('')}
+                        </ul>
+                        <p><strong>Complexity:</strong> ${recommendations.complexity}</p>
+                        <p><strong>Features:</strong> ${recommendations.features.join(', ')}</p>
+                    </div>
+                    <div class="actions" style="margin-top: 20px;">
+                        <button onclick="setupFinancialConnection()" class="btn-primary">Connect Accounting System</button>
+                        <button onclick="setupManualInput()" class="btn-secondary">Manual Input Setup</button>
+                        <button onclick="generateSampleStatements()" class="btn-info">Generate Sample Statements</button>
+                    </div>
+                </div>
+            `);
+        };
+        
+        // Setup financial connection
+        window.setupFinancialConnection = function() {
+            showModal('Connect Accounting System', `
+                <div class="connection-setup">
+                    <h3>🔗 Connect Your Accounting System</h3>
+                    <form id="financial-connection-form">
+                        <div class="form-group">
+                            <label>Select Accounting System:</label>
+                            <select id="accounting-system" required>
+                                <option value="">Choose system...</option>
+                                <option value="quickbooks">QuickBooks</option>
+                                <option value="sage">Sage</option>
+                                <option value="greatplains">Great Plains</option>
+                                <option value="xero">Xero</option>
+                                <option value="wave">Wave</option>
+                                <option value="freshbooks">FreshBooks</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Connection Method:</label>
+                            <select id="connection-method">
+                                <option value="oauth">OAuth (Recommended)</option>
+                                <option value="api">API Keys</option>
+                                <option value="manual">Manual Import</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" onclick="connectAccountingSystem()" class="btn-primary">Connect</button>
+                            <button type="button" onclick="closeModal()" class="btn-secondary">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            `);
+        };
+        
+        // Connect accounting system
+        window.connectAccountingSystem = async function() {
+            const system = document.getElementById('accounting-system').value;
+            const method = document.getElementById('connection-method').value;
+            
+            if (!system) {
+                alert('Please select an accounting system');
+                return;
+            }
+            
+            console.log(`🔗 Connecting to ${system} via ${method}...`);
+            
+            // Simulated connection process
+            try {
+                const result = await window.financialHub.registerAccountingSystem(
+                    'current-org',
+                    system,
+                    { method: method, demo: true }
+                );
+                
+                if (result.success) {
+                    closeModal();
+                    alert(`✅ Successfully connected to ${system.toUpperCase()}!`);
+                    console.log('Connection result:', result);
+                } else {
+                    alert(`❌ Connection failed: ${result.error}`);
+                }
+            } catch (error) {
+                alert(`❌ Connection error: ${error.message}`);
+            }
+        };
+        
+        // Setup manual input
+        window.setupManualInput = function() {
+            showModal('Manual Financial Input', `
+                <div class="manual-input-setup">
+                    <h3>📝 Manual Financial Data Input</h3>
+                    <p>Set up manual input for organizations without integrated accounting systems.</p>
+                    <div class="input-options">
+                        <button onclick="openBalanceSheetInput()" class="btn-primary">Enter Balance Sheet</button>
+                        <button onclick="openIncomeStatementInput()" class="btn-primary">Enter Income Statement</button>
+                        <button onclick="openCashFlowInput()" class="btn-primary">Enter Cash Flow</button>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <button onclick="closeModal()" class="btn-secondary">Close</button>
+                    </div>
+                </div>
+            `);
+        };
+        
+        // Generate sample statements
+        window.generateSampleStatements = async function() {
+            try {
+                console.log('📊 Generating sample financial statements...');
+                
+                // Generate sample data for demonstration
+                const statements = {
+                    balance_sheet: await window.financialHub.financialEngine.generateBalanceSheet('sample-org', 'current'),
+                    income_statement: await window.financialHub.financialEngine.generateIncomeStatement('sample-org', 'current'),
+                    cash_flow: await window.financialHub.financialEngine.generateCashFlow('sample-org', 'current')
+                };
+                
+                showModal('Sample Financial Statements', `
+                    <div class="sample-statements">
+                        <h3>📊 Sample Financial Statements</h3>
+                        <div class="statement-tabs">
+                            <button onclick="showSampleStatement('balance')" class="tab-btn active">Balance Sheet</button>
+                            <button onclick="showSampleStatement('income')" class="tab-btn">Income Statement</button>
+                            <button onclick="showSampleStatement('cashflow')" class="tab-btn">Cash Flow</button>
+                        </div>
+                        <div id="sample-statement-content">
+                            <pre>${JSON.stringify(statements.balance_sheet, null, 2)}</pre>
+                        </div>
+                        <div class="export-options" style="margin-top: 20px;">
+                            <button onclick="exportSampleStatements('pdf')" class="btn-primary">Export as PDF</button>
+                            <button onclick="exportSampleStatements('excel')" class="btn-primary">Export as Excel</button>
+                            <button onclick="exportSampleStatements('word')" class="btn-secondary">Export as Word</button>
+                        </div>
+                    </div>
+                `);
+                
+                // Store sample statements for export
+                window.sampleStatements = statements;
+                
+            } catch (error) {
+                alert(`❌ Failed to generate sample statements: ${error.message}`);
+            }
+        };
+        
+        // Show specific sample statement
+        window.showSampleStatement = function(type) {
+            if (!window.sampleStatements) return;
+            
+            const content = document.getElementById('sample-statement-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            // Update active tab
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show statement content
+            let statement;
+            switch (type) {
+                case 'balance':
+                    statement = window.sampleStatements.balance_sheet;
+                    break;
+                case 'income':
+                    statement = window.sampleStatements.income_statement;
+                    break;
+                case 'cashflow':
+                    statement = window.sampleStatements.cash_flow;
+                    break;
+            }
+            
+            content.innerHTML = `<pre>${JSON.stringify(statement, null, 2)}</pre>`;
+        };
+        
+        // Export sample statements
+        window.exportSampleStatements = async function(format) {
+            if (!window.sampleStatements) {
+                alert('No statements to export');
+                return;
+            }
+            
+            try {
+                console.log(`📄 Exporting statements as ${format}...`);
+                
+                const result = await window.exportManager.exportStatements(
+                    window.sampleStatements,
+                    format,
+                    {
+                        organization: { name: 'Sample Organization' },
+                        includeAnalysis: true,
+                        includeCharts: false
+                    }
+                );
+                
+                if (result.success) {
+                    alert(`✅ Statements exported successfully as ${format.toUpperCase()}!`);
+                    console.log('Export result:', result);
+                } else {
+                    alert(`❌ Export failed: ${result.error}`);
+                }
+            } catch (error) {
+                alert(`❌ Export error: ${error.message}`);
+            }
+        };
+        
+        // Utility function for modal management
+        if (!window.showModal) {
+            window.showModal = function(title, content) {
+                const modal = document.createElement('div');
+                modal.className = 'modal-overlay';
+                modal.innerHTML = `
+                    <div class="modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
+                        <div class="modal-header">
+                            <h2>${title}</h2>
+                            <button onclick="closeModal()" class="close-btn">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            ${content}
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                window.currentModal = modal;
+            };
+            
+            window.closeModal = function() {
+                if (window.currentModal) {
+                    document.body.removeChild(window.currentModal);
+                    window.currentModal = null;
+                }
+            };
+        }
+        
+        console.log('🎯 Advanced financial integration functions loaded');
+    </script>
 </body>
 </html>
