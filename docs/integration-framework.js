@@ -29,6 +29,57 @@ class LucidraIntegrationFramework {
         console.log('🚀 Lucidra Integration Framework initialized');
     }
 
+    // Initialize all connected frameworks
+    initializeFrameworks() {
+        try {
+            // Initialize Porter's Five Forces
+            if (typeof initializePorterFramework === 'function') {
+                this.frameworks.porter = { initialized: true };
+                initializePorterFramework();
+                console.log('✅ Porter Framework initialized');
+            }
+
+            // Initialize Blue Ocean Strategy
+            if (typeof initializeBlueOceanFramework === 'function') {
+                this.frameworks.blueOcean = { initialized: true };
+                initializeBlueOceanFramework();
+                console.log('✅ Blue Ocean Framework initialized');
+            }
+
+            // Initialize Process Management
+            if (typeof initializeProcessManagement === 'function') {
+                this.frameworks.processManagement = { initialized: true };
+                initializeProcessManagement();
+                console.log('✅ Process Management initialized');
+            }
+
+            // Initialize Mission Generator
+            if (typeof initializeMissionGenerator === 'function') {
+                this.frameworks.missionGenerator = { initialized: true };
+                initializeMissionGenerator();
+                console.log('✅ Mission Generator initialized');
+            }
+
+            // Initialize Business Model Canvas
+            if (typeof initializeBusinessCanvas === 'function') {
+                this.frameworks.canvas = { initialized: true };
+                initializeBusinessCanvas();
+                console.log('✅ Business Canvas initialized');
+            }
+
+            // Initialize Organizational Intelligence
+            if (typeof initializeOrgIntelligence === 'function') {
+                this.frameworks.organizationalIntelligence = { initialized: true };
+                initializeOrgIntelligence();
+                console.log('✅ Organizational Intelligence initialized');
+            }
+
+            console.log('🎯 All available frameworks initialized');
+        } catch (error) {
+            console.error('Error initializing frameworks:', error);
+        }
+    }
+
     // Load organizational data from localStorage or API
     loadOrganizationData() {
         try {

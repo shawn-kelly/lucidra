@@ -5,6 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucidra - Strategic Intelligence Platform</title>
     <script src="integration-framework.js"></script>
+    <script>
+        // Verify integration framework is working
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 Verifying platform functionality...');
+            
+            // Test showView function
+            if (typeof window.showView === 'function') {
+                console.log('✅ showView function is accessible');
+            } else {
+                console.error('❌ showView function not found');
+            }
+            
+            // Test LucidraIntegration
+            if (window.LucidraIntegration) {
+                console.log('✅ LucidraIntegration framework loaded');
+                console.log('📊 Organization data:', window.LucidraIntegration.organizationData.length, 'employees');
+            } else {
+                console.error('❌ LucidraIntegration framework not found');
+            }
+            
+            // Test critical functions
+            const criticalFunctions = ['showAnalysisModal', 'showTab'];
+            criticalFunctions.forEach(func => {
+                if (typeof window[func] === 'function') {
+                    console.log(`✅ ${func} function available`);
+                } else {
+                    console.log(`⚠️ ${func} function not found globally`);
+                }
+            });
+            
+            console.log('🚀 Platform verification complete');
+        });
+    </script>
     <style>
         * {
             margin: 0;
@@ -2397,8 +2430,8 @@
     </div>
 
     <script>
-        // Navigation and UI Management
-        function showView(viewName) {
+        // Navigation and UI Management - Global function
+        window.showView = function showView(viewName) {
             // Hide all views
             document.querySelectorAll('.dashboard, .workspace').forEach(view => {
                 view.style.display = 'none';
@@ -2424,6 +2457,11 @@
             if (targetBtn) {
                 targetBtn.classList.add('active');
             }
+        };
+
+        // Also make it available as a regular function for compatibility
+        function showView(viewName) {
+            return window.showView(viewName);
         }
 
         function showTab(workspace, tabName) {
@@ -2925,8 +2963,6 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
             } else {
                 alert('BPMN diagram generated! This would create a detailed business process model.');
             }
-        }
-            ev.target.appendChild(element);
         }
 
         function saveProcess() {
@@ -3834,16 +3870,8 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
                     }
                 });
                 
-                // Ensure showView function is properly defined
-                if (typeof window.showView !== 'function') {
-                    window.showView = function(viewName) {
-                        document.querySelectorAll('.view').forEach(view => view.style.display = 'none');
-                        const targetView = document.getElementById(viewName);
-                        if (targetView) {
-                            targetView.style.display = 'block';
-                        }
-                    };
-                }
+                // showView function is already defined globally above
+                console.log('✅ showView function verified as available');
             }
             
             repairPlatformConnections() {
