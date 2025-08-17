@@ -325,6 +325,19 @@
             <p>Essential strategy tools optimized for simplicity and speed</p>
         </div>
         
+        <!-- Platform Navigation -->
+        <div class="platform-navigation" style="margin: 20px 0; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <button onclick="openFinancialHub()" class="nav-btn" style="background: linear-gradient(45deg, #8B5CF6, #A855F7); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 13px;">
+                💰 Financial Hub
+            </button>
+            <button onclick="window.parent.postMessage({action: 'showView', view: 'dashboard'}, '*')" class="nav-btn" style="background: linear-gradient(45deg, #6366F1, #8B5CF6); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 13px;">
+                🏠 Main Dashboard
+            </button>
+            <button onclick="openQuickTools()" class="nav-btn" style="background: linear-gradient(45deg, #F59E0B, #F97316); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 13px;">
+                ⚡ Quick Tools
+            </button>
+        </div>
+        
         <!-- Quick Stats -->
         <div class="quick-stats">
             <div class="stat-card">
@@ -680,6 +693,41 @@
                             </div>
                         </div>
                     `
+                },
+                'financial-hub': {
+                    title: '💰 Micro Organization Financial Hub',
+                    content: `
+                        <div style="margin: 20px 0;">
+                            <h4 style="color: #8B5CF6; margin-bottom: 15px;">💰 Simple Financial Management</h4>
+                            <p style="margin-bottom: 20px;">Essential financial tools designed for micro organizations and small teams.</p>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                                <div onclick="window.showFinancialDashboard()" style="background: linear-gradient(45deg, #8B5CF6, #A855F7); color: white; padding: 15px; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; text-align: center;">
+                                    <h5>📊 Basic Statements</h5>
+                                    <p style="font-size: 0.9rem;">Simple P&L and Cash Flow</p>
+                                </div>
+                                
+                                <div onclick="openManualInput()" style="background: linear-gradient(45deg, #10B981, #34D399); color: white; padding: 15px; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; text-align: center;">
+                                    <h5>✏️ Manual Input</h5>
+                                    <p style="font-size: 0.9rem;">Quick data entry</p>
+                                </div>
+                                
+                                <div onclick="openBasicReports()" style="background: linear-gradient(45deg, #F59E0B, #F97316); color: white; padding: 15px; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; text-align: center;">
+                                    <h5>📄 Basic Reports</h5>
+                                    <p style="font-size: 0.9rem;">Essential summaries</p>
+                                </div>
+                            </div>
+                            
+                            <div style="background: rgba(139, 92, 246, 0.1); padding: 15px; border-radius: 8px; margin-top: 20px;">
+                                <h5 style="color: #8B5CF6;">💡 Micro Organization Recommendations</h5>
+                                <ul style="list-style: none; padding: 0; margin: 10px 0;">
+                                    <li style="margin: 5px 0;">• <strong>Wave Accounting:</strong> Free for small teams</li>
+                                    <li style="margin: 5px 0;">• <strong>FreshBooks:</strong> Simple invoicing</li>
+                                    <li style="margin: 5px 0;">• <strong>Manual tracking:</strong> Spreadsheet templates</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
                 }
             };
 
@@ -736,6 +784,23 @@
 
         function learnLean() {
             alert('💡 Lean Principles for Small Teams\n\n🎯 Value Focus:\n• Identify what customers truly value\n• Eliminate activities that don\'t add value\n• Measure impact, not just activity\n\n🔄 Rapid Iteration:\n• Plan → Build → Measure → Learn\n• Short feedback cycles (weekly)\n• Quick adjustments based on data\n\n📏 Waste Elimination:\n• Reduce unnecessary meetings\n• Streamline approval processes\n• Focus on essential features only');
+        }
+
+        // Financial Hub Integration
+        function openFinancialHub() {
+            console.log('💰 Opening Financial Hub for Micro Organization...');
+            
+            // Initialize organization context for micro organization
+            if (typeof window.setupOrganizationWithFinancials === 'function') {
+                window.setupOrganizationWithFinancials('micro', 'Owner');
+            }
+            
+            openTool('financial-hub');
+        }
+
+        function openQuickTools() {
+            console.log('⚡ Opening Quick Tools for Micro Organization...');
+            alert('⚡ Quick Tools: Coming soon! Essential business tools for rapid deployment.');
         }
 
         // Initialize micro platform

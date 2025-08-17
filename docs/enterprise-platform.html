@@ -209,6 +209,19 @@
             <p style="font-size: 1.1rem; opacity: 0.9;">Advanced strategic planning and intelligence for large organizations</p>
         </div>
         
+        <!-- Platform Navigation -->
+        <div class="platform-navigation" style="margin-top: 25px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button onclick="openFinancialHub()" class="nav-btn" style="background: linear-gradient(45deg, #1F2937, #374151); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                💰 Financial Hub
+            </button>
+            <button onclick="window.parent.postMessage({action: 'showView', view: 'dashboard'}, '*')" class="nav-btn" style="background: linear-gradient(45deg, #6366F1, #8B5CF6); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                🏠 Main Dashboard
+            </button>
+            <button onclick="openEnterpriseAnalytics()" class="nav-btn" style="background: linear-gradient(45deg, #F59E0B, #F97316); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                📊 Enterprise Analytics
+            </button>
+        </div>
+        
         <div class="dashboard-grid">
             <!-- Global Operations Dashboard -->
             <div class="dashboard-card">
@@ -477,6 +490,89 @@
             if (framework) {
                 alert(framework.title + '\n\n' + framework.description + '\n\n🎯 Framework features:\n\n📊 Interactive modeling tools\n📈 Quantitative analysis\n🔍 Strategic recommendations\n📋 Implementation roadmaps\n🚀 Enterprise-scale deployment');
             }
+        }
+
+        // Financial Hub Integration
+        function openFinancialHub() {
+            console.log('💰 Opening Financial Hub for Enterprise...');
+            
+            // Initialize organization context for enterprise
+            if (typeof window.setupOrganizationWithFinancials === 'function') {
+                window.setupOrganizationWithFinancials('enterprise', 'C-Suite Executive');
+            }
+            
+            showFinancialModal('Enterprise Financial Hub', `
+                <div class="financial-hub">
+                    <h3>💰 Enterprise Financial Intelligence</h3>
+                    <p>Advanced financial management for large organizations with multi-entity consolidation and enterprise-grade analytics.</p>
+                    
+                    <div class="financial-sections" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0;">
+                        <div class="financial-card" onclick="window.showFinancialDashboard()" style="background: linear-gradient(45deg, #1F2937, #374151); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>📊 Consolidated Statements</h4>
+                            <p>Multi-entity financial reporting</p>
+                        </div>
+                        
+                        <div class="financial-card" onclick="openConsolidation()" style="background: linear-gradient(45deg, #6366F1, #8B5CF6); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>🏢 Multi-Entity</h4>
+                            <p>Divisional consolidation</p>
+                        </div>
+                        
+                        <div class="financial-card" onclick="openAdvancedAnalytics()" style="background: linear-gradient(45deg, #F59E0B, #F97316); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>📈 Advanced Analytics</h4>
+                            <p>Predictive modeling & KPIs</p>
+                        </div>
+                        
+                        <div class="financial-card" onclick="openCustomReporting()" style="background: linear-gradient(45deg, #10B981, #34D399); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>📋 Custom Reporting</h4>
+                            <p>Executive dashboards</p>
+                        </div>
+                    </div>
+                    
+                    <div class="financial-recommendations" style="background: rgba(31, 41, 55, 0.1); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                        <h4>💡 Enterprise Financial Recommendations</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 5px 0;">• <strong>SAP ERP:</strong> Comprehensive enterprise solution</li>
+                            <li style="margin: 5px 0;">• <strong>Oracle NetSuite:</strong> Cloud-based consolidation</li>
+                            <li style="margin: 5px 0;">• <strong>Microsoft Dynamics GP:</strong> Multi-entity support</li>
+                            <li style="margin: 5px 0;">• <strong>Sage Intacct:</strong> Advanced analytics</li>
+                        </ul>
+                    </div>
+                </div>
+            `);
+        }
+
+        function openEnterpriseAnalytics() {
+            console.log('📊 Opening Enterprise Analytics...');
+            alert('📊 Enterprise Analytics Suite coming soon! Advanced business intelligence and predictive analytics.');
+        }
+
+        function showFinancialModal(title, content) {
+            // Create modal if it doesn't exist
+            let modal = document.getElementById('enterpriseModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'enterpriseModal';
+                modal.style.cssText = `
+                    display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+                    overflow: auto; background-color: rgba(0,0,0,0.4); backdrop-filter: blur(5px);
+                `;
+                modal.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #1F2937 0%, #374151 100%); margin: 5% auto; padding: 30px; border-radius: 20px; width: 90%; max-width: 800px; color: white; position: relative;">
+                        <span onclick="closeEnterpriseModal()" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; line-height: 1;">&times;</span>
+                        <h2 id="enterpriseModalTitle" style="margin-bottom: 20px; color: white;"></h2>
+                        <div id="enterpriseModalContent"></div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+            
+            document.getElementById('enterpriseModalTitle').textContent = title;
+            document.getElementById('enterpriseModalContent').innerHTML = content;
+            modal.style.display = 'block';
+        }
+
+        function closeEnterpriseModal() {
+            document.getElementById('enterpriseModal').style.display = 'none';
         }
         
         // Initialize enterprise platform

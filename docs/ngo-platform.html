@@ -422,6 +422,19 @@
             <p>Comprehensive strategic frameworks optimized for social impact and sustainability</p>
         </div>
         
+        <!-- Platform Navigation -->
+        <div class="platform-navigation" style="margin-top: 25px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button onclick="openFinancialHub()" class="nav-btn" style="background: linear-gradient(45deg, #10B981, #34D399); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                💰 Financial Hub
+            </button>
+            <button onclick="window.parent.postMessage({action: 'showView', view: 'dashboard'}, '*')" class="nav-btn" style="background: linear-gradient(45deg, #6366F1, #8B5CF6); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                🏠 Main Dashboard
+            </button>
+            <button onclick="openGrantManagement()" class="nav-btn" style="background: linear-gradient(45deg, #F59E0B, #F97316); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                💝 Grant Management
+            </button>
+        </div>
+        
         <div class="main-dashboard">
             <!-- Primary Dashboard -->
             <div class="primary-panel">
@@ -1003,6 +1016,65 @@
             // Update display
             document.getElementById('beneficiariesReached').textContent = ngoState.impactMetrics.beneficiariesReached.toLocaleString();
             document.getElementById('fundingEfficiency').textContent = Math.floor(ngoState.impactMetrics.fundingEfficiency) + '%';
+        }
+
+        // Financial Hub Integration
+        function openFinancialHub() {
+            console.log('💰 Opening Financial Hub for NGO...');
+            
+            // Initialize organization context for NGO
+            if (typeof window.setupOrganizationWithFinancials === 'function') {
+                window.setupOrganizationWithFinancials('ngo', 'Executive Director');
+            }
+            
+            showFinancialModal('NGO Financial Hub', `
+                <div class="financial-hub">
+                    <h3>💰 NGO Financial Intelligence</h3>
+                    <p>Specialized financial management for non-profit organizations with grant tracking and fund accounting.</p>
+                    
+                    <div class="financial-sections" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0;">
+                        <div class="financial-card" onclick="window.showFinancialDashboard()" style="background: linear-gradient(45deg, #10B981, #34D399); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>📊 Financial Statements</h4>
+                            <p>Balance Sheet, P&L, Cash Flow</p>
+                        </div>
+                        
+                        <div class="financial-card" onclick="openGrantTracking()" style="background: linear-gradient(45deg, #6366F1, #8B5CF6); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>💝 Grant Tracking</h4>
+                            <p>Fund allocation & reporting</p>
+                        </div>
+                        
+                        <div class="financial-card" onclick="openDonorManagement()" style="background: linear-gradient(45deg, #F59E0B, #F97316); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>🤝 Donor Management</h4>
+                            <p>Donor analytics & stewardship</p>
+                        </div>
+                        
+                        <div class="financial-card" onclick="openComplianceReporting()" style="background: linear-gradient(45deg, #EF4444, #F87171); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>📋 Compliance</h4>
+                            <p>Regulatory reporting</p>
+                        </div>
+                    </div>
+                    
+                    <div class="financial-recommendations" style="background: rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                        <h4>💡 NGO Financial Recommendations</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 5px 0;">• <strong>QuickBooks Nonprofit:</strong> Fund accounting features</li>
+                            <li style="margin: 5px 0;">• <strong>Sage Intacct:</strong> Advanced grant tracking</li>
+                            <li style="margin: 5px 0;">• <strong>Manual Input:</strong> Custom fund allocation</li>
+                        </ul>
+                    </div>
+                </div>
+            `);
+        }
+
+        function openGrantManagement() {
+            console.log('💝 Opening Grant Management for NGO...');
+            alert('💝 Grant Management Suite coming soon! Advanced grant tracking and compliance reporting.');
+        }
+
+        function showFinancialModal(title, content) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('frameworkModal').style.display = 'block';
         }
 
         // Initialize NGO platform

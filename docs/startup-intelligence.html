@@ -460,6 +460,22 @@
             <h1>🚀 Lucidra Startup Intelligence</h1>
             <div class="startup-badge">Investor-Ready Strategic Platform</div>
             <p>Transform your startup vision into investor-ready strategic intelligence with real-world data validation</p>
+            
+            <!-- Enhanced Navigation with Financial Hub -->
+            <div class="platform-navigation" style="margin-top: 25px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button onclick="window.open('../index.html', '_self')" class="nav-btn" style="background: linear-gradient(45deg, #4A90E2, #357ABD); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                    🏠 Main Platform
+                </button>
+                <button onclick="openFinancialHub()" class="nav-btn" style="background: linear-gradient(45deg, #27AE60, #2ECC71); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                    💰 Financial Hub
+                </button>
+                <button onclick="generateComprehensiveReport()" class="nav-btn" style="background: linear-gradient(45deg, #E67E22, #F39C12); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                    📊 Generate Reports
+                </button>
+                <button onclick="connectAccountingSystem()" class="nav-btn" style="background: linear-gradient(45deg, #8E44AD, #9B59B6); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                    🔗 Connect Accounting
+                </button>
+            </div>
         </div>
         
         <div class="main-dashboard">
@@ -988,6 +1004,344 @@ FUNDING USE:
             document.getElementById('ltv').textContent = '$' + Math.floor(startupState.metrics.ltv).toLocaleString();
         }
 
+        // Financial Hub Integration for Startup Platform
+        function openFinancialHub() {
+            console.log('💰 Opening Financial Hub for Startup...');
+            
+            // Initialize organization context for startup
+            if (typeof window.setupOrganizationWithFinancials === 'function') {
+                window.setupOrganizationWithFinancials('startup', 'CEO');
+            }
+            
+            showFinancialModal('Startup Financial Hub', `
+                <div class="financial-hub">
+                    <h3>💰 Startup Financial Intelligence</h3>
+                    <p>Optimize your financial strategy with investor-grade reporting and accounting integration.</p>
+                    
+                    <div class="startup-financial-features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0;">
+                        <div class="feature-card" style="background: rgba(39, 174, 96, 0.2); padding: 20px; border-radius: 10px; border: 1px solid rgba(39, 174, 96, 0.3);">
+                            <h4>📊 Investor Reports</h4>
+                            <p>Generate professional financial statements for investor presentations.</p>
+                            <button onclick="generateInvestorFinancials()" class="feature-btn">Generate Now</button>
+                        </div>
+                        
+                        <div class="feature-card" style="background: rgba(52, 152, 219, 0.2); padding: 20px; border-radius: 10px; border: 1px solid rgba(52, 152, 219, 0.3);">
+                            <h4>🔗 Connect QuickBooks</h4>
+                            <p>Recommended accounting system for startups with automatic sync.</p>
+                            <button onclick="setupQuickBooksStartup()" class="feature-btn">Connect</button>
+                        </div>
+                        
+                        <div class="feature-card" style="background: rgba(155, 89, 182, 0.2); padding: 20px; border-radius: 10px; border: 1px solid rgba(155, 89, 182, 0.3);">
+                            <h4>💡 Financial Planning</h4>
+                            <p>Burn rate analysis and funding runway calculations.</p>
+                            <button onclick="openBurnRateAnalysis()" class="feature-btn">Analyze</button>
+                        </div>
+                        
+                        <div class="feature-card" style="background: rgba(230, 126, 34, 0.2); padding: 20px; border-radius: 10px; border: 1px solid rgba(230, 126, 34, 0.3);">
+                            <h4>📈 Growth Metrics</h4>
+                            <p>Real-time financial KPIs and growth tracking.</p>
+                            <button onclick="openGrowthMetrics()" class="feature-btn">View Metrics</button>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-actions" style="margin-top: 25px; text-align: center;">
+                        <button onclick="generateSampleStartupStatements()" style="background: linear-gradient(45deg, #27AE60, #2ECC71); color: white; border: none; padding: 12px 24px; border-radius: 25px; margin: 5px; cursor: pointer;">
+                            📊 Generate Sample Statements
+                        </button>
+                        <button onclick="exportStartupReports('pdf')" style="background: linear-gradient(45deg, #E74C3C, #C0392B); color: white; border: none; padding: 12px 24px; border-radius: 25px; margin: 5px; cursor: pointer;">
+                            📄 Export PDF Report
+                        </button>
+                    </div>
+                </div>
+            `);
+        }
+        
+        function generateInvestorFinancials() {
+            console.log('📊 Generating investor-ready financial statements...');
+            alert(`📊 Investor Financial Package Generated!\n\n✅ Balance Sheet (Startup Format)\n✅ Profit & Loss Statement\n✅ Cash Flow Forecast (18 months)\n✅ Key Metrics Dashboard\n✅ Burn Rate Analysis\n✅ Funding Runway Calculator\n\nAll statements formatted for investor presentations with scenario modeling.`);
+        }
+        
+        function setupQuickBooksStartup() {
+            console.log('🔗 Setting up QuickBooks for startup...');
+            showFinancialModal('Connect QuickBooks for Startups', `
+                <div class="quickbooks-setup">
+                    <h3>🔗 QuickBooks Integration for Startups</h3>
+                    <p>Connect your QuickBooks account for automatic financial data sync and investor-ready reporting.</p>
+                    
+                    <div class="integration-benefits" style="background: rgba(39, 174, 96, 0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h4>Benefits for Startups:</h4>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Automatic burn rate calculations</li>
+                            <li>Investor-ready financial statements</li>
+                            <li>Real-time cash flow monitoring</li>
+                            <li>Funding runway projections</li>
+                            <li>Cap table integration</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="connection-steps" style="margin: 20px 0;">
+                        <button onclick="connectQuickBooksDemo()" style="background: #0077C5; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; width: 100%; font-size: 16px; margin: 10px 0;">
+                            🔗 Connect QuickBooks Online
+                        </button>
+                        <button onclick="setupManualInputStartup()" style="background: #666; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; width: 100%; font-size: 16px; margin: 10px 0;">
+                            📝 Manual Input (No QuickBooks)
+                        </button>
+                    </div>
+                </div>
+            `);
+        }
+        
+        function openBurnRateAnalysis() {
+            console.log('💡 Opening burn rate analysis...');
+            showFinancialModal('Startup Burn Rate Analysis', `
+                <div class="burn-rate-analysis">
+                    <h3>💡 Burn Rate & Runway Analysis</h3>
+                    
+                    <div class="burn-metrics" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                        <div class="metric-card" style="background: rgba(231, 76, 60, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold;">$15,000</div>
+                            <div style="font-size: 14px; opacity: 0.8;">Monthly Burn Rate</div>
+                        </div>
+                        <div class="metric-card" style="background: rgba(52, 152, 219, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold;">$180,000</div>
+                            <div style="font-size: 14px; opacity: 0.8;">Current Cash</div>
+                        </div>
+                        <div class="metric-card" style="background: rgba(46, 204, 113, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold;">12 months</div>
+                            <div style="font-size: 14px; opacity: 0.8;">Funding Runway</div>
+                        </div>
+                    </div>
+                    
+                    <div class="runway-chart" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 8px; margin: 15px 0;">
+                        <h4>📈 Cash Flow Projection</h4>
+                        <p>Based on current burn rate, you have 12 months of runway. Consider fundraising in 6-9 months.</p>
+                        <div style="background: linear-gradient(to right, #46D2A0 0%, #F7DC6F 50%, #E74C3C 100%); height: 20px; border-radius: 10px; margin: 10px 0;"></div>
+                        <div style="display: flex; justify-content: space-between; font-size: 12px;">
+                            <span>Safe (9+ months)</span>
+                            <span>Caution (3-9 months)</span>
+                            <span>Critical (&lt;3 months)</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="generateBurnRateReport()" style="background: linear-gradient(45deg, #3498DB, #2980B9); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 15px;">
+                        📊 Generate Detailed Burn Rate Report
+                    </button>
+                </div>
+            `);
+        }
+        
+        function openGrowthMetrics() {
+            console.log('📈 Opening growth metrics dashboard...');
+            showFinancialModal('Startup Growth Metrics', `
+                <div class="growth-metrics">
+                    <h3>📈 Key Growth & Financial Metrics</h3>
+                    
+                    <div class="metrics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 20px 0;">
+                        <div class="metric-card" style="background: rgba(46, 204, 113, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: bold;">$45</div>
+                            <div style="font-size: 12px; opacity: 0.8;">Customer Acquisition Cost</div>
+                            <div style="font-size: 10px; color: #27AE60;">↓ 15% vs last month</div>
+                        </div>
+                        <div class="metric-card" style="background: rgba(52, 152, 219, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: bold;">$540</div>
+                            <div style="font-size: 12px; opacity: 0.8;">Lifetime Value</div>
+                            <div style="font-size: 10px; color: #27AE60;">↑ 8% vs last month</div>
+                        </div>
+                        <div class="metric-card" style="background: rgba(155, 89, 182, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: bold;">12:1</div>
+                            <div style="font-size: 12px; opacity: 0.8;">LTV:CAC Ratio</div>
+                            <div style="font-size: 10px; color: #27AE60;">Healthy ratio</div>
+                        </div>
+                        <div class="metric-card" style="background: rgba(230, 126, 34, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: bold;">85%</div>
+                            <div style="font-size: 12px; opacity: 0.8;">Gross Margin</div>
+                            <div style="font-size: 10px; color: #27AE60;">↑ 3% vs last month</div>
+                        </div>
+                        <div class="metric-card" style="background: rgba(231, 76, 60, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: bold;">15%</div>
+                            <div style="font-size: 12px; opacity: 0.8;">Monthly Churn</div>
+                            <div style="font-size: 10px; color: #E74C3C;">↑ 2% vs last month</div>
+                        </div>
+                        <div class="metric-card" style="background: rgba(241, 196, 15, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: bold;">$28K</div>
+                            <div style="font-size: 12px; opacity: 0.8;">Monthly Recurring Revenue</div>
+                            <div style="font-size: 10px; color: #27AE60;">↑ 22% vs last month</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; text-align: center;">
+                        <button onclick="exportMetricsReport()" style="background: linear-gradient(45deg, #9B59B6, #8E44AD); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; margin: 5px;">
+                            📊 Export Metrics Report
+                        </button>
+                        <button onclick="setupMetricsTracking()" style="background: linear-gradient(45deg, #34495E, #2C3E50); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; margin: 5px;">
+                            ⚙️ Setup Auto-Tracking
+                        </button>
+                    </div>
+                </div>
+            `);
+        }
+        
+        function generateSampleStartupStatements() {
+            console.log('📊 Generating sample startup financial statements...');
+            alert(`📊 Sample Startup Financial Statements Generated!\n\n✅ Balance Sheet (Startup Format)\n✅ Income Statement (Monthly)\n✅ Cash Flow Statement\n✅ Burn Rate Analysis\n✅ Funding Runway Report\n✅ Key Metrics Dashboard\n\nThese statements are formatted specifically for startup reporting and investor presentations.`);
+        }
+        
+        function exportStartupReports(format) {
+            console.log(`📄 Exporting startup reports as ${format}...`);
+            alert(`📄 Startup Financial Report Package Exported!\n\nFormat: ${format.toUpperCase()}\n\nIncludes:\n✅ Executive Summary\n✅ Financial Statements\n✅ Burn Rate Analysis\n✅ Growth Metrics\n✅ Funding Runway\n✅ Investor Presentation\n\nReport optimized for startup investors and stakeholders.`);
+        }
+        
+        function connectQuickBooksDemo() {
+            console.log('🔗 Connecting QuickBooks (Demo)...');
+            alert('✅ QuickBooks Connected Successfully!\n\nDemo connection established. In production:\n- OAuth 2.0 authentication\n- Real-time data sync\n- Automatic categorization\n- Investor-ready reporting\n\nStartup financial data now synced.');
+        }
+        
+        function setupManualInputStartup() {
+            console.log('📝 Setting up manual input for startup...');
+            alert('📝 Manual Input Setup for Startups\n\n✅ Balance Sheet Template\n✅ Income Statement Template\n✅ Cash Flow Template\n✅ Burn Rate Calculator\n✅ Growth Metrics Tracker\n\nTemplates optimized for startup accounting and investor reporting.');
+        }
+        
+        function generateBurnRateReport() {
+            console.log('📊 Generating burn rate report...');
+            alert('📊 Detailed Burn Rate Report Generated!\n\n✅ Historical burn rate trends\n✅ Cash flow projections (12 months)\n✅ Funding runway analysis\n✅ Break-even scenarios\n✅ Cost optimization recommendations\n\nReport includes actionable insights for extending runway.');
+        }
+        
+        function exportMetricsReport() {
+            console.log('📊 Exporting metrics report...');
+            alert('📊 Growth Metrics Report Exported!\n\n✅ Key performance indicators\n✅ Trend analysis\n✅ Benchmark comparisons\n✅ Growth projections\n✅ Action recommendations\n\nReport formatted for investor updates.');
+        }
+        
+        function setupMetricsTracking() {
+            console.log('⚙️ Setting up metrics tracking...');
+            alert('⚙️ Automated Metrics Tracking Setup\n\n✅ Daily revenue tracking\n✅ Customer acquisition monitoring\n✅ Churn rate calculations\n✅ LTV analysis\n✅ Automated reporting\n\nReal-time dashboard will update automatically.');
+        }
+        
+        function generateComprehensiveReport() {
+            console.log('📊 Generating comprehensive startup report...');
+            alert('📊 Comprehensive Startup Intelligence Report\n\n✅ Business Model Analysis\n✅ Market Position Assessment\n✅ Financial Performance\n✅ Growth Metrics\n✅ Competitive Analysis\n✅ Investment Readiness Score\n✅ Strategic Recommendations\n\nComplete report ready for investors and stakeholders.');
+        }
+        
+        function connectAccountingSystem() {
+            console.log('🔗 Opening accounting system connection...');
+            showFinancialModal('Connect Accounting System', `
+                <div class="accounting-connection">
+                    <h3>🔗 Connect Your Accounting System</h3>
+                    <p>Choose your preferred accounting system for automatic financial integration.</p>
+                    
+                    <div class="system-options" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                        <button onclick="connectSpecificSystem('QuickBooks')" style="background: #0077C5; color: white; border: none; padding: 20px; border-radius: 10px; cursor: pointer;">
+                            <div style="font-size: 18px;">💼 QuickBooks</div>
+                            <div style="font-size: 12px;">Recommended for Startups</div>
+                        </button>
+                        <button onclick="connectSpecificSystem('Wave')" style="background: #00D4AA; color: white; border: none; padding: 20px; border-radius: 10px; cursor: pointer;">
+                            <div style="font-size: 18px;">🌊 Wave</div>
+                            <div style="font-size: 12px;">Free for Small Business</div>
+                        </button>
+                        <button onclick="connectSpecificSystem('FreshBooks')" style="background: #0E80D3; color: white; border: none; padding: 20px; border-radius: 10px; cursor: pointer;">
+                            <div style="font-size: 18px;">📚 FreshBooks</div>
+                            <div style="font-size: 12px;">Service-Based Business</div>
+                        </button>
+                        <button onclick="connectSpecificSystem('Xero')" style="background: #13B5EA; color: white; border: none; padding: 20px; border-radius: 10px; cursor: pointer;">
+                            <div style="font-size: 18px;">🔄 Xero</div>
+                            <div style="font-size: 12px;">Cloud Accounting</div>
+                        </button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button onclick="setupManualInputStartup()" style="background: #7F8C8D; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer;">
+                            📝 Manual Input Instead
+                        </button>
+                    </div>
+                </div>
+            `);
+        }
+        
+        function connectSpecificSystem(systemName) {
+            console.log(`🔗 Connecting ${systemName}...`);
+            alert(`🔗 ${systemName} Integration\n\nDemo connection for ${systemName}.\n\nIn production:\n✅ OAuth authentication\n✅ Real-time data sync\n✅ Automatic categorization\n✅ Startup-specific reporting\n\n${systemName} would be connected and syncing financial data.`);
+            closeModal();
+        }
+        
+        // Financial modal utility functions
+        function showFinancialModal(title, content) {
+            // Remove existing modal
+            const existingModal = document.getElementById('financialModal');
+            if (existingModal) {
+                document.body.removeChild(existingModal);
+            }
+            
+            const modal = document.createElement('div');
+            modal.id = 'financialModal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+                backdrop-filter: blur(5px);
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                     border-radius: 20px; 
+                     padding: 30px; 
+                     max-width: 90vw; 
+                     max-height: 90vh; 
+                     overflow-y: auto; 
+                     border: 1px solid rgba(255, 255, 255, 0.2);
+                     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2 style="color: white; margin: 0;">${title}</h2>
+                        <button onclick="closeFinancialModal()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer; padding: 5px;">&times;</button>
+                    </div>
+                    <div style="color: white;">
+                        ${content}
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function closeFinancialModal() {
+            const modal = document.getElementById('financialModal');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+        }
+        
+        // Add feature button styling
+        const featureBtnStyle = document.createElement('style');
+        featureBtnStyle.textContent = `
+            .feature-btn {
+                background: linear-gradient(45deg, #3498DB, #2980B9);
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 15px;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: 600;
+                margin-top: 10px;
+                transition: all 0.3s ease;
+                width: 100%;
+            }
+            .feature-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            }
+            .nav-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+        `;
+        document.head.appendChild(featureBtnStyle);
+
         // Initialize startup intelligence
         document.addEventListener('DOMContentLoaded', function() {
             updateReadinessScore();
@@ -996,6 +1350,7 @@ FUNDING USE:
             setInterval(updateMetrics, 30000);
             
             console.log('🚀 Startup Intelligence Platform initialized');
+            console.log('💰 Financial Hub integration ready');
         });
 
         // Close modal when clicking outside

@@ -451,6 +451,19 @@
             <p>Comprehensive business intelligence for small and medium enterprises focused on sustainable scale</p>
         </div>
         
+        <!-- Platform Navigation -->
+        <div class="platform-navigation" style="margin-top: 25px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button onclick="openFinancialHub()" class="nav-btn" style="background: linear-gradient(45deg, #10B981, #34D399); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                💰 Financial Hub
+            </button>
+            <button onclick="window.parent.postMessage({action: 'showView', view: 'dashboard'}, '*')" class="nav-btn" style="background: linear-gradient(45deg, #6366F1, #8B5CF6); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                🏠 Main Dashboard
+            </button>
+            <button onclick="openProcessManagement()" class="nav-btn" style="background: linear-gradient(45deg, #F59E0B, #F97316); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 14px;">
+                ⚙️ Process Management
+            </button>
+        </div>
+        
         <div class="main-dashboard">
             <!-- Primary Dashboard -->
             <div class="primary-panel">
@@ -960,6 +973,12 @@
             document.getElementById('frameworkModal').style.display = 'none';
         }
 
+        function showFinancialModal(title, content) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('frameworkModal').style.display = 'block';
+        }
+
         // Quick Action Functions
         function optimizeResources() {
             alert('🎯 Resource Optimization Analysis\n\nIdentified optimization opportunities:\n\n• Human Resources: Redistribute tasks to improve 88% → 95% efficiency\n• Technology: Upgrade automation tools for 15% cost reduction\n• Financial: Optimize working capital for improved cash flow\n• Processes: Eliminate 3 redundant steps in core workflows\n\nEstimated annual savings: $285,000');
@@ -1006,6 +1025,59 @@
             // Update display
             document.getElementById('operationalEfficiency').textContent = Math.floor(smeState.operationalMetrics.efficiency) + '%';
             document.getElementById('resourceUtilization').textContent = Math.floor(smeState.operationalMetrics.resourceUtilization) + '%';
+        }
+
+        // Financial Hub Integration
+        function openFinancialHub() {
+            console.log('💰 Opening Financial Hub for SME...');
+            
+            // Initialize organization context for SME
+            if (typeof window.setupOrganizationWithFinancials === 'function') {
+                window.setupOrganizationWithFinancials('sme', 'Business Owner');
+            }
+            
+            showFinancialModal('SME Financial Hub', `
+                <div class="financial-hub">
+                    <h3>💰 SME Financial Intelligence</h3>
+                    <p>Comprehensive financial analysis and accounting system integration for small and medium enterprises.</p>
+                    
+                    <div class="financial-sections" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0;">
+                        <div class="financial-card" onclick="window.showFinancialDashboard()" style="background: linear-gradient(45deg, #10B981, #34D399); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>📊 Real-Time Statements</h4>
+                            <p>Balance Sheet, P&L, Cash Flow</p>
+                        </div>
+                        
+                        <div class="financial-card" onclick="openAccountingIntegration()" style="background: linear-gradient(45deg, #6366F1, #8B5CF6); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>🔗 Accounting Integration</h4>
+                            <p>QuickBooks, Sage, Xero</p>
+                        </div>
+                        
+                        <div class="financial-card" onclick="openScenarioModeling()" style="background: linear-gradient(45deg, #F59E0B, #F97316); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>🎯 Scenario Planning</h4>
+                            <p>Growth, Risk, Expansion</p>
+                        </div>
+                        
+                        <div class="financial-card" onclick="openExportCenter()" style="background: linear-gradient(45deg, #EF4444, #F87171); color: white; padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;">
+                            <h4>📄 Export Center</h4>
+                            <p>Word, Excel, PDF</p>
+                        </div>
+                    </div>
+                    
+                    <div class="financial-recommendations" style="background: rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                        <h4>💡 SME Financial Recommendations</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 5px 0;">• <strong>QuickBooks Online:</strong> Most popular for SMEs</li>
+                            <li style="margin: 5px 0;">• <strong>Sage Business Cloud:</strong> Advanced reporting</li>
+                            <li style="margin: 5px 0;">• <strong>Xero:</strong> Best for multi-currency</li>
+                        </ul>
+                    </div>
+                </div>
+            `);
+        }
+
+        function openProcessManagement() {
+            console.log('⚙️ Opening Process Management for SME...');
+            alert('🔧 SME Process Management coming soon!');
         }
 
         // Initialize SME platform
