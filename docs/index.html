@@ -534,6 +534,160 @@
                 font-size: 2rem;
             }
         }
+        
+        /* BPMN Swimlanes & Pools */
+        .swimlane-container {
+            border: 2px solid rgba(76, 175, 80, 0.6);
+            background: rgba(76, 175, 80, 0.05);
+            border-radius: 8px;
+            position: absolute;
+            z-index: 5;
+            cursor: move;
+            transition: all 0.2s ease;
+        }
+        
+        .swimlane-container[data-type="pool"] {
+            border-color: rgba(63, 81, 181, 0.6);
+            background: rgba(63, 81, 181, 0.05);
+        }
+        
+        .swimlane-container:hover {
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        
+        .swimlane-container[data-type="pool"]:hover {
+            box-shadow: 0 4px 12px rgba(63, 81, 181, 0.3);
+        }
+        
+        .swimlane-header {
+            background: rgba(76, 175, 80, 0.2);
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(76, 175, 80, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .swimlane-container[data-type="pool"] .swimlane-header {
+            background: rgba(63, 81, 181, 0.2);
+            border-bottom-color: rgba(63, 81, 181, 0.3);
+        }
+        
+        .swimlane-title {
+            flex: 1;
+            min-width: 0;
+            cursor: text;
+        }
+        
+        .swimlane-controls {
+            display: flex;
+            gap: 4px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .swimlane-container:hover .swimlane-controls {
+            opacity: 1;
+        }
+        
+        .swimlane-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .swimlane-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .swimlane-body {
+            padding: 10px;
+            min-height: 60px;
+            position: relative;
+        }
+        
+        .swimlane-resize-handle {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 12px;
+            height: 12px;
+            background: rgba(76, 175, 80, 0.6);
+            cursor: se-resize;
+            border-radius: 4px 0 0 0;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .swimlane-container[data-type="pool"] .swimlane-resize-handle {
+            background: rgba(63, 81, 181, 0.6);
+        }
+        
+        .swimlane-container:hover .swimlane-resize-handle {
+            opacity: 1;
+        }
+        
+        .swimlane-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.5;
+            font-size: 11px;
+            pointer-events: none;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .connection-point {
+            position: absolute;
+            z-index: 20;
+            pointer-events: auto;
+        }
+        
+        .connection-point:hover {
+            opacity: 1 !important;
+            transform: scale(1.2);
+        }
+        
+        .sequence-flow-line {
+            position: absolute;
+            z-index: 10;
+            pointer-events: stroke;
+            cursor: pointer;
+        }
+        
+        .sequence-flow-line:hover line {
+            stroke-width: 3px !important;
+            stroke: #2196F3 !important;
+        }
+        
+        .temp-connection-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 15;
+        }
+        
+        .connection-mode-active .process-canvas-enhanced {
+            cursor: crosshair !important;
+        }
+        
+        .connection-mode-active .canvas-element {
+            cursor: crosshair !important;
+        }
+        
+        .connection-target-highlight {
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.6) !important;
+        }
     </style>
 </head>
 <body>
@@ -960,8 +1114,9 @@
                                 
                                 <!-- Enhanced Process Canvas -->
                                 <div style="flex: 1; display: flex; flex-direction: column;">
-                                    <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px 10px 0 0; display: flex; gap: 10px; align-items: center;">
+                                    <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px 10px 0 0; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                                         <span style="font-weight: bold;">🎨 Canvas Tools:</span>
+                                        <button class="btn-small" id="connectionModeBtn" onclick="toggleConnectionMode()">🔗 Connect Elements</button>
                                         <button class="btn-small" onclick="clearCanvas()">🗑️ Clear</button>
                                         <button class="btn-small" onclick="zoomIn()">🔍+ Zoom In</button>
                                         <button class="btn-small" onclick="zoomOut()">🔍- Zoom Out</button>
@@ -3002,10 +3157,18 @@ CREATE:
         // ==========================================
         
         let canvasElements = [];
+        let sequenceFlows = [];
+        let swimlanes = [];
         let selectedElement = null;
         let connectionMode = false;
+        let connectionStart = null;
+        let connectionEnd = null;
         let nextElementId = 1;
+        let nextFlowId = 1;
+        let nextLaneId = 1;
         let canvasZoom = 1;
+        let isDrawingConnection = false;
+        let tempConnection = null;
         
         function dropEnhanced(ev) {
             ev.preventDefault();
@@ -3031,13 +3194,19 @@ CREATE:
             }
         }
         
-        function createProcessElement(type, x, y) {
+        function createProcessElement(type, x, y, laneId = null) {
             const elementId = 'element_' + nextElementId++;
             const elementData = getElementTemplate(type);
             
             const element = document.createElement('div');
             element.id = elementId;
             element.className = 'canvas-element';
+            
+            // Handle special case for pools and lanes
+            if (type === 'pool' || type === 'lane') {
+                return createSwimlane(type, x, y);
+            }
+            
             element.style.cssText = `
                 position: absolute;
                 left: ${x}px;
@@ -3051,13 +3220,29 @@ CREATE:
             element.setAttribute('data-type', type);
             element.setAttribute('data-id', elementId);
             
+            // Add connection points
+            addConnectionPoints(element);
+            
             // Add event listeners
             element.onclick = (e) => {
                 e.stopPropagation();
-                selectElement(element);
+                if (connectionMode) {
+                    handleConnectionClick(element);
+                } else {
+                    selectElement(element);
+                }
             };
             
-            element.onmousedown = startDragElement;
+            element.onmousedown = (e) => {
+                if (!connectionMode) {
+                    startDragElement(e);
+                }
+            };
+            
+            element.ondblclick = (e) => {
+                e.stopPropagation();
+                editElementText(element);
+            };
             
             document.getElementById('processCanvas').appendChild(element);
             
@@ -3067,8 +3252,11 @@ CREATE:
                 type: type,
                 x: x,
                 y: y,
+                laneId: laneId,
                 properties: elementData.properties,
-                connections: []
+                connections: [],
+                incomingFlows: [],
+                outgoingFlows: []
             });
             
             return element;
@@ -3615,6 +3803,1195 @@ Generated by Lucidra Strategic Intelligence Platform
         
         function optimizeProcess() {
             alert('🚀 AI Process Optimization\\n\\nThis would analyze your process for:\\n• Bottlenecks and delays\\n• Automation opportunities\\n• Resource optimization\\n• Best practice compliance\\n• Performance improvements');
+        }
+        
+        // ==========================================
+        // INTERACTIVE BPMN CONNECTIONS & SEQUENCE FLOWS
+        // ==========================================
+        
+        function addConnectionPoints(element) {
+            const connectionPoints = ['top', 'right', 'bottom', 'left'];
+            
+            connectionPoints.forEach(position => {
+                const point = document.createElement('div');
+                point.className = 'connection-point';
+                point.setAttribute('data-position', position);
+                point.style.cssText = `
+                    position: absolute;
+                    width: 8px;
+                    height: 8px;
+                    background: #2196F3;
+                    border: 2px solid white;
+                    border-radius: 50%;
+                    cursor: crosshair;
+                    opacity: 0;
+                    transition: opacity 0.2s ease;
+                    z-index: 20;
+                `;
+                
+                // Position the connection points
+                switch(position) {
+                    case 'top':
+                        point.style.top = '-6px';
+                        point.style.left = '50%';
+                        point.style.transform = 'translateX(-50%)';
+                        break;
+                    case 'right':
+                        point.style.top = '50%';
+                        point.style.right = '-6px';
+                        point.style.transform = 'translateY(-50%)';
+                        break;
+                    case 'bottom':
+                        point.style.bottom = '-6px';
+                        point.style.left = '50%';
+                        point.style.transform = 'translateX(-50%)';
+                        break;
+                    case 'left':
+                        point.style.top = '50%';
+                        point.style.left = '-6px';
+                        point.style.transform = 'translateY(-50%)';
+                        break;
+                }
+                
+                point.onmousedown = (e) => {
+                    e.stopPropagation();
+                    startConnection(element, position);
+                };
+                
+                element.appendChild(point);
+            });
+            
+            // Show connection points on hover
+            element.onmouseenter = () => {
+                const points = element.querySelectorAll('.connection-point');
+                points.forEach(point => point.style.opacity = '1');
+            };
+            
+            element.onmouseleave = () => {
+                if (!isDrawingConnection) {
+                    const points = element.querySelectorAll('.connection-point');
+                    points.forEach(point => point.style.opacity = '0');
+                }
+            };
+        }
+        
+        function toggleConnectionMode() {
+            connectionMode = !connectionMode;
+            const button = document.getElementById('connectionModeBtn');
+            
+            if (connectionMode) {
+                button.style.background = '#4CAF50';
+                button.textContent = '🔗 Connection Mode: ON';
+                document.getElementById('processCanvas').style.cursor = 'crosshair';
+                showConnectionInstructions();
+            } else {
+                button.style.background = 'rgba(255,255,255,0.2)';
+                button.textContent = '🔗 Connect Elements';
+                document.getElementById('processCanvas').style.cursor = 'default';
+                hideConnectionInstructions();
+                cancelConnection();
+            }
+        }
+        
+        function startConnection(element, position) {
+            isDrawingConnection = true;
+            connectionStart = {
+                element: element,
+                position: position,
+                elementId: element.getAttribute('data-id')
+            };
+            
+            document.addEventListener('mousemove', drawTempConnection);
+            document.addEventListener('mouseup', finishConnection);
+            
+            // Highlight possible targets
+            highlightConnectionTargets(element);
+        }
+        
+        function drawTempConnection(e) {
+            if (!connectionStart) return;
+            
+            // Remove existing temp connection
+            if (tempConnection) {
+                tempConnection.remove();
+            }
+            
+            const canvas = document.getElementById('processCanvas');
+            const canvasRect = canvas.getBoundingClientRect();
+            
+            const startPoint = getConnectionPoint(connectionStart.element, connectionStart.position);
+            const endX = (e.clientX - canvasRect.left) / canvasZoom;
+            const endY = (e.clientY - canvasRect.top) / canvasZoom;
+            
+            tempConnection = createSequenceFlowElement(
+                startPoint.x, startPoint.y, 
+                endX, endY, 
+                'temp-connection', true
+            );
+            
+            canvas.appendChild(tempConnection);
+        }
+        
+        function finishConnection(e) {
+            document.removeEventListener('mousemove', drawTempConnection);
+            document.removeEventListener('mouseup', finishConnection);
+            
+            if (tempConnection) {
+                tempConnection.remove();
+                tempConnection = null;
+            }
+            
+            // Check if we're over a valid target
+            const target = e.target.closest('.canvas-element');
+            if (target && target !== connectionStart.element) {
+                createSequenceFlow(connectionStart.element, target);
+            }
+            
+            // Clean up
+            isDrawingConnection = false;
+            connectionStart = null;
+            removeTargetHighlights();
+            
+            // Hide connection points
+            const allElements = document.querySelectorAll('.canvas-element');
+            allElements.forEach(el => {
+                const points = el.querySelectorAll('.connection-point');
+                points.forEach(point => point.style.opacity = '0');
+            });
+        }
+        
+        function createSequenceFlow(sourceElement, targetElement) {
+            const flowId = 'flow_' + nextFlowId++;
+            const sourceId = sourceElement.getAttribute('data-id');
+            const targetId = targetElement.getAttribute('data-id');
+            
+            // Calculate connection points
+            const sourcePoint = getOptimalConnectionPoint(sourceElement, targetElement);
+            const targetPoint = getOptimalConnectionPoint(targetElement, sourceElement);
+            
+            // Create visual flow element
+            const flowElement = createSequenceFlowElement(
+                sourcePoint.x, sourcePoint.y,
+                targetPoint.x, targetPoint.y,
+                flowId, false
+            );
+            
+            document.getElementById('processCanvas').appendChild(flowElement);
+            
+            // Store flow data
+            const flowData = {
+                id: flowId,
+                sourceId: sourceId,
+                targetId: targetId,
+                sourceElement: sourceElement,
+                targetElement: targetElement,
+                element: flowElement,
+                properties: {
+                    name: '',
+                    condition: '',
+                    type: 'sequenceFlow'
+                }
+            };
+            
+            sequenceFlows.push(flowData);
+            
+            // Update element connections
+            const sourceData = canvasElements.find(e => e.id === sourceId);
+            const targetData = canvasElements.find(e => e.id === targetId);
+            
+            if (sourceData) sourceData.outgoingFlows.push(flowId);
+            if (targetData) targetData.incomingFlows.push(flowId);
+            
+            // Add click handler for flow selection
+            flowElement.onclick = (e) => {
+                e.stopPropagation();
+                selectSequenceFlow(flowData);
+            };
+            
+            updateProcessMetrics();
+            return flowData;
+        }
+        
+        function createSequenceFlowElement(startX, startY, endX, endY, id, isTemp = false) {
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            const arrowHead = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            
+            svg.id = id;
+            svg.className = isTemp ? 'temp-sequence-flow' : 'sequence-flow';
+            svg.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: ${isTemp ? 'none' : 'stroke'};
+                z-index: 5;
+            `;
+            
+            // Calculate line properties
+            const angle = Math.atan2(endY - startY, endX - startX);
+            const arrowLength = 10;
+            const arrowX = endX - arrowLength * Math.cos(angle);
+            const arrowY = endY - arrowLength * Math.sin(angle);
+            
+            // Configure line
+            line.setAttribute('x1', startX);
+            line.setAttribute('y1', startY);
+            line.setAttribute('x2', arrowX);
+            line.setAttribute('y2', arrowY);
+            line.setAttribute('stroke', isTemp ? '#FFC107' : '#666');
+            line.setAttribute('stroke-width', isTemp ? '3' : '2');
+            line.setAttribute('stroke-dasharray', isTemp ? '5,5' : 'none');
+            
+            // Configure arrow head
+            const arrowPoints = [
+                [endX, endY],
+                [arrowX - 5 * Math.cos(angle + Math.PI/6), arrowY - 5 * Math.sin(angle + Math.PI/6)],
+                [arrowX - 5 * Math.cos(angle - Math.PI/6), arrowY - 5 * Math.sin(angle - Math.PI/6)]
+            ];
+            
+            arrowHead.setAttribute('points', arrowPoints.map(p => p.join(',')).join(' '));
+            arrowHead.setAttribute('fill', isTemp ? '#FFC107' : '#666');
+            
+            svg.appendChild(line);
+            svg.appendChild(arrowHead);
+            
+            return svg;
+        }
+        
+        function getConnectionPoint(element, position) {
+            const rect = element.getBoundingClientRect();
+            const canvasRect = document.getElementById('processCanvas').getBoundingClientRect();
+            
+            const elementX = (rect.left - canvasRect.left) / canvasZoom;
+            const elementY = (rect.top - canvasRect.top) / canvasZoom;
+            const elementWidth = rect.width / canvasZoom;
+            const elementHeight = rect.height / canvasZoom;
+            
+            switch(position) {
+                case 'top':
+                    return { x: elementX + elementWidth/2, y: elementY };
+                case 'right':
+                    return { x: elementX + elementWidth, y: elementY + elementHeight/2 };
+                case 'bottom':
+                    return { x: elementX + elementWidth/2, y: elementY + elementHeight };
+                case 'left':
+                    return { x: elementX, y: elementY + elementHeight/2 };
+                default:
+                    return { x: elementX + elementWidth/2, y: elementY + elementHeight/2 };
+            }
+        }
+        
+        function getOptimalConnectionPoint(sourceElement, targetElement) {
+            const sourceRect = sourceElement.getBoundingClientRect();
+            const targetRect = targetElement.getBoundingClientRect();
+            const canvasRect = document.getElementById('processCanvas').getBoundingClientRect();
+            
+            const sourceCenterX = (sourceRect.left + sourceRect.width/2 - canvasRect.left) / canvasZoom;
+            const sourceCenterY = (sourceRect.top + sourceRect.height/2 - canvasRect.top) / canvasZoom;
+            const targetCenterX = (targetRect.left + targetRect.width/2 - canvasRect.left) / canvasZoom;
+            const targetCenterY = (targetRect.top + targetRect.height/2 - canvasRect.top) / canvasZoom;
+            
+            const deltaX = targetCenterX - sourceCenterX;
+            const deltaY = targetCenterY - sourceCenterY;
+            
+            // Determine optimal connection side based on relative position
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                return deltaX > 0 ? 
+                    getConnectionPoint(sourceElement, 'right') : 
+                    getConnectionPoint(sourceElement, 'left');
+            } else {
+                return deltaY > 0 ? 
+                    getConnectionPoint(sourceElement, 'bottom') : 
+                    getConnectionPoint(sourceElement, 'top');
+            }
+        }
+        
+        function highlightConnectionTargets(sourceElement) {
+            const allElements = document.querySelectorAll('.canvas-element');
+            allElements.forEach(element => {
+                if (element !== sourceElement) {
+                    element.style.boxShadow = '0 0 0 2px rgba(76, 175, 80, 0.5)';
+                    element.style.background = 'rgba(76, 175, 80, 0.1)';
+                }
+            });
+        }
+        
+        function removeTargetHighlights() {
+            const allElements = document.querySelectorAll('.canvas-element');
+            allElements.forEach(element => {
+                element.style.boxShadow = '';
+                element.style.background = '';
+            });
+        }
+        
+        function selectSequenceFlow(flowData) {
+            // Deselect any selected element
+            if (selectedElement) {
+                selectedElement.style.boxShadow = 'none';
+                selectedElement = null;
+            }
+            
+            // Highlight selected flow
+            const flowElement = flowData.element;
+            const line = flowElement.querySelector('line');
+            const arrow = flowElement.querySelector('polygon');
+            
+            line.setAttribute('stroke', '#2196F3');
+            line.setAttribute('stroke-width', '3');
+            arrow.setAttribute('fill', '#2196F3');
+            
+            // Show flow properties
+            showSequenceFlowProperties(flowData);
+        }
+        
+        function showSequenceFlowProperties(flowData) {
+            const propertiesPanel = document.getElementById('elementProperties');
+            propertiesPanel.innerHTML = `
+                <div style="margin-bottom: 15px;">
+                    <strong>Sequence Flow</strong>
+                    <div style="font-size: 12px; opacity: 0.7; margin-top: 2px;">${flowData.id}</div>
+                </div>
+                
+                <div style="margin-bottom: 10px;">
+                    <label style="display: block; font-size: 12px; margin-bottom: 3px;">Name:</label>
+                    <input type="text" value="${flowData.properties.name}" onchange="updateFlowProperty('${flowData.id}', 'name', this.value)" 
+                           style="width: 100%; padding: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white; font-size: 12px;">
+                </div>
+                
+                <div style="margin-bottom: 10px;">
+                    <label style="display: block; font-size: 12px; margin-bottom: 3px;">Condition:</label>
+                    <textarea onchange="updateFlowProperty('${flowData.id}', 'condition', this.value)" 
+                              style="width: 100%; height: 60px; padding: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white; font-size: 12px; resize: vertical;">${flowData.properties.condition}</textarea>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <button onclick="deleteSequenceFlow('${flowData.id}')" style="background: #F44336; border: none; color: white; padding: 5px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">🗑️ Delete Flow</button>
+                </div>
+                
+                <div style="padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 12px;">
+                    <div>Source: ${flowData.sourceId}</div>
+                    <div>Target: ${flowData.targetId}</div>
+                    <div>Type: Sequence Flow</div>
+                </div>
+            `;
+        }
+        
+        function updateFlowProperty(flowId, property, value) {
+            const flowData = sequenceFlows.find(f => f.id === flowId);
+            if (flowData) {
+                flowData.properties[property] = value;
+            }
+        }
+        
+        function deleteSequenceFlow(flowId) {
+            const flowIndex = sequenceFlows.findIndex(f => f.id === flowId);
+            if (flowIndex > -1) {
+                const flowData = sequenceFlows[flowIndex];
+                
+                // Remove visual element
+                if (flowData.element) {
+                    flowData.element.remove();
+                }
+                
+                // Update element connections
+                const sourceData = canvasElements.find(e => e.id === flowData.sourceId);
+                const targetData = canvasElements.find(e => e.id === flowData.targetId);
+                
+                if (sourceData) {
+                    const outIndex = sourceData.outgoingFlows.indexOf(flowId);
+                    if (outIndex > -1) sourceData.outgoingFlows.splice(outIndex, 1);
+                }
+                
+                if (targetData) {
+                    const inIndex = targetData.incomingFlows.indexOf(flowId);
+                    if (inIndex > -1) targetData.incomingFlows.splice(inIndex, 1);
+                }
+                
+                // Remove from flows array
+                sequenceFlows.splice(flowIndex, 1);
+                
+                hideElementProperties();
+                updateProcessMetrics();
+            }
+        }
+        
+        function cancelConnection() {
+            if (tempConnection) {
+                tempConnection.remove();
+                tempConnection = null;
+            }
+            
+            isDrawingConnection = false;
+            connectionStart = null;
+            removeTargetHighlights();
+            
+            document.removeEventListener('mousemove', drawTempConnection);
+            document.removeEventListener('mouseup', finishConnection);
+        }
+        
+        // ==========================================
+        // INTERACTIVE SWIMLANES & POOLS
+        // ==========================================
+        
+        function createSwimlane(type, x, y) {
+            const laneId = 'lane_' + nextLaneId++;
+            const isPool = type === 'pool';
+            
+            const lane = document.createElement('div');
+            lane.id = laneId;
+            lane.className = 'swimlane-container';
+            lane.setAttribute('data-type', type);
+            lane.setAttribute('data-id', laneId);
+            
+            const width = isPool ? 600 : 400;
+            const height = isPool ? 200 : 120;
+            
+            lane.style.cssText = `
+                position: absolute;
+                left: ${x}px;
+                top: ${y}px;
+                width: ${width}px;
+                height: ${height}px;
+                border: 2px solid ${isPool ? '#3F51B5' : '#009688'};
+                background: ${isPool ? 'rgba(63, 81, 181, 0.1)' : 'rgba(0, 150, 136, 0.1)'};
+                border-radius: 8px;
+                z-index: 1;
+                min-width: 200px;
+                min-height: 80px;
+            `;
+            
+            // Create header section
+            const header = document.createElement('div');
+            header.className = 'swimlane-header';
+            header.style.cssText = `
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 30px;
+                height: 100%;
+                background: ${isPool ? '#3F51B5' : '#009688'};
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                writing-mode: vertical-lr;
+                text-orientation: mixed;
+                font-weight: bold;
+                font-size: 12px;
+                cursor: pointer;
+                border-radius: 6px 0 0 6px;
+            `;
+            
+            // Create editable title
+            const title = document.createElement('div');
+            title.className = 'swimlane-title';
+            title.contentEditable = true;
+            title.textContent = isPool ? 'PROCESS POOL' : 'SWIMLANE';
+            title.style.cssText = `
+                outline: none;
+                text-align: center;
+                padding: 2px;
+            `;
+            
+            title.ondblclick = (e) => {
+                e.stopPropagation();
+                title.focus();
+                title.selectAll();
+            };
+            
+            title.onblur = () => {
+                updateSwimlaneTitle(laneId, title.textContent);
+            };
+            
+            header.appendChild(title);
+            
+            // Create content area
+            const content = document.createElement('div');
+            content.className = 'swimlane-content';
+            content.style.cssText = `
+                position: absolute;
+                left: 30px;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                padding: 10px;
+                border-radius: 0 6px 6px 0;
+            `;
+            
+            // Create resize handles
+            const resizeHandle = document.createElement('div');
+            resizeHandle.className = 'swimlane-resize-handle';
+            resizeHandle.style.cssText = `
+                position: absolute;
+                right: -5px;
+                bottom: -5px;
+                width: 10px;
+                height: 10px;
+                background: ${isPool ? '#3F51B5' : '#009688'};
+                cursor: se-resize;
+                border-radius: 2px;
+            `;
+            
+            resizeHandle.onmousedown = (e) => {
+                e.stopPropagation();
+                startResizeSwimlane(lane, e);
+            };
+            
+            // Add lane management buttons
+            const controls = document.createElement('div');
+            controls.className = 'swimlane-controls';
+            controls.style.cssText = `
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                display: flex;
+                gap: 3px;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+            `;
+            
+            if (isPool) {
+                const addLaneBtn = document.createElement('button');
+                addLaneBtn.textContent = '+';
+                addLaneBtn.className = 'swimlane-btn';
+                addLaneBtn.style.cssText = `
+                    width: 20px;
+                    height: 20px;
+                    border: none;
+                    background: #4CAF50;
+                    color: white;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    cursor: pointer;
+                `;
+                addLaneBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    addLaneToPool(lane);
+                };
+                addLaneBtn.title = 'Add Lane';
+                controls.appendChild(addLaneBtn);
+            }
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = '×';
+            deleteBtn.className = 'swimlane-btn';
+            deleteBtn.style.cssText = `
+                width: 20px;
+                height: 20px;
+                border: none;
+                background: #F44336;
+                color: white;
+                border-radius: 3px;
+                font-size: 14px;
+                cursor: pointer;
+            `;
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                deleteSwimlane(laneId);
+            };
+            deleteBtn.title = 'Delete';
+            controls.appendChild(deleteBtn);
+            
+            // Assembly
+            lane.appendChild(header);
+            lane.appendChild(content);
+            lane.appendChild(resizeHandle);
+            lane.appendChild(controls);
+            
+            // Event handlers
+            lane.onmouseenter = () => {
+                controls.style.opacity = '1';
+            };
+            
+            lane.onmouseleave = () => {
+                controls.style.opacity = '0';
+            };
+            
+            lane.onclick = (e) => {
+                e.stopPropagation();
+                selectSwimlane(lane);
+            };
+            
+            lane.onmousedown = (e) => {
+                if (!e.target.closest('.swimlane-controls') && !e.target.closest('.swimlane-resize-handle')) {
+                    startDragSwimlane(lane, e);
+                }
+            };
+            
+            document.getElementById('processCanvas').appendChild(lane);
+            
+            // Store lane data
+            const laneData = {
+                id: laneId,
+                type: type,
+                x: x,
+                y: y,
+                width: width,
+                height: height,
+                title: title.textContent,
+                parentId: null,
+                childLanes: [],
+                elements: []
+            };
+            
+            swimlanes.push(laneData);
+            
+            // Update metrics
+            updateProcessMetrics();
+            
+            return lane;
+        }
+        
+        function addLaneToPool(poolElement) {
+            const poolData = swimlanes.find(s => s.id === poolElement.getAttribute('data-id'));
+            if (!poolData) return;
+            
+            const newLaneY = poolData.y + poolData.height + 10;
+            const newLane = createSwimlane('lane', poolData.x, newLaneY);
+            const newLaneData = swimlanes.find(s => s.id === newLane.getAttribute('data-id'));
+            
+            if (newLaneData) {
+                newLaneData.parentId = poolData.id;
+                poolData.childLanes.push(newLaneData.id);
+                
+                // Expand pool to accommodate new lane
+                expandPoolForLane(poolElement, newLane);
+            }
+        }
+        
+        function expandPoolForLane(poolElement, laneElement) {
+            const poolRect = poolElement.getBoundingClientRect();
+            const laneRect = laneElement.getBoundingClientRect();
+            const canvasRect = document.getElementById('processCanvas').getBoundingClientRect();
+            
+            const poolData = swimlanes.find(s => s.id === poolElement.getAttribute('data-id'));
+            const laneData = swimlanes.find(s => s.id === laneElement.getAttribute('data-id'));
+            
+            if (poolData && laneData) {
+                const newHeight = Math.max(poolData.height, (laneData.y + laneData.height) - poolData.y + 20);
+                const newWidth = Math.max(poolData.width, laneData.width + 40);
+                
+                poolData.height = newHeight;
+                poolData.width = newWidth;
+                
+                poolElement.style.height = newHeight + 'px';
+                poolElement.style.width = newWidth + 'px';
+            }
+        }
+        
+        function startResizeSwimlane(lane, e) {
+            const laneData = swimlanes.find(s => s.id === lane.getAttribute('data-id'));
+            if (!laneData) return;
+            
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startWidth = laneData.width;
+            const startHeight = laneData.height;
+            
+            const handleResize = (e) => {
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                const newWidth = Math.max(200, startWidth + deltaX / canvasZoom);
+                const newHeight = Math.max(80, startHeight + deltaY / canvasZoom);
+                
+                laneData.width = newWidth;
+                laneData.height = newHeight;
+                
+                lane.style.width = newWidth + 'px';
+                lane.style.height = newHeight + 'px';
+                
+                // Update contained elements if needed
+                updateLaneElements(lane);
+            };
+            
+            const stopResize = () => {
+                document.removeEventListener('mousemove', handleResize);
+                document.removeEventListener('mouseup', stopResize);
+            };
+            
+            document.addEventListener('mousemove', handleResize);
+            document.addEventListener('mouseup', stopResize);
+            
+            e.preventDefault();
+        }
+        
+        function startDragSwimlane(lane, e) {
+            const laneData = swimlanes.find(s => s.id === lane.getAttribute('data-id'));
+            if (!laneData) return;
+            
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const initialX = laneData.x;
+            const initialY = laneData.y;
+            
+            const handleDrag = (e) => {
+                const deltaX = (e.clientX - startX) / canvasZoom;
+                const deltaY = (e.clientY - startY) / canvasZoom;
+                
+                laneData.x = initialX + deltaX;
+                laneData.y = initialY + deltaY;
+                
+                lane.style.left = laneData.x + 'px';
+                lane.style.top = laneData.y + 'px';
+                
+                // Move contained elements
+                moveLaneElements(lane, deltaX, deltaY);
+            };
+            
+            const stopDrag = () => {
+                document.removeEventListener('mousemove', handleDrag);
+                document.removeEventListener('mouseup', stopDrag);
+            };
+            
+            document.addEventListener('mousemove', handleDrag);
+            document.addEventListener('mouseup', stopDrag);
+            
+            e.preventDefault();
+        }
+        
+        function selectSwimlane(lane) {
+            // Deselect other elements
+            if (selectedElement) {
+                selectedElement.style.boxShadow = 'none';
+                selectedElement = null;
+            }
+            
+            // Clear flow selections
+            sequenceFlows.forEach(flow => {
+                const line = flow.element.querySelector('line');
+                const arrow = flow.element.querySelector('polygon');
+                line.setAttribute('stroke', '#666');
+                line.setAttribute('stroke-width', '2');
+                arrow.setAttribute('fill', '#666');
+            });
+            
+            // Highlight selected lane
+            lane.style.boxShadow = '0 0 0 3px rgba(33, 150, 243, 0.5)';
+            selectedElement = lane;
+            
+            showSwimlaneProperties(lane);
+        }
+        
+        function showSwimlaneProperties(lane) {
+            const laneData = swimlanes.find(s => s.id === lane.getAttribute('data-id'));
+            if (!laneData) return;
+            
+            const propertiesPanel = document.getElementById('elementProperties');
+            propertiesPanel.innerHTML = `
+                <div style="margin-bottom: 15px;">
+                    <strong>${laneData.type === 'pool' ? 'Process Pool' : 'Swimlane'}</strong>
+                    <div style="font-size: 12px; opacity: 0.7; margin-top: 2px;">${laneData.id}</div>
+                </div>
+                
+                <div style="margin-bottom: 10px;">
+                    <label style="display: block; font-size: 12px; margin-bottom: 3px;">Title:</label>
+                    <input type="text" value="${laneData.title}" onchange="updateSwimlaneProperty('${laneData.id}', 'title', this.value)" 
+                           style="width: 100%; padding: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white; font-size: 12px;">
+                </div>
+                
+                <div style="margin-bottom: 10px;">
+                    <label style="display: block; font-size: 12px; margin-bottom: 3px;">Dimensions:</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" value="${Math.round(laneData.width)}" onchange="updateSwimlaneSize('${laneData.id}', 'width', this.value)" 
+                               style="width: 50%; padding: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white; font-size: 12px;" placeholder="Width">
+                        <input type="number" value="${Math.round(laneData.height)}" onchange="updateSwimlaneSize('${laneData.id}', 'height', this.value)" 
+                               style="width: 50%; padding: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white; font-size: 12px;" placeholder="Height">
+                    </div>
+                </div>
+                
+                ${laneData.type === 'pool' ? `
+                <div style="margin-bottom: 15px;">
+                    <button onclick="addLaneToPool(document.getElementById('${laneData.id}'))" style="background: #4CAF50; border: none; color: white; padding: 5px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">➕ Add Lane</button>
+                </div>
+                ` : ''}
+                
+                <div style="margin-bottom: 15px;">
+                    <button onclick="deleteSwimlane('${laneData.id}')" style="background: #F44336; border: none; color: white; padding: 5px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">🗑️ Delete</button>
+                </div>
+                
+                <div style="padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 12px;">
+                    <div>Position: (${Math.round(laneData.x)}, ${Math.round(laneData.y)})</div>
+                    <div>Elements: ${laneData.elements.length}</div>
+                    ${laneData.type === 'pool' ? `<div>Child Lanes: ${laneData.childLanes.length}</div>` : ''}
+                </div>
+            `;
+        }
+        
+        function updateSwimlaneProperty(laneId, property, value) {
+            const laneData = swimlanes.find(s => s.id === laneId);
+            if (laneData) {
+                laneData[property] = value;
+                
+                if (property === 'title') {
+                    const laneElement = document.getElementById(laneId);
+                    const titleElement = laneElement.querySelector('.swimlane-title');
+                    if (titleElement) {
+                        titleElement.textContent = value;
+                    }
+                }
+            }
+        }
+        
+        function updateSwimlaneTitle(laneId, title) {
+            updateSwimlaneProperty(laneId, 'title', title);
+        }
+        
+        function updateSwimlaneSize(laneId, dimension, value) {
+            const laneData = swimlanes.find(s => s.id === laneId);
+            const laneElement = document.getElementById(laneId);
+            
+            if (laneData && laneElement) {
+                const numValue = Math.max(dimension === 'width' ? 200 : 80, parseInt(value) || 0);
+                laneData[dimension] = numValue;
+                laneElement.style[dimension] = numValue + 'px';
+            }
+        }
+        
+        function deleteSwimlane(laneId) {
+            const laneIndex = swimlanes.findIndex(s => s.id === laneId);
+            if (laneIndex > -1) {
+                const laneData = swimlanes[laneIndex];
+                
+                // Move elements out of lane before deleting
+                laneData.elements.forEach(elementId => {
+                    const elementData = canvasElements.find(e => e.id === elementId);
+                    if (elementData) {
+                        elementData.laneId = null;
+                    }
+                });
+                
+                // Remove visual element
+                const laneElement = document.getElementById(laneId);
+                if (laneElement) {
+                    laneElement.remove();
+                }
+                
+                // Remove from parent pool if applicable
+                if (laneData.parentId) {
+                    const parentData = swimlanes.find(s => s.id === laneData.parentId);
+                    if (parentData) {
+                        const childIndex = parentData.childLanes.indexOf(laneId);
+                        if (childIndex > -1) {
+                            parentData.childLanes.splice(childIndex, 1);
+                        }
+                    }
+                }
+                
+                // Remove from swimlanes array
+                swimlanes.splice(laneIndex, 1);
+                
+                if (selectedElement && selectedElement.id === laneId) {
+                    selectedElement = null;
+                    hideElementProperties();
+                }
+                
+                updateProcessMetrics();
+            }
+        }
+        
+        function updateLaneElements(lane) {
+            // Update positions of elements contained in lane
+            // This would be called after lane resize
+        }
+        
+        function moveLaneElements(lane, deltaX, deltaY) {
+            // Move all elements contained in the lane
+            const laneData = swimlanes.find(s => s.id === lane.getAttribute('data-id'));
+            if (!laneData) return;
+            
+            laneData.elements.forEach(elementId => {
+                const elementData = canvasElements.find(e => e.id === elementId);
+                const elementDOM = document.getElementById(elementId);
+                
+                if (elementData && elementDOM) {
+                    elementData.x += deltaX;
+                    elementData.y += deltaY;
+                    elementDOM.style.left = elementData.x + 'px';
+                    elementDOM.style.top = elementData.y + 'px';
+                }
+            });
+        }
+        
+        function addLaneToPool(poolElement) {
+            const poolData = swimlanes.find(s => s.id === poolElement.getAttribute('data-id'));
+            if (!poolData || poolData.type !== 'pool') return;
+            
+            const laneX = poolData.x + 20;
+            const laneY = poolData.y + 60 + (poolData.childLanes.length * 60);
+            
+            const newLane = createSwimlane('lane', laneX, laneY);
+            const laneData = swimlanes[swimlanes.length - 1]; // Get the last added lane
+            
+            // Set parent-child relationship
+            laneData.parentId = poolData.id;
+            poolData.childLanes.push(laneData.id);
+            
+            // Add to canvas
+            const canvas = document.getElementById('processCanvas');
+            canvas.appendChild(newLane);
+            
+            // Update pool height to accommodate new lane
+            const newPoolHeight = Math.max(poolData.height, 120 + (poolData.childLanes.length * 60));
+            poolData.height = newPoolHeight;
+            poolElement.style.height = newPoolHeight + 'px';
+            
+            updateProcessMetrics();
+        }
+        
+        // ==========================================
+        // MISSING HELPER FUNCTIONS
+        // ==========================================
+        
+        function editElementText(element) {
+            const elementData = canvasElements.find(e => e.id === element.id);
+            if (!elementData) return;
+            
+            const textSpan = element.querySelector('.element-text');
+            if (!textSpan) return;
+            
+            // Create input element
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = elementData.properties.name || elementData.properties.text || '';
+            input.style.cssText = `
+                width: 100%;
+                padding: 2px 4px;
+                font-size: 11px;
+                border: 1px solid #2196F3;
+                border-radius: 2px;
+                background: white;
+                color: black;
+            `;
+            
+            // Replace text with input
+            textSpan.style.display = 'none';
+            element.appendChild(input);
+            input.focus();
+            input.select();
+            
+            const finishEdit = () => {
+                const newText = input.value.trim();
+                if (newText) {
+                    elementData.properties.name = newText;
+                    elementData.properties.text = newText;
+                    textSpan.textContent = newText;
+                }
+                textSpan.style.display = 'block';
+                input.remove();
+            };
+            
+            input.addEventListener('blur', finishEdit);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    finishEdit();
+                } else if (e.key === 'Escape') {
+                    textSpan.style.display = 'block';
+                    input.remove();
+                }
+            });
+        }
+        
+        function showConnectionInstructions() {
+            let instructionsDiv = document.getElementById('connectionInstructions');
+            if (!instructionsDiv) {
+                instructionsDiv = document.createElement('div');
+                instructionsDiv.id = 'connectionInstructions';
+                instructionsDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(33, 150, 243, 0.9);
+                    color: white;
+                    padding: 15px;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    max-width: 300px;
+                    z-index: 1000;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+                `;
+                instructionsDiv.innerHTML = `
+                    <div style="font-weight: bold; margin-bottom: 8px;">🔗 Connection Mode Active</div>
+                    <div style="font-size: 12px; line-height: 1.4;">
+                        • Click on the first element to start connection<br>
+                        • Click on the second element to complete connection<br>
+                        • Right-click or ESC to cancel<br>
+                        • Connection points will appear on hover
+                    </div>
+                `;
+                document.body.appendChild(instructionsDiv);
+            }
+            instructionsDiv.style.display = 'block';
+        }
+        
+        function hideConnectionInstructions() {
+            const instructionsDiv = document.getElementById('connectionInstructions');
+            if (instructionsDiv) {
+                instructionsDiv.style.display = 'none';
+            }
+        }
+        
+        function validateProcess() {
+            const issues = [];
+            const warnings = [];
+            
+            // Check for start events
+            const startEvents = canvasElements.filter(e => e.type === 'start');
+            if (startEvents.length === 0) {
+                issues.push('Process should have at least one start event');
+            } else if (startEvents.length > 1) {
+                warnings.push('Multiple start events detected');
+            }
+            
+            // Check for end events
+            const endEvents = canvasElements.filter(e => e.type === 'end');
+            if (endEvents.length === 0) {
+                issues.push('Process should have at least one end event');
+            }
+            
+            // Check for orphaned elements
+            const connectedElements = new Set();
+            sequenceFlows.forEach(flow => {
+                connectedElements.add(flow.sourceId);
+                connectedElements.add(flow.targetId);
+            });
+            
+            canvasElements.forEach(element => {
+                if (!connectedElements.has(element.id) && element.type !== 'start' && element.type !== 'end') {
+                    warnings.push(`Element "${element.properties.name || element.id}" is not connected`);
+                }
+            });
+            
+            // Check for missing names
+            canvasElements.forEach(element => {
+                if (!element.properties.name || element.properties.name.trim() === '') {
+                    warnings.push(`Element ${element.id} is missing a name`);
+                }
+            });
+            
+            // Show validation results
+            let message = 'Process Validation Results:\n\n';
+            
+            if (issues.length === 0 && warnings.length === 0) {
+                message += '✅ Process is valid!\n\nElements: ' + canvasElements.length + 
+                          '\nConnections: ' + sequenceFlows.length +
+                          '\nSwimlanes: ' + swimlanes.length;
+            } else {
+                if (issues.length > 0) {
+                    message += '❌ ISSUES:\n' + issues.map(issue => '• ' + issue).join('\n') + '\n\n';
+                }
+                if (warnings.length > 0) {
+                    message += '⚠️ WARNINGS:\n' + warnings.map(warning => '• ' + warning).join('\n');
+                }
+            }
+            
+            alert(message);
+        }
+        
+        function autoLayout() {
+            if (canvasElements.length === 0) return;
+            
+            // Simple auto-layout algorithm
+            const startElements = canvasElements.filter(e => e.type === 'start');
+            const otherElements = canvasElements.filter(e => e.type !== 'start');
+            
+            let currentX = 100;
+            let currentY = 100;
+            const spacingX = 150;
+            const spacingY = 100;
+            
+            // Position start elements
+            startElements.forEach((element, index) => {
+                element.x = currentX;
+                element.y = currentY + (index * spacingY);
+                
+                const elementDOM = document.getElementById(element.id);
+                if (elementDOM) {
+                    elementDOM.style.left = element.x + 'px';
+                    elementDOM.style.top = element.y + 'px';
+                }
+            });
+            
+            // Position other elements in a grid
+            currentX += spacingX;
+            let row = 0;
+            const elementsPerRow = 3;
+            
+            otherElements.forEach((element, index) => {
+                const col = index % elementsPerRow;
+                row = Math.floor(index / elementsPerRow);
+                
+                element.x = currentX + (col * spacingX);
+                element.y = currentY + (row * spacingY);
+                
+                const elementDOM = document.getElementById(element.id);
+                if (elementDOM) {
+                    elementDOM.style.left = element.x + 'px';
+                    elementDOM.style.top = element.y + 'px';
+                }
+            });
+            
+            // Redraw all sequence flows
+            sequenceFlows.forEach(flow => {
+                updateSequenceFlowPath(flow);
+            });
+            
+            updateProcessMetrics();
+        }
+            
+            laneData.elements.forEach(elementId => {
+                const element = document.getElementById(elementId);
+                const elementData = canvasElements.find(e => e.id === elementId);
+                
+                if (element && elementData) {
+                    elementData.x += deltaX;
+                    elementData.y += deltaY;
+                    element.style.left = elementData.x + 'px';
+                    element.style.top = elementData.y + 'px';
+                }
+            });
+            
+            // Update sequence flows connected to moved elements
+            updateSequenceFlowsForElements(laneData.elements);
+        }
+        
+        function updateSequenceFlowsForElements(elementIds) {
+            elementIds.forEach(elementId => {
+                sequenceFlows.forEach(flow => {
+                    if (flow.sourceId === elementId || flow.targetId === elementId) {
+                        // Redraw the flow
+                        const sourcePoint = getOptimalConnectionPoint(flow.sourceElement, flow.targetElement);
+                        const targetPoint = getOptimalConnectionPoint(flow.targetElement, flow.sourceElement);
+                        
+                        const line = flow.element.querySelector('line');
+                        const arrow = flow.element.querySelector('polygon');
+                        
+                        if (line && arrow) {
+                            // Update line
+                            const arrowLength = 10;
+                            const angle = Math.atan2(targetPoint.y - sourcePoint.y, targetPoint.x - sourcePoint.x);
+                            const arrowX = targetPoint.x - arrowLength * Math.cos(angle);
+                            const arrowY = targetPoint.y - arrowLength * Math.sin(angle);
+                            
+                            line.setAttribute('x1', sourcePoint.x);
+                            line.setAttribute('y1', sourcePoint.y);
+                            line.setAttribute('x2', arrowX);
+                            line.setAttribute('y2', arrowY);
+                            
+                            // Update arrow
+                            const arrowPoints = [
+                                [targetPoint.x, targetPoint.y],
+                                [arrowX - 5 * Math.cos(angle + Math.PI/6), arrowY - 5 * Math.sin(angle + Math.PI/6)],
+                                [arrowX - 5 * Math.cos(angle - Math.PI/6), arrowY - 5 * Math.sin(angle - Math.PI/6)]
+                            ];
+                            
+                            arrow.setAttribute('points', arrowPoints.map(p => p.join(',')).join(' '));
+                        }
+                    }
+                });
+            });
         }
         
         function generateOrganizationalProcessMap() {
