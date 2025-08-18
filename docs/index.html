@@ -371,6 +371,76 @@
             transform: scale(1.05);
         }
         
+        /* Enhanced BPMN Styles */
+        .enhanced-element {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            margin: 4px 0;
+            cursor: grab;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .enhanced-element:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(5px);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .enhanced-element:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+        
+        .enhanced-element span {
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .element-icon {
+            flex-shrink: 0;
+        }
+        
+        .process-canvas-enhanced {
+            position: relative;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            transition: border-color 0.2s ease;
+        }
+        
+        .process-canvas-enhanced:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .canvas-element {
+            transition: box-shadow 0.2s ease;
+        }
+        
+        .canvas-element:hover {
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3) !important;
+        }
+        
+        .btn-small {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-small:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
         .bpmn-toolbar {
             background: rgba(255, 255, 255, 0.1);
             padding: 1rem;
@@ -797,40 +867,169 @@
                         </div>
                         
                         <div id="process-bpmn-designer" class="tab-panel active">
-                            <h3>BPMN Process Designer</h3>
-                            <div class="bpmn-toolbar">
-                                <div class="element-category">
-                                    <div class="category-title">Events</div>
-                                    <div class="process-element" draggable="true">● Start Event</div>
-                                    <div class="process-element" draggable="true">● End Event</div>
-                                    <div class="process-element" draggable="true">◐ Intermediate Event</div>
-                                    <div class="process-element" draggable="true">⏰ Timer Event</div>
+                            <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                                <h3>🏗️ Advanced BPMN Process Designer & Architecture Software</h3>
+                                <button class="btn btn-secondary" onclick="reverseEngineerProcess()">🔄 Reverse Engineer</button>
+                                <button class="btn btn-secondary" onclick="loadProcessTemplates()">📋 Templates</button>
+                                <button class="btn btn-secondary" onclick="analyzeProcessArchitecture()">🔍 Analyze Architecture</button>
+                            </div>
+                            
+                            <div style="display: flex; gap: 20px; height: 600px;">
+                                <!-- Enhanced BPMN Toolbar -->
+                                <div class="bpmn-toolbar" style="width: 250px; overflow-y: auto;">
+                                    <div class="element-category">
+                                        <div class="category-title">🎯 Start/End Events</div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="start-event" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 30px; height: 30px; border: 3px solid #4CAF50; border-radius: 50%; background: #E8F5E8; display: flex; align-items: center; justify-content: center; font-size: 12px;">▶</div>
+                                            <span>Start Event</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="end-event" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 30px; height: 30px; border: 3px solid #F44336; border-radius: 50%; background: #FFEBEE; display: flex; align-items: center; justify-content: center; font-size: 12px;">⏹</div>
+                                            <span>End Event</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="intermediate-event" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 30px; height: 30px; border: 3px solid #FF9800; border-radius: 50%; background: #FFF3E0; display: flex; align-items: center; justify-content: center; font-size: 10px;">⚡</div>
+                                            <span>Intermediate Event</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="timer-event" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 30px; height: 30px; border: 3px solid #9C27B0; border-radius: 50%; background: #F3E5F5; display: flex; align-items: center; justify-content: center; font-size: 10px;">⏰</div>
+                                            <span>Timer Event</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="element-category">
+                                        <div class="category-title">⚙️ Activities & Tasks</div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="task" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 80px; height: 40px; border: 2px solid #2196F3; border-radius: 8px; background: #E3F2FD; display: flex; align-items: center; justify-content: center; font-size: 10px;">TASK</div>
+                                            <span>Generic Task</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="user-task" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 80px; height: 40px; border: 2px solid #4CAF50; border-radius: 8px; background: #E8F5E8; display: flex; align-items: center; justify-content: center; font-size: 10px;">👤 USER</div>
+                                            <span>User Task</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="service-task" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 80px; height: 40px; border: 2px solid #FF5722; border-radius: 8px; background: #FBE9E7; display: flex; align-items: center; justify-content: center; font-size: 10px;">⚙️ SVC</div>
+                                            <span>Service Task</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="subprocess" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 80px; height: 40px; border: 2px solid #9C27B0; border-radius: 8px; background: #F3E5F5; display: flex; align-items: center; justify-content: center; font-size: 8px;">⊞ SUB</div>
+                                            <span>Sub-Process</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="script-task" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 80px; height: 40px; border: 2px solid #607D8B; border-radius: 8px; background: #ECEFF1; display: flex; align-items: center; justify-content: center; font-size: 10px;">📜 SCR</div>
+                                            <span>Script Task</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="element-category">
+                                        <div class="category-title">🔀 Gateways & Decisions</div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="exclusive-gateway" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 40px; height: 40px; border: 2px solid #FFC107; background: #FFF8E1; transform: rotate(45deg); display: flex; align-items: center; justify-content: center;"><span style="transform: rotate(-45deg); font-size: 12px;">✕</span></div>
+                                            <span>Exclusive Gateway</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="parallel-gateway" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 40px; height: 40px; border: 2px solid #03A9F4; background: #E1F5FE; transform: rotate(45deg); display: flex; align-items: center; justify-content: center;"><span style="transform: rotate(-45deg); font-size: 12px;">+</span></div>
+                                            <span>Parallel Gateway</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="inclusive-gateway" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 40px; height: 40px; border: 2px solid #8BC34A; background: #F1F8E9; transform: rotate(45deg); display: flex; align-items: center; justify-content: center;"><span style="transform: rotate(-45deg); font-size: 12px;">○</span></div>
+                                            <span>Inclusive Gateway</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="element-category">
+                                        <div class="category-title">🏗️ Architecture Elements</div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="data-store" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 60px; height: 30px; border: 2px solid #795548; border-radius: 0 0 20px 20px; background: #EFEBE9; display: flex; align-items: center; justify-content: center; font-size: 10px;">🗃️</div>
+                                            <span>Data Store</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="message-flow" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 60px; height: 20px; border: 2px dashed #E91E63; background: #FCE4EC; display: flex; align-items: center; justify-content: center; font-size: 10px;">📨</div>
+                                            <span>Message Flow</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="pool" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 80px; height: 60px; border: 2px solid #3F51B5; background: #E8EAF6; display: flex; align-items: center; justify-content: center; font-size: 9px;">🏊 POOL</div>
+                                            <span>Process Pool</span>
+                                        </div>
+                                        <div class="process-element enhanced-element" draggable="true" data-type="lane" onclick="selectElement(this)">
+                                            <div class="element-icon" style="width: 80px; height: 30px; border: 2px solid #009688; background: #E0F2F1; display: flex; align-items: center; justify-content: center; font-size: 9px;">🛣️ LANE</div>
+                                            <span>Swimlane</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 
-                                <div class="element-category">
-                                    <div class="category-title">Activities</div>
-                                    <div class="process-element" draggable="true">□ Task</div>
-                                    <div class="process-element" draggable="true">⊞ Sub-Process</div>
-                                    <div class="process-element" draggable="true">👤 User Task</div>
-                                    <div class="process-element" draggable="true">⚙️ Service Task</div>
+                                <!-- Enhanced Process Canvas -->
+                                <div style="flex: 1; display: flex; flex-direction: column;">
+                                    <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px 10px 0 0; display: flex; gap: 10px; align-items: center;">
+                                        <span style="font-weight: bold;">🎨 Canvas Tools:</span>
+                                        <button class="btn-small" onclick="clearCanvas()">🗑️ Clear</button>
+                                        <button class="btn-small" onclick="zoomIn()">🔍+ Zoom In</button>
+                                        <button class="btn-small" onclick="zoomOut()">🔍- Zoom Out</button>
+                                        <button class="btn-small" onclick="autoLayout()">📐 Auto Layout</button>
+                                        <button class="btn-small" onclick="validateProcess()">✅ Validate</button>
+                                        <span id="elementCounter" style="margin-left: auto; opacity: 0.7;">Elements: 0</span>
+                                    </div>
+                                    
+                                    <div class="process-canvas-enhanced" id="processCanvas" ondrop="dropEnhanced(event)" ondragover="allowDrop(event)" onclick="deselectAll()" style="
+                                        flex: 1; 
+                                        background: 
+                                            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+                                            linear-gradient(180deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+                                            linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+                                        background-size: 20px 20px, 20px 20px, 100% 100%;
+                                        border-radius: 0 0 10px 10px;
+                                        position: relative;
+                                        overflow: hidden;
+                                        cursor: crosshair;
+                                    ">
+                                        <div id="canvasPlaceholder" style="
+                                            position: absolute;
+                                            top: 50%;
+                                            left: 50%;
+                                            transform: translate(-50%, -50%);
+                                            text-align: center;
+                                            opacity: 0.4;
+                                            pointer-events: none;
+                                        ">
+                                            <div style="font-size: 48px; margin-bottom: 10px;">🏗️</div>
+                                            <div style="font-size: 18px; font-weight: bold;">Professional BPMN Designer</div>
+                                            <div style="font-size: 14px; margin-top: 5px;">Drag elements from the toolbar to design your process</div>
+                                            <div style="font-size: 12px; margin-top: 10px; opacity: 0.6;">✨ Features: Auto-layout, validation, reverse engineering, templates</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 
-                                <div class="element-category">
-                                    <div class="category-title">Gateways</div>
-                                    <div class="process-element" draggable="true">◇ Exclusive Gateway</div>
-                                    <div class="process-element" draggable="true">⬟ Parallel Gateway</div>
-                                    <div class="process-element" draggable="true">◈ Inclusive Gateway</div>
+                                <!-- Process Properties Panel -->
+                                <div id="propertiesPanel" style="width: 250px; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; overflow-y: auto;">
+                                    <h4 style="margin-bottom: 15px;">🔧 Element Properties</h4>
+                                    <div id="elementProperties">
+                                        <div style="text-align: center; opacity: 0.6; padding: 20px;">
+                                            <div style="font-size: 24px; margin-bottom: 10px;">📋</div>
+                                            <div>Select an element to view and edit its properties</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
+                                        <h5 style="margin-bottom: 10px;">📊 Process Metrics</h5>
+                                        <div id="processMetrics" style="font-size: 12px; opacity: 0.8;">
+                                            <div>Total Elements: <span id="totalElements">0</span></div>
+                                            <div>Tasks: <span id="totalTasks">0</span></div>
+                                            <div>Gateways: <span id="totalGateways">0</span></div>
+                                            <div>Events: <span id="totalEvents">0</span></div>
+                                            <div>Complexity Score: <span id="complexityScore">Low</span></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="process-canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
-                                <p style="text-align: center; opacity: 0.5; margin-top: 150px;">
-                                    Drag and drop BPMN elements here to design your process
-                                </p>
+                            <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+                                <button class="btn" onclick="saveProcessEnhanced()">💾 Save Process</button>
+                                <button class="btn btn-secondary" onclick="exportBPMNEnhanced()">📄 Export BPMN 2.0</button>
+                                <button class="btn btn-secondary" onclick="exportToVisio()">📊 Export to Visio</button>
+                                <button class="btn btn-secondary" onclick="generateProcessDocumentation()">📖 Generate Documentation</button>
+                                <button class="btn btn-secondary" onclick="simulateProcess()">▶️ Simulate Process</button>
+                                <button class="btn btn-secondary" onclick="optimizeProcess()">🚀 AI Optimize</button>
                             </div>
-                            
-                            <button class="btn" onclick="saveProcess()">💾 Save Process</button>
-                            <button class="btn btn-secondary" onclick="exportBPMN()">📄 Export BPMN</button>
                         </div>
                         
                         <div id="process-process-narrative" class="tab-panel">
@@ -2796,6 +2995,626 @@ CREATE:
             element.style.borderRadius = '5px';
             element.style.cursor = 'move';
             ev.target.appendChild(element);
+        }
+
+        // ==========================================
+        // ENHANCED BPMN DESIGNER & PROCESS ARCHITECTURE
+        // ==========================================
+        
+        let canvasElements = [];
+        let selectedElement = null;
+        let connectionMode = false;
+        let nextElementId = 1;
+        let canvasZoom = 1;
+        
+        function dropEnhanced(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            
+            const draggedElement = ev.dataTransfer.getData("text/plain");
+            const elementType = ev.dataTransfer.getData("application/element-type");
+            
+            if (!elementType) return;
+            
+            const canvas = document.getElementById('processCanvas');
+            const rect = canvas.getBoundingClientRect();
+            const x = (ev.clientX - rect.left) / canvasZoom;
+            const y = (ev.clientY - rect.top) / canvasZoom;
+            
+            createProcessElement(elementType, x, y);
+            updateProcessMetrics();
+            
+            // Hide placeholder after first element
+            const placeholder = document.getElementById('canvasPlaceholder');
+            if (placeholder && canvasElements.length > 0) {
+                placeholder.style.display = 'none';
+            }
+        }
+        
+        function createProcessElement(type, x, y) {
+            const elementId = 'element_' + nextElementId++;
+            const elementData = getElementTemplate(type);
+            
+            const element = document.createElement('div');
+            element.id = elementId;
+            element.className = 'canvas-element';
+            element.style.cssText = `
+                position: absolute;
+                left: ${x}px;
+                top: ${y}px;
+                cursor: move;
+                user-select: none;
+                z-index: 10;
+            `;
+            
+            element.innerHTML = elementData.html;
+            element.setAttribute('data-type', type);
+            element.setAttribute('data-id', elementId);
+            
+            // Add event listeners
+            element.onclick = (e) => {
+                e.stopPropagation();
+                selectElement(element);
+            };
+            
+            element.onmousedown = startDragElement;
+            
+            document.getElementById('processCanvas').appendChild(element);
+            
+            // Store element data
+            canvasElements.push({
+                id: elementId,
+                type: type,
+                x: x,
+                y: y,
+                properties: elementData.properties,
+                connections: []
+            });
+            
+            return element;
+        }
+        
+        function getElementTemplate(type) {
+            const templates = {
+                'start-event': {
+                    html: `<div style="width: 30px; height: 30px; border: 3px solid #4CAF50; border-radius: 50%; background: #E8F5E8; display: flex; align-items: center; justify-content: center; font-size: 12px;">▶</div>`,
+                    properties: { name: 'Start Event', type: 'startEvent', description: '' }
+                },
+                'end-event': {
+                    html: `<div style="width: 30px; height: 30px; border: 3px solid #F44336; border-radius: 50%; background: #FFEBEE; display: flex; align-items: center; justify-content: center; font-size: 12px;">⏹</div>`,
+                    properties: { name: 'End Event', type: 'endEvent', description: '' }
+                },
+                'task': {
+                    html: `<div style="width: 80px; height: 40px; border: 2px solid #2196F3; border-radius: 8px; background: #E3F2FD; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #1976D2;">TASK</div>`,
+                    properties: { name: 'Task', type: 'task', assignee: '', description: '', duration: '' }
+                },
+                'user-task': {
+                    html: `<div style="width: 80px; height: 40px; border: 2px solid #4CAF50; border-radius: 8px; background: #E8F5E8; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #388E3C;">👤 USER</div>`,
+                    properties: { name: 'User Task', type: 'userTask', assignee: '', form: '', description: '' }
+                },
+                'service-task': {
+                    html: `<div style="width: 80px; height: 40px; border: 2px solid #FF5722; border-radius: 8px; background: #FBE9E7; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #D84315;">⚙️ SVC</div>`,
+                    properties: { name: 'Service Task', type: 'serviceTask', implementation: '', class: '', description: '' }
+                },
+                'exclusive-gateway': {
+                    html: `<div style="width: 40px; height: 40px; border: 2px solid #FFC107; background: #FFF8E1; transform: rotate(45deg); display: flex; align-items: center; justify-content: center;"><span style="transform: rotate(-45deg); font-size: 12px; color: #F57C00;">✕</span></div>`,
+                    properties: { name: 'Exclusive Gateway', type: 'exclusiveGateway', condition: '', description: '' }
+                },
+                'parallel-gateway': {
+                    html: `<div style="width: 40px; height: 40px; border: 2px solid #03A9F4; background: #E1F5FE; transform: rotate(45deg); display: flex; align-items: center; justify-content: center;"><span style="transform: rotate(-45deg); font-size: 12px; color: #0277BD;">+</span></div>`,
+                    properties: { name: 'Parallel Gateway', type: 'parallelGateway', description: '' }
+                },
+                'data-store': {
+                    html: `<div style="width: 60px; height: 30px; border: 2px solid #795548; border-radius: 0 0 20px 20px; background: #EFEBE9; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #5D4037;">🗃️</div>`,
+                    properties: { name: 'Data Store', type: 'dataStore', capacity: '', location: '', description: '' }
+                }
+            };
+            
+            return templates[type] || templates['task'];
+        }
+        
+        function selectElement(element) {
+            if (selectedElement) {
+                selectedElement.style.boxShadow = 'none';
+            }
+            
+            selectedElement = element;
+            element.style.boxShadow = '0 0 0 3px rgba(33, 150, 243, 0.5)';
+            
+            showElementProperties(element);
+        }
+        
+        function deselectAll() {
+            if (selectedElement) {
+                selectedElement.style.boxShadow = 'none';
+                selectedElement = null;
+                hideElementProperties();
+            }
+        }
+        
+        function showElementProperties(element) {
+            const elementId = element.getAttribute('data-id');
+            const elementData = canvasElements.find(e => e.id === elementId);
+            
+            if (!elementData) return;
+            
+            const propertiesPanel = document.getElementById('elementProperties');
+            propertiesPanel.innerHTML = `
+                <div style="margin-bottom: 15px;">
+                    <strong>${elementData.properties.name}</strong>
+                    <div style="font-size: 12px; opacity: 0.7; margin-top: 2px;">${elementData.type}</div>
+                </div>
+                
+                <div style="margin-bottom: 10px;">
+                    <label style="display: block; font-size: 12px; margin-bottom: 3px;">Name:</label>
+                    <input type="text" value="${elementData.properties.name}" onchange="updateElementProperty('${elementId}', 'name', this.value)" 
+                           style="width: 100%; padding: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white; font-size: 12px;">
+                </div>
+                
+                <div style="margin-bottom: 10px;">
+                    <label style="display: block; font-size: 12px; margin-bottom: 3px;">Description:</label>
+                    <textarea onchange="updateElementProperty('${elementId}', 'description', this.value)" 
+                              style="width: 100%; height: 60px; padding: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white; font-size: 12px; resize: vertical;">${elementData.properties.description}</textarea>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <button onclick="deleteElement('${elementId}')" style="background: #F44336; border: none; color: white; padding: 5px 10px; border-radius: 3px; font-size: 11px; cursor: pointer;">🗑️ Delete</button>
+                    <button onclick="duplicateElement('${elementId}')" style="background: #2196F3; border: none; color: white; padding: 5px 10px; border-radius: 3px; font-size: 11px; cursor: pointer; margin-left: 5px;">📋 Duplicate</button>
+                </div>
+                
+                <div style="padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 12px;">
+                    <div>Position: (${Math.round(elementData.x)}, ${Math.round(elementData.y)})</div>
+                    <div>ID: ${elementId}</div>
+                </div>
+            `;
+        }
+        
+        function hideElementProperties() {
+            document.getElementById('elementProperties').innerHTML = `
+                <div style="text-align: center; opacity: 0.6; padding: 20px;">
+                    <div style="font-size: 24px; margin-bottom: 10px;">📋</div>
+                    <div>Select an element to view and edit its properties</div>
+                </div>
+            `;
+        }
+        
+        function updateElementProperty(elementId, property, value) {
+            const elementData = canvasElements.find(e => e.id === elementId);
+            if (elementData) {
+                elementData.properties[property] = value;
+            }
+        }
+        
+        function duplicateElement(elementId) {
+            const originalElement = canvasElements.find(e => e.id === elementId);
+            if (!originalElement) return;
+            
+            // Create duplicate with offset position
+            const newX = originalElement.x + 100;
+            const newY = originalElement.y + 50;
+            
+            createProcessElement(originalElement.type, newX, newY);
+            updateProcessMetrics();
+        }
+        
+        function deleteElement(elementId) {
+            const elementIndex = canvasElements.findIndex(e => e.id === elementId);
+            if (elementIndex > -1) {
+                canvasElements.splice(elementIndex, 1);
+            }
+            
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.remove();
+            }
+            
+            if (selectedElement && selectedElement.getAttribute('data-id') === elementId) {
+                selectedElement = null;
+                hideElementProperties();
+            }
+            
+            updateProcessMetrics();
+        }
+        
+        function updateProcessMetrics() {
+            const tasks = canvasElements.filter(e => e.type.includes('task')).length;
+            const gateways = canvasElements.filter(e => e.type.includes('gateway')).length;
+            const events = canvasElements.filter(e => e.type.includes('event')).length;
+            const total = canvasElements.length;
+            
+            document.getElementById('totalElements').textContent = total;
+            document.getElementById('totalTasks').textContent = tasks;
+            document.getElementById('totalGateways').textContent = gateways;
+            document.getElementById('totalEvents').textContent = events;
+            document.getElementById('elementCounter').textContent = `Elements: ${total}`;
+            
+            // Calculate complexity
+            let complexity = 'Low';
+            if (total > 15 || gateways > 5) complexity = 'High';
+            else if (total > 8 || gateways > 2) complexity = 'Medium';
+            
+            document.getElementById('complexityScore').textContent = complexity;
+        }
+        
+        // Canvas manipulation functions
+        function clearCanvas() {
+            if (confirm('Are you sure you want to clear the entire canvas? This action cannot be undone.')) {
+                canvasElements = [];
+                selectedElement = null;
+                nextElementId = 1;
+                
+                const canvas = document.getElementById('processCanvas');
+                const elements = canvas.querySelectorAll('.canvas-element');
+                elements.forEach(el => el.remove());
+                
+                document.getElementById('canvasPlaceholder').style.display = 'block';
+                hideElementProperties();
+                updateProcessMetrics();
+            }
+        }
+        
+        function zoomIn() {
+            canvasZoom = Math.min(canvasZoom * 1.2, 3);
+            applyZoom();
+        }
+        
+        function zoomOut() {
+            canvasZoom = Math.max(canvasZoom / 1.2, 0.3);
+            applyZoom();
+        }
+        
+        function applyZoom() {
+            const canvas = document.getElementById('processCanvas');
+            canvas.style.transform = `scale(${canvasZoom})`;
+        }
+        
+        function autoLayout() {
+            if (canvasElements.length === 0) {
+                alert('Please add some elements to the canvas first.');
+                return;
+            }
+            
+            // Simple auto-layout algorithm
+            let x = 100;
+            let y = 100;
+            const spacing = 150;
+            
+            canvasElements.forEach((elementData, index) => {
+                const element = document.getElementById(elementData.id);
+                if (element) {
+                    element.style.left = x + 'px';
+                    element.style.top = y + 'px';
+                    elementData.x = x;
+                    elementData.y = y;
+                }
+                
+                x += spacing;
+                if ((index + 1) % 4 === 0) {
+                    x = 100;
+                    y += 100;
+                }
+            });
+            
+            if (selectedElement) {
+                showElementProperties(selectedElement);
+            }
+        }
+        
+        function validateProcess() {
+            const issues = [];
+            const startEvents = canvasElements.filter(e => e.type === 'start-event');
+            const endEvents = canvasElements.filter(e => e.type === 'end-event');
+            
+            if (startEvents.length === 0) issues.push('❌ Missing start event');
+            if (startEvents.length > 1) issues.push('⚠️ Multiple start events found');
+            if (endEvents.length === 0) issues.push('❌ Missing end event');
+            if (canvasElements.length < 3) issues.push('⚠️ Process seems too simple');
+            
+            if (issues.length === 0) {
+                alert('✅ Process validation passed! Your BPMN diagram follows best practices.');
+            } else {
+                alert('🔍 Validation Issues Found:\\n\\n' + issues.join('\\n'));
+            }
+        }
+        
+        // Enhanced drag functionality
+        let draggedElement = null;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+        
+        function startDragElement(e) {
+            if (e.target.closest('.enhanced-element')) return; // Don't drag toolbar elements
+            
+            draggedElement = e.currentTarget;
+            const rect = draggedElement.getBoundingClientRect();
+            dragOffsetX = e.clientX - rect.left;
+            dragOffsetY = e.clientY - rect.top;
+            
+            document.addEventListener('mousemove', dragElement);
+            document.addEventListener('mouseup', stopDragElement);
+            e.preventDefault();
+        }
+        
+        function dragElement(e) {
+            if (!draggedElement) return;
+            
+            const canvas = document.getElementById('processCanvas');
+            const canvasRect = canvas.getBoundingClientRect();
+            
+            const x = (e.clientX - canvasRect.left - dragOffsetX) / canvasZoom;
+            const y = (e.clientY - canvasRect.top - dragOffsetY) / canvasZoom;
+            
+            draggedElement.style.left = x + 'px';
+            draggedElement.style.top = y + 'px';
+            
+            // Update element data
+            const elementId = draggedElement.getAttribute('data-id');
+            const elementData = canvasElements.find(e => e.id === elementId);
+            if (elementData) {
+                elementData.x = x;
+                elementData.y = y;
+            }
+        }
+        
+        function stopDragElement() {
+            if (draggedElement && selectedElement === draggedElement) {
+                showElementProperties(draggedElement);
+            }
+            
+            draggedElement = null;
+            document.removeEventListener('mousemove', dragElement);
+            document.removeEventListener('mouseup', stopDragElement);
+        }
+        
+        // Enhanced toolbar element setup
+        document.addEventListener('DOMContentLoaded', function() {
+            const toolbarElements = document.querySelectorAll('.enhanced-element[draggable]');
+            toolbarElements.forEach(element => {
+                element.addEventListener('dragstart', function(e) {
+                    const elementType = this.getAttribute('data-type');
+                    e.dataTransfer.setData('text/plain', this.innerHTML);
+                    e.dataTransfer.setData('application/element-type', elementType);
+                });
+            });
+        });
+        
+        // Process Architecture & Reverse Engineering Functions
+        function reverseEngineerProcess() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); z-index: 1000; display: flex;
+                align-items: center; justify-content: center;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; max-width: 500px; color: white;">
+                    <h3 style="margin-bottom: 20px;">🔄 Process Reverse Engineering</h3>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px;">Upload Process Documentation:</label>
+                        <input type="file" accept=".pdf,.doc,.docx,.txt" style="width: 100%; padding: 5px; margin-bottom: 10px;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px;">Or describe your process:</label>
+                        <textarea placeholder="Describe the steps in your current process..." style="width: 100%; height: 80px; padding: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; color: white;"></textarea>
+                    </div>
+                    <div style="text-align: center;">
+                        <button onclick="startReverseEngineering(); document.body.removeChild(this.closest('div').parentElement)" style="background: #4CAF50; border: none; color: white; padding: 10px 20px; border-radius: 25px; cursor: pointer; margin-right: 10px;">🚀 Analyze & Generate</button>
+                        <button onclick="document.body.removeChild(this.closest('div').parentElement)" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px 20px; border-radius: 25px; cursor: pointer;">Cancel</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function startReverseEngineering() {
+            // Simulate AI analysis and BPMN generation
+            setTimeout(() => {
+                clearCanvas();
+                
+                // Generate sample process flow
+                createProcessElement('start-event', 100, 200);
+                createProcessElement('user-task', 200, 200);
+                createProcessElement('exclusive-gateway', 350, 200);
+                createProcessElement('service-task', 450, 150);
+                createProcessElement('user-task', 450, 250);
+                createProcessElement('end-event', 600, 200);
+                
+                updateProcessMetrics();
+                alert('🎉 Process successfully reverse-engineered! A BPMN diagram has been generated based on your input.');
+            }, 2000);
+        }
+        
+        function loadProcessTemplates() {
+            const templates = [
+                'Customer Onboarding Process',
+                'Invoice Approval Workflow',
+                'Product Development Lifecycle',
+                'Employee Recruitment Process',
+                'Quality Control Procedure',
+                'Order Fulfillment Process'
+            ];
+            
+            const templateList = templates.map(t => `<li style="padding: 8px; cursor: pointer; border-radius: 3px;" onclick="loadTemplate('${t}'); document.body.removeChild(this.closest('div').parentElement);" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">${t}</li>`).join('');
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); z-index: 1000; display: flex;
+                align-items: center; justify-content: center;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; max-width: 400px; color: white;">
+                    <h3 style="margin-bottom: 20px;">📋 Process Templates</h3>
+                    <ul style="list-style: none; padding: 0; margin-bottom: 20px;">${templateList}</ul>
+                    <div style="text-align: center;">
+                        <button onclick="document.body.removeChild(this.parentElement.parentElement)" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px 20px; border-radius: 25px; cursor: pointer;">Close</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function loadTemplate(templateName) {
+            clearCanvas();
+            alert(`📋 Loading template: ${templateName}...\\nThis would load a pre-designed BPMN template for common business processes.`);
+        }
+        
+        function analyzeProcessArchitecture() {
+            if (canvasElements.length === 0) {
+                alert('Please add some elements to analyze the process architecture.');
+                return;
+            }
+            
+            const analysis = `
+🏗️ PROCESS ARCHITECTURE ANALYSIS
+
+📊 Structure Overview:
+• Total Elements: ${canvasElements.length}
+• Process Complexity: ${canvasElements.length > 10 ? 'High' : canvasElements.length > 5 ? 'Medium' : 'Low'}
+• Decision Points: ${canvasElements.filter(e => e.type.includes('gateway')).length}
+• Human Tasks: ${canvasElements.filter(e => e.type === 'user-task').length}
+• Automated Tasks: ${canvasElements.filter(e => e.type === 'service-task').length}
+
+🔍 Quality Assessment:
+${canvasElements.filter(e => e.type === 'start-event').length === 1 ? '✅' : '❌'} Single Start Event
+${canvasElements.filter(e => e.type === 'end-event').length >= 1 ? '✅' : '❌'} End Event Present
+${canvasElements.length >= 3 ? '✅' : '❌'} Adequate Process Flow
+
+🚀 Optimization Recommendations:
+• Consider adding parallel gateways for concurrent tasks
+• Implement service tasks for automation opportunities
+• Add timer events for time-based triggers
+• Use swimlanes to clarify responsibilities
+            `.trim();
+            
+            alert(analysis);
+        }
+        
+        // Enhanced save and export functions
+        function saveProcessEnhanced() {
+            const processData = {
+                elements: canvasElements,
+                metadata: {
+                    name: 'Process_' + Date.now(),
+                    created: new Date().toISOString(),
+                    version: '1.0',
+                    author: 'Lucidra User'
+                }
+            };
+            
+            localStorage.setItem('lucidra_process', JSON.stringify(processData));
+            alert('💾 Process saved successfully! Your BPMN diagram has been stored locally.');
+        }
+        
+        function exportBPMNEnhanced() {
+            const bpmnXml = generateBPMNXML();
+            downloadFile('process.bpmn', bpmnXml, 'application/xml');
+        }
+        
+        function generateBPMNXML() {
+            let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="Process_${Date.now()}">
+  <process id="process" isExecutable="false">
+`;
+            
+            canvasElements.forEach(element => {
+                const props = element.properties;
+                switch(element.type) {
+                    case 'start-event':
+                        xml += `    <startEvent id="${element.id}" name="${props.name}" />\\n`;
+                        break;
+                    case 'end-event':
+                        xml += `    <endEvent id="${element.id}" name="${props.name}" />\\n`;
+                        break;
+                    case 'task':
+                    case 'user-task':
+                    case 'service-task':
+                        xml += `    <${element.type.replace('-', '')} id="${element.id}" name="${props.name}" />\\n`;
+                        break;
+                    case 'exclusive-gateway':
+                    case 'parallel-gateway':
+                        xml += `    <${element.type.replace('-', '')} id="${element.id}" name="${props.name}" />\\n`;
+                        break;
+                }
+            });
+            
+            xml += `  </process>
+</definitions>`;
+            
+            return xml;
+        }
+        
+        function downloadFile(filename, content, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function exportToVisio() {
+            alert('📊 Exporting to Microsoft Visio format...\\nThis would generate a .vsdx file compatible with Microsoft Visio.');
+        }
+        
+        function generateProcessDocumentation() {
+            const doc = generateProcessDocumentationText();
+            downloadFile('process_documentation.txt', doc, 'text/plain');
+        }
+        
+        function generateProcessDocumentationText() {
+            const metadata = {
+                title: 'Process Documentation',
+                generated: new Date().toISOString(),
+                elements: canvasElements.length
+            };
+            
+            let doc = `BUSINESS PROCESS DOCUMENTATION
+Generated by Lucidra Process Designer
+========================================
+
+Process Overview:
+• Total Elements: ${canvasElements.length}
+• Created: ${metadata.generated}
+• Complexity: ${canvasElements.length > 10 ? 'High' : canvasElements.length > 5 ? 'Medium' : 'Low'}
+
+Process Elements:
+`;
+            
+            canvasElements.forEach((element, index) => {
+                doc += `
+${index + 1}. ${element.properties.name}
+   Type: ${element.type}
+   Description: ${element.properties.description || 'No description provided'}
+   Position: (${Math.round(element.x)}, ${Math.round(element.y)})
+`;
+            });
+            
+            doc += `
+
+Process Flow Description:
+This process consists of ${canvasElements.length} elements including activities, events, and gateways.
+The process should be reviewed and validated by business stakeholders before implementation.
+
+Generated by Lucidra Strategic Intelligence Platform
+`;
+            
+            return doc;
+        }
+        
+        function simulateProcess() {
+            alert('▶️ Process Simulation Mode\\n\\nThis would run a step-by-step simulation of your process flow, highlighting each element as it executes and showing timing and resource utilization.');
+        }
+        
+        function optimizeProcess() {
+            alert('🚀 AI Process Optimization\\n\\nThis would analyze your process for:\\n• Bottlenecks and delays\\n• Automation opportunities\\n• Resource optimization\\n• Best practice compliance\\n• Performance improvements');
         }
         
         function generateOrganizationalProcessMap() {

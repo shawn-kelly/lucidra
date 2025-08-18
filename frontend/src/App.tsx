@@ -77,6 +77,8 @@ const ChunkPESTLEAnalysis = React.lazy(() => import('./components/RealTimePESTLE
 
 // Advanced Infrastructure Chunks
 const ChunkEnhancedFrameworkHub = React.lazy(() => import('./components/EnhancedFrameworkHub'));
+const ChunkHealthMonitor = React.lazy(() => import('./components/LucidraHealthMonitor'));
+const ChunkIntegratedPlatform = React.lazy(() => import('./components/IntegratedStrategicPlatform'));
 const ChunkAIScenarioEngine = React.lazy(() => import('./components/AIScenarioEngine'));
 const ChunkStrategicIntelligence = React.lazy(() => import('./components/StrategicIntelligenceHub'));
 
@@ -262,6 +264,12 @@ function App() {
         break;
       case 'hr-module':
         items.push({ label: 'HR Management', view: 'hr-module', icon: '👥' });
+        break;
+      case 'health-monitor':
+        items.push({ label: 'System Health', view: 'health-monitor', icon: '🏥' });
+        break;
+      case 'integrated-platform':
+        items.push({ label: 'Integrated Platform', view: 'integrated-platform', icon: '🔗' });
         break;
       case 'execution':
         items.push({ label: 'Execution Tracker', view: 'execution', icon: '📈' });
@@ -635,6 +643,14 @@ function App() {
             >
               🌍 PESTLE
             </Button>
+            <Button
+              variant={currentView === 'integrated-platform' ? 'solid' : 'ghost'}
+              colorScheme={currentView === 'integrated-platform' ? 'purple' : 'gray'}
+              size="sm"
+              onClick={() => setCurrentView('integrated-platform')}
+            >
+              🔗 Integrated
+            </Button>
           </HStack>
 
           {/* Row 4: Operations & Team Management */}
@@ -678,6 +694,14 @@ function App() {
               onClick={() => setCurrentView('hr-module')}
             >
               👥 HR
+            </Button>
+            <Button
+              variant={currentView === 'health-monitor' ? 'solid' : 'ghost'}
+              colorScheme={currentView === 'health-monitor' ? 'blue' : 'gray'}
+              size="sm"
+              onClick={() => setCurrentView('health-monitor')}
+            >
+              🏥 Health
             </Button>
           </HStack>
 
@@ -812,9 +836,9 @@ function App() {
         <Alert status="success" borderRadius="lg">
           <AlertIcon />
           <VStack align="start" spacing={1}>
-            <Text fontWeight="semibold">🚀 COMPLETE LUCIDRA PLATFORM - ALL 26+ MODULES ACTIVE!</Text>
+            <Text fontWeight="semibold">🚀 COMPLETE LUCIDRA PLATFORM - ALL 28+ MODULES ACTIVE!</Text>
             <Text fontSize="sm">
-              🌊 Blue Ocean • 🗺️ Strategic Planning • 🛣️ Journey Mapping • 🔄 Process Management • 🏭 Advanced Process • ⚙️ Process Intelligence • 📊 Process Analysis • 🤖 AI Logger • 📊 Data Pulse • 🏢 Five Forces • 💰 Financial • 📈 Comprehensive Financial • ⚖️ SWOT • 🌍 PESTLE • 📋 Project Management • 👥 Team Collaboration • 🤝 Team Hub • 🏢 Org Chart • 📧 Marketing • 🚀 Startup Stages • 👥 HR • 📈 Execution • 📋 Canvas • 🎓 Tutorials • 🎥 AI Video
+              🌊 Blue Ocean • 🗺️ Strategic Planning • 🛣️ Journey Mapping • 🔄 Process Management • 🏭 Advanced Process • ⚙️ Process Intelligence • 📊 Process Analysis • 🤖 AI Logger • 📊 Data Pulse • 🏢 Five Forces • 💰 Financial • 📈 Comprehensive Financial • ⚖️ SWOT • 🌍 PESTLE • 🔗 Integrated Platform • 📋 Project Management • 👥 Team Collaboration • 🤝 Team Hub • 🏢 Org Chart • 📧 Marketing • 🚀 Startup Stages • 👥 HR • 🏥 Health Monitor • 📈 Execution • 📋 Canvas • 🎓 Tutorials • 🎥 AI Video
             </Text>
           </VStack>
         </Alert>
@@ -1393,7 +1417,7 @@ function App() {
                 ➕ Add New Process
               </Button>
             </HStack>
-          </VStack>
+          </HStack>
 
           {/* Tab Navigation */}
           <HStack spacing={1} bg="gray.50" p={2} borderRadius="lg" overflowX="auto">
@@ -4187,6 +4211,10 @@ function App() {
         return renderWithSuspense(ChunkStartupStages);
       case 'hr-module':
         return renderWithSuspense(ChunkHRModule);
+      case 'health-monitor':
+        return renderWithSuspense(ChunkHealthMonitor);
+      case 'integrated-platform':
+        return renderWithSuspense(ChunkIntegratedPlatform);
       case 'tutorials':
         return renderWithSuspense(ChunkVideoLibrary);
       
