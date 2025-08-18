@@ -562,14 +562,18 @@
         @media (max-width: 768px) {
             .modules-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0 10px;
             }
             
             .canvas-grid {
                 grid-template-columns: 1fr;
+                gap: 0.8rem;
             }
             
             .strategy-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
             }
             
             .nav {
@@ -577,7 +581,106 @@
             }
             
             .dashboard-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                text-align: center;
+            }
+            
+            .dashboard-subtitle {
+                font-size: 0.9rem;
+                text-align: center;
+                padding: 0 10px;
+            }
+            
+            .module-card {
+                padding: 1rem;
+                margin: 0.5rem 0;
+            }
+            
+            .module-title {
+                font-size: 1.1rem;
+            }
+            
+            .workspace-content {
+                padding: 10px;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .tab {
+                min-width: 120px;
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .bpmn-container {
+                flex-direction: column;
+            }
+            
+            .process-elements {
+                width: 100%;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+            
+            .process-canvas-enhanced {
+                width: 100%;
+                height: 300px;
+                min-height: 300px;
+            }
+            
+            .canvas-tools {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+            
+            .btn-small {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+            
+            .main-content {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 10px;
+                text-align: center;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dashboard-title {
+                font-size: 1.5rem;
+            }
+            
+            .module-card {
+                padding: 0.8rem;
+            }
+            
+            .module-features {
+                font-size: 0.8rem;
+            }
+            
+            .process-canvas-enhanced {
+                height: 250px;
+            }
+            
+            .workspace-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .back-btn {
+                width: 100%;
+                text-align: center;
             }
         }
         
@@ -759,6 +862,8 @@
                 <a href="#" class="nav-btn" onclick="showView('canvas')">Canvas</a>
                 <a href="#" class="nav-btn" onclick="showView('financial')">Financial</a>
                 <a href="#" class="nav-btn" onclick="showView('strategy-exec')">Execution</a>
+                <a href="#" class="nav-btn" onclick="showView('tutorial-center')" style="background: linear-gradient(45deg, #8E44AD, #9B59B6);">🎥 Tutorial Center</a>
+                <a href="#" class="nav-btn" onclick="showView('leadership-coaching')" style="background: linear-gradient(45deg, #E67E22, #F39C12);">🧠 Leadership Coaching</a>
                 <a href="#" class="nav-btn" onclick="showView('platform-types')" style="background: linear-gradient(45deg, #FF6B6B, #FF8E53);">🏢 Organization Types</a>
                 <a href="#" class="nav-btn" onclick="showFinancialDashboard()" style="background: linear-gradient(45deg, #32CD32, #228B22);">💰 Financial Hub</a>
             </nav>
@@ -905,6 +1010,32 @@
                             <li>Progress visualization</li>
                             <li>Team collaboration</li>
                             <li>Analytics dashboard</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module-card" onclick="showView('tutorial-center')" style="border: 2px solid #8E44AD;">
+                        <div class="module-icon">🎥</div>
+                        <h3 class="module-title">Tutorial Center</h3>
+                        <p class="module-description">Interactive video tutorials and guided platform walkthroughs for all user types</p>
+                        <ul class="module-features">
+                            <li>🎯 Role-Based Tutorials</li>
+                            <li>📚 Step-by-Step Guides</li>
+                            <li>🎬 Interactive Videos</li>
+                            <li>📝 Progress Tracking</li>
+                            <li>🔄 Ongoing Updates</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module-card" onclick="showView('leadership-coaching')" style="border: 2px solid #E67E22;">
+                        <div class="module-icon">🧠</div>
+                        <h3 class="module-title">Leadership Coaching</h3>
+                        <p class="module-description">Strategic thinking development and coaching modules for leaders and managers</p>
+                        <ul class="module-features">
+                            <li>🎯 Strategic Thinking Training</li>
+                            <li>💡 Decision-Making Frameworks</li>
+                            <li>🏃 Leadership Scenarios</li>
+                            <li>📊 Self-Assessment Tools</li>
+                            <li>🔄 Continuous Development</li>
                         </ul>
                     </div>
                     
@@ -2819,6 +2950,680 @@
                         <h3 style="margin-bottom: 1rem;">🤖 AI-Powered Organization Analysis</h3>
                         <p style="margin-bottom: 2rem; opacity: 0.9;">Let our AI analyze your organization and recommend the optimal platform configuration</p>
                         <button onclick="startAIAnalysis()" style="background: linear-gradient(45deg, #667eea, #764ba2); border: none; color: white; padding: 15px 30px; border-radius: 25px; font-weight: 600; cursor: pointer; font-size: 1rem;">🔍 Analyze My Organization</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tutorial Center Workspace -->
+            <div id="tutorial-center-workspace" class="workspace">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">🎥 Tutorial Center</h2>
+                    <a href="#" class="back-btn" onclick="showView('dashboard')">← Back to Dashboard</a>
+                </div>
+                <div class="workspace-content">
+                    <div class="tabs">
+                        <div class="tab-list">
+                            <div class="tab active" onclick="showTab('tutorial', 'video-library')">Video Library</div>
+                            <div class="tab" onclick="showTab('tutorial', 'user-journeys')">User Journeys</div>
+                            <div class="tab" onclick="showTab('tutorial', 'progress-tracking')">Progress Tracking</div>
+                            <div class="tab" onclick="showTab('tutorial', 'tutorial-builder')">Tutorial Builder</div>
+                        </div>
+                        
+                        <div id="tutorial-video-library" class="tab-panel active">
+                            <h3>🎬 Interactive Video Library</h3>
+                            <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                                    
+                                    <!-- Role-Based Tutorial Categories -->
+                                    <div class="tutorial-category" style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(155, 89, 182, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                        <h4 style="color: #3498DB; margin-bottom: 15px;">👑 For CEOs & Leaders</h4>
+                                        <div class="video-list">
+                                            <div class="video-item" onclick="playTutorialVideo('ceo-overview')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#3498DB'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="display: flex; align-items: center; gap: 10px;">
+                                                    <span style="font-size: 20px;">▶️</span>
+                                                    <div>
+                                                        <div style="font-weight: bold; font-size: 14px;">Strategic Platform Overview</div>
+                                                        <div style="font-size: 12px; opacity: 0.8;">Duration: 8:30 | Level: Beginner</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="video-item" onclick="playTutorialVideo('strategic-frameworks')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#3498DB'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="display: flex; align-items: center; gap: 10px;">
+                                                    <span style="font-size: 20px;">▶️</span>
+                                                    <div>
+                                                        <div style="font-weight: bold; font-size: 14px;">Strategic Framework Deep Dive</div>
+                                                        <div style="font-size: 12px; opacity: 0.8;">Duration: 15:45 | Level: Intermediate</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="video-item" onclick="playTutorialVideo('executive-dashboards')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#3498DB'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="display: flex; align-items: center; gap: 10px;">
+                                                    <span style="font-size: 20px;">▶️</span>
+                                                    <div>
+                                                        <div style="font-weight: bold; font-size: 14px;">Executive Dashboard Mastery</div>
+                                                        <div style="font-size: 12px; opacity: 0.8;">Duration: 12:20 | Level: Advanced</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tutorial-category" style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(26, 188, 156, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                        <h4 style="color: #2ECC71; margin-bottom: 15px;">⚙️ For Operations Managers</h4>
+                                        <div class="video-list">
+                                            <div class="video-item" onclick="playTutorialVideo('process-management')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#2ECC71'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="display: flex; align-items: center; gap: 10px;">
+                                                    <span style="font-size: 20px;">▶️</span>
+                                                    <div>
+                                                        <div style="font-weight: bold; font-size: 14px;">BPMN Process Design</div>
+                                                        <div style="font-size: 12px; opacity: 0.8;">Duration: 18:15 | Level: Intermediate</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="video-item" onclick="playTutorialVideo('workflow-optimization')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#2ECC71'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="display: flex; align-items: center; gap: 10px;">
+                                                    <span style="font-size: 20px;">▶️</span>
+                                                    <div>
+                                                        <div style="font-weight: bold; font-size: 14px;">Workflow Optimization</div>
+                                                        <div style="font-size: 12px; opacity: 0.8;">Duration: 14:30 | Level: Advanced</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tutorial-category" style="background: linear-gradient(135deg, rgba(230, 126, 34, 0.2), rgba(243, 156, 18, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                        <h4 style="color: #E67E22; margin-bottom: 15px;">📊 For Analysts</h4>
+                                        <div class="video-list">
+                                            <div class="video-item" onclick="playTutorialVideo('financial-analysis')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#E67E22'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="display: flex; align-items: center; gap: 10px;">
+                                                    <span style="font-size: 20px;">▶️</span>
+                                                    <div>
+                                                        <div style="font-weight: bold; font-size: 14px;">Financial Framework Mastery</div>
+                                                        <div style="font-size: 12px; opacity: 0.8;">Duration: 22:10 | Level: Advanced</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="video-item" onclick="playTutorialVideo('data-visualization')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#E67E22'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="display: flex; align-items: center; gap: 10px;">
+                                                    <span style="font-size: 20px;">▶️</span>
+                                                    <div>
+                                                        <div style="font-weight: bold; font-size: 14px;">Data Visualization Best Practices</div>
+                                                        <div style="font-size: 12px; opacity: 0.8;">Duration: 16:25 | Level: Intermediate</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tutorial-category" style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.2), rgba(192, 57, 43, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                        <h4 style="color: #E74C3C; margin-bottom: 15px;">🚀 For New Users</h4>
+                                        <div class="video-list">
+                                            <div class="video-item" onclick="playTutorialVideo('getting-started')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#E74C3C'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="display: flex; align-items: center; gap: 10px;">
+                                                    <span style="font-size: 20px;">▶️</span>
+                                                    <div>
+                                                        <div style="font-weight: bold; font-size: 14px;">Getting Started with Lucidra</div>
+                                                        <div style="font-size: 12px; opacity: 0.8;">Duration: 5:45 | Level: Beginner</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="video-item" onclick="playTutorialVideo('navigation-basics')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#E74C3C'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="display: flex; align-items: center; gap: 10px;">
+                                                    <span style="font-size: 20px;">▶️</span>
+                                                    <div>
+                                                        <div style="font-weight: bold; font-size: 14px;">Platform Navigation Basics</div>
+                                                        <div style="font-size: 12px; opacity: 0.8;">Duration: 7:30 | Level: Beginner</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Video Player Area -->
+                                <div id="video-player-area" style="background: #000; border-radius: 10px; margin-top: 20px; padding: 20px; text-align: center; min-height: 300px; display: none;">
+                                    <div id="video-player" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white;">
+                                        <div style="text-align: center;">
+                                            <div style="font-size: 48px; margin-bottom: 20px;">🎬</div>
+                                            <h3 id="video-title">Select a tutorial to begin</h3>
+                                            <p id="video-description">Interactive tutorials will play here with step-by-step guidance</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="tutorial-user-journeys" class="tab-panel">
+                            <h3>🗺️ User Journey Maps</h3>
+                            <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                                    
+                                    <div class="journey-path" style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(155, 89, 182, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                        <h4 style="color: #3498DB; margin-bottom: 15px;">📈 CEO Strategic Journey</h4>
+                                        <div class="journey-steps" style="color: white;">
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">1.</span> Platform Overview (5 min)
+                                            </div>
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">2.</span> Blue Ocean Strategy (15 min)
+                                            </div>
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">3.</span> Financial Analysis (10 min)
+                                            </div>
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">4.</span> Strategy Execution (12 min)
+                                            </div>
+                                        </div>
+                                        <button onclick="startJourney('ceo')" style="margin-top: 15px; background: #3498DB; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">🚀 Start Journey</button>
+                                    </div>
+                                    
+                                    <div class="journey-path" style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(26, 188, 156, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                        <h4 style="color: #2ECC71; margin-bottom: 15px;">⚙️ Operations Manager Journey</h4>
+                                        <div class="journey-steps" style="color: white;">
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">1.</span> Process Management Basics (8 min)
+                                            </div>
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">2.</span> BPMN Designer (18 min)
+                                            </div>
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">3.</span> Workflow Optimization (14 min)
+                                            </div>
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">4.</span> Performance Tracking (10 min)
+                                            </div>
+                                        </div>
+                                        <button onclick="startJourney('operations')" style="margin-top: 15px; background: #2ECC71; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">🚀 Start Journey</button>
+                                    </div>
+                                    
+                                    <div class="journey-path" style="background: linear-gradient(135deg, rgba(230, 126, 34, 0.2), rgba(243, 156, 18, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                        <h4 style="color: #E67E22; margin-bottom: 15px;">📊 Analyst Journey</h4>
+                                        <div class="journey-steps" style="color: white;">
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">1.</span> Data Import & Setup (6 min)
+                                            </div>
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">2.</span> Financial Frameworks (22 min)
+                                            </div>
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">3.</span> Visualization & Reports (16 min)
+                                            </div>
+                                            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 5px;">
+                                                <span style="font-weight: bold;">4.</span> Advanced Analytics (20 min)
+                                            </div>
+                                        </div>
+                                        <button onclick="startJourney('analyst')" style="margin-top: 15px; background: #E67E22; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">🚀 Start Journey</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="tutorial-progress-tracking" class="tab-panel">
+                            <h3>📈 Learning Progress</h3>
+                            <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                                    <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                        <h4 style="color: #3498DB; margin-bottom: 15px;">🎯 Overall Progress</h4>
+                                        <div style="margin: 10px 0;">
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                                <span>Videos Completed</span>
+                                                <span>12/24 (50%)</span>
+                                            </div>
+                                            <div style="background: rgba(255, 255, 255, 0.2); height: 8px; border-radius: 4px;">
+                                                <div style="background: #3498DB; height: 100%; width: 50%; border-radius: 4px;"></div>
+                                            </div>
+                                        </div>
+                                        <div style="margin: 10px 0;">
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                                <span>Journeys Completed</span>
+                                                <span>2/4 (50%)</span>
+                                            </div>
+                                            <div style="background: rgba(255, 255, 255, 0.2); height: 8px; border-radius: 4px;">
+                                                <div style="background: #2ECC71; height: 100%; width: 50%; border-radius: 4px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                        <h4 style="color: #E67E22; margin-bottom: 15px;">🏆 Achievements</h4>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                            <div style="background: rgba(52, 152, 219, 0.3); padding: 8px 12px; border-radius: 20px; font-size: 12px;">
+                                                🥇 First Video Complete
+                                            </div>
+                                            <div style="background: rgba(46, 204, 113, 0.3); padding: 8px 12px; border-radius: 20px; font-size: 12px;">
+                                                📚 Knowledge Seeker
+                                            </div>
+                                            <div style="background: rgba(230, 126, 34, 0.3); padding: 8px 12px; border-radius: 20px; font-size: 12px;">
+                                                ⭐ Journey Master
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                    <h4 style="color: #9B59B6; margin-bottom: 15px;">📝 Recent Activity</h4>
+                                    <div style="color: white;">
+                                        <div style="margin: 8px 0; padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 5px; display: flex; justify-content: space-between;">
+                                            <span>✅ Completed "BPMN Process Design"</span>
+                                            <span style="opacity: 0.7;">2 hours ago</span>
+                                        </div>
+                                        <div style="margin: 8px 0; padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 5px; display: flex; justify-content: space-between;">
+                                            <span>📚 Started "Operations Manager Journey"</span>
+                                            <span style="opacity: 0.7;">Yesterday</span>
+                                        </div>
+                                        <div style="margin: 8px 0; padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 5px; display: flex; justify-content: space-between;">
+                                            <span>🎯 Earned "Knowledge Seeker" badge</span>
+                                            <span style="opacity: 0.7;">2 days ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="tutorial-tutorial-builder" class="tab-panel">
+                            <h3>🔧 Tutorial Builder</h3>
+                            <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                <p style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.9);">Create custom tutorials and walkthroughs for your organization's specific workflows and processes.</p>
+                                
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                    <div>
+                                        <h4 style="color: #3498DB; margin-bottom: 15px;">📋 Tutorial Template</h4>
+                                        <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 8px;">
+                                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Tutorial Title:</label>
+                                            <input type="text" placeholder="Enter tutorial title..." style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 4px; color: white; margin-bottom: 10px;">
+                                            
+                                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Target Role:</label>
+                                            <select style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 4px; color: white; margin-bottom: 10px;">
+                                                <option>CEO/Leadership</option>
+                                                <option>Operations Manager</option>
+                                                <option>Financial Analyst</option>
+                                                <option>Team Member</option>
+                                                <option>New User</option>
+                                            </select>
+                                            
+                                            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Difficulty Level:</label>
+                                            <select style="width: 100%; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 4px; color: white; margin-bottom: 15px;">
+                                                <option>Beginner</option>
+                                                <option>Intermediate</option>
+                                                <option>Advanced</option>
+                                            </select>
+                                            
+                                            <button onclick="createCustomTutorial()" style="background: #3498DB; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%;">🚀 Create Tutorial</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <h4 style="color: #2ECC71; margin-bottom: 15px;">📚 Quick Start Templates</h4>
+                                        <div style="color: white;">
+                                            <div class="template-item" onclick="loadTemplate('onboarding')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#2ECC71'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="font-weight: bold;">🎯 Employee Onboarding</div>
+                                                <div style="font-size: 12px; opacity: 0.8;">Complete new user orientation workflow</div>
+                                            </div>
+                                            <div class="template-item" onclick="loadTemplate('process-training')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#2ECC71'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="font-weight: bold;">⚙️ Process Training</div>
+                                                <div style="font-size: 12px; opacity: 0.8;">Step-by-step process documentation</div>
+                                            </div>
+                                            <div class="template-item" onclick="loadTemplate('feature-walkthrough')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#2ECC71'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="font-weight: bold;">🔍 Feature Walkthrough</div>
+                                                <div style="font-size: 12px; opacity: 0.8;">Interactive feature demonstration</div>
+                                            </div>
+                                            <div class="template-item" onclick="loadTemplate('troubleshooting')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#2ECC71'" onmouseout="this.style.borderColor='transparent'">
+                                                <div style="font-weight: bold;">🔧 Troubleshooting Guide</div>
+                                                <div style="font-size: 12px; opacity: 0.8;">Common issues and solutions</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leadership Coaching Workspace -->
+            <div id="leadership-coaching-workspace" class="workspace">
+                <div class="workspace-header">
+                    <h2 class="workspace-title">🧠 Leadership Coaching</h2>
+                    <a href="#" class="back-btn" onclick="showView('dashboard')">← Back to Dashboard</a>
+                </div>
+                <div class="workspace-content">
+                    <div class="tabs">
+                        <div class="tab-list">
+                            <div class="tab active" onclick="showTab('coaching', 'strategic-thinking')">Strategic Thinking</div>
+                            <div class="tab" onclick="showTab('coaching', 'decision-frameworks')">Decision Frameworks</div>
+                            <div class="tab" onclick="showTab('coaching', 'leadership-scenarios')">Leadership Scenarios</div>
+                            <div class="tab" onclick="showTab('coaching', 'assessment-tools')">Assessment Tools</div>
+                            <div class="tab" onclick="showTab('coaching', 'development-plan')">Development Plan</div>
+                        </div>
+                        
+                        <div id="coaching-strategic-thinking" class="tab-panel active">
+                            <h3>🎯 Strategic Thinking Development</h3>
+                            <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                                    
+                                    <div class="thinking-module" style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(155, 89, 182, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                        <h4 style="color: #3498DB; margin-bottom: 15px;">🌐 Systems Thinking</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Understand interconnections, feedback loops, and emergent properties in complex organizational systems.</p>
+                                        <div class="module-content">
+                                            <div style="margin-bottom: 15px;">
+                                                <div style="font-weight: bold; margin-bottom: 8px;">📚 Core Concepts:</div>
+                                                <ul style="margin-left: 20px; color: rgba(255, 255, 255, 0.8); font-size: 13px;">
+                                                    <li>Feedback loops and delays</li>
+                                                    <li>Mental models and assumptions</li>
+                                                    <li>Leverage points for change</li>
+                                                    <li>Unintended consequences</li>
+                                                </ul>
+                                            </div>
+                                            <button onclick="startSystemsThinking()" style="background: #3498DB; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 12px;">🚀 Start Module</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="thinking-module" style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(26, 188, 156, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                        <h4 style="color: #2ECC71; margin-bottom: 15px;">🔄 Design Thinking</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Human-centered approach to innovation and problem-solving in strategic contexts.</p>
+                                        <div class="module-content">
+                                            <div style="margin-bottom: 15px;">
+                                                <div style="font-weight: bold; margin-bottom: 8px;">🎯 Process Steps:</div>
+                                                <ul style="margin-left: 20px; color: rgba(255, 255, 255, 0.8); font-size: 13px;">
+                                                    <li>Empathize with stakeholders</li>
+                                                    <li>Define core problems</li>
+                                                    <li>Ideate solutions</li>
+                                                    <li>Prototype and test</li>
+                                                </ul>
+                                            </div>
+                                            <button onclick="startDesignThinking()" style="background: #2ECC71; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 12px;">🚀 Start Module</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="thinking-module" style="background: linear-gradient(135deg, rgba(230, 126, 34, 0.2), rgba(243, 156, 18, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                        <h4 style="color: #E67E22; margin-bottom: 15px;">⚡ Critical Thinking</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Analytical skills for evaluating information, identifying biases, and making sound judgments.</p>
+                                        <div class="module-content">
+                                            <div style="margin-bottom: 15px;">
+                                                <div style="font-weight: bold; margin-bottom: 8px;">🔍 Key Skills:</div>
+                                                <ul style="margin-left: 20px; color: rgba(255, 255, 255, 0.8); font-size: 13px;">
+                                                    <li>Argument analysis</li>
+                                                    <li>Evidence evaluation</li>
+                                                    <li>Bias recognition</li>
+                                                    <li>Logical reasoning</li>
+                                                </ul>
+                                            </div>
+                                            <button onclick="startCriticalThinking()" style="background: #E67E22; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 12px;">🚀 Start Module</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="thinking-module" style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.2), rgba(142, 68, 173, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                                        <h4 style="color: #9B59B6; margin-bottom: 15px;">🎲 Scenario Planning</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Strategic planning method for making flexible long-term plans by analyzing multiple possible future scenarios.</p>
+                                        <div class="module-content">
+                                            <div style="margin-bottom: 15px;">
+                                                <div style="font-weight: bold; margin-bottom: 8px;">📋 Components:</div>
+                                                <ul style="margin-left: 20px; color: rgba(255, 255, 255, 0.8); font-size: 13px;">
+                                                    <li>Driving forces identification</li>
+                                                    <li>Scenario construction</li>
+                                                    <li>Implications analysis</li>
+                                                    <li>Strategy resilience testing</li>
+                                                </ul>
+                                            </div>
+                                            <button onclick="startScenarioPlanning()" style="background: #9B59B6; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 12px;">🚀 Start Module</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="coaching-decision-frameworks" class="tab-panel">
+                            <h3>💡 Decision-Making Frameworks</h3>
+                            <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                                    
+                                    <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                        <h4 style="color: #3498DB; margin-bottom: 15px;">🎯 OODA Loop</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Observe, Orient, Decide, Act - Rapid decision-making cycle for dynamic environments.</p>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                                            <div style="padding: 8px; background: rgba(52, 152, 219, 0.3); border-radius: 5px; text-align: center; font-size: 12px; font-weight: bold;">👁️ OBSERVE</div>
+                                            <div style="padding: 8px; background: rgba(46, 204, 113, 0.3); border-radius: 5px; text-align: center; font-size: 12px; font-weight: bold;">🧭 ORIENT</div>
+                                            <div style="padding: 8px; background: rgba(230, 126, 34, 0.3); border-radius: 5px; text-align: center; font-size: 12px; font-weight: bold;">⚡ DECIDE</div>
+                                            <div style="padding: 8px; background: rgba(231, 76, 60, 0.3); border-radius: 5px; text-align: center; font-size: 12px; font-weight: bold;">🚀 ACT</div>
+                                        </div>
+                                        <button onclick="practiceOODA()" style="background: #3498DB; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; width: 100%;">Practice OODA</button>
+                                    </div>
+                                    
+                                    <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                        <h4 style="color: #2ECC71; margin-bottom: 15px;">⚖️ Six Thinking Hats</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Edward de Bono's method for exploring different perspectives on a problem.</p>
+                                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px;">
+                                            <div style="padding: 6px; background: #fff; color: #000; border-radius: 3px; text-align: center; font-size: 11px; font-weight: bold;">⚪ Facts</div>
+                                            <div style="padding: 6px; background: #f00; color: #fff; border-radius: 3px; text-align: center; font-size: 11px; font-weight: bold;">🔴 Emotions</div>
+                                            <div style="padding: 6px; background: #000; color: #fff; border-radius: 3px; text-align: center; font-size: 11px; font-weight: bold;">⚫ Critical</div>
+                                            <div style="padding: 6px; background: #ff0; color: #000; border-radius: 3px; text-align: center; font-size: 11px; font-weight: bold;">🟡 Positive</div>
+                                            <div style="padding: 6px; background: #0f0; color: #000; border-radius: 3px; text-align: center; font-size: 11px; font-weight: bold;">🟢 Creative</div>
+                                            <div style="padding: 6px; background: #00f; color: #fff; border-radius: 3px; text-align: center; font-size: 11px; font-weight: bold;">🔵 Process</div>
+                                        </div>
+                                        <button onclick="practiceSixHats()" style="background: #2ECC71; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; width: 100%;">Practice Six Hats</button>
+                                    </div>
+                                    
+                                    <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                        <h4 style="color: #E67E22; margin-bottom: 15px;">📊 Decision Matrix</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Systematic evaluation of options against weighted criteria for complex decisions.</p>
+                                        <div style="margin-bottom: 15px;">
+                                            <table style="width: 100%; font-size: 12px; border-collapse: collapse;">
+                                                <tr style="background: rgba(255, 255, 255, 0.2);">
+                                                    <th style="padding: 4px; border: 1px solid rgba(255, 255, 255, 0.3);">Criteria</th>
+                                                    <th style="padding: 4px; border: 1px solid rgba(255, 255, 255, 0.3);">Weight</th>
+                                                    <th style="padding: 4px; border: 1px solid rgba(255, 255, 255, 0.3);">Score</th>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 4px; border: 1px solid rgba(255, 255, 255, 0.3);">Cost</td>
+                                                    <td style="padding: 4px; border: 1px solid rgba(255, 255, 255, 0.3);">30%</td>
+                                                    <td style="padding: 4px; border: 1px solid rgba(255, 255, 255, 0.3);">8.5</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 4px; border: 1px solid rgba(255, 255, 255, 0.3);">Risk</td>
+                                                    <td style="padding: 4px; border: 1px solid rgba(255, 255, 255, 0.3);">25%</td>
+                                                    <td style="padding: 4px; border: 1px solid rgba(255, 255, 255, 0.3);">7.2</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <button onclick="buildDecisionMatrix()" style="background: #E67E22; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; width: 100%;">Build Matrix</button>
+                                    </div>
+                                    
+                                    <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                        <h4 style="color: #9B59B6; margin-bottom: 15px;">🎲 Monte Carlo Analysis</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Risk assessment using probability distributions and simulation for strategic decisions.</p>
+                                        <div style="margin-bottom: 15px;">
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 12px;">
+                                                <span>Success Probability:</span>
+                                                <span>68%</span>
+                                            </div>
+                                            <div style="background: rgba(255, 255, 255, 0.2); height: 6px; border-radius: 3px;">
+                                                <div style="background: #9B59B6; height: 100%; width: 68%; border-radius: 3px;"></div>
+                                            </div>
+                                        </div>
+                                        <button onclick="runMonteCarloSim()" style="background: #9B59B6; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; width: 100%;">Run Simulation</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="coaching-leadership-scenarios" class="tab-panel">
+                            <h3>🏃 Leadership Scenarios</h3>
+                            <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                <p style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.9);">Practice leadership skills through realistic business scenarios and case studies.</p>
+                                
+                                <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                                    <div class="scenario-card" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; border-left: 4px solid #E74C3C;">
+                                        <h4 style="color: #E74C3C; margin-bottom: 10px;">🚨 Crisis Management Scenario</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">
+                                            <strong>Situation:</strong> A critical system failure has impacted 40% of your operations. Customer complaints are increasing, and your team is looking to you for direction. Media attention is growing.
+                                        </p>
+                                        <div style="margin-bottom: 15px;">
+                                            <div style="font-weight: bold; margin-bottom: 8px; color: #E74C3C;">Decision Points:</div>
+                                            <div style="margin-left: 15px; color: rgba(255, 255, 255, 0.8); font-size: 13px;">
+                                                • Communication strategy with stakeholders<br>
+                                                • Resource allocation for recovery<br>
+                                                • Media response approach<br>
+                                                • Team motivation during crisis
+                                            </div>
+                                        </div>
+                                        <button onclick="startScenario('crisis')" style="background: #E74C3C; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">🚀 Start Scenario</button>
+                                    </div>
+                                    
+                                    <div class="scenario-card" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; border-left: 4px solid #3498DB;">
+                                        <h4 style="color: #3498DB; margin-bottom: 10px;">💼 Strategic Pivot Scenario</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">
+                                            <strong>Situation:</strong> Market conditions have shifted dramatically. Your current strategy is no longer viable, but pivoting will require significant organizational change and may face internal resistance.
+                                        </p>
+                                        <div style="margin-bottom: 15px;">
+                                            <div style="font-weight: bold; margin-bottom: 8px; color: #3498DB;">Decision Points:</div>
+                                            <div style="margin-left: 15px; color: rgba(255, 255, 255, 0.8); font-size: 13px;">
+                                                • Change management approach<br>
+                                                • Stakeholder buy-in strategies<br>
+                                                • Timeline and resource planning<br>
+                                                • Risk mitigation measures
+                                            </div>
+                                        </div>
+                                        <button onclick="startScenario('pivot')" style="background: #3498DB; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">🚀 Start Scenario</button>
+                                    </div>
+                                    
+                                    <div class="scenario-card" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; border-left: 4px solid #2ECC71;">
+                                        <h4 style="color: #2ECC71; margin-bottom: 10px;">🌱 Growth Leadership Scenario</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">
+                                            <strong>Situation:</strong> Your organization has secured major funding for expansion. You need to scale operations, hire new talent, and maintain culture while growing rapidly.
+                                        </p>
+                                        <div style="margin-bottom: 15px;">
+                                            <div style="font-weight: bold; margin-bottom: 8px; color: #2ECC71;">Decision Points:</div>
+                                            <div style="margin-left: 15px; color: rgba(255, 255, 255, 0.8); font-size: 13px;">
+                                                • Scaling strategy development<br>
+                                                • Culture preservation methods<br>
+                                                • Leadership team expansion<br>
+                                                • Performance measurement systems
+                                            </div>
+                                        </div>
+                                        <button onclick="startScenario('growth')" style="background: #2ECC71; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">🚀 Start Scenario</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="coaching-assessment-tools" class="tab-panel">
+                            <h3>📊 Leadership Assessment Tools</h3>
+                            <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                                    
+                                    <div class="assessment-tool" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                        <h4 style="color: #3498DB; margin-bottom: 15px;">🎯 Strategic Thinking Assessment</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Evaluate your strategic thinking capabilities across multiple dimensions.</p>
+                                        <div style="margin-bottom: 15px;">
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 12px;">
+                                                <span>Systems Thinking:</span>
+                                                <span>8.2/10</span>
+                                            </div>
+                                            <div style="background: rgba(255, 255, 255, 0.2); height: 4px; border-radius: 2px;">
+                                                <div style="background: #3498DB; height: 100%; width: 82%; border-radius: 2px;"></div>
+                                            </div>
+                                        </div>
+                                        <button onclick="takeAssessment('strategic')" style="background: #3498DB; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; width: 100%;">Take Assessment</button>
+                                    </div>
+                                    
+                                    <div class="assessment-tool" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                        <h4 style="color: #2ECC71; margin-bottom: 15px;">🧠 Decision-Making Style</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Understand your decision-making preferences and blind spots.</p>
+                                        <div style="margin-bottom: 15px;">
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 12px;">
+                                                <span>Analytical:</span>
+                                                <span>7.5/10</span>
+                                            </div>
+                                            <div style="background: rgba(255, 255, 255, 0.2); height: 4px; border-radius: 2px;">
+                                                <div style="background: #2ECC71; height: 100%; width: 75%; border-radius: 2px;"></div>
+                                            </div>
+                                        </div>
+                                        <button onclick="takeAssessment('decision')" style="background: #2ECC71; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; width: 100%;">Take Assessment</button>
+                                    </div>
+                                    
+                                    <div class="assessment-tool" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                        <h4 style="color: #E67E22; margin-bottom: 15px;">⚡ Crisis Leadership</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Assess your ability to lead effectively under pressure and uncertainty.</p>
+                                        <div style="margin-bottom: 15px;">
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 12px;">
+                                                <span>Resilience:</span>
+                                                <span>9.1/10</span>
+                                            </div>
+                                            <div style="background: rgba(255, 255, 255, 0.2); height: 4px; border-radius: 2px;">
+                                                <div style="background: #E67E22; height: 100%; width: 91%; border-radius: 2px;"></div>
+                                            </div>
+                                        </div>
+                                        <button onclick="takeAssessment('crisis')" style="background: #E67E22; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; width: 100%;">Take Assessment</button>
+                                    </div>
+                                    
+                                    <div class="assessment-tool" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                        <h4 style="color: #9B59B6; margin-bottom: 15px;">🤝 Emotional Intelligence</h4>
+                                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Evaluate your emotional awareness and interpersonal effectiveness.</p>
+                                        <div style="margin-bottom: 15px;">
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 12px;">
+                                                <span>Self-Awareness:</span>
+                                                <span>8.7/10</span>
+                                            </div>
+                                            <div style="background: rgba(255, 255, 255, 0.2); height: 4px; border-radius: 2px;">
+                                                <div style="background: #9B59B6; height: 100%; width: 87%; border-radius: 2px;"></div>
+                                            </div>
+                                        </div>
+                                        <button onclick="takeAssessment('emotional')" style="background: #9B59B6; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; width: 100%;">Take Assessment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="coaching-development-plan" class="tab-panel">
+                            <h3>📈 Personal Development Plan</h3>
+                            <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                    <div>
+                                        <h4 style="color: #3498DB; margin-bottom: 15px;">🎯 Development Goals</h4>
+                                        <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                                <span style="font-weight: bold;">Improve Systems Thinking</span>
+                                                <span style="font-size: 12px; opacity: 0.8;">75% Complete</span>
+                                            </div>
+                                            <div style="background: rgba(255, 255, 255, 0.2); height: 6px; border-radius: 3px;">
+                                                <div style="background: #3498DB; height: 100%; width: 75%; border-radius: 3px;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                                <span style="font-weight: bold;">Crisis Leadership Skills</span>
+                                                <span style="font-size: 12px; opacity: 0.8;">40% Complete</span>
+                                            </div>
+                                            <div style="background: rgba(255, 255, 255, 0.2); height: 6px; border-radius: 3px;">
+                                                <div style="background: #E67E22; height: 100%; width: 40%; border-radius: 3px;"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <button onclick="addDevelopmentGoal()" style="background: #2ECC71; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%;">+ Add New Goal</button>
+                                    </div>
+                                    
+                                    <div>
+                                        <h4 style="color: #2ECC71; margin-bottom: 15px;">📅 Upcoming Activities</h4>
+                                        <div style="color: white;">
+                                            <div style="margin: 8px 0; padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 5px; border-left: 3px solid #3498DB;">
+                                                <div style="font-weight: bold; font-size: 14px;">Strategic Thinking Workshop</div>
+                                                <div style="font-size: 12px; opacity: 0.8;">Tomorrow, 2:00 PM | Duration: 90 min</div>
+                                            </div>
+                                            <div style="margin: 8px 0; padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 5px; border-left: 3px solid #E67E22;">
+                                                <div style="font-weight: bold; font-size: 14px;">Crisis Simulation Exercise</div>
+                                                <div style="font-size: 12px; opacity: 0.8;">Friday, 10:00 AM | Duration: 2 hours</div>
+                                            </div>
+                                            <div style="margin: 8px 0; padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 5px; border-left: 3px solid #9B59B6;">
+                                                <div style="font-weight: bold; font-size: 14px;">1-on-1 Coaching Session</div>
+                                                <div style="font-size: 12px; opacity: 0.8;">Next Monday, 3:00 PM | Duration: 60 min</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -6575,6 +7380,422 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
         }
         
         console.log('🎯 Advanced financial integration functions loaded');
+        
+        // ==============================================
+        // 🎥 TUTORIAL CENTER FUNCTIONS
+        // ==============================================
+        
+        // Play tutorial video function
+        window.playTutorialVideo = function(videoId) {
+            console.log(`🎥 Playing tutorial video: ${videoId}`);
+            
+            const videoData = {
+                'ceo-overview': {
+                    title: 'CEO Platform Overview',
+                    description: 'Complete executive guide to strategic decision-making tools',
+                    duration: '8:30',
+                    content: 'This comprehensive video walks CEOs through the strategic frameworks, market intelligence dashboards, and executive reporting features.'
+                },
+                'strategic-frameworks': {
+                    title: 'Strategic Frameworks Masterclass',
+                    description: 'Deep dive into Blue Ocean, Porter\'s Forces, and advanced strategy tools',
+                    duration: '12:45',
+                    content: 'Learn to leverage cutting-edge strategic frameworks for competitive advantage and market positioning.'
+                },
+                'executive-dashboards': {
+                    title: 'Executive Dashboard Navigation',
+                    description: 'Master the executive command center and KPI monitoring',
+                    duration: '6:20',
+                    content: 'Navigate real-time business intelligence dashboards and customize executive views for optimal decision-making.'
+                },
+                'process-management': {
+                    title: 'Process Management Excellence',
+                    description: 'BPMN modeling and workflow optimization techniques',
+                    duration: '10:15',
+                    content: 'Design, model, and optimize business processes using advanced BPMN tools and workflow automation.'
+                },
+                'workflow-optimization': {
+                    title: 'Workflow Optimization Strategies',
+                    description: 'Advanced techniques for operational efficiency',
+                    duration: '9:40',
+                    content: 'Implement data-driven workflow optimization strategies to maximize operational efficiency and reduce costs.'
+                },
+                'financial-analysis': {
+                    title: 'Financial Analysis Deep Dive',
+                    description: 'DuPont analysis, ABC costing, and financial modeling',
+                    duration: '14:25',
+                    content: 'Master advanced financial analysis techniques including DuPont decomposition, activity-based costing, and predictive modeling.'
+                },
+                'data-visualization': {
+                    title: 'Data Visualization Mastery',
+                    description: 'Create compelling business intelligence dashboards',
+                    duration: '11:10',
+                    content: 'Design professional data visualizations and interactive dashboards for effective business communication.'
+                },
+                'getting-started': {
+                    title: 'Getting Started Guide',
+                    description: 'Platform basics and first steps',
+                    duration: '5:30',
+                    content: 'Quick start guide covering platform navigation, basic features, and initial setup for new users.'
+                },
+                'navigation-basics': {
+                    title: 'Navigation Fundamentals',
+                    description: 'Master platform navigation and shortcuts',
+                    duration: '4:15',
+                    content: 'Learn efficient navigation techniques, keyboard shortcuts, and productivity tips for power users.'
+                }
+            };
+            
+            const video = videoData[videoId] || {
+                title: 'Tutorial Video',
+                description: 'Interactive tutorial content',
+                duration: '5:00',
+                content: 'Tutorial video content would be displayed here.'
+            };
+            
+            showModal(video.title, `
+                <div class="video-player" style="text-align: center; padding: 20px;">
+                    <div class="video-placeholder" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3>🎥 ${video.title}</h3>
+                        <p style="opacity: 0.9; margin: 15px 0;">Duration: ${video.duration}</p>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin-top: 20px;">
+                            <p style="font-size: 14px; line-height: 1.5;">${video.content}</p>
+                        </div>
+                        <button onclick="simulateVideoProgress('${videoId}')" style="background: #4CAF50; border: none; color: white; padding: 12px 24px; border-radius: 25px; cursor: pointer; margin-top: 20px; font-size: 16px;">
+                            ▶️ Play Video
+                        </button>
+                    </div>
+                    <div style="text-align: left; background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                        <h4>📚 Learning Objectives:</h4>
+                        <p>${video.description}</p>
+                        <div style="margin-top: 15px;">
+                            <button onclick="addToProgress('${videoId}')" style="background: #2196F3; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+                                ✅ Mark Complete
+                            </button>
+                            <button onclick="bookmarkVideo('${videoId}')" style="background: #FF9800; border: none; color: white; padding: 8px 16px; border-radius: 5px; cursor: pointer;">
+                                🔖 Bookmark
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `);
+        };
+        
+        // Simulate video progress
+        window.simulateVideoProgress = function(videoId) {
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 5;
+                console.log(`📹 Video ${videoId} progress: ${progress}%`);
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    alert(`✅ Video "${videoId}" completed! Progress saved to your learning profile.`);
+                    addToProgress(videoId);
+                }
+            }, 500);
+        };
+        
+        // Start user journey
+        window.startJourney = function(roleType) {
+            console.log(`🚀 Starting journey for role: ${roleType}`);
+            
+            const journeys = {
+                'ceo': {
+                    title: 'Executive Leadership Journey',
+                    path: ['Platform Overview', 'Strategic Frameworks', 'Executive Dashboards', 'Market Intelligence', 'Decision Analytics'],
+                    description: 'Comprehensive executive training pathway focusing on strategic decision-making and leadership excellence.',
+                    estimatedTime: '45 minutes',
+                    color: '#3498DB'
+                },
+                'operations': {
+                    title: 'Operations Excellence Journey',
+                    path: ['Process Management', 'Workflow Optimization', 'Performance Metrics', 'Resource Planning', 'Quality Control'],
+                    description: 'Operations-focused learning path for process optimization and operational excellence.',
+                    estimatedTime: '35 minutes',
+                    color: '#2ECC71'
+                },
+                'analyst': {
+                    title: 'Data Analytics Journey',
+                    path: ['Financial Analysis', 'Data Visualization', 'Market Research', 'Statistical Modeling', 'Report Generation'],
+                    description: 'Advanced analytics training for data-driven decision making and business intelligence.',
+                    estimatedTime: '50 minutes',
+                    color: '#E67E22'
+                }
+            };
+            
+            const journey = journeys[roleType] || journeys['ceo'];
+            
+            showModal(`🎯 ${journey.title}`, `
+                <div class="journey-viewer" style="padding: 20px;">
+                    <div style="background: ${journey.color}; color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3>${journey.title}</h3>
+                        <p style="opacity: 0.9;">${journey.description}</p>
+                        <p><strong>Estimated Time:</strong> ${journey.estimatedTime}</p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4>🗺️ Learning Path:</h4>
+                        ${journey.path.map((step, index) => `
+                            <div style="display: flex; align-items: center; margin: 10px 0;">
+                                <div style="background: ${journey.color}; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-weight: bold;">
+                                    ${index + 1}
+                                </div>
+                                <span>${step}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button onclick="beginJourneyStep('${roleType}', 0)" style="background: ${journey.color}; border: none; color: white; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-size: 16px; margin-right: 10px;">
+                            🚀 Begin Journey
+                        </button>
+                        <button onclick="scheduleJourney('${roleType}')" style="background: #6c757d; border: none; color: white; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-size: 16px;">
+                            📅 Schedule Later
+                        </button>
+                    </div>
+                </div>
+            `);
+        };
+        
+        // Begin journey step
+        window.beginJourneyStep = function(roleType, stepIndex) {
+            console.log(`📚 Beginning journey step ${stepIndex + 1} for ${roleType}`);
+            alert(`🎯 Starting step ${stepIndex + 1} of your ${roleType} journey! Navigate to the recommended sections to continue your learning path.`);
+            closeModal();
+        };
+        
+        // Schedule journey
+        window.scheduleJourney = function(roleType) {
+            alert(`📅 Journey scheduled! You'll receive a reminder to start your ${roleType} learning journey.`);
+            closeModal();
+        };
+        
+        // Add to progress
+        window.addToProgress = function(videoId) {
+            console.log(`✅ Adding ${videoId} to learning progress`);
+            // In real implementation, this would save to user profile
+            alert(`✅ Progress saved! "${videoId}" marked as completed in your learning profile.`);
+        };
+        
+        // Bookmark video
+        window.bookmarkVideo = function(videoId) {
+            console.log(`🔖 Bookmarking video: ${videoId}`);
+            alert(`🔖 Video bookmarked! You can find it in your "Saved Content" section.`);
+        };
+        
+        // ==============================================
+        // 🧠 LEADERSHIP COACHING FUNCTIONS
+        // ==============================================
+        
+        // Start Systems Thinking Module
+        window.startSystemsThinking = function() {
+            console.log('🧠 Starting Systems Thinking module...');
+            
+            showModal('🧠 Systems Thinking Module', `
+                <div class="coaching-module" style="padding: 20px;">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3>🧠 Systems Thinking for Leaders</h3>
+                        <p style="opacity: 0.9;">Develop holistic thinking patterns for complex problem-solving and strategic decision-making.</p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4>🎯 Module Components:</h4>
+                        <div style="margin: 15px 0;">
+                            <div style="display: flex; align-items: center; margin: 10px 0;">
+                                <span style="margin-right: 10px;">🔍</span>
+                                <span><strong>System Mapping:</strong> Visualize interconnected relationships and feedback loops</span>
+                            </div>
+                            <div style="display: flex; align-items: center; margin: 10px 0;">
+                                <span style="margin-right: 10px;">⚖️</span>
+                                <span><strong>Leverage Points:</strong> Identify high-impact intervention opportunities</span>
+                            </div>
+                            <div style="display: flex; align-items: center; margin: 10px 0;">
+                                <span style="margin-right: 10px;">🔄</span>
+                                <span><strong>Mental Models:</strong> Challenge assumptions and cognitive biases</span>
+                            </div>
+                            <div style="display: flex; align-items: center; margin: 10px 0;">
+                                <span style="margin-right: 10px;">🎲</span>
+                                <span><strong>Scenario Planning:</strong> Navigate uncertainty with multiple future states</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button onclick="startInteractiveExercise('systems-mapping')" style="background: #3498DB; border: none; color: white; padding: 12px 24px; border-radius: 25px; cursor: pointer; margin: 5px; font-size: 14px;">
+                            🗺️ System Mapping Exercise
+                        </button>
+                        <button onclick="startInteractiveExercise('leverage-points')" style="background: #2ECC71; border: none; color: white; padding: 12px 24px; border-radius: 25px; cursor: pointer; margin: 5px; font-size: 14px;">
+                            ⚡ Find Leverage Points
+                        </button>
+                        <button onclick="startInteractiveExercise('mental-models')" style="background: #E67E22; border: none; color: white; padding: 12px 24px; border-radius: 25px; cursor: pointer; margin: 5px; font-size: 14px;">
+                            🧩 Challenge Mental Models
+                        </button>
+                    </div>
+                </div>
+            `);
+        };
+        
+        // Start interactive exercise
+        window.startInteractiveExercise = function(exerciseType) {
+            console.log(`🎯 Starting interactive exercise: ${exerciseType}`);
+            
+            const exercises = {
+                'systems-mapping': {
+                    title: '🗺️ System Mapping Exercise',
+                    content: 'Map the key stakeholders, processes, and feedback loops in your organization. Identify how changes in one area might ripple through the entire system.',
+                    action: 'Create your system map by identifying: 1) Key stakeholders, 2) Core processes, 3) Information flows, 4) Feedback loops, 5) External influences'
+                },
+                'leverage-points': {
+                    title: '⚡ Leverage Points Identification',
+                    content: 'Discover the most effective intervention points in your organization where small changes can create significant impact.',
+                    action: 'Analyze your current challenges and identify: 1) Root causes, 2) System structures, 3) Power dynamics, 4) Information flows, 5) Purpose and paradigms'
+                },
+                'mental-models': {
+                    title: '🧩 Mental Models Challenge',
+                    content: 'Examine and challenge the underlying assumptions that drive decision-making in your organization.',
+                    action: 'Reflect on: 1) Current assumptions, 2) Alternative perspectives, 3) Evidence for/against, 4) Potential blind spots, 5) New mental models to adopt'
+                }
+            };
+            
+            const exercise = exercises[exerciseType];
+            
+            showModal(exercise.title, `
+                <div class="interactive-exercise" style="padding: 20px;">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3>${exercise.title}</h3>
+                        <p style="opacity: 0.9;">${exercise.content}</p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4>📝 Exercise Instructions:</h4>
+                        <p>${exercise.action}</p>
+                        <textarea placeholder="Enter your thoughts and insights here..." style="width: 100%; height: 120px; margin: 15px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button onclick="submitExercise('${exerciseType}')" style="background: #4CAF50; border: none; color: white; padding: 12px 24px; border-radius: 25px; cursor: pointer; margin-right: 10px;">
+                            ✅ Submit Exercise
+                        </button>
+                        <button onclick="saveForLater('${exerciseType}')" style="background: #FF9800; border: none; color: white; padding: 12px 24px; border-radius: 25px; cursor: pointer;">
+                            💾 Save for Later
+                        </button>
+                    </div>
+                </div>
+            `);
+        };
+        
+        // Submit exercise
+        window.submitExercise = function(exerciseType) {
+            console.log(`📝 Submitting exercise: ${exerciseType}`);
+            alert(`✅ Exercise submitted! Your ${exerciseType} insights have been saved to your coaching profile for review and feedback.`);
+            closeModal();
+        };
+        
+        // Save for later
+        window.saveForLater = function(exerciseType) {
+            console.log(`💾 Saving exercise for later: ${exerciseType}`);
+            alert(`💾 Exercise saved! You can continue working on your ${exerciseType} exercise anytime from your coaching dashboard.`);
+            closeModal();
+        };
+        
+        // Take Assessment
+        window.takeAssessment = function(assessmentType) {
+            console.log(`📊 Taking assessment: ${assessmentType}`);
+            
+            const assessments = {
+                'strategic': {
+                    title: 'Strategic Thinking Assessment',
+                    description: 'Evaluate your strategic thinking capabilities and decision-making patterns',
+                    questions: [
+                        'How do you typically approach complex strategic decisions?',
+                        'What frameworks do you use for competitive analysis?',
+                        'How do you balance short-term and long-term objectives?',
+                        'Describe your process for evaluating strategic alternatives.'
+                    ],
+                    color: '#3498DB'
+                },
+                'decision': {
+                    title: 'Decision-Making Assessment',
+                    description: 'Assess your decision-making process and identify improvement areas',
+                    questions: [
+                        'How do you gather information for important decisions?',
+                        'What role does intuition play in your decision-making?',
+                        'How do you handle uncertainty and ambiguity?',
+                        'Describe a time when you had to make a difficult decision quickly.'
+                    ],
+                    color: '#2ECC71'
+                },
+                'crisis': {
+                    title: 'Crisis Leadership Assessment',
+                    description: 'Evaluate your leadership effectiveness during crisis situations',
+                    questions: [
+                        'How do you maintain team morale during challenging times?',
+                        'What communication strategies do you use in crisis situations?',
+                        'How do you prioritize decisions when everything seems urgent?',
+                        'Describe your approach to stakeholder management during crises.'
+                    ],
+                    color: '#E67E22'
+                },
+                'emotional': {
+                    title: 'Emotional Intelligence Assessment',
+                    description: 'Assess your emotional intelligence and interpersonal effectiveness',
+                    questions: [
+                        'How do you recognize and manage your own emotions?',
+                        'Describe how you read and respond to others\' emotions.',
+                        'How do you handle conflicts and difficult conversations?',
+                        'What strategies do you use to motivate and inspire others?'
+                    ],
+                    color: '#9B59B6'
+                }
+            };
+            
+            const assessment = assessments[assessmentType] || assessments['strategic'];
+            
+            showModal(`📊 ${assessment.title}`, `
+                <div class="assessment-container" style="padding: 20px;">
+                    <div style="background: ${assessment.color}; color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3>📊 ${assessment.title}</h3>
+                        <p style="opacity: 0.9;">${assessment.description}</p>
+                        <p><strong>Duration:</strong> 15-20 minutes</p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4>📝 Assessment Preview:</h4>
+                        ${assessment.questions.map((question, index) => `
+                            <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px; border-left: 4px solid ${assessment.color};">
+                                <strong>Question ${index + 1}:</strong> ${question}
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button onclick="beginAssessment('${assessmentType}')" style="background: ${assessment.color}; border: none; color: white; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-size: 16px; margin-right: 10px;">
+                            📋 Begin Assessment
+                        </button>
+                        <button onclick="scheduleAssessment('${assessmentType}')" style="background: #6c757d; border: none; color: white; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-size: 16px;">
+                            📅 Schedule Later
+                        </button>
+                    </div>
+                </div>
+            `);
+        };
+        
+        // Begin assessment
+        window.beginAssessment = function(assessmentType) {
+            console.log(`📋 Beginning assessment: ${assessmentType}`);
+            alert(`📋 Assessment started! You will now be guided through a series of questions to evaluate your ${assessmentType} capabilities. Results will include personalized feedback and development recommendations.`);
+            closeModal();
+        };
+        
+        // Schedule assessment
+        window.scheduleAssessment = function(assessmentType) {
+            console.log(`📅 Scheduling assessment: ${assessmentType}`);
+            alert(`📅 Assessment scheduled! You'll receive a reminder to complete your ${assessmentType} assessment when convenient.`);
+            closeModal();
+        };
+        
+        console.log('🎥 Tutorial Center and 🧠 Leadership Coaching functions loaded successfully!');
     </script>
 </body>
 </html>
