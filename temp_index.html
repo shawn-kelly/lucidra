@@ -6,52 +6,6 @@
     <title>Lucidra - Strategic Intelligence Platform</title>
     <script src="integration-framework.js"></script>
     <script>
-        // Define showView function FIRST before any verification
-        window.showView = function(viewName) {
-            console.log(`🚀 showView called with: ${viewName}`);
-            
-            try {
-                // Hide all views
-                const allViews = document.querySelectorAll('.dashboard, .workspace');
-                allViews.forEach(view => {
-                    view.style.display = 'none';
-                });
-                
-                // Show selected view
-                let targetView;
-                if (viewName === 'dashboard') {
-                    targetView = document.getElementById('dashboard');
-                } else {
-                    targetView = document.getElementById(viewName + '-workspace');
-                }
-                
-                if (targetView) {
-                    targetView.style.display = 'block';
-                    console.log(`✅ Successfully showed view: ${targetView.id}`);
-                } else {
-                    console.error(`❌ Could not find view for: ${viewName}`);
-                }
-                
-                // Update navigation
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                
-                const targetBtn = document.querySelector(`[onclick="showView('${viewName}')"]`);
-                if (targetBtn) {
-                    targetBtn.classList.add('active');
-                }
-                
-            } catch (error) {
-                console.error(`❌ Error in showView(${viewName}):`, error);
-            }
-        };
-        
-        // Make it available as regular function too
-        function showView(viewName) {
-            return window.showView(viewName);
-        }
-        
         // Verify integration framework is working
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔧 Verifying platform functionality...');
@@ -2831,6 +2785,40 @@
     </div>
 
     <script>
+        // Ensure showView is globally accessible
+        window.showView = function(viewName) {
+            // Hide all views
+            document.querySelectorAll('.dashboard, .workspace').forEach(view => {
+                view.style.display = 'none';
+            });
+            
+            // Show selected view
+            if (viewName === 'dashboard') {
+                document.getElementById('dashboard').style.display = 'block';
+            } else {
+                const workspace = document.getElementById(viewName + '-workspace');
+                if (workspace) {
+                    workspace.style.display = 'block';
+                }
+            }
+            
+            // Update navigation - safely handle event
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Find and activate the correct navigation button
+            const targetBtn = document.querySelector(`[onclick="showView('${viewName}')"]`);
+            if (targetBtn) {
+                targetBtn.classList.add('active');
+            }
+        };
+
+        // Make showView available globally for onclick handlers
+        function showView(viewName) {
+            return window.showView(viewName);
+        }
+        
         // Additional safety for button clicks
         window.onclick = function(event) {
             if (event.target.getAttribute('onclick') && event.target.getAttribute('onclick').includes('showView')) {
@@ -6226,10 +6214,30 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
             }
         });
 
+        // CRITICAL FIX: Ensure showView is always available
+        if (!window.showView) {
+            window.showView = function(viewName) {
+                console.log(`🔧 Emergency showView called for: ${viewName}`);
+                document.querySelectorAll('.dashboard, .workspace').forEach(view => {
+                    view.style.display = 'none';
+                });
+                const target = document.getElementById(viewName === 'dashboard' ? 'dashboard' : viewName + '-workspace');
+                if (target) target.style.display = 'block';
+            };
+        }
+        
+        // Make sure it's also available as a regular function
+        if (typeof showView === 'undefined') {
+            function showView(viewName) {
+                return window.showView(viewName);
+            }
+        }
+        
         console.log('🚀 Final verification: showView available =', typeof window.showView);
     </script>
     
     <!-- Financial Integration System -->
+    <script src="integration-framework.js"></script>
     <script src="organizational-journey-framework.js"></script>
     <script src="financial-integration-api.js"></script>
     <script src="real-time-financial-engine.js"></script>
