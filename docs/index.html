@@ -2787,30 +2787,50 @@
     <script>
         // Ensure showView is globally accessible
         window.showView = function(viewName) {
-            // Hide all views
-            document.querySelectorAll('.dashboard, .workspace').forEach(view => {
-                view.style.display = 'none';
-            });
+            console.log(`🚀 showView called with: ${viewName}`);
             
-            // Show selected view
-            if (viewName === 'dashboard') {
-                document.getElementById('dashboard').style.display = 'block';
-            } else {
-                const workspace = document.getElementById(viewName + '-workspace');
-                if (workspace) {
-                    workspace.style.display = 'block';
+            try {
+                // Hide all views
+                const allViews = document.querySelectorAll('.dashboard, .workspace');
+                console.log(`📱 Found ${allViews.length} views to hide`);
+                allViews.forEach(view => {
+                    view.style.display = 'none';
+                });
+                
+                // Show selected view
+                let targetView;
+                if (viewName === 'dashboard') {
+                    targetView = document.getElementById('dashboard');
+                    console.log(`🏠 Looking for dashboard element: ${targetView ? 'found' : 'NOT FOUND'}`);
+                } else {
+                    const workspaceId = viewName + '-workspace';
+                    targetView = document.getElementById(workspaceId);
+                    console.log(`⚙️ Looking for workspace '${workspaceId}': ${targetView ? 'found' : 'NOT FOUND'}`);
                 }
-            }
-            
-            // Update navigation - safely handle event
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Find and activate the correct navigation button
-            const targetBtn = document.querySelector(`[onclick="showView('${viewName}')"]`);
-            if (targetBtn) {
-                targetBtn.classList.add('active');
+                
+                if (targetView) {
+                    targetView.style.display = 'block';
+                    console.log(`✅ Successfully showed view: ${targetView.id}`);
+                } else {
+                    console.error(`❌ Could not find view for: ${viewName}`);
+                }
+                
+                // Update navigation - safely handle event
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Find and activate the correct navigation button
+                const targetBtn = document.querySelector(`[onclick="showView('${viewName}')"]`);
+                if (targetBtn) {
+                    targetBtn.classList.add('active');
+                    console.log(`🔘 Activated navigation button for: ${viewName}`);
+                } else {
+                    console.warn(`⚠️ No navigation button found for: ${viewName}`);
+                }
+                
+            } catch (error) {
+                console.error(`❌ Error in showView(${viewName}):`, error);
             }
         };
 
@@ -6214,25 +6234,6 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
             }
         });
 
-        // CRITICAL FIX: Ensure showView is always available
-        if (!window.showView) {
-            window.showView = function(viewName) {
-                console.log(`🔧 Emergency showView called for: ${viewName}`);
-                document.querySelectorAll('.dashboard, .workspace').forEach(view => {
-                    view.style.display = 'none';
-                });
-                const target = document.getElementById(viewName === 'dashboard' ? 'dashboard' : viewName + '-workspace');
-                if (target) target.style.display = 'block';
-            };
-        }
-        
-        // Make sure it's also available as a regular function
-        if (typeof showView === 'undefined') {
-            function showView(viewName) {
-                return window.showView(viewName);
-            }
-        }
-        
         console.log('🚀 Final verification: showView available =', typeof window.showView);
     </script>
     
