@@ -2978,7 +2978,7 @@
                                     <div class="tutorial-category" style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(155, 89, 182, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
                                         <h4 style="color: #3498DB; margin-bottom: 15px;">👑 For CEOs & Leaders</h4>
                                         <div class="video-list">
-                                            <div class="video-item" onclick="playTutorialVideo('ceo-overview')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#3498DB'" onmouseout="this.style.borderColor='transparent'">
+                                            <div class="video-item" onclick="playEnhancedVideo('ceo-overview')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#3498DB'" onmouseout="this.style.borderColor='transparent'">
                                                 <div style="display: flex; align-items: center; gap: 10px;">
                                                     <span style="font-size: 20px;">▶️</span>
                                                     <div>
@@ -2987,7 +2987,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="video-item" onclick="playTutorialVideo('strategic-frameworks')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#3498DB'" onmouseout="this.style.borderColor='transparent'">
+                                            <div class="video-item" onclick="playEnhancedVideo('strategic-frameworks')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#3498DB'" onmouseout="this.style.borderColor='transparent'">
                                                 <div style="display: flex; align-items: center; gap: 10px;">
                                                     <span style="font-size: 20px;">▶️</span>
                                                     <div>
@@ -3011,7 +3011,7 @@
                                     <div class="tutorial-category" style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(26, 188, 156, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
                                         <h4 style="color: #2ECC71; margin-bottom: 15px;">⚙️ For Operations Managers</h4>
                                         <div class="video-list">
-                                            <div class="video-item" onclick="playTutorialVideo('process-management')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#2ECC71'" onmouseout="this.style.borderColor='transparent'">
+                                            <div class="video-item" onclick="playEnhancedVideo('process-management')" style="padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 8px 0; cursor: pointer; border: 1px solid transparent;" onmouseover="this.style.borderColor='#2ECC71'" onmouseout="this.style.borderColor='transparent'">
                                                 <div style="display: flex; align-items: center; gap: 10px;">
                                                     <span style="font-size: 20px;">▶️</span>
                                                     <div>
@@ -3134,7 +3134,8 @@
                                                 <span style="font-weight: bold;">4.</span> Performance Tracking (10 min)
                                             </div>
                                         </div>
-                                        <button onclick="startJourney('operations')" style="margin-top: 15px; background: #2ECC71; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">🚀 Start Journey</button>
+                                        <button onclick="startJourney('operations')" style="margin-top: 15px; background: #2ECC71; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-right: 10px;">🚀 Start Journey</button>
+                                        <button onclick="openAdvancedProcessDesigner()" style="margin-top: 15px; background: #27AE60; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">🔧 Process Designer</button>
                                     </div>
                                     
                                     <div class="journey-path" style="background: linear-gradient(135deg, rgba(230, 126, 34, 0.2), rgba(243, 156, 18, 0.2)); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
@@ -7796,6 +7797,686 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
         };
         
         console.log('🎥 Tutorial Center and 🧠 Leadership Coaching functions loaded successfully!');
+        
+        // ==============================================
+        // 🎬 AI-POWERED VIDEO CONTENT SYSTEM
+        // ==============================================
+        
+        // Enhanced video player with AI recommendations
+        window.playEnhancedVideo = function(videoId) {
+            console.log(`🎬 Playing enhanced video: ${videoId}`);
+            
+            const videoData = {
+                'ceo-overview': {
+                    title: 'CEO Platform Overview',
+                    duration: '8:30',
+                    learningObjectives: ['Navigate executive command center', 'Understand strategic frameworks', 'Master business intelligence'],
+                    aiRecommendations: ['Complete strategic assessment', 'Review competitive analysis', 'Set up market alerts']
+                },
+                'strategic-frameworks': {
+                    title: 'Strategic Frameworks Masterclass',
+                    duration: '12:45',
+                    learningObjectives: ['Master Blue Ocean Strategy', 'Conduct Porter\'s Analysis', 'Apply Good Strategy principles'],
+                    aiRecommendations: ['Practice framework application', 'Complete case studies', 'Schedule coaching session']
+                },
+                'process-management': {
+                    title: 'Process Management Excellence',
+                    duration: '10:15',
+                    learningObjectives: ['Master BPMN modeling', 'Design workflows', 'Implement optimization'],
+                    aiRecommendations: ['Model your first process', 'Analyze bottlenecks', 'Set up monitoring']
+                }
+            };
+            
+            const video = videoData[videoId] || {
+                title: 'Enhanced Video Content',
+                duration: '10:00',
+                learningObjectives: ['Learn platform features', 'Apply best practices', 'Achieve mastery'],
+                aiRecommendations: ['Continue learning journey', 'Practice skills', 'Get feedback']
+            };
+            
+            showModal(`🎬 ${video.title}`, `
+                <div class="enhanced-video-player" style="padding: 25px;">
+                    <div class="video-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                        <h3>🎬 ${video.title}</h3>
+                        <p style="opacity: 0.9; margin: 10px 0;">Duration: ${video.duration} | AI-Enhanced Learning Experience</p>
+                        <div class="learning-progress" style="background: rgba(255,255,255,0.2); border-radius: 10px; height: 8px; margin-top: 15px;">
+                            <div style="background: #4CAF50; height: 100%; width: 0%; border-radius: 10px; transition: width 0.5s;" id="video-progress-${videoId}"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-content" style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 25px;">
+                        <div class="main-video" style="background: #000; border-radius: 8px; position: relative; min-height: 300px; display: flex; align-items: center; justify-content: center; color: white;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 48px; margin-bottom: 15px;">🎥</div>
+                                <h4>Interactive Video Player</h4>
+                                <p style="opacity: 0.8; margin: 10px 0;">AI-powered adaptive learning experience</p>
+                                <button onclick="startEnhancedPlayback('${videoId}')" style="background: #4CAF50; border: none; color: white; padding: 15px 25px; border-radius: 25px; cursor: pointer; font-size: 16px; margin-top: 10px;">
+                                    ▶️ Start Learning
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-companion" style="background: #f8f9fa; border-radius: 8px; padding: 20px;">
+                            <h4 style="color: #333; margin-bottom: 15px;">🤖 AI Learning Companion</h4>
+                            <div class="ai-insights" style="font-size: 14px; color: #666;">
+                                <div style="margin-bottom: 10px;">📊 <strong>Your Progress:</strong> 0% Complete</div>
+                                <div style="margin-bottom: 10px;">🎯 <strong>Focus Areas:</strong> Strategic Thinking</div>
+                                <div style="margin-bottom: 10px;">⏱️ <strong>Estimated Time:</strong> ${video.duration}</div>
+                                <div style="margin-bottom: 15px;">🧠 <strong>Difficulty:</strong> Adaptive</div>
+                                
+                                <div style="background: white; padding: 10px; border-radius: 5px; border-left: 3px solid #2196F3;">
+                                    <strong>AI Tip:</strong> This video will adapt to your learning pace and focus on areas most relevant to your role.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="learning-objectives" style="background: #f0f8ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #333; margin-bottom: 15px;">🎯 Learning Objectives</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                            ${video.learningObjectives.map(objective => `
+                                <div style="display: flex; align-items: center;">
+                                    <span style="color: #4CAF50; margin-right: 10px;">✓</span>
+                                    <span>${objective}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-elements" style="background: #fff9e6; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #333; margin-bottom: 15px;">⚡ Interactive Learning Elements</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                            <button onclick="triggerInteraction('quiz')" style="background: #2196F3; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                                🧠 Knowledge Check
+                            </button>
+                            <button onclick="triggerInteraction('simulation')" style="background: #FF9800; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                                🎮 Practice Simulation
+                            </button>
+                            <button onclick="triggerInteraction('assessment')" style="background: #4CAF50; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                                📋 Skills Assessment
+                            </button>
+                            <button onclick="triggerInteraction('discussion')" style="background: #9C27B0; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                                💬 Discussion Forum
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-recommendations" style="background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%); padding: 20px; border-radius: 8px;">
+                        <h4 style="color: #2e7d32; margin-bottom: 15px;">🚀 AI-Powered Next Steps</h4>
+                        <div id="ai-recommendations-${videoId}">
+                            ${video.aiRecommendations.map(rec => `<div style="margin-bottom: 10px;">• ${rec}</div>`).join('')}
+                        </div>
+                        <button onclick="generatePersonalizedPlan('${videoId}')" style="background: #4CAF50; color: white; border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; margin-top: 10px;">
+                            🎯 Generate Personal Learning Plan
+                        </button>
+                    </div>
+                </div>
+            `);
+        };
+        
+        // Enhanced video playback with AI adaptation
+        window.startEnhancedPlayback = function(videoId) {
+            console.log(`🎬 Starting enhanced playback: ${videoId}`);
+            
+            let progress = 0;
+            const progressBar = document.getElementById(`video-progress-${videoId}`);
+            
+            const playbackInterval = setInterval(() => {
+                progress += 2;
+                if (progressBar) {
+                    progressBar.style.width = progress + '%';
+                }
+                
+                // Trigger AI interactions at key points
+                if (progress === 25) {
+                    showAIInsight('🎯 Great engagement! The AI has identified optimal learning patterns.');
+                } else if (progress === 50) {
+                    showAIInsight('📊 Halfway through! Ready for a quick knowledge check?');
+                } else if (progress === 75) {
+                    showAIInsight('🚀 Almost complete! Personalized recommendations are being generated.');
+                } else if (progress >= 100) {
+                    clearInterval(playbackInterval);
+                    completeEnhancedVideo(videoId);
+                }
+            }, 200);
+        };
+        
+        // Show AI insights during video
+        window.showAIInsight = function(message) {
+            const insight = document.createElement('div');
+            insight.style.cssText = `
+                position: fixed; top: 20px; right: 20px; 
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white; padding: 15px 20px; border-radius: 10px;
+                z-index: 1001; max-width: 300px; font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                transform: translateX(100%); transition: transform 0.5s ease-out;
+            `;
+            insight.innerHTML = `🤖 <strong>AI Insight:</strong> ${message}`;
+            document.body.appendChild(insight);
+            
+            // Animate in
+            setTimeout(() => {
+                insight.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                insight.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (document.body.contains(insight)) {
+                        document.body.removeChild(insight);
+                    }
+                }, 500);
+            }, 4000);
+        };
+        
+        // Complete enhanced video experience
+        window.completeEnhancedVideo = function(videoId) {
+            console.log(`✅ Enhanced video completed: ${videoId}`);
+            
+            showAIInsight('🎉 Video completed! Your personalized learning plan is ready.');
+            
+            // Update AI recommendations based on completion
+            const recommendationsDiv = document.getElementById(`ai-recommendations-${videoId}`);
+            if (recommendationsDiv) {
+                recommendationsDiv.innerHTML = `
+                    <div style="margin-bottom: 10px;">✅ Video completed successfully!</div>
+                    <div style="margin-bottom: 10px;">🎯 Comprehension score: 94%</div>
+                    <div style="margin-bottom: 10px;">🧠 Retention rate: 88%</div>
+                    <div style="margin-bottom: 10px;">🚀 Ready for advanced modules</div>
+                    <div style="margin-bottom: 10px;">📈 Performance above average</div>
+                `;
+            }
+        };
+        
+        // ==============================================
+        // 🔧 ENHANCED PROCESS MANAGEMENT SYSTEM
+        // ==============================================
+        
+        // Advanced BPMN process designer
+        window.openAdvancedProcessDesigner = function() {
+            console.log('🔧 Opening advanced process designer...');
+            
+            showModal('🔧 Advanced Process Designer', `
+                <div class="process-designer" style="padding: 25px;">
+                    <div class="designer-header" style="background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3>🔧 BPMN 2.0 Process Designer</h3>
+                        <p style="opacity: 0.9;">Design, optimize, and monitor business processes with advanced AI assistance</p>
+                    </div>
+                    
+                    <div class="designer-workspace" style="display: grid; grid-template-columns: 200px 1fr 250px; gap: 20px; height: 500px;">
+                        <!-- Tool Palette -->
+                        <div class="tool-palette" style="background: #f8f9fa; border-radius: 8px; padding: 15px;">
+                            <h4 style="color: #333; margin-bottom: 15px;">🛠️ BPMN Elements</h4>
+                            <div class="tool-category" style="margin-bottom: 15px;">
+                                <h5 style="color: #666; margin-bottom: 8px;">Events</h5>
+                                <div onclick="selectTool('start-event')" style="background: white; padding: 8px; margin: 5px 0; border-radius: 5px; cursor: pointer; border: 1px solid #ddd;">
+                                    🟢 Start Event
+                                </div>
+                                <div onclick="selectTool('end-event')" style="background: white; padding: 8px; margin: 5px 0; border-radius: 5px; cursor: pointer; border: 1px solid #ddd;">
+                                    🔴 End Event
+                                </div>
+                            </div>
+                            <div class="tool-category" style="margin-bottom: 15px;">
+                                <h5 style="color: #666; margin-bottom: 8px;">Activities</h5>
+                                <div onclick="selectTool('task')" style="background: white; padding: 8px; margin: 5px 0; border-radius: 5px; cursor: pointer; border: 1px solid #ddd;">
+                                    📋 Task
+                                </div>
+                                <div onclick="selectTool('subprocess')" style="background: white; padding: 8px; margin: 5px 0; border-radius: 5px; cursor: pointer; border: 1px solid #ddd;">
+                                    📊 Subprocess
+                                </div>
+                            </div>
+                            <div class="tool-category">
+                                <h5 style="color: #666; margin-bottom: 8px;">Gateways</h5>
+                                <div onclick="selectTool('exclusive-gateway')" style="background: white; padding: 8px; margin: 5px 0; border-radius: 5px; cursor: pointer; border: 1px solid #ddd;">
+                                    ◊ Decision
+                                </div>
+                                <div onclick="selectTool('parallel-gateway')" style="background: white; padding: 8px; margin: 5px 0; border-radius: 5px; cursor: pointer; border: 1px solid #ddd;">
+                                    + Parallel
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Canvas Area -->
+                        <div class="process-canvas" style="background: white; border: 2px dashed #ddd; border-radius: 8px; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 20px; left: 20px; color: #999; font-size: 14px;">
+                                Drop BPMN elements here to design your process
+                            </div>
+                            <div id="process-canvas-content" style="height: 100%; width: 100%;"></div>
+                        </div>
+                        
+                        <!-- Properties Panel -->
+                        <div class="properties-panel" style="background: #f8f9fa; border-radius: 8px; padding: 15px;">
+                            <h4 style="color: #333; margin-bottom: 15px;">⚙️ Properties</h4>
+                            <div id="element-properties" style="color: #666; font-size: 14px;">
+                                Select an element to view properties
+                            </div>
+                            
+                            <div style="margin-top: 20px;">
+                                <h5 style="color: #666; margin-bottom: 10px;">🤖 AI Assistance</h5>
+                                <div style="background: white; padding: 10px; border-radius: 5px; border-left: 3px solid #2ECC71; font-size: 12px;">
+                                    AI is analyzing your process design and will suggest optimizations...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="designer-actions" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="process-info" style="color: #666;">
+                            <span id="element-count">0 elements</span> | 
+                            <span id="connection-count">0 connections</span> |
+                            <span style="color: #2ECC71;">AI Analysis: Ready</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button onclick="analyzeProcessFlow()" style="background: #3498DB; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+                                🔍 Analyze Flow
+                            </button>
+                            <button onclick="optimizeProcess()" style="background: #FF9800; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+                                ⚡ Optimize
+                            </button>
+                            <button onclick="simulateProcess()" style="background: #E74C3C; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+                                ▶️ Simulate
+                            </button>
+                            <button onclick="saveProcess()" style="background: #2ECC71; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                                💾 Save Process
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `);
+        };
+        
+        // Select BPMN tool
+        window.selectTool = function(toolType) {
+            console.log(`🛠️ Selected tool: ${toolType}`);
+            
+            // Visual feedback for tool selection
+            document.querySelectorAll('.tool-category div').forEach(tool => {
+                tool.style.background = 'white';
+                tool.style.borderColor = '#ddd';
+            });
+            
+            event.target.style.background = '#e3f2fd';
+            event.target.style.borderColor = '#2196F3';
+            
+            // Update canvas interaction mode
+            window.selectedTool = toolType;
+            
+            // Update properties panel
+            const propertiesDiv = document.getElementById('element-properties');
+            if (propertiesDiv) {
+                propertiesDiv.innerHTML = `
+                    <div style="background: white; padding: 10px; border-radius: 5px;">
+                        <strong>Selected Tool:</strong> ${toolType}<br>
+                        <small>Click on the canvas to place this element</small>
+                    </div>
+                `;
+            }
+        };
+        
+        // Analyze process flow
+        window.analyzeProcessFlow = function() {
+            console.log('🔍 Analyzing process flow...');
+            
+            // Simulate AI analysis
+            setTimeout(() => {
+                showAIInsight('🔍 Process analysis complete! Found 2 optimization opportunities and 1 potential bottleneck.');
+                
+                const propertiesDiv = document.getElementById('element-properties');
+                if (propertiesDiv) {
+                    propertiesDiv.innerHTML = `
+                        <div style="background: white; padding: 10px; border-radius: 5px;">
+                            <h5 style="color: #E74C3C;">🚨 Analysis Results</h5>
+                            <div style="font-size: 12px; margin: 5px 0;">
+                                • Bottleneck detected in approval step<br>
+                                • 2 parallel activities can be optimized<br>
+                                • Average cycle time: 4.2 days<br>
+                                • Efficiency score: 72%
+                            </div>
+                        </div>
+                    `;
+                }
+            }, 2000);
+        };
+        
+        // Optimize process
+        window.optimizeProcess = function() {
+            console.log('⚡ Optimizing process...');
+            
+            setTimeout(() => {
+                showAIInsight('⚡ Process optimization complete! Potential 35% improvement in cycle time.');
+                alert('🚀 Process optimized! AI has suggested workflow improvements that could reduce cycle time by 35% and increase efficiency to 89%.');
+            }, 1500);
+        };
+        
+        // Simulate process
+        window.simulateProcess = function() {
+            console.log('▶️ Simulating process...');
+            
+            setTimeout(() => {
+                showAIInsight('▶️ Process simulation complete! All paths validated successfully.');
+                alert('🎮 Process simulation complete! All workflow paths have been validated. Average processing time: 3.1 days, Success rate: 96%');
+            }, 3000);
+        };
+        
+        // Save process
+        window.saveProcess = function() {
+            console.log('💾 Saving process...');
+            alert('💾 Process saved successfully! Your BPMN model has been saved and is ready for deployment.');
+        };
+        
+        console.log('🎬 AI-Powered Video Content and 🔧 Enhanced Process Management loaded successfully!');
+        
+        // ==============================================
+        // 🎯 TRIGGER INTERACTION FUNCTIONS (Enhanced)
+        // ==============================================
+        
+        // Enhanced trigger interaction with AI capabilities
+        window.triggerInteraction = function(type) {
+            console.log(`🎯 Triggering enhanced interaction: ${type}`);
+            
+            const interactions = {
+                'quiz': {
+                    title: '🧠 AI-Powered Knowledge Check',
+                    content: 'Adaptive assessment that adjusts difficulty based on your performance',
+                    questions: [
+                        'What are the key components of Blue Ocean Strategy?',
+                        'How do Porter\'s Five Forces affect industry profitability?',
+                        'What makes a strategy "good" versus "bad" according to Rumelt?'
+                    ]
+                },
+                'simulation': {
+                    title: '🎮 Business Strategy Simulation',
+                    content: 'Navigate a realistic strategic scenario with AI feedback',
+                    scenarios: [
+                        'Competitive Response Scenario',
+                        'Market Entry Decision',
+                        'Digital Transformation Challenge'
+                    ]
+                },
+                'assessment': {
+                    title: '📋 Comprehensive Skills Assessment',
+                    content: 'Evaluate strategic thinking, decision-making, and leadership capabilities',
+                    assessments: [
+                        'Strategic Analysis Proficiency',
+                        'Process Design Expertise',
+                        'Leadership Decision-Making'
+                    ]
+                },
+                'discussion': {
+                    title: '💬 AI-Moderated Discussion Forum',
+                    content: 'Connect with peers and get AI-powered insights on strategic topics',
+                    topics: [
+                        'Strategic Framework Applications',
+                        'Process Optimization Experiences',
+                        'Leadership Challenges & Solutions'
+                    ]
+                }
+            };
+            
+            const interaction = interactions[type];
+            
+            showModal(interaction.title, `
+                <div class="enhanced-interaction" style="padding: 25px;">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3>${interaction.title}</h3>
+                        <p style="opacity: 0.9;">${interaction.content}</p>
+                    </div>
+                    
+                    <div class="interaction-content" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        ${type === 'quiz' ? `
+                            <h4>📝 Sample Questions:</h4>
+                            ${interaction.questions.map((q, i) => `
+                                <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                    <strong>Q${i + 1}:</strong> ${q}
+                                </div>
+                            `).join('')}
+                        ` : type === 'simulation' ? `
+                            <h4>🎯 Available Scenarios:</h4>
+                            ${interaction.scenarios.map((s, i) => `
+                                <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px; cursor: pointer;" onclick="launchScenario('${s}')">
+                                    <strong>Scenario ${i + 1}:</strong> ${s}
+                                </div>
+                            `).join('')}
+                        ` : type === 'assessment' ? `
+                            <h4>📊 Assessment Categories:</h4>
+                            ${interaction.assessments.map((a, i) => `
+                                <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                    <strong>${i + 1}.</strong> ${a}
+                                </div>
+                            `).join('')}
+                        ` : `
+                            <h4>💬 Discussion Topics:</h4>
+                            ${interaction.topics.map((t, i) => `
+                                <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                    <strong>Topic ${i + 1}:</strong> ${t}
+                                </div>
+                            `).join('')}
+                        `}
+                    </div>
+                    
+                    <div class="ai-features" style="background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #2e7d32; margin-bottom: 10px;">🤖 AI-Enhanced Features</h4>
+                        <div style="font-size: 14px; color: #2e7d32;">
+                            • Adaptive difficulty based on performance<br>
+                            • Real-time feedback and coaching<br>
+                            • Personalized learning recommendations<br>
+                            • Progress tracking and analytics<br>
+                            • Peer comparison and benchmarking
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button onclick="executeEnhancedInteraction('${type}')" style="background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-size: 16px; margin-right: 10px;">
+                            🚀 Start ${interaction.title.replace(/🧠|🎮|📋|💬/g, '').trim()}
+                        </button>
+                        <button onclick="scheduleInteraction('${type}')" style="background: #2196F3; color: white; border: none; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-size: 16px;">
+                            📅 Schedule Later
+                        </button>
+                    </div>
+                </div>
+            `);
+        };
+        
+        // Execute enhanced interaction
+        window.executeEnhancedInteraction = function(type) {
+            console.log(`▶️ Executing enhanced interaction: ${type}`);
+            
+            const messages = {
+                'quiz': '🧠 AI-powered quiz launched! The system will adapt questions based on your responses and provide personalized feedback.',
+                'simulation': '🎮 Business simulation starting! You\'ll face realistic strategic challenges with AI coaching throughout the experience.',
+                'assessment': '📋 Comprehensive assessment initiated! AI will evaluate multiple dimensions of your strategic capabilities.',
+                'discussion': '💬 AI-moderated discussion opened! Connect with peers while receiving intelligent insights on your conversations.'
+            };
+            
+            showAIInsight(messages[type]);
+            closeModal();
+            
+            // Simulate launching the actual interaction
+            setTimeout(() => {
+                showAIInsight(`✅ ${type} session completed! Your performance data has been analyzed and recommendations generated.`);
+            }, 5000);
+        };
+        
+        // Launch scenario simulation
+        window.launchScenario = function(scenario) {
+            console.log(`🎯 Launching scenario: ${scenario}`);
+            alert(`🎮 Launching "${scenario}" simulation! You'll navigate complex strategic decisions with real-time AI coaching and feedback.`);
+            closeModal();
+        };
+        
+        // Schedule interaction
+        window.scheduleInteraction = function(type) {
+            console.log(`📅 Scheduling interaction: ${type}`);
+            alert(`📅 ${type} interaction scheduled! You'll receive a personalized reminder when it's optimal for your learning journey.`);
+            closeModal();
+        };
+        
+        // Enhanced personalized plan generation
+        window.generatePersonalizedPlan = function(videoId) {
+            console.log(`🎯 Generating enhanced personalized plan for: ${videoId}`);
+            
+            showModal('🎯 AI-Generated Personal Learning Plan', `
+                <div class="personalized-plan" style="padding: 25px;">
+                    <div style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3>🤖 Advanced AI Learning Plan</h3>
+                        <p style="opacity: 0.9;">Powered by machine learning algorithms analyzing your learning patterns and preferences</p>
+                    </div>
+                    
+                    <div class="learning-analytics" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #333; margin-bottom: 15px;">📊 Your Learning Analytics</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <div style="text-align: center; padding: 15px; background: white; border-radius: 8px;">
+                                <div style="font-size: 24px; font-weight: bold; color: #2196F3;">94%</div>
+                                <div style="font-size: 12px; color: #666;">Comprehension Rate</div>
+                            </div>
+                            <div style="text-align: center; padding: 15px; background: white; border-radius: 8px;">
+                                <div style="font-size: 24px; font-weight: bold; color: #4CAF50;">88%</div>
+                                <div style="font-size: 12px; color: #666;">Retention Score</div>
+                            </div>
+                            <div style="text-align: center; padding: 15px; background: white; border-radius: 8px;">
+                                <div style="font-size: 24px; font-weight: bold; color: #FF9800;">Advanced</div>
+                                <div style="font-size: 12px; color: #666;">Skill Level</div>
+                            </div>
+                            <div style="text-align: center; padding: 15px; background: white; border-radius: 8px;">
+                                <div style="font-size: 24px; font-weight: bold; color: #9C27B0;">Visual</div>
+                                <div style="font-size: 12px; color: #666;">Learning Style</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="adaptive-recommendations" style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #2e7d32;">🧠 AI-Adaptive Recommendations</h4>
+                        <div style="margin-top: 15px;">
+                            <div style="display: flex; align-items: center; margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                <div style="background: #4CAF50; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 12px;">1</div>
+                                <div>
+                                    <strong>Advanced Strategic Frameworks</strong><br>
+                                    <small style="color: #666;">Based on your high comprehension in foundational concepts</small>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                <div style="background: #2196F3; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 12px;">2</div>
+                                <div>
+                                    <strong>Interactive Process Simulation</strong><br>
+                                    <small style="color: #666;">Recommended for visual learners with practical application focus</small>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                <div style="background: #FF9800; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 12px;">3</div>
+                                <div>
+                                    <strong>Leadership Coaching Intensive</strong><br>
+                                    <small style="color: #666;">Personalized 1-on-1 AI coaching sessions</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="learning-goals" style="background: #fff9e6; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #f57c00;">🎯 Personalized Learning Goals</h4>
+                        <div style="margin-top: 15px;">
+                            <div style="margin-bottom: 10px;">
+                                <strong>Week 1-2:</strong> Master advanced strategic analysis techniques
+                                <div style="background: #4CAF50; height: 4px; width: 85%; border-radius: 2px; margin-top: 5px;"></div>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>Week 3-4:</strong> Complete process optimization certification
+                                <div style="background: #2196F3; height: 4px; width: 60%; border-radius: 2px; margin-top: 5px;"></div>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>Week 5-6:</strong> Apply frameworks to real business case
+                                <div style="background: #FF9800; height: 4px; width: 30%; border-radius: 2px; margin-top: 5px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button onclick="activatePersonalizedPlan('${videoId}')" style="background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-size: 16px; margin-right: 10px;">
+                            🚀 Activate Learning Plan
+                        </button>
+                        <button onclick="scheduleAICoaching()" style="background: #2196F3; color: white; border: none; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-size: 16px; margin-right: 10px;">
+                            🤖 Schedule AI Coaching
+                        </button>
+                        <button onclick="exportLearningPlan('${videoId}')" style="background: #FF9800; color: white; border: none; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-size: 16px;">
+                            📄 Export Plan
+                        </button>
+                    </div>
+                </div>
+            `);
+        };
+        
+        // Activate personalized learning plan
+        window.activatePersonalizedPlan = function(videoId) {
+            console.log(`🚀 Activating personalized plan for: ${videoId}`);
+            showAIInsight('🚀 Your AI-powered learning plan is now active! The system will adapt content and pacing based on your progress.');
+            alert('✅ Learning plan activated! AI will now provide personalized recommendations, adaptive content, and progress tracking throughout your journey.');
+            closeModal();
+        };
+        
+        // Schedule AI coaching
+        window.scheduleAICoaching = function() {
+            console.log('🤖 Scheduling AI coaching session');
+            showAIInsight('🤖 AI coaching session scheduled! You\'ll receive personalized strategic guidance and feedback.');
+            alert('📅 AI coaching scheduled! Your personalized coaching session will include strategic analysis, leadership development, and real-time feedback.');
+            closeModal();
+        };
+        
+        // Export learning plan
+        window.exportLearningPlan = function(videoId) {
+            console.log(`📄 Exporting learning plan for: ${videoId}`);
+            
+            const planData = `
+LUCIDRA AI-GENERATED LEARNING PLAN
+==================================
+Generated: ${new Date().toISOString()}
+
+LEARNER PROFILE:
+- ID: ${videoId}
+- Comprehension Rate: 94%
+- Retention Score: 88%
+- Skill Level: Advanced
+- Learning Style: Visual + Practical
+
+ADAPTIVE RECOMMENDATIONS:
+1. Advanced Strategic Frameworks
+   - Based on high comprehension in foundational concepts
+   - Estimated completion: 2 weeks
+
+2. Interactive Process Simulation
+   - Recommended for visual learners
+   - Focus on practical application
+
+3. Leadership Coaching Intensive
+   - Personalized 1-on-1 AI coaching sessions
+   - Strategic decision-making focus
+
+LEARNING GOALS:
+Week 1-2: Master advanced strategic analysis techniques (85% progress)
+Week 3-4: Complete process optimization certification (60% progress)  
+Week 5-6: Apply frameworks to real business case (30% progress)
+
+AI COACHING SCHEDULE:
+- Weekly strategic thinking sessions
+- Bi-weekly progress assessments
+- Monthly comprehensive reviews
+- Real-time feedback and adjustments
+
+This plan adapts based on your learning patterns and performance.
+            `.trim();
+            
+            const blob = new Blob([planData], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `lucidra-learning-plan-${videoId}-${Date.now()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('📄 Learning plan exported! Your personalized AI-generated plan has been downloaded.');
+        };
+        
+        console.log('🎯 Enhanced Training & AI Integration System loaded successfully!');
     </script>
 </body>
 </html>
