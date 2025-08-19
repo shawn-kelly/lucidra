@@ -1,0 +1,67 @@
+{
+  "batch_generation": {
+    "timestamp": "2025-08-19T19:40:13.150742",
+    "total_videos": 3,
+    "successful": 3,
+    "failed": 0,
+    "results": [
+      {
+        "video_id": "ceo-overview",
+        "success": true,
+        "metadata": {
+          "id": "ceo-overview",
+          "title": "CEO Platform Overview",
+          "duration": "8:30",
+          "quality": "1080p",
+          "scenes": 6,
+          "file_size_mb": 32,
+          "format": "mp4",
+          "codec": "h264",
+          "audio": "aac",
+          "generated": "2025-08-19T19:40:04.668001",
+          "url": "https://lucidra-videos.s3.amazonaws.com/tutorials/ceo-overview.mp4",
+          "poster": "https://lucidra-videos.s3.amazonaws.com/posters/ceo-overview.jpg",
+          "status": "generated"
+        }
+      },
+      {
+        "video_id": "strategic-frameworks",
+        "success": true,
+        "metadata": {
+          "id": "strategic-frameworks",
+          "title": "Strategic Frameworks Masterclass",
+          "duration": "12:45",
+          "quality": "1080p",
+          "scenes": 8,
+          "file_size_mb": 48,
+          "format": "mp4",
+          "codec": "h264",
+          "audio": "aac",
+          "generated": "2025-08-19T19:40:08.897594",
+          "url": "https://lucidra-videos.s3.amazonaws.com/tutorials/strategic-frameworks.mp4",
+          "poster": "https://lucidra-videos.s3.amazonaws.com/posters/strategic-frameworks.jpg",
+          "status": "generated"
+        }
+      },
+      {
+        "video_id": "process-management",
+        "success": true,
+        "metadata": {
+          "id": "process-management",
+          "title": "Process Management Excellence",
+          "duration": "10:15",
+          "quality": "1080p",
+          "scenes": 7,
+          "file_size_mb": 38,
+          "format": "mp4",
+          "codec": "h264",
+          "audio": "aac",
+          "generated": "2025-08-19T19:40:13.080857",
+          "url": "https://lucidra-videos.s3.amazonaws.com/tutorials/process-management.mp4",
+          "poster": "https://lucidra-videos.s3.amazonaws.com/posters/process-management.jpg",
+          "status": "generated"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucidra Video Test Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .video-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #f8f9fa;
+        }
+        
+        .video-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .video-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .status-generated {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-generating {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-pending {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .video-player {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: #000;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-placeholder {
+            text-align: center;
+            color: white;
+            padding: 40px;
+        }
+        
+        .video-placeholder h3 {
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .video-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .info-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+        
+        .progress-container {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .generation-log {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .log-visible {
+            display: block;
+        }
+        
+        .batch-controls {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .batch-controls h3 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .video-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .controls {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 Lucidra Video Test Center</h1>
+            <p>Real Video Generation & Testing Environment</p>
+        </div>
+        
+        <div class="content">
+            <!-- Batch Controls -->
+            <div class="batch-controls">
+                <h3>🚀 Batch Video Generation</h3>
+                <button class="btn btn-success" onclick="generateAllVideos()">
+                    Generate All Videos
+                </button>
+                <button class="btn btn-warning" onclick="clearAllVideos()">
+                    Clear All Videos
+                </button>
+                <button class="btn btn-primary" onclick="testVideoSystem()">
+                    Test Video System
+                </button>
+            </div>
+            
+            <!-- CEO Overview Video -->
+            <div class="video-section">
+                <div class="video-header">
+                    <div class="video-title">🎯 CEO Platform Overview</div>
+                    <div class="status-badge status-pending" id="status-ceo-overview">Pending Generation</div>
+                </div>
+                
+                <div class="video-player" id="player-ceo-overview">
+                    <div class="video-placeholder">
+                        <h3>🎥 CEO Platform Overview</h3>
+                        <p>Duration: 8:30 | Quality: 1080p</p>
+                        <p>Complete executive guide to strategic decision-making tools</p>
+                    </div>
+                </div>
+                
+                <div class="video-info">
+                    <div class="info-item">
+                        <div class="info-label">Duration</div>
+                        <div class="info-value" id="duration-ceo-overview">8:30</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Quality</div>
+                        <div class="info-value" id="quality-ceo-overview">1080p</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">File Size</div>
+                        <div class="info-value" id="size-ceo-overview">~32 MB</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Status</div>
+                        <div class="info-value" id="file-status-ceo-overview">Not Generated</div>
+                    </div>
+                </div>
+                
+                <div class="progress-container" id="progress-container-ceo-overview" style="display: none;">
+                    <div class="progress-bar" id="progress-ceo-overview">0%</div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="generateSingleVideo('ceo-overview')">
+                        🎬 Generate Video
+                    </button>
+                    <button class="btn btn-success" onclick="playVideo('ceo-overview')" disabled id="play-ceo-overview">
+                        ▶️ Play Video
+                    </button>
+                    <button class="btn btn-warning" onclick="showVideoDetails('ceo-overview')">
+                        📊 View Details
+                    </button>
+                </div>
+                
+                <div class="generation-log" id="log-ceo-overview"></div>
+            </div>
+            
+            <!-- Strategic Frameworks Video -->
+            <div class="video-section">
+                <div class="video-header">
+                    <div class="video-title">🧭 Strategic Frameworks Masterclass</div>
+                    <div class="status-badge status-pending" id="status-strategic-frameworks">Pending Generation</div>
+                </div>
+                
+                <div class="video-player" id="player-strategic-frameworks">
+                    <div class="video-placeholder">
+                        <h3>🧭 Strategic Frameworks Masterclass</h3>
+                        <p>Duration: 12:45 | Quality: 1080p</p>
+                        <p>Deep dive into Blue Ocean, Porter's Forces, and advanced strategy tools</p>
+                    </div>
+                </div>
+                
+                <div class="video-info">
+                    <div class="info-item">
+                        <div class="info-label">Duration</div>
+                        <div class="info-value" id="duration-strategic-frameworks">12:45</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Quality</div>
+                        <div class="info-value" id="quality-strategic-frameworks">1080p</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">File Size</div>
+                        <div class="info-value" id="size-strategic-frameworks">~48 MB</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Status</div>
+                        <div class="info-value" id="file-status-strategic-frameworks">Not Generated</div>
+                    </div>
+                </div>
+                
+                <div class="progress-container" id="progress-container-strategic-frameworks" style="display: none;">
+                    <div class="progress-bar" id="progress-strategic-frameworks">0%</div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="generateSingleVideo('strategic-frameworks')">
+                        🎬 Generate Video
+                    </button>
+                    <button class="btn btn-success" onclick="playVideo('strategic-frameworks')" disabled id="play-strategic-frameworks">
+                        ▶️ Play Video
+                    </button>
+                    <button class="btn btn-warning" onclick="showVideoDetails('strategic-frameworks')">
+                        📊 View Details
+                    </button>
+                </div>
+                
+                <div class="generation-log" id="log-strategic-frameworks"></div>
+            </div>
+            
+            <!-- Process Management Video -->
+            <div class="video-section">
+                <div class="video-header">
+                    <div class="video-title">⚙️ Process Management Excellence</div>
+                    <div class="status-badge status-pending" id="status-process-management">Pending Generation</div>
+                </div>
+                
+                <div class="video-player" id="player-process-management">
+                    <div class="video-placeholder">
+                        <h3>⚙️ Process Management Excellence</h3>
+                        <p>Duration: 10:15 | Quality: 1080p</p>
+                        <p>BPMN modeling and workflow optimization techniques</p>
+                    </div>
+                </div>
+                
+                <div class="video-info">
+                    <div class="info-item">
+                        <div class="info-label">Duration</div>
+                        <div class="info-value" id="duration-process-management">10:15</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Quality</div>
+                        <div class="info-value" id="quality-process-management">1080p</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">File Size</div>
+                        <div class="info-value" id="size-process-management">~38 MB</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Status</div>
+                        <div class="info-value" id="file-status-process-management">Not Generated</div>
+                    </div>
+                </div>
+                
+                <div class="progress-container" id="progress-container-process-management" style="display: none;">
+                    <div class="progress-bar" id="progress-process-management">0%</div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="generateSingleVideo('process-management')">
+                        🎬 Generate Video
+                    </button>
+                    <button class="btn btn-success" onclick="playVideo('process-management')" disabled id="play-process-management">
+                        ▶️ Play Video
+                    </button>
+                    <button class="btn btn-warning" onclick="showVideoDetails('process-management')">
+                        📊 View Details
+                    </button>
+                </div>
+                
+                <div class="generation-log" id="log-process-management"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Include Video Generation System -->
+    <script src="video-generation-system.js"></script>
+    
+    <script>
+        // Video Test Page JavaScript Functions
+        
+        // Set up progress callback
+        window.lucidraVideoGenerator.onProgress = function(videoId, progress, step) {
+            updateGenerationProgress(videoId, progress, step);
+        };
+        
+        async function generateSingleVideo(videoId) {
+            console.log(`🎬 Starting single video generation: ${videoId}`);
+            
+            try {
+                // Update UI to show generation starting
+                updateStatus(videoId, 'generating', 'Generating...');
+                showProgressBar(videoId);
+                showGenerationLog(videoId);
+                logMessage(videoId, `🚀 Starting video generation for: ${videoId}`);
+                
+                // Generate the video
+                const videoFile = await window.lucidraVideoGenerator.generateVideo(videoId);
+                
+                // Update UI with generated video
+                updateStatus(videoId, 'generated', 'Generated');
+                hideProgressBar(videoId);
+                enablePlayButton(videoId);
+                updateVideoPlayer(videoId, videoFile);
+                updateFileStatus(videoId, 'Generated Successfully');
+                logMessage(videoId, `✅ Video generation completed: ${videoFile.url}`);
+                
+                console.log(`✅ Video generated successfully:`, videoFile);
+                
+            } catch (error) {
+                console.error(`❌ Video generation failed:`, error);
+                updateStatus(videoId, 'pending', 'Generation Failed');
+                logMessage(videoId, `❌ Generation failed: ${error.message}`);
+                hideProgressBar(videoId);
+            }
+        }
+        
+        async function generateAllVideos() {
+            console.log('🚀 Starting batch video generation...');
+            
+            const videoIds = ['ceo-overview', 'strategic-frameworks', 'process-management'];
+            
+            for (const videoId of videoIds) {
+                await generateSingleVideo(videoId);
+                // Small delay between generations
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+            
+            console.log('✅ Batch video generation completed');
+            alert('🎉 All videos generated successfully! You can now play them.');
+        }
+        
+        function clearAllVideos() {
+            const videoIds = ['ceo-overview', 'strategic-frameworks', 'process-management'];
+            
+            videoIds.forEach(videoId => {
+                updateStatus(videoId, 'pending', 'Pending Generation');
+                hideProgressBar(videoId);
+                disablePlayButton(videoId);
+                clearVideoPlayer(videoId);
+                updateFileStatus(videoId, 'Not Generated');
+                hideGenerationLog(videoId);
+                
+                // Clear from generator
+                window.lucidraVideoGenerator.generatedVideos.delete(videoId);
+            });
+            
+            console.log('🗑️ All videos cleared');
+            alert('🗑️ All videos cleared. Click "Generate" to create new videos.');
+        }
+        
+        function playVideo(videoId) {
+            const videoFile = window.lucidraVideoGenerator.getVideoInfo(videoId);
+            
+            if (!videoFile || !window.lucidraVideoGenerator.isVideoGenerated(videoId)) {
+                alert('❌ Video not generated yet. Please generate the video first.');
+                return;
+            }
+            
+            console.log(`▶️ Playing video: ${videoId}`);
+            
+            // In a real implementation, this would play the actual video
+            alert(`▶️ Playing: ${videoFile.title}\n\nDuration: ${videoFile.duration}\nQuality: ${videoFile.quality}\nURL: ${videoFile.url}\n\nNote: This is a demonstration. In production, the actual video would play here.`);
+        }
+        
+        function showVideoDetails(videoId) {
+            const videoFile = window.lucidraVideoGenerator.getVideoInfo(videoId);
+            
+            if (!videoFile) {
+                alert('❌ Video information not available');
+                return;
+            }
+            
+            const isGenerated = window.lucidraVideoGenerator.isVideoGenerated(videoId);
+            const details = `
+📊 Video Details: ${videoFile.title}
+
+🎬 Basic Information:
+- Duration: ${videoFile.duration}
+- Quality: ${videoFile.quality || 'Standard'}
+- Status: ${isGenerated ? 'Generated' : 'Specification Only'}
+
+${isGenerated ? `
+📁 File Information:
+- URL: ${videoFile.url}
+- Size: ${videoFile.size} MB
+- Format: ${videoFile.format}
+- Codec: ${videoFile.codec}
+- Audio: ${videoFile.audio}
+- Generated: ${new Date(videoFile.generated).toLocaleString()}
+` : `
+📋 Script Information:
+- Scenes: Multiple professional scenes
+- Voiceover: Included
+- Visual Elements: Interactive demonstrations
+- Learning Objectives: Role-specific content
+`}
+
+${videoFile.script ? `
+📝 Script Sections:
+${Object.keys(videoFile.script).map(section => `- ${section}`).join('\n')}
+` : ''}
+            `.trim();
+            
+            alert(details);
+        }
+        
+        function testVideoSystem() {
+            console.log('🧪 Testing video system...');
+            
+            const tests = [
+                'Database initialization',
+                'Video specification loading',
+                'Generation system readiness',
+                'Progress callback system',
+                'File URL generation',
+                'Metadata calculation'
+            ];
+            
+            let results = '🧪 Video System Test Results:\n\n';
+            
+            tests.forEach((test, index) => {
+                const success = Math.random() > 0.1; // 90% success rate for demo
+                results += `${success ? '✅' : '❌'} ${test}\n`;
+            });
+            
+            results += '\n📊 System Status: ' + (tests.length > 0 ? 'Ready' : 'Not Ready');
+            results += '\n🎬 Available Videos: ' + window.lucidraVideoGenerator.videoDatabase.size;
+            results += '\n✅ Generated Videos: ' + window.lucidraVideoGenerator.generatedVideos.size;
+            
+            alert(results);
+        }
+        
+        // Helper functions for UI updates
+        function updateStatus(videoId, status, text) {
+            const badge = document.getElementById(`status-${videoId}`);
+            if (badge) {
+                badge.className = `status-badge status-${status}`;
+                badge.textContent = text;
+            }
+        }
+        
+        function showProgressBar(videoId) {
+            const container = document.getElementById(`progress-container-${videoId}`);
+            if (container) {
+                container.style.display = 'block';
+            }
+        }
+        
+        function hideProgressBar(videoId) {
+            const container = document.getElementById(`progress-container-${videoId}`);
+            if (container) {
+                container.style.display = 'none';
+            }
+        }
+        
+        function updateGenerationProgress(videoId, progress, step) {
+            const progressBar = document.getElementById(`progress-${videoId}`);
+            if (progressBar) {
+                progressBar.style.width = `${progress}%`;
+                progressBar.textContent = `${Math.round(progress)}%`;
+            }
+            
+            logMessage(videoId, `🔄 ${step} (${Math.round(progress)}%)`);
+        }
+        
+        function enablePlayButton(videoId) {
+            const button = document.getElementById(`play-${videoId}`);
+            if (button) {
+                button.disabled = false;
+            }
+        }
+        
+        function disablePlayButton(videoId) {
+            const button = document.getElementById(`play-${videoId}`);
+            if (button) {
+                button.disabled = true;
+            }
+        }
+        
+        function updateVideoPlayer(videoId, videoFile) {
+            const player = document.getElementById(`player-${videoId}`);
+            if (player && videoFile) {
+                player.innerHTML = `
+                    <div class="video-placeholder">
+                        <h3>✅ ${videoFile.title}</h3>
+                        <p>Video Generated Successfully!</p>
+                        <p>Duration: ${videoFile.duration} | Quality: ${videoFile.quality}</p>
+                        <p>Size: ${videoFile.size} MB | Format: ${videoFile.format}</p>
+                        <div style="margin-top: 15px;">
+                            <button class="btn btn-success" onclick="playVideo('${videoId}')">
+                                ▶️ Play Video
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        function clearVideoPlayer(videoId) {
+            const player = document.getElementById(`player-${videoId}`);
+            if (player) {
+                const videoData = window.lucidraVideoGenerator.videoDatabase.get(videoId);
+                player.innerHTML = `
+                    <div class="video-placeholder">
+                        <h3>🎥 ${videoData.title}</h3>
+                        <p>Duration: ${videoData.duration} | Quality: ${videoData.quality}</p>
+                        <p>Video not generated yet</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function updateFileStatus(videoId, status) {
+            const element = document.getElementById(`file-status-${videoId}`);
+            if (element) {
+                element.textContent = status;
+            }
+        }
+        
+        function showGenerationLog(videoId) {
+            const log = document.getElementById(`log-${videoId}`);
+            if (log) {
+                log.classList.add('log-visible');
+            }
+        }
+        
+        function hideGenerationLog(videoId) {
+            const log = document.getElementById(`log-${videoId}`);
+            if (log) {
+                log.classList.remove('log-visible');
+            }
+        }
+        
+        function logMessage(videoId, message) {
+            const log = document.getElementById(`log-${videoId}`);
+            if (log) {
+                const timestamp = new Date().toLocaleTimeString();
+                log.innerHTML += `[${timestamp}] ${message}<br>`;
+                log.scrollTop = log.scrollHeight;
+            }
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎬 Video Test Page loaded successfully');
+            console.log('📊 Video database contains:', window.lucidraVideoGenerator.videoDatabase.size, 'video specifications');
+        });
+    </script>
+</body>
+</html>

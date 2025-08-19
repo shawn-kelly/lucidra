@@ -1,0 +1,15 @@
+{
+  "id": "ceo-overview",
+  "title": "CEO Platform Overview",
+  "duration": "8:30",
+  "quality": "1080p",
+  "scenes": 6,
+  "file_size_mb": 32,
+  "format": "mp4",
+  "codec": "h264",
+  "audio": "aac",
+  "generated": "2025-08-19T19:40:04.668001",
+  "url": "https://lucidra-videos.s3.amazonaws.com/tutorials/ceo-overview.mp4",
+  "poster": "https://lucidra-videos.s3.amazonaws.com/posters/ceo-overview.jpg",
+  "status": "generated"
+}
