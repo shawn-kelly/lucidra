@@ -1,15 +1,21 @@
 {
-  "id": "ceo-overview",
   "title": "CEO Platform Overview",
-  "duration": "8:30",
-  "quality": "1080p",
-  "scenes": 6,
-  "file_size_mb": 32,
-  "format": "mp4",
-  "codec": "h264",
-  "audio": "aac",
-  "generated": "2025-08-19T19:40:04.668001",
-  "url": "https://lucidra-videos.s3.amazonaws.com/tutorials/ceo-overview.mp4",
-  "poster": "https://lucidra-videos.s3.amazonaws.com/posters/ceo-overview.jpg",
-  "status": "generated"
+  "duration": "30 seconds",
+  "file": "ceo-overview.webm",
+  "size": "2.5 MB",
+  "quality": "720p HD",
+  "format": "WebM (VP9)",
+  "description": "Complete executive guide to strategic decision-making tools and platform capabilities",
+  "status": "generated",
+  "generatedAt": "2025-01-20T10:30:00.000Z",
+  "slides": 5,
+  "content": [
+    "CEO Overview - Strategic Leadership Dashboard",
+    "Platform Benefits - What Lucidra Delivers", 
+    "Key Features - Executive Tools",
+    "Implementation - Getting Started",
+    "Results - Strategic Outcomes"
+  ],
+  "videoUrl": "./ceo-overview.webm",
+  "fallbackUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
 }
