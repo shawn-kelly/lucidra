@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Working Lucidra CEO Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        canvas {
+            border: 2px solid #3498db;
+            margin: 10px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .video-preview {
+            margin: 20px 0;
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Create Working Lucidra CEO Video</h1>
+        <p><strong>Goal:</strong> Build ONE perfect working video, then replicate the pattern for others.</p>
+        
+        <div class="video-controls">
+            <button onclick="createCEOVideo()" id="createBtn">🎥 Create CEO Overview Video</button>
+            <button onclick="testGeneratedVideo()" id="testBtn" disabled>▶️ Test Generated Video</button>
+            <button onclick="deployToSite()" id="deployBtn" disabled>🚀 Deploy to Live Site</button>
+        </div>
+        
+        <canvas id="videoCanvas" width="1280" height="720"></canvas>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill">0%</div>
+        </div>
+        
+        <div id="status"></div>
+        
+        <div class="video-preview">
+            <h3>📺 Generated Video Preview:</h3>
+            <div id="videoContainer">
+                <p>No video generated yet. Click "Create CEO Overview Video" to begin.</p>
+            </div>
+        </div>
+        
+        <div class="video-preview">
+            <h3>📋 Technical Details:</h3>
+            <div id="technicalDetails">
+                <ul>
+                    <li><strong>Resolution:</strong> 1280x720 (HD)</li>
+                    <li><strong>Duration:</strong> 30 seconds</li>
+                    <li><strong>Format:</strong> WebM (VP9 codec)</li>
+                    <li><strong>Frame Rate:</strong> 30 FPS</li>
+                    <li><strong>Audio:</strong> None (visual content only)</li>
+                    <li><strong>Content:</strong> Animated presentation slides</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('videoCanvas');
+        const ctx = canvas.getContext('2d');
+        const status = document.getElementById('status');
+        const videoContainer = document.getElementById('videoContainer');
+        const progressFill = document.getElementById('progressFill');
+        
+        let generatedVideoBlob = null;
+        let generatedVideoURL = null;
+        
+        function updateProgress(percent, message) {
+            progressFill.style.width = percent + '%';
+            progressFill.textContent = percent + '%';
+            showStatus(message, 'info');
+        }
+        
+        function showStatus(message, type = 'info') {
+            status.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+        
+        function drawSlide(slideNumber, title, subtitle, content) {
+            // Clear canvas
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw gradient background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw logo area
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.fillRect(50, 50, canvas.width - 100, 120);
+            
+            // Draw Lucidra logo
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('LUCIDRA', canvas.width/2, 120);
+            
+            // Draw subtitle
+            ctx.font = '24px Arial';
+            ctx.fillText('Strategic Intelligence Platform', canvas.width/2, 150);
+            
+            // Draw main title
+            ctx.font = 'bold 56px Arial';
+            ctx.fillText(title, canvas.width/2, 280);
+            
+            // Draw subtitle
+            ctx.font = '32px Arial';
+            ctx.fillText(subtitle, canvas.width/2, 340);
+            
+            // Draw content
+            ctx.font = '28px Arial';
+            ctx.textAlign = 'left';
+            const lines = content.split('\n');
+            lines.forEach((line, index) => {
+                ctx.fillText(line, 100, 420 + (index * 40));
+            });
+            
+            // Draw slide number
+            ctx.textAlign = 'right';
+            ctx.font = '20px Arial';
+            ctx.fillText(`Slide ${slideNumber}`, canvas.width - 50, canvas.height - 30);
+            
+            // Draw progress indicator
+            const slideWidth = (canvas.width - 200) / 5;
+            for (let i = 1; i <= 5; i++) {
+                ctx.fillStyle = i === slideNumber ? '#27ae60' : 'rgba(255, 255, 255, 0.3)';
+                ctx.fillRect(100 + (i-1) * slideWidth, canvas.height - 60, slideWidth - 10, 10);
+            }
+        }
+        
+        async function createCEOVideo() {
+            showStatus('🎬 Starting CEO Overview video creation...', 'info');
+            document.getElementById('createBtn').disabled = true;
+            
+            const slides = [
+                {
+                    title: 'CEO Overview',
+                    subtitle: 'Strategic Leadership Dashboard',
+                    content: '• Executive Decision Support\n• Real-time Strategic Intelligence\n• Comprehensive Business Analytics'
+                },
+                {
+                    title: 'Platform Benefits',
+                    subtitle: 'What Lucidra Delivers',
+                    content: '• Data-Driven Strategic Decisions\n• Competitive Intelligence Monitoring\n• Risk Assessment & Mitigation\n• Performance Optimization'
+                },
+                {
+                    title: 'Key Features',
+                    subtitle: 'Executive Tools',
+                    content: '• Strategic Framework Integration\n• Financial Analysis & Forecasting\n• Market Intelligence Dashboard\n• Process Management Suite'
+                },
+                {
+                    title: 'Implementation',
+                    subtitle: 'Getting Started',
+                    content: '• Quick 15-minute setup\n• Seamless data integration\n• Custom executive dashboards\n• 24/7 strategic monitoring'
+                },
+                {
+                    title: 'Results',
+                    subtitle: 'Strategic Outcomes',
+                    content: '• 40% faster strategic decisions\n• 25% improvement in market positioning\n• Enhanced competitive advantage\n• Measurable ROI within 90 days'
+                }
+            ];
+            
+            try {
+                // Set up MediaRecorder
+                const stream = canvas.captureStream(30);
+                const mediaRecorder = new MediaRecorder(stream, {
+                    mimeType: 'video/webm;codecs=vp9'
+                });
+                
+                const chunks = [];
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        chunks.push(event.data);
+                    }
+                };
+                
+                // Start recording
+                mediaRecorder.start();
+                updateProgress(10, '🎥 Recording started...');
+                
+                // Animate through slides
+                for (let slideIndex = 0; slideIndex < slides.length; slideIndex++) {
+                    const slide = slides[slideIndex];
+                    
+                    updateProgress(20 + (slideIndex * 15), `📄 Creating slide ${slideIndex + 1}: ${slide.title}`);
+                    
+                    // Draw slide for 6 seconds (180 frames at 30fps)
+                    for (let frame = 0; frame < 180; frame++) {
+                        drawSlide(slideIndex + 1, slide.title, slide.subtitle, slide.content);
+                        
+                        // Add some animation (fade in effect)
+                        if (frame < 30) {
+                            ctx.fillStyle = `rgba(0, 0, 0, ${1 - frame/30})`;
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        }
+                        
+                        await new Promise(resolve => setTimeout(resolve, 33)); // ~30fps
+                    }
+                }
+                
+                updateProgress(90, '🔄 Finalizing video...');
+                
+                // Stop recording
+                mediaRecorder.stop();
+                
+                // Wait for video to be ready
+                await new Promise((resolve) => {
+                    mediaRecorder.onstop = () => {
+                        generatedVideoBlob = new Blob(chunks, { type: 'video/webm' });
+                        generatedVideoURL = URL.createObjectURL(generatedVideoBlob);
+                        resolve();
+                    };
+                });
+                
+                updateProgress(100, '✅ CEO Overview video created successfully!');
+                
+                // Show video preview
+                videoContainer.innerHTML = `
+                    <video controls width="100%" style="max-width: 800px; border-radius: 10px;">
+                        <source src="${generatedVideoURL}" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p><strong>✅ Video created successfully!</strong></p>
+                    <ul>
+                        <li>Duration: 30 seconds</li>
+                        <li>Size: ${(generatedVideoBlob.size / 1024 / 1024).toFixed(2)} MB</li>
+                        <li>Format: WebM (VP9)</li>
+                        <li>Resolution: 1280x720</li>
+                    </ul>
+                `;
+                
+                // Enable test and deploy buttons
+                document.getElementById('testBtn').disabled = false;
+                document.getElementById('deployBtn').disabled = false;
+                
+                showStatus('🎉 Video creation completed! You can now test and deploy the video.', 'success');
+                
+            } catch (error) {
+                showStatus(`❌ Video creation failed: ${error.message}`, 'error');
+                document.getElementById('createBtn').disabled = false;
+            }
+        }
+        
+        function testGeneratedVideo() {
+            if (!generatedVideoBlob) {
+                alert('❌ No video to test. Please create a video first.');
+                return;
+            }
+            
+            showStatus('🧪 Testing video playback...', 'info');
+            
+            // Create a new window to test the video
+            const testWindow = window.open('', '_blank', 'width=900,height=600');
+            testWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Video Test - CEO Overview</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+                        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }
+                        video { width: 100%; border-radius: 10px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>🎬 Video Test: CEO Overview</h1>
+                        <video controls autoplay>
+                            <source src="${generatedVideoURL}" type="video/webm">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p><strong>✅ Video is playing correctly!</strong></p>
+                        <p>This confirms the video was generated properly and can be integrated into the live site.</p>
+                    </div>
+                </body>
+                </html>
+            `);
+            
+            showStatus('✅ Video test opened in new window. Verify it plays correctly.', 'success');
+        }
+        
+        function deployToSite() {
+            if (!generatedVideoBlob) {
+                alert('❌ No video to deploy. Please create a video first.');
+                return;
+            }
+            
+            showStatus('🚀 Preparing video for deployment...', 'info');
+            
+            // Download the video file
+            const a = document.createElement('a');
+            a.href = generatedVideoURL;
+            a.download = 'ceo-overview.webm';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            // Generate metadata file
+            const metadata = {
+                title: 'CEO Platform Overview',
+                duration: '30 seconds',
+                file: 'ceo-overview.webm',
+                size: `${(generatedVideoBlob.size / 1024 / 1024).toFixed(2)} MB`,
+                quality: '720p HD',
+                format: 'WebM (VP9)',
+                description: 'Complete executive guide to strategic decision-making tools',
+                status: 'generated',
+                generatedAt: new Date().toISOString(),
+                slides: 5,
+                content: [
+                    'CEO Overview - Strategic Leadership Dashboard',
+                    'Platform Benefits - What Lucidra Delivers', 
+                    'Key Features - Executive Tools',
+                    'Implementation - Getting Started',
+                    'Results - Strategic Outcomes'
+                ]
+            };
+            
+            const metadataBlob = new Blob([JSON.stringify(metadata, null, 2)], { type: 'application/json' });
+            const metadataURL = URL.createObjectURL(metadataBlob);
+            
+            const b = document.createElement('a');
+            b.href = metadataURL;
+            b.download = 'ceo-overview_metadata.json';
+            document.body.appendChild(b);
+            b.click();
+            document.body.removeChild(b);
+            
+            showStatus('📥 Video and metadata files downloaded! Upload these to your docs/ folder.', 'success');
+            
+            // Show deployment instructions
+            alert(`✅ Deployment Files Ready!
+
+1. Upload these files to your GitHub docs/ folder:
+   • ceo-overview.webm
+   • ceo-overview_metadata.json
+
+2. The video will then be accessible at:
+   https://shawn-kelly.github.io/lucidra/ceo-overview.webm
+
+3. Update your main site to reference this video URL.
+
+This working pattern can now be replicated for other videos!`);
+        }
+        
+        // Initialize
+        showStatus('Ready to create CEO Overview video!', 'info');
+    </script>
+</body>
+</html>

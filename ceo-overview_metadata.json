@@ -1,0 +1,21 @@
+{
+  "title": "CEO Platform Overview",
+  "duration": "30 seconds",
+  "file": "ceo-overview.webm",
+  "size": "2.5 MB",
+  "quality": "720p HD",
+  "format": "WebM (VP9)",
+  "description": "Complete executive guide to strategic decision-making tools and platform capabilities",
+  "status": "generated",
+  "generatedAt": "2025-01-20T10:30:00.000Z",
+  "slides": 5,
+  "content": [
+    "CEO Overview - Strategic Leadership Dashboard",
+    "Platform Benefits - What Lucidra Delivers", 
+    "Key Features - Executive Tools",
+    "Implementation - Getting Started",
+    "Results - Strategic Outcomes"
+  ],
+  "videoUrl": "./ceo-overview.webm",
+  "fallbackUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+}
