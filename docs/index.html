@@ -8498,12 +8498,12 @@ This plan adapts based on your learning patterns and performance.
                             title: 'CEO Platform Overview',
                             duration: '8:30',
                             file: 'ceo-overview.mp4',
-                            poster: 'ceo-overview-poster.jpg',
+                            poster: './ceo-overview_metadata.json',
                             size: '32 MB',
                             quality: '1080p',
                             description: 'Complete executive guide to strategic decision-making tools',
                             status: 'generated',
-                            url: '/generated_videos/ceo-overview.mp4',
+                            url: './ceo-overview.mp4',
                             generatedAt: new Date().toISOString()
                         },
                         'strategic-frameworks': {
@@ -8515,7 +8515,7 @@ This plan adapts based on your learning patterns and performance.
                             quality: '1080p',
                             description: 'Deep dive into Blue Ocean, Porter\'s Forces, and advanced strategy tools',
                             status: 'generated',
-                            url: '/generated_videos/strategic-frameworks.mp4',
+                            url: './strategic-frameworks.mp4',
                             generatedAt: new Date().toISOString()
                         },
                         'process-management': {
@@ -8527,7 +8527,7 @@ This plan adapts based on your learning patterns and performance.
                             quality: '1080p',
                             description: 'BPMN modeling and workflow optimization techniques',
                             status: 'generated',
-                            url: '/generated_videos/process-management.mp4',
+                            url: './process-management.mp4',
                             generatedAt: new Date().toISOString()
                         }
                     };
@@ -8584,7 +8584,7 @@ This plan adapts based on your learning patterns and performance.
                         // Mark as generated with real file path
                         video.status = 'generated';
                         video.generatedAt = new Date().toISOString();
-                        video.url = `/generated_videos/${video.file}`;
+                        video.url = `./${video.file}`;
                         video.streamingUrl = `https://lucidra-videos.s3.amazonaws.com/stream/${video.file}`;
                         
                         this.generatedVideos.set(videoId, video);
