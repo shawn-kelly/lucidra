@@ -280,3 +280,59 @@
         color: black !important;
     }
 }
+
+/* Additional critical contrast fixes for remaining issues */
+.main-content {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+}
+
+.workspace-content h1, .workspace-content h2, .workspace-content h3, 
+.workspace-content h4, .workspace-content h5, .workspace-content h6 {
+    color: #2c3e50 !important;
+}
+
+.workspace-content p, .workspace-content div, .workspace-content span {
+    color: #34495e !important;
+}
+
+/* Fix any remaining white text on light backgrounds */
+*[style*="color: white"] {
+    color: #2c3e50 !important;
+}
+
+*[style*="color: rgba(255, 255, 255"] {
+    color: #2c3e50 !important;
+}
+
+/* Ensure all text elements have proper contrast */
+h1, h2, h3, h4, h5, h6, p, div, span, li, td, th, label {
+    color: #2c3e50 !important;
+}
+
+/* Override any problematic inline styles */
+[style*="background: rgba(255, 255, 255, 0.1)"] {
+    background: rgba(44, 62, 80, 0.9) !important;
+    color: white !important;
+}
+
+/* Specific section background fixes */
+section {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+}
+
+.dashboard {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+}
+
+.dashboard-title, .dashboard-subtitle {
+    color: #2c3e50 !important;
+    text-shadow: none !important;
+}
+
+/* Force readable text everywhere */
+body * {
+    color: #2c3e50 !important;
+}
