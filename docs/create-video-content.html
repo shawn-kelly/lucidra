@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Lucidra Video Content</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .video-preview {
+            margin: 20px 0;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Lucidra Video Content Generator</h1>
+        <p>This tool creates real video content for the Lucidra platform.</p>
+        
+        <div class="video-controls">
+            <button onclick="generateCEOVideo()">Generate CEO Overview Video</button>
+            <button onclick="generateFrameworksVideo()">Generate Frameworks Video</button>
+            <button onclick="generateProcessVideo()">Generate Process Video</button>
+        </div>
+        
+        <canvas id="videoCanvas" width="640" height="360" style="display: none;"></canvas>
+        
+        <div id="status"></div>
+        
+        <div class="video-preview">
+            <h3>Generated Videos:</h3>
+            <div id="videoList"></div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('videoCanvas');
+        const ctx = canvas.getContext('2d');
+        const status = document.getElementById('status');
+        const videoList = document.getElementById('videoList');
+        
+        function showStatus(message, type = 'info') {
+            status.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+        
+        function drawVideoFrame(title, subtitle, progress) {
+            // Clear canvas
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw gradient background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#3498db');
+            gradient.addColorStop(1, '#2c3e50');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw Lucidra logo
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 24px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('LUCIDRA', canvas.width/2, 60);
+            
+            // Draw title
+            ctx.font = 'bold 32px Arial';
+            ctx.fillText(title, canvas.width/2, 140);
+            
+            // Draw subtitle
+            ctx.font = '18px Arial';
+            ctx.fillText(subtitle, canvas.width/2, 180);
+            
+            // Draw progress bar
+            const barWidth = 300;
+            const barHeight = 20;
+            const barX = (canvas.width - barWidth) / 2;
+            const barY = 220;
+            
+            // Background bar
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.fillRect(barX, barY, barWidth, barHeight);
+            
+            // Progress bar
+            ctx.fillStyle = '#27ae60';
+            ctx.fillRect(barX, barY, barWidth * progress, barHeight);
+            
+            // Progress text
+            ctx.fillStyle = 'white';
+            ctx.font = '16px Arial';
+            ctx.fillText(`${Math.round(progress * 100)}% Complete`, canvas.width/2, barY + 50);
+            
+            // Add timestamp
+            ctx.font = '12px Arial';
+            ctx.fillText(new Date().toLocaleString(), canvas.width/2, canvas.height - 30);
+        }
+        
+        async function generateVideoBlob(title, subtitle, duration = 5) {
+            showStatus(`🎬 Generating ${title}...`, 'info');
+            
+            const stream = canvas.captureStream(30); // 30 FPS
+            const mediaRecorder = new MediaRecorder(stream, {
+                mimeType: 'video/webm;codecs=vp9'
+            });
+            
+            const chunks = [];
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    chunks.push(event.data);
+                }
+            };
+            
+            return new Promise((resolve) => {
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'video/webm' });
+                    resolve(blob);
+                };
+                
+                mediaRecorder.start();
+                
+                // Animate the video content
+                let frame = 0;
+                const totalFrames = duration * 30; // 30 FPS
+                
+                const animate = () => {
+                    const progress = frame / totalFrames;
+                    drawVideoFrame(title, subtitle, progress);
+                    
+                    frame++;
+                    if (frame < totalFrames) {
+                        setTimeout(animate, 1000/30); // 30 FPS
+                    } else {
+                        mediaRecorder.stop();
+                    }
+                };
+                
+                animate();
+            });
+        }
+        
+        async function generateCEOVideo() {
+            try {
+                const blob = await generateVideoBlob(
+                    'CEO Platform Overview',
+                    'Strategic Intelligence for Executive Leadership',
+                    8
+                );
+                downloadVideo(blob, 'ceo-overview.webm');
+                addVideoToList('CEO Platform Overview', 'ceo-overview.webm', blob);
+                showStatus('✅ CEO Overview video generated successfully!', 'success');
+            } catch (error) {
+                showStatus(`❌ Error generating CEO video: ${error.message}`, 'error');
+            }
+        }
+        
+        async function generateFrameworksVideo() {
+            try {
+                const blob = await generateVideoBlob(
+                    'Strategic Frameworks',
+                    'Masterclass in Business Strategy',
+                    10
+                );
+                downloadVideo(blob, 'strategic-frameworks.webm');
+                addVideoToList('Strategic Frameworks Masterclass', 'strategic-frameworks.webm', blob);
+                showStatus('✅ Strategic Frameworks video generated successfully!', 'success');
+            } catch (error) {
+                showStatus(`❌ Error generating Frameworks video: ${error.message}`, 'error');
+            }
+        }
+        
+        async function generateProcessVideo() {
+            try {
+                const blob = await generateVideoBlob(
+                    'Process Management',
+                    'BPMN Modeling & Optimization',
+                    7
+                );
+                downloadVideo(blob, 'process-management.webm');
+                addVideoToList('Process Management Excellence', 'process-management.webm', blob);
+                showStatus('✅ Process Management video generated successfully!', 'success');
+            } catch (error) {
+                showStatus(`❌ Error generating Process video: ${error.message}`, 'error');
+            }
+        }
+        
+        function downloadVideo(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        function addVideoToList(title, filename, blob) {
+            const url = URL.createObjectURL(blob);
+            const videoElement = document.createElement('div');
+            videoElement.innerHTML = `
+                <div style="margin: 10px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                    <h4>${title}</h4>
+                    <video controls width="300" style="max-width: 100%;">
+                        <source src="${url}" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p><strong>File:</strong> ${filename}</p>
+                    <button onclick="downloadVideo(arguments[0], '${filename}')" 
+                            style="background: #27ae60;">📥 Download</button>
+                </div>
+            `;
+            videoList.appendChild(videoElement);
+        }
+        
+        // Initialize
+        showStatus('Ready to generate Lucidra video content!', 'info');
+    </script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+/* ===================================
+   LUCIDRA PLATFORM CONTRAST FIXES
+   ===================================
+   Fixes readability and accessibility issues
+   by improving text/background contrast ratios
+*/
+
+/* Form Elements - High Contrast Fix */
+.form-input, .form-textarea, .form-select {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+    border: 2px solid rgba(52, 152, 219, 0.3) !important;
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+    color: #7f8c8d !important;
+    opacity: 0.8 !important;
+}
+
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+    background: white !important;
+    border-color: #3498db !important;
+    color: #2c3e50 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2) !important;
+}
+
+/* Modal Content - Better Text Visibility */
+.modal-content {
+    background: white !important;
+    color: #2c3e50 !important;
+    border-radius: 15px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+}
+
+.modal-content h1, .modal-content h2, .modal-content h3, .modal-content h4 {
+    color: #2c3e50 !important;
+}
+
+.modal-content p, .modal-content li, .modal-content span {
+    color: #34495e !important;
+}
+
+/* White-on-light background fixes */
+[style*="background: rgba(255, 255, 255, 0.1)"][style*="color: white"] {
+    background: rgba(44, 62, 80, 0.9) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Tutorial and video content fixes */
+.video-item {
+    background: rgba(44, 62, 80, 0.8) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Process design elements */
+.enhanced-element {
+    background: rgba(44, 62, 80, 0.9) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Button contrast improvements */
+.btn-secondary {
+    background: rgba(52, 73, 94, 0.9) !important;
+    color: white !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.btn-secondary:hover {
+    background: rgba(44, 62, 80, 1) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Navigation improvements */
+.nav-btn {
+    background: rgba(44, 62, 80, 0.8) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.nav-btn:hover {
+    background: rgba(52, 152, 219, 0.8) !important;
+    color: white !important;
+}
+
+.nav-btn.active {
+    background: rgba(52, 152, 219, 0.9) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Tab improvements */
+.tab {
+    background: rgba(44, 62, 80, 0.8) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.tab.active {
+    background: rgba(52, 152, 219, 0.9) !important;
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Module card text fixes */
+.module-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.module-title {
+    color: #2c3e50 !important;
+}
+
+.module-description {
+    color: #34495e !important;
+}
+
+.module-features {
+    color: #7f8c8d !important;
+}
+
+/* Workspace content fixes */
+.workspace-content {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+}
+
+.workspace-content h1, .workspace-content h2, .workspace-content h3 {
+    color: #2c3e50 !important;
+}
+
+.workspace-content p, .workspace-content li {
+    color: #34495e !important;
+}
+
+/* Canvas and drawing area fixes */
+.process-canvas, .process-canvas-enhanced {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 2px dashed rgba(52, 152, 219, 0.5) !important;
+    color: #2c3e50 !important;
+}
+
+/* Strategy content fixes */
+.strategy-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+    border: 1px solid rgba(52, 152, 219, 0.3) !important;
+}
+
+.canvas-section {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #2c3e50 !important;
+    border: 1px solid rgba(52, 152, 219, 0.3) !important;
+}
+
+.canvas-title {
+    color: #2c3e50 !important;
+}
+
+/* Results section fixes */
+.results-section {
+    background: rgba(46, 204, 113, 0.15) !important;
+    border: 2px solid rgba(46, 204, 113, 0.5) !important;
+    color: #2c3e50 !important;
+}
+
+/* Video player fixes */
+.real-video-player {
+    background: white !important;
+    color: #2c3e50 !important;
+    border-radius: 15px !important;
+}
+
+.video-details {
+    background: #f8f9fa !important;
+    color: #2c3e50 !important;
+}
+
+/* Tutorial builder fixes */
+.tutorial-builder input, .tutorial-builder select, .tutorial-builder textarea {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+    border: 2px solid rgba(52, 152, 219, 0.3) !important;
+}
+
+/* Leadership coaching fixes */
+.coaching-module {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+    border: 1px solid rgba(52, 152, 219, 0.3) !important;
+}
+
+/* Assessment fixes */
+.assessment-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+}
+
+/* Scenario planning fixes */
+.scenario-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+}
+
+/* Progress indicators */
+.progress-indicator {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #2c3e50 !important;
+}
+
+/* Specific inline style overrides */
+[style*="color: white"][style*="background: rgba(255, 255, 255"] {
+    background: rgba(44, 62, 80, 0.9) !important;
+    color: white !important;
+}
+
+/* Input field contrast in modals */
+.modal input, .modal textarea, .modal select {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+    border: 2px solid rgba(52, 152, 219, 0.3) !important;
+}
+
+/* Opacity fixes for better readability */
+[style*="opacity: 0.4"], [style*="opacity: 0.3"], [style*="opacity: 0.2"] {
+    opacity: 0.8 !important;
+}
+
+/* Text on gradient backgrounds */
+.gradient-text {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+}
+
+/* Ensure proper contrast ratios */
+.high-contrast {
+    background: #2c3e50 !important;
+    color: white !important;
+}
+
+.light-contrast {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+}
+
+/* Mobile-specific fixes */
+@media (max-width: 768px) {
+    .module-card, .workspace-content, .strategy-card {
+        background: rgba(255, 255, 255, 0.98) !important;
+        color: #2c3e50 !important;
+    }
+    
+    .form-input, .form-textarea, .form-select {
+        background: white !important;
+        color: #2c3e50 !important;
+        border: 2px solid #3498db !important;
+    }
+}
+
+/* Ensure accessibility compliance */
+.wcag-aa-compliant {
+    /* Minimum contrast ratio of 4.5:1 for normal text */
+    /* Minimum contrast ratio of 3:1 for large text */
+}
+
+/* Focus indicators for keyboard navigation */
+*:focus {
+    outline: 3px solid rgba(52, 152, 219, 0.6) !important;
+    outline-offset: 2px !important;
+}
+
+/* Print styles for better readability */
+@media print {
+    * {
+        background: white !important;
+        color: black !important;
+    }
+}

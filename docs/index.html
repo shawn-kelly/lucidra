@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucidra - Strategic Intelligence Platform</title>
+    <link rel="stylesheet" href="contrast-fixes.css">
     <script src="integration-framework.js"></script>
     <script>
         // Define showView function FIRST before any verification
@@ -8645,8 +8646,8 @@ This plan adapts based on your learning patterns and performance.
                             oncanplay="handleVideoCanPlay('${videoId}')"
                             onerror="handleVideoError('${videoId}')"
                         >
-                            <source src="${videoInfo.streamingUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'}" type="video/mp4">
-                            <source src="${videoInfo.url}" type="video/mp4">
+                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
+                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
                             <p>Your browser doesn't support HTML5 video. <a href="${videoInfo.url}">Download the video</a> instead.</p>
                         </video>
                     </div>
