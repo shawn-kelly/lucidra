@@ -3649,6 +3649,75 @@
             }
         };
 
+        // Add missing allowDrop function for drag-and-drop functionality
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        // Add missing exportBPMNEnhanced function for process export
+        function exportBPMNEnhanced() {
+            console.log('📊 Exporting enhanced BPMN process...');
+            
+            try {
+                const canvas = document.getElementById('process-canvas-enhanced');
+                if (!canvas) {
+                    alert('❌ No process canvas found to export');
+                    return;
+                }
+                
+                const elements = canvas.querySelectorAll('.canvas-element');
+                const processData = {
+                    id: 'lucidra-process-' + Date.now(),
+                    name: 'Enhanced Process Model',
+                    elements: [],
+                    connections: [],
+                    generated: new Date().toISOString()
+                };
+                
+                elements.forEach((element, index) => {
+                    processData.elements.push({
+                        id: element.id || `element-${index}`,
+                        type: element.dataset.type || 'task',
+                        name: element.textContent.trim(),
+                        x: parseInt(element.style.left) || 0,
+                        y: parseInt(element.style.top) || 0
+                    });
+                });
+                
+                // Create downloadable BPMN XML
+                const bpmnXml = `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL">
+  <bpmn:process id="${processData.id}" name="${processData.name}">
+    ${processData.elements.map(el => 
+        `<bpmn:${el.type} id="${el.id}" name="${el.name}"/>`
+    ).join('\n    ')}
+  </bpmn:process>
+</bpmn:definitions>`;
+                
+                // Download the file
+                const blob = new Blob([bpmnXml], { type: 'application/xml' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `lucidra-process-${Date.now()}.bpmn`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert(`✅ Process exported successfully!\n\nElements: ${processData.elements.length}\nFormat: BPMN 2.0 XML`);
+                console.log('✅ BPMN export completed:', processData);
+                
+            } catch (error) {
+                console.error('❌ Export failed:', error);
+                alert('❌ Export failed: ' + error.message);
+            }
+        }
+
+        // Make functions globally available
+        window.allowDrop = allowDrop;
+        window.exportBPMNEnhanced = exportBPMNEnhanced;
+
         function showTab(workspace, tabName) {
             // Hide all tab panels for this workspace
             document.querySelectorAll(`#${workspace}-workspace .tab-panel`).forEach(panel => {
@@ -3672,6 +3741,9 @@
                 targetTab.classList.add('active');
             }
         }
+
+        // Make showTab function globally available
+        window.showTab = showTab;
 
         // Porter's Five Forces Functions
         function updateSlider(force) {
