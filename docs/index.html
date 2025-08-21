@@ -6830,37 +6830,35 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
             }
             
             createHealthDashboard() {
-                // Create floating health indicator
-                const healthIndicator = document.createElement('div');
-                healthIndicator.id = 'health-indicator';
-                healthIndicator.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    width: 50px;
-                    height: 50px;
+                // Create health toggle button in navigation (user-activated)
+                const healthToggle = document.createElement('button');
+                healthToggle.id = 'health-toggle';
+                healthToggle.className = 'nav-btn';
+                healthToggle.style.cssText = `
                     background: #4CAF50;
-                    border-radius: 50%;
-                    z-index: 999;
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
                     color: white;
-                    font-weight: bold;
-                    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                    border: none;
+                    padding: 8px 12px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    margin-left: 10px;
                     transition: all 0.3s ease;
                 `;
                 
-                healthIndicator.innerHTML = '💚';
-                healthIndicator.title = 'Platform Health Monitor - Click for Details';
+                healthToggle.innerHTML = '💚 Health';
+                healthToggle.title = 'Platform Health Monitor - Click for Details';
                 
-                healthIndicator.addEventListener('click', () => this.showHealthModal());
+                healthToggle.addEventListener('click', () => this.showHealthModal());
                 
-                document.body.appendChild(healthIndicator);
+                // Add to navigation instead of floating
+                const navElement = document.querySelector('.nav');
+                if (navElement) {
+                    navElement.appendChild(healthToggle);
+                }
                 
                 // Store reference for updates
-                this.healthIndicatorElement = healthIndicator;
+                this.healthIndicatorElement = healthToggle;
             }
             
             updateHealthDashboard(healthReport) {
