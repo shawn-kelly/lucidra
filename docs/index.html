@@ -846,8 +846,9 @@
 <body>
     <div class="app-container">
         <header class="header">
-            <div class="logo">
-                🧠 Lucidra
+            <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+                <img src="./lucidra-icon.svg" alt="Lucidra" class="lucidra-logo nav-logo" style="max-height: 35px;">
+                <span>Lucidra</span>
             </div>
             <nav class="nav">
                 <a href="#" class="nav-btn active" onclick="showView('dashboard')">Dashboard</a>
@@ -877,6 +878,9 @@
             <!-- Dashboard -->
             <div id="dashboard" class="dashboard">
                 <div class="dashboard-header">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <img src="./lucidra-logo-light.svg" alt="Lucidra - Clarity Engine for Strategic Growth" class="lucidra-logo dashboard-logo" style="max-height: 120px; margin-bottom: 15px;">
+                    </div>
                     <h1 class="dashboard-title">Strategic Intelligence Platform</h1>
                     <p class="dashboard-subtitle">Comprehensive AI-powered tools for strategic planning, process management, and business execution</p>
                 </div>
@@ -3636,7 +3640,10 @@
         </main>
 
         <footer class="footer">
-            <p>Built with Strategic Intelligence • © 2025 Lucidra Platform • v3.0 Updated</p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <img src="./lucidra-icon.svg" alt="Lucidra" class="lucidra-logo footer-logo" style="max-height: 24px; opacity: 0.7;">
+                <p>Built with Strategic Intelligence • © 2025 Lucidra Platform • v3.0 Updated</p>
+            </div>
         </footer>
     </div>
 

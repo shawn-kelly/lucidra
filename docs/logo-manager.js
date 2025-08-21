@@ -8,18 +8,18 @@ window.LucidraLogo = {
     
     // Logo configuration
     config: {
-        // Primary logo URL - UPDATE THIS with your chosen logo
-        primaryLogo: './assets/lucidra-logo.png',
+        // Primary logo URL - LUCIDRA OFFICIAL SVG LOGO
+        primaryLogo: './lucidra-logo.svg',
         
         // Fallback options
-        fallbackLogo: './assets/lucidra-logo-alt.png',
+        fallbackLogo: './lucidra-logo-light.svg',
         
         // Logo variations for different contexts
         variations: {
-            light: './assets/lucidra-logo-light.png', // For dark backgrounds
-            dark: './assets/lucidra-logo-dark.png',   // For light backgrounds
-            icon: './assets/lucidra-icon.png',        // Icon only
-            full: './assets/lucidra-logo-full.png'    // Full logo with tagline
+            light: './lucidra-logo-light.svg', // For dark backgrounds
+            dark: './lucidra-logo.svg',        // For light backgrounds
+            icon: './lucidra-icon.svg',        // Icon only
+            full: './lucidra-logo.svg'         // Full logo with tagline
         },
         
         // Default text fallback

@@ -1,0 +1,12 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Abstract hourglass shape - light version for dark backgrounds -->
+  <path d="M60,40 Q100,100 60,160 M140,40 Q100,100 140,160" stroke="#00aaff" stroke-width="8" fill="none"/>
+  
+  <!-- Text - white for dark backgrounds -->
+  <text x="100" y="185" font-family="Verdana" font-size="16" fill="white" text-anchor="middle">
+    LUCIDRA
+  </text>
+  <text x="100" y="200" font-family="Verdana" font-size="12" fill="white" fill-opacity="0.9" text-anchor="middle">
+    Clarity Engine for Strategic Growth
+  </text>
+</svg>

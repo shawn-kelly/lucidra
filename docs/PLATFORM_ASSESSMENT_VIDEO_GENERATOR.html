@@ -328,14 +328,31 @@
             ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
             ctx.fillRect(0, 0, canvas.width, 140);
             
-            // Lucidra logo
-            ctx.fillStyle = 'white';
-            ctx.font = 'bold 56px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('LUCIDRA', canvas.width/2, 70);
+            // Lucidra logo - draw hourglass shapes
+            ctx.strokeStyle = '#00aaff';
+            ctx.lineWidth = 8;
             
-            ctx.font = '24px Arial';
-            ctx.fillText('Strategic Intelligence Platform', canvas.width/2, 110);
+            // Left hourglass curve
+            ctx.beginPath();
+            ctx.moveTo(canvas.width/2 - 80, 30);
+            ctx.quadraticCurveTo(canvas.width/2, 70, canvas.width/2 - 80, 110);
+            ctx.stroke();
+            
+            // Right hourglass curve
+            ctx.beginPath();
+            ctx.moveTo(canvas.width/2 + 80, 30);
+            ctx.quadraticCurveTo(canvas.width/2, 70, canvas.width/2 + 80, 110);
+            ctx.stroke();
+            
+            // Logo text
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 32px Verdana';
+            ctx.textAlign = 'center';
+            ctx.fillText('LUCIDRA', canvas.width/2, 95);
+            
+            ctx.font = '18px Verdana';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillText('Clarity Engine for Strategic Growth', canvas.width/2, 115);
             
             // Main content area
             ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
