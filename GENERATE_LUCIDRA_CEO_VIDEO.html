@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Lucidra CEO Video</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        canvas {
+            border: 3px solid #3498db;
+            margin: 15px 0;
+            border-radius: 10px;
+            background: #2c3e50;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .status {
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .success {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: 2px solid #27ae60;
+        }
+        .info {
+            background: linear-gradient(45deg, #3498db, #5dade2);
+            color: white;
+            border: 2px solid #3498db;
+        }
+        .progress-container {
+            background: #ecf0f1;
+            border-radius: 25px;
+            height: 30px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .video-preview {
+            margin: 25px 0;
+            padding: 25px;
+            border: 3px solid #3498db;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        .slide-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .slide-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #3498db;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .slide-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        .slide-content {
+            font-size: 12px;
+            color: #34495e;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; color: #2c3e50; margin-bottom: 10px;">🎬 Lucidra CEO Video Generator</h1>
+        <h2 style="text-align: center; color: #7f8c8d; margin-top: 0;">Strategic Intelligence Platform Overview</h2>
+        
+        <div class="slide-preview">
+            <div class="slide-card">
+                <div class="slide-title">🎯 Executive Dashboard</div>
+                <div class="slide-content">Real-time strategic metrics • Decision support analytics • Executive KPI monitoring</div>
+            </div>
+            <div class="slide-card">
+                <div class="slide-title">📊 Strategic Frameworks</div>
+                <div class="slide-content">Porter's Five Forces • Blue Ocean Strategy • SWOT Analysis • Market Intelligence</div>
+            </div>
+            <div class="slide-card">
+                <div class="slide-title">⚙️ Process Management</div>
+                <div class="slide-content">BPMN Modeling • Workflow Optimization • Process Analytics • Automation Tools</div>
+            </div>
+            <div class="slide-card">
+                <div class="slide-title">💰 Financial Intelligence</div>
+                <div class="slide-content">Budget Analysis • ROI Tracking • Cost Optimization • Investment Analysis</div>
+            </div>
+            <div class="slide-card">
+                <div class="slide-title">🚀 Implementation</div>
+                <div class="slide-content">Quick Setup • Team Onboarding • Success Metrics • Ongoing Support</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="generateLucidraVideo()" id="generateBtn">🎥 Generate Lucidra CEO Video</button>
+            <button onclick="previewVideo()" id="previewBtn" disabled>👁️ Preview Video</button>
+            <button onclick="downloadVideo()" id="downloadBtn" disabled>📥 Download Video</button>
+            <button onclick="deployToSite()" id="deployBtn" disabled>🚀 Deploy to Site</button>
+        </div>
+        
+        <canvas id="videoCanvas" width="1280" height="720" style="display: block; margin: 0 auto;"></canvas>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">0%</div>
+        </div>
+        
+        <div id="status"></div>
+        
+        <div class="video-preview">
+            <h3 style="color: #2c3e50;">📺 Generated Video:</h3>
+            <div id="videoContainer">
+                <p style="color: #7f8c8d; text-align: center;">Click "Generate Lucidra CEO Video" to create platform-specific content</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('videoCanvas');
+        const ctx = canvas.getContext('2d');
+        const status = document.getElementById('status');
+        const videoContainer = document.getElementById('videoContainer');
+        const progressBar = document.getElementById('progressBar');
+        
+        let generatedVideoBlob = null;
+        let generatedVideoURL = null;
+        
+        // Lucidra brand colors
+        const colors = {
+            primary: '#3498db',
+            secondary: '#2c3e50',
+            accent: '#27ae60',
+            gradient1: '#667eea',
+            gradient2: '#764ba2'
+        };
+        
+        function updateProgress(percent, message) {
+            progressBar.style.width = percent + '%';
+            progressBar.textContent = percent + '%';
+            showStatus(message, 'info');
+        }
+        
+        function showStatus(message, type = 'info') {
+            status.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+        
+        function drawLucidraSlide(slideData) {
+            // Clear canvas with gradient background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, colors.gradient1);
+            gradient.addColorStop(1, colors.gradient2);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw header section
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, 150);
+            
+            // Lucidra logo and tagline
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 64px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('LUCIDRA', canvas.width/2, 80);
+            
+            ctx.font = '28px Arial';
+            ctx.fillText('Strategic Intelligence Platform', canvas.width/2, 120);
+            
+            // Main title section
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            ctx.fillRect(80, 200, canvas.width - 160, 100);
+            
+            ctx.fillStyle = colors.secondary;
+            ctx.font = 'bold 48px Arial';
+            ctx.fillText(slideData.title, canvas.width/2, 260);
+            
+            // Content area
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillRect(80, 340, canvas.width - 160, 280);
+            
+            // Draw content bullets
+            ctx.fillStyle = colors.secondary;
+            ctx.font = '32px Arial';
+            ctx.textAlign = 'left';
+            
+            slideData.bullets.forEach((bullet, index) => {
+                const y = 390 + (index * 50);
+                
+                // Bullet point
+                ctx.fillStyle = colors.accent;
+                ctx.fillRect(120, y - 15, 20, 20);
+                
+                // Bullet text
+                ctx.fillStyle = colors.secondary;
+                ctx.fillText(bullet, 160, y);
+            });
+            
+            // Footer with slide indicator
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.fillRect(0, canvas.height - 60, canvas.width, 60);
+            
+            ctx.fillStyle = 'white';
+            ctx.font = '24px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Strategic Intelligence for Executive Leadership`, canvas.width/2, canvas.height - 30);
+            
+            // Slide number
+            ctx.textAlign = 'right';
+            ctx.font = '20px Arial';
+            ctx.fillText(`${slideData.number}/5`, canvas.width - 40, canvas.height - 15);
+        }
+        
+        async function generateLucidraVideo() {
+            showStatus('🎬 Starting Lucidra CEO video generation...', 'info');
+            document.getElementById('generateBtn').disabled = true;
+            
+            const slides = [
+                {
+                    number: 1,
+                    title: 'Executive Dashboard Overview',
+                    bullets: [
+                        '📊 Real-time strategic metrics and KPIs',
+                        '🎯 Decision support analytics',
+                        '📈 Performance monitoring dashboard',
+                        '⚡ Instant insights for executive decisions'
+                    ]
+                },
+                {
+                    number: 2,
+                    title: 'Strategic Framework Integration',
+                    bullets: [
+                        '🏢 Porter\'s Five Forces Analysis',
+                        '🌊 Blue Ocean Strategy Canvas',
+                        '📋 Comprehensive SWOT Analysis',
+                        '🔍 Market Intelligence & Competitor Tracking'
+                    ]
+                },
+                {
+                    number: 3,
+                    title: 'Process Management Excellence',
+                    bullets: [
+                        '⚙️ BPMN process modeling & optimization',
+                        '🔄 Workflow automation capabilities',
+                        '📊 Process analytics & improvement',
+                        '🎯 Operational efficiency enhancement'
+                    ]
+                },
+                {
+                    number: 4,
+                    title: 'Financial Intelligence Hub',
+                    bullets: [
+                        '💰 Advanced financial analysis tools',
+                        '📈 ROI tracking & investment analysis',
+                        '💡 Cost optimization recommendations',
+                        '📊 Budget planning & forecasting'
+                    ]
+                },
+                {
+                    number: 5,
+                    title: 'Implementation & Results',
+                    bullets: [
+                        '🚀 Rapid 15-minute platform setup',
+                        '👥 Comprehensive team onboarding',
+                        '📈 40% faster strategic decision-making',
+                        '🎯 Measurable ROI within 90 days'
+                    ]
+                }
+            ];
+            
+            try {
+                // Set up MediaRecorder
+                const stream = canvas.captureStream(30);
+                const mediaRecorder = new MediaRecorder(stream, {
+                    mimeType: 'video/webm;codecs=vp9'
+                });
+                
+                const chunks = [];
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        chunks.push(event.data);
+                    }
+                };
+                
+                // Start recording
+                mediaRecorder.start();
+                updateProgress(10, '🎥 Recording Lucidra presentation...');
+                
+                // Generate each slide with animations
+                for (let slideIndex = 0; slideIndex < slides.length; slideIndex++) {
+                    const slide = slides[slideIndex];
+                    
+                    updateProgress(15 + (slideIndex * 15), `📄 Creating ${slide.title}...`);
+                    
+                    // 6 seconds per slide (180 frames at 30fps)
+                    for (let frame = 0; frame < 180; frame++) {
+                        drawLucidraSlide(slide);
+                        
+                        // Fade in animation for first 30 frames
+                        if (frame < 30) {
+                            ctx.fillStyle = `rgba(0, 0, 0, ${1 - frame/30})`;
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        }
+                        
+                        // Add some subtle animations
+                        if (frame % 60 === 0) {
+                            // Pulse effect on Lucidra logo every 2 seconds
+                            ctx.save();
+                            ctx.shadowColor = 'white';
+                            ctx.shadowBlur = 20;
+                            ctx.fillStyle = 'white';
+                            ctx.font = 'bold 66px Arial';
+                            ctx.textAlign = 'center';
+                            ctx.fillText('LUCIDRA', canvas.width/2, 80);
+                            ctx.restore();
+                        }
+                        
+                        await new Promise(resolve => setTimeout(resolve, 33)); // ~30fps
+                    }
+                }
+                
+                updateProgress(90, '🔄 Finalizing Lucidra CEO video...');
+                
+                // Stop recording
+                mediaRecorder.stop();
+                
+                // Wait for video to be ready
+                await new Promise((resolve) => {
+                    mediaRecorder.onstop = () => {
+                        generatedVideoBlob = new Blob(chunks, { type: 'video/webm' });
+                        generatedVideoURL = URL.createObjectURL(generatedVideoBlob);
+                        resolve();
+                    };
+                });
+                
+                updateProgress(100, '✅ Lucidra CEO video generated successfully!');
+                
+                // Show video preview
+                videoContainer.innerHTML = `
+                    <video controls width="100%" style="max-width: 900px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
+                        <source src="${generatedVideoURL}" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+                        <h4 style="color: #2c3e50; margin: 0 0 10px 0;">✅ Lucidra CEO Video Generated!</h4>
+                        <ul style="color: #34495e; margin: 0;">
+                            <li><strong>Duration:</strong> 30 seconds</li>
+                            <li><strong>Size:</strong> ${(generatedVideoBlob.size / 1024 / 1024).toFixed(2)} MB</li>
+                            <li><strong>Format:</strong> WebM (VP9)</li>
+                            <li><strong>Resolution:</strong> 1280x720 HD</li>
+                            <li><strong>Content:</strong> Lucidra platform overview with 5 strategic slides</li>
+                        </ul>
+                    </div>
+                `;
+                
+                // Enable other buttons
+                document.getElementById('previewBtn').disabled = false;
+                document.getElementById('downloadBtn').disabled = false;
+                document.getElementById('deployBtn').disabled = false;
+                
+                showStatus('🎉 Lucidra CEO video ready! Preview, download, or deploy to your site.', 'success');
+                
+            } catch (error) {
+                showStatus(`❌ Video generation failed: ${error.message}`, 'error');
+                document.getElementById('generateBtn').disabled = false;
+            }
+        }
+        
+        function previewVideo() {
+            if (!generatedVideoBlob) {
+                alert('❌ No video to preview. Generate video first.');
+                return;
+            }
+            
+            // Open video in new window for testing
+            const testWindow = window.open('', '_blank', 'width=1000,height=700');
+            testWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Lucidra CEO Video Preview</title>
+                    <style>
+                        body { 
+                            font-family: Arial, sans-serif; 
+                            padding: 20px; 
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            margin: 0;
+                        }
+                        .container { 
+                            max-width: 900px; 
+                            margin: 0 auto; 
+                            background: white; 
+                            padding: 30px; 
+                            border-radius: 15px; 
+                            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                        }
+                        video { width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+                        h1 { color: #2c3e50; text-align: center; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>🎬 Lucidra CEO Platform Overview</h1>
+                        <video controls autoplay>
+                            <source src="${generatedVideoURL}" type="video/webm">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p style="text-align: center; color: #34495e; margin-top: 20px;">
+                            <strong>✅ This is your custom Lucidra CEO video!</strong><br>
+                            Platform-specific content showcasing strategic intelligence capabilities.
+                        </p>
+                    </div>
+                </body>
+                </html>
+            `);
+            
+            showStatus('👁️ Video preview opened in new window', 'info');
+        }
+        
+        function downloadVideo() {
+            if (!generatedVideoBlob) {
+                alert('❌ No video to download. Generate video first.');
+                return;
+            }
+            
+            // Download video file
+            const a = document.createElement('a');
+            a.href = generatedVideoURL;
+            a.download = 'lucidra-ceo-overview.webm';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            // Generate and download metadata
+            const metadata = {
+                title: 'Lucidra CEO Platform Overview',
+                duration: '30 seconds',
+                file: 'lucidra-ceo-overview.webm',
+                size: `${(generatedVideoBlob.size / 1024 / 1024).toFixed(2)} MB`,
+                quality: '720p HD',
+                format: 'WebM (VP9)',
+                description: 'Strategic Intelligence Platform overview for executive leadership featuring dashboard analytics, framework integration, process management, financial intelligence, and implementation guidance.',
+                status: 'generated',
+                generatedAt: new Date().toISOString(),
+                slides: [
+                    'Executive Dashboard Overview',
+                    'Strategic Framework Integration', 
+                    'Process Management Excellence',
+                    'Financial Intelligence Hub',
+                    'Implementation & Results'
+                ],
+                features: [
+                    'Real-time strategic metrics',
+                    'Porter\'s Five Forces Analysis',
+                    'BPMN process modeling',
+                    'Financial analysis tools',
+                    '40% faster decision-making'
+                ]
+            };
+            
+            const metadataBlob = new Blob([JSON.stringify(metadata, null, 2)], { type: 'application/json' });
+            const metadataURL = URL.createObjectURL(metadataBlob);
+            
+            const b = document.createElement('a');
+            b.href = metadataURL;
+            b.download = 'lucidra-ceo-overview_metadata.json';
+            document.body.appendChild(b);
+            b.click();
+            document.body.removeChild(b);
+            
+            showStatus('📥 Lucidra video and metadata downloaded!', 'success');
+        }
+        
+        function deployToSite() {
+            if (!generatedVideoBlob) {
+                alert('❌ No video to deploy. Generate video first.');
+                return;
+            }
+            
+            showStatus('🚀 Generating deployment instructions...', 'info');
+            
+            alert(`🚀 Deploy Your Lucidra CEO Video!
+
+STEP 1: Upload Files
+• Upload "lucidra-ceo-overview.webm" to your docs/ folder
+• Upload "lucidra-ceo-overview_metadata.json" to your docs/ folder
+
+STEP 2: Update Video URL
+In your index.html, change the CEO video URL to:
+videoUrl: './lucidra-ceo-overview.webm'
+
+STEP 3: Verify Deployment
+• Video will be accessible at: https://shawn-kelly.github.io/lucidra/lucidra-ceo-overview.webm
+• Test the CEO Overview button to confirm it plays
+
+✅ This video contains actual Lucidra platform content!
+✅ Ready to replicate this pattern for other videos!`);
+            
+            showStatus('📋 Deployment instructions generated. Follow steps to go live!', 'success');
+        }
+        
+        // Initialize
+        showStatus('Ready to generate Lucidra-specific CEO video content!', 'info');
+    </script>
+</body>
+</html>
