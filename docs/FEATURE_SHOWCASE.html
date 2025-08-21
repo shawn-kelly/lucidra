@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Lucidra Platform Features Showcase</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            border-radius: 10px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        .feature-card {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.2);
+        }
+        .feature-title {
+            color: #2c3e50;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .feature-demo {
+            background: #f8f9fa;
+            border: 2px dashed #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+            position: relative;
+        }
+        .demo-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 15px;
+            font-size: 0.7em;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+        .user-indicator {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px;
+            animation: glow 3s infinite;
+        }
+        .quick-action {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .quick-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        .notification-demo {
+            position: relative;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            animation: slideIn 2s ease-in-out infinite;
+        }
+        .tooltip-demo {
+            background: #2c3e50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            display: inline-block;
+            margin: 10px;
+            animation: fadeIn 2s ease-in-out infinite;
+        }
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 10px;
+        }
+        .flow-step {
+            text-align: center;
+            flex: 1;
+        }
+        .flow-arrow {
+            font-size: 2em;
+            color: #3498db;
+            margin: 0 10px;
+        }
+        .try-button {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto;
+        }
+        .try-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3); }
+            50% { box-shadow: 0 5px 20px rgba(52, 152, 219, 0.6); }
+        }
+        
+        @keyframes slideIn {
+            0% { transform: translateX(-20px); opacity: 0.7; }
+            50% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(-20px); opacity: 0.7; }
+        }
+        
+        @keyframes fadeIn {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="./lucidra-logo-light.svg" alt="Lucidra" style="max-height: 80px; margin-bottom: 15px;">
+            <h1>🚀 New Platform Features</h1>
+            <p>Discover the enhanced user experience with personalized journeys</p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-title">👥 Personalized User Types</div>
+                <p>Choose your role for a customized experience:</p>
+                <div class="feature-demo">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 15px 0;">
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2em;">👨‍💼</div>
+                            <strong>CEO</strong><br>
+                            <small>Strategic oversight</small>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2em;">🎯</div>
+                            <strong>Strategy Manager</strong><br>
+                            <small>Planning & analysis</small>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2em;">⚙️</div>
+                            <strong>Operations</strong><br>
+                            <small>Process optimization</small>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2em;">💰</div>
+                            <strong>Financial Analyst</strong><br>
+                            <small>Financial planning</small>
+                        </div>
+                    </div>
+                </div>
+                <p>✨ Each role gets personalized priority modules and quick actions</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-title">🎯 Priority Module System</div>
+                <p>Your important modules are highlighted with animated badges:</p>
+                <div class="feature-demo">
+                    <div style="position: relative; background: white; border: 3px solid #3498db; border-radius: 10px; padding: 20px; margin: 10px;">
+                        <div class="demo-badge">✨ #1 PRIORITY</div>
+                        <strong>Strategic Frameworks</strong><br>
+                        <small>Porter's Five Forces Analysis</small>
+                    </div>
+                    <p style="margin: 10px 0; color: #7f8c8d; font-size: 0.9em;">
+                        Modules ranked by relevance to your role
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-title">🚀 Smart User Indicator</div>
+                <p>Always know your current role and personalization status:</p>
+                <div class="feature-demo">
+                    <div class="user-indicator">👨‍💼 CEO</div>
+                    <p style="margin: 10px 0; color: #7f8c8d; font-size: 0.9em;">
+                        Click to change user type anytime
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-title">⚡ Quick Actions</div>
+                <p>Instant access to your priority modules:</p>
+                <div class="feature-demo">
+                    <div style="display: grid; gap: 8px;">
+                        <button class="quick-action">
+                            Strategic Intel <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.8em;">#1</span>
+                        </button>
+                        <button class="quick-action">
+                            Porter's Analysis <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.8em;">#2</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-title">📱 Non-Blocking Notifications</div>
+                <p>Helpful feedback that doesn't interrupt your workflow:</p>
+                <div class="feature-demo">
+                    <div class="notification-demo">
+                        <strong>✅ Welcome, CEO!</strong><br>
+                        <small>Platform personalized for strategic oversight</small>
+                    </div>
+                    <p style="margin: 10px 0; color: #7f8c8d; font-size: 0.9em;">
+                        Auto-dismissing, non-intrusive notifications
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-title">💡 Interactive Tooltips</div>
+                <p>Smart hints appear when you need them:</p>
+                <div class="feature-demo">
+                    <div class="tooltip-demo">🎯 Priority module for your role!</div>
+                    <p style="margin: 10px 0; color: #7f8c8d; font-size: 0.9em;">
+                        Context-aware tips and guidance
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 30px 0;">
+            <h2 style="color: #2c3e50; text-align: center; margin-bottom: 20px;">🔄 Smooth User Flow</h2>
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🎯</div>
+                    <strong>Select Role</strong><br>
+                    <small>Choose your user type</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div style="font-size: 2em; margin-bottom: 10px;">✨</div>
+                    <strong>Instant Personalization</strong><br>
+                    <small>Priority modules highlighted</small>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🚀</div>
+                    <strong>Start Working</strong><br>
+                    <small>No blocking popups</small>
+                </div>
+            </div>
+            <p style="text-align: center; color: #7f8c8d; margin-top: 15px;">
+                ✅ Seamless transitions • No interruptions • Clear next steps
+            </p>
+        </div>
+
+        <div style="text-align: center; background: linear-gradient(135deg, #e8f5e8, #d4edda); padding: 30px; border-radius: 15px; margin: 20px 0;">
+            <h3 style="color: #155724; margin-bottom: 15px;">🎉 Ready to Experience the New Lucidra?</h3>
+            <p style="color: #155724; margin-bottom: 20px;">
+                All these features are now live on the platform with intuitive design and smooth interactions.
+            </p>
+            <button class="try-button" onclick="window.open('../index.html', '_blank')">
+                🚀 Try the Enhanced Platform
+            </button>
+        </div>
+
+        <div style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 10px; padding: 20px; margin: 20px 0;">
+            <h4 style="color: #856404; margin-top: 0;">🔧 What's Been Fixed</h4>
+            <ul style="color: #856404;">
+                <li>✅ <strong>No more blocking popups</strong> - Overlays disappear after selection</li>
+                <li>✅ <strong>Enhanced visibility</strong> - Priority modules clearly marked</li>
+                <li>✅ <strong>Intuitive flow</strong> - Next steps always clear</li>
+                <li>✅ <strong>Smart notifications</strong> - Helpful without being intrusive</li>
+                <li>✅ <strong>Professional animations</strong> - Smooth, polished interactions</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive demo functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate demo elements periodically
+            setInterval(() => {
+                const badges = document.querySelectorAll('.demo-badge');
+                badges.forEach(badge => {
+                    badge.style.animation = 'none';
+                    setTimeout(() => {
+                        badge.style.animation = 'pulse 2s infinite';
+                    }, 100);
+                });
+            }, 5000);
+
+            // Add click tracking for analytics
+            document.querySelectorAll('.try-button, .quick-action').forEach(button => {
+                button.addEventListener('click', function() {
+                    console.log('🎯 User interacted with feature showcase');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
