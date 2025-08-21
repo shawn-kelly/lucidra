@@ -10,6 +10,8 @@
     <script src="user-journey-logic.js"></script>
     <script src="logo-manager.js"></script>
     <script src="ai-strategic-assistant.js"></script>
+    <script src="window-management-api.js"></script>
+    <script src="window-agent-manager.js"></script>
     <script src="collaborative-planning.js"></script>
     <script>
         // Define showView function FIRST before any verification
@@ -873,6 +875,14 @@
                 <a href="#" class="nav-btn" onclick="showView('leadership-coaching')" style="background: linear-gradient(45deg, #E67E22, #F39C12);">🧠 Leadership Coaching</a>
                 <a href="#" class="nav-btn" onclick="showView('platform-types')" style="background: linear-gradient(45deg, #FF6B6B, #FF8E53);">🏢 Organization Types</a>
                 <a href="#" class="nav-btn" onclick="showFinancialDashboard()" style="background: linear-gradient(45deg, #32CD32, #228B22);">💰 Financial Hub</a>
+                
+                <!-- Window Management Controls -->
+                <div style="margin-left: auto; display: flex; gap: 10px; align-items: center;">
+                    <button id="window-control-btn" class="nav-btn" onclick="showWindowManager()" 
+                            style="background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 14px; position: relative;">
+                        🪟 Windows <span id="window-count" style="background: rgba(255,255,255,0.3); border-radius: 50%; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; margin-left: 5px;">0</span>
+                    </button>
+                </div>
             </nav>
         </header>
 
@@ -3840,109 +3850,314 @@ Average Force Strength: ${avgScore.toFixed(1)}/5
             }
         }
 
-        // Analysis Modal Function
+        // Enhanced Analysis Modal using Lucidra Window Manager
         function showAnalysisModal(title, content) {
-            // Create modal if it doesn't exist
-            let modal = document.getElementById('analysisModal');
-            if (!modal) {
-                modal = document.createElement('div');
-                modal.id = 'analysisModal';
-                modal.className = 'analysis-modal';
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 id="modalTitle">${title}</h2>
-                            <span class="modal-close" onclick="closeAnalysisModal()">&times;</span>
-                        </div>
-                        <div class="modal-body">
-                            <pre id="modalContent">${content}</pre>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn" onclick="exportAnalysis()">📤 Export Analysis</button>
-                            <button class="btn" onclick="shareAnalysis()">🔗 Share</button>
-                            <button class="btn" onclick="closeAnalysisModal()">Close</button>
-                        </div>
-                    </div>
-                `;
-                
-                // Add modal styles
-                const modalStyles = `
-                    .analysis-modal {
-                        display: block;
-                        position: fixed;
-                        z-index: 1000;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        height: 100%;
-                        background-color: rgba(0,0,0,0.8);
-                        backdrop-filter: blur(5px);
-                    }
-                    .modal-content {
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        margin: 5% auto;
-                        padding: 0;
-                        border-radius: 15px;
-                        width: 90%;
-                        max-width: 800px;
-                        max-height: 80vh;
-                        overflow: hidden;
-                        color: white;
-                        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-                    }
-                    .modal-header {
-                        padding: 20px;
-                        border-bottom: 1px solid rgba(255,255,255,0.2);
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                    }
-                    .modal-close {
-                        font-size: 28px;
-                        font-weight: bold;
-                        cursor: pointer;
-                        opacity: 0.7;
-                        transition: opacity 0.3s;
-                    }
-                    .modal-close:hover {
-                        opacity: 1;
-                    }
-                    .modal-body {
-                        padding: 20px;
-                        max-height: 50vh;
-                        overflow-y: auto;
-                    }
-                    .modal-body pre {
-                        white-space: pre-wrap;
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        line-height: 1.6;
-                        margin: 0;
-                    }
-                    .modal-footer {
-                        padding: 20px;
-                        border-top: 1px solid rgba(255,255,255,0.2);
-                        display: flex;
-                        gap: 10px;
-                        justify-content: flex-end;
-                    }
-                `;
-                
-                const styleSheet = document.createElement('style');
-                styleSheet.textContent = modalStyles;
-                document.head.appendChild(styleSheet);
-                document.body.appendChild(modal);
+            const windowId = 'analysis-' + Date.now();
+            
+            // Create window using new system
+            const windowComponents = window.LucidraWindows.createWindow(windowId, {
+                maxWidth: '800px',
+                maxHeight: '80vh',
+                closeable: true,
+                minimizable: true,
+                draggable: true,
+                resizable: false,
+                backdrop: true,
+                escapeClose: true
+            });
+            
+            // Set title and content
+            window.LucidraWindows.setWindowTitle(windowId, title);
+            
+            const analysisContent = `
+                <div style="color: #333; line-height: 1.6;">
+                    <pre style="white-space: pre-wrap; word-wrap: break-word; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0;">${content}</pre>
+                </div>
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; display: flex; gap: 10px; justify-content: flex-end;">
+                    <button onclick="exportAnalysisContent('${title}', \`${content.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)" 
+                            style="background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.2s;">
+                        📤 Export Analysis
+                    </button>
+                    <button onclick="shareAnalysisContent('${title}', \`${content.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)" 
+                            style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.2s;">
+                        🔗 Share
+                    </button>
+                    <button onclick="window.LucidraWindows.closeWindow('${windowId}')" 
+                            style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: all 0.2s;">
+                        Close
+                    </button>
+                </div>
+            `;
+            
+            window.LucidraWindows.setWindowContent(windowId, analysisContent);
+        }
+        
+        // Export function for analysis content
+        function exportAnalysisContent(title, content) {
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            console.log(`📄 Analysis exported: ${title}`);
+        }
+        
+        // Share function for analysis content
+        function shareAnalysisContent(title, content) {
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: content
+                }).then(() => {
+                    console.log('📤 Analysis shared successfully');
+                }).catch((error) => {
+                    console.log('Share failed:', error);
+                    copyAnalysisToClipboard(content);
+                });
             } else {
-                document.getElementById('modalTitle').textContent = title;
-                document.getElementById('modalContent').textContent = content;
-                modal.style.display = 'block';
+                copyAnalysisToClipboard(content);
             }
         }
         
-        function closeAnalysisModal() {
-            const modal = document.getElementById('analysisModal');
-            if (modal) {
-                modal.style.display = 'none';
+        // Copy to clipboard fallback
+        function copyAnalysisToClipboard(content) {
+            navigator.clipboard.writeText(content).then(() => {
+                alert('✅ Analysis copied to clipboard!');
+            }).catch(() => {
+                alert('❌ Could not copy to clipboard. Please select and copy manually.');
+            });
+        }
+        
+        // Window Manager Interface
+        function showWindowManager() {
+            const windowId = 'window-manager';
+            
+            // Check if already open
+            if (window.LucidraWindows.windowExists(windowId)) {
+                window.LucidraWindows.focusWindow(windowId);
+                return;
             }
+            
+            const windowComponents = window.LucidraWindows.createWindow(windowId, {
+                maxWidth: '600px',
+                maxHeight: '70vh',
+                closeable: true,
+                minimizable: true,
+                draggable: true,
+                backdrop: true,
+                escapeClose: true
+            });
+            
+            window.LucidraWindows.setWindowTitle(windowId, '🪟 Window Manager');
+            
+            const stats = window.LucidraAgent ? window.LucidraAgent.getAgentStats() : {
+                session: { windowsOpened: 0, windowsClosed: 0, peakConcurrentWindows: 0 }
+            };
+            
+            const activeWindows = window.LucidraWindows.getActiveWindowsCount();
+            const minimizedWindows = window.LucidraWindows.getMinimizedWindowsCount();
+            
+            const managerContent = `
+                <div style="padding: 10px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold; color: #667eea;">${activeWindows}</div>
+                            <div style="color: #666; font-size: 14px;">Active Windows</div>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold; color: #28a745;">${minimizedWindows}</div>
+                            <div style="color: #666; font-size: 14px;">Minimized Windows</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="margin-bottom: 10px; color: #333;">Session Statistics</h4>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-size: 14px;">
+                            <div>Windows Opened: <strong>${stats.session.windowsOpened}</strong></div>
+                            <div>Windows Closed: <strong>${stats.session.windowsClosed}</strong></div>
+                            <div>Peak Concurrent: <strong>${stats.session.peakConcurrentWindows}</strong></div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <button onclick="window.LucidraWindows.closeAllWindows(); updateWindowManagerContent();" 
+                                style="background: #dc3545; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 14px;">
+                            ✕ Close All Windows
+                        </button>
+                        <button onclick="showAgentReport()" 
+                                style="background: #17a2b8; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 14px;">
+                            🤖 Agent Report
+                        </button>
+                        <button onclick="showWindowPreferences()" 
+                                style="background: #6f42c1; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 14px;">
+                            ⚙️ Preferences
+                        </button>
+                    </div>
+                    
+                    <div id="active-windows-list">
+                        ${generateActiveWindowsList()}
+                    </div>
+                </div>
+            `;
+            
+            window.LucidraWindows.setWindowContent(windowId, managerContent);
+        }
+        
+        function generateActiveWindowsList() {
+            const windows = Array.from(window.LucidraWindows.windows.entries())
+                .filter(([id, data]) => id !== 'window-manager');
+            
+            if (windows.length === 0) {
+                return '<div style="text-align: center; color: #666; padding: 20px;">No other windows open</div>';
+            }
+            
+            return `
+                <h4 style="margin-bottom: 10px; color: #333;">Active Windows</h4>
+                <div style="max-height: 200px; overflow-y: auto;">
+                    ${windows.map(([id, data]) => `
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f9fa; margin-bottom: 5px; border-radius: 5px;">
+                            <div>
+                                <div style="font-weight: bold; color: #333;">${data.header.querySelector('.lucidra-window-title').textContent}</div>
+                                <div style="font-size: 12px; color: #666;">ID: ${id}</div>
+                            </div>
+                            <div style="display: flex; gap: 5px;">
+                                <button onclick="window.LucidraWindows.focusWindow('${id}')" style="background: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 12px;">Focus</button>
+                                <button onclick="window.LucidraWindows.minimizeWindow('${id}'); updateWindowManagerContent();" style="background: #ffc107; color: #333; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 12px;">Minimize</button>
+                                <button onclick="window.LucidraWindows.closeWindow('${id}'); updateWindowManagerContent();" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 12px;">Close</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        function updateWindowManagerContent() {
+            if (window.LucidraWindows.windowExists('window-manager')) {
+                setTimeout(() => {
+                    const listElement = document.getElementById('active-windows-list');
+                    if (listElement) {
+                        listElement.innerHTML = generateActiveWindowsList();
+                    }
+                    updateWindowCount();
+                }, 100);
+            }
+        }
+        
+        function showAgentReport() {
+            if (window.LucidraAgent) {
+                const report = window.LucidraAgent.generateReport();
+                showAnalysisModal('🤖 Window Agent Report', report);
+            } else {
+                alert('Window Agent not available');
+            }
+        }
+        
+        function showWindowPreferences() {
+            const prefWindowId = 'window-preferences';
+            
+            const windowComponents = window.LucidraWindows.createWindow(prefWindowId, {
+                maxWidth: '500px',
+                closeable: true,
+                minimizable: false,
+                draggable: true,
+                backdrop: true
+            });
+            
+            window.LucidraWindows.setWindowTitle(prefWindowId, '⚙️ Window Preferences');
+            
+            const prefs = window.LucidraAgent ? window.LucidraAgent.sessionData.userPreferences : {
+                autoCloseAfter: 300,
+                maxConcurrentWindows: 4,
+                autoOptimize: true,
+                showSuggestions: true
+            };
+            
+            const preferencesContent = `
+                <div style="padding: 10px;">
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Auto-close idle windows after (seconds):</label>
+                        <input type="number" id="autoCloseAfter" value="${prefs.autoCloseAfter}" min="60" max="3600" 
+                               style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Maximum concurrent windows:</label>
+                        <input type="number" id="maxConcurrentWindows" value="${prefs.maxConcurrentWindows}" min="1" max="10" 
+                               style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="autoOptimize" ${prefs.autoOptimize ? 'checked' : ''}>
+                            <span>Enable automatic optimization</span>
+                        </label>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="showSuggestions" ${prefs.showSuggestions ? 'checked' : ''}>
+                            <span>Show optimization suggestions</span>
+                        </label>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button onclick="saveWindowPreferences('${prefWindowId}')" 
+                                style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                            Save Preferences
+                        </button>
+                        <button onclick="window.LucidraWindows.closeWindow('${prefWindowId}')" 
+                                style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            window.LucidraWindows.setWindowContent(prefWindowId, preferencesContent);
+        }
+        
+        function saveWindowPreferences(windowId) {
+            if (window.LucidraAgent) {
+                const autoCloseAfter = parseInt(document.getElementById('autoCloseAfter').value);
+                const maxConcurrentWindows = parseInt(document.getElementById('maxConcurrentWindows').value);
+                const autoOptimize = document.getElementById('autoOptimize').checked;
+                const showSuggestions = document.getElementById('showSuggestions').checked;
+                
+                window.LucidraAgent.updateUserPreference('autoCloseAfter', autoCloseAfter);
+                window.LucidraAgent.updateUserPreference('maxConcurrentWindows', maxConcurrentWindows);
+                window.LucidraAgent.updateUserPreference('autoOptimize', autoOptimize);
+                window.LucidraAgent.updateUserPreference('showSuggestions', showSuggestions);
+                
+                alert('✅ Preferences saved successfully!');
+                window.LucidraWindows.closeWindow(windowId);
+            }
+        }
+        
+        // Update window count in navigation
+        function updateWindowCount() {
+            const countElement = document.getElementById('window-count');
+            if (countElement) {
+                const activeCount = window.LucidraWindows.getActiveWindowsCount();
+                countElement.textContent = activeCount;
+                
+                // Update button style based on count
+                const btnElement = document.getElementById('window-control-btn');
+                if (btnElement) {
+                    if (activeCount > 0) {
+                        btnElement.style.background = 'linear-gradient(45deg, #28a745, #20c997)';
+                    } else {
+                        btnElement.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+                    }
+                }
+            }
+        }
+        
+        // Legacy function - now handled by window manager
+        function closeAnalysisModal() {
+            // Close any analysis windows
+            window.LucidraWindows.closeAllWindows();
         }
         
         function exportAnalysis() {
@@ -7091,6 +7306,46 @@ Process Complexity: ${orgContext.organizationalComplexity.toFixed(1)} (scale 1-1
                 // Initialize self-healing system
                 healthMonitor = new LucidraHealthMonitor();
                 console.log('✅ Self-healing system activated');
+                
+                // Initialize window management system
+                setTimeout(() => {
+                    if (window.LucidraWindows && window.LucidraAgent) {
+                        // Hook into window creation/destruction for count updates
+                        const originalCreateWindow = window.LucidraWindows.createWindow.bind(window.LucidraWindows);
+                        window.LucidraWindows.createWindow = function(id, options) {
+                            const result = originalCreateWindow(id, options);
+                            setTimeout(updateWindowCount, 100);
+                            return result;
+                        };
+                        
+                        const originalCloseWindow = window.LucidraWindows.closeWindow.bind(window.LucidraWindows);
+                        window.LucidraWindows.closeWindow = function(id) {
+                            const result = originalCloseWindow(id);
+                            setTimeout(updateWindowCount, 100);
+                            return result;
+                        };
+                        
+                        const originalMinimizeWindow = window.LucidraWindows.minimizeWindow.bind(window.LucidraWindows);
+                        window.LucidraWindows.minimizeWindow = function(id) {
+                            const result = originalMinimizeWindow(id);
+                            setTimeout(updateWindowCount, 100);
+                            return result;
+                        };
+                        
+                        const originalRestoreWindow = window.LucidraWindows.restoreWindow.bind(window.LucidraWindows);
+                        window.LucidraWindows.restoreWindow = function(id) {
+                            const result = originalRestoreWindow(id);
+                            setTimeout(updateWindowCount, 100);
+                            return result;
+                        };
+                        
+                        // Initial count update
+                        updateWindowCount();
+                        console.log('✅ Window management system integrated');
+                    } else {
+                        console.warn('⚠️ Window management system not fully loaded');
+                    }
+                }, 1000);
                 
                 // Verify critical elements exist
                 const dashboard = document.getElementById('dashboard');
