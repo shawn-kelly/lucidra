@@ -1,111 +1,26 @@
 /* ===================================
    LUCIDRA PLATFORM CONTRAST FIXES
    ===================================
-   Fixes readability and accessibility issues
-   by improving text/background contrast ratios
+   Proper contrast fixes with context awareness
 */
 
-/* Form Elements - High Contrast Fix */
-.form-input, .form-textarea, .form-select {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #2c3e50 !important;
-    border: 2px solid rgba(52, 152, 219, 0.3) !important;
+/* Reset overly aggressive text color forcing */
+body * {
+    color: inherit !important;
 }
 
-.form-input::placeholder, .form-textarea::placeholder {
-    color: #7f8c8d !important;
-    opacity: 0.8 !important;
+/* Dashboard - white text on gradient background */
+.dashboard {
+    background: transparent;
+    color: white;
 }
 
-.form-input:focus, .form-textarea:focus, .form-select:focus {
-    background: white !important;
-    border-color: #3498db !important;
-    color: #2c3e50 !important;
-    outline: none !important;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2) !important;
-}
-
-/* Modal Content - Better Text Visibility */
-.modal-content {
-    background: white !important;
-    color: #2c3e50 !important;
-    border-radius: 15px !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
-}
-
-.modal-content h1, .modal-content h2, .modal-content h3, .modal-content h4 {
-    color: #2c3e50 !important;
-}
-
-.modal-content p, .modal-content li, .modal-content span {
-    color: #34495e !important;
-}
-
-/* White-on-light background fixes */
-[style*="background: rgba(255, 255, 255, 0.1)"][style*="color: white"] {
-    background: rgba(44, 62, 80, 0.9) !important;
+.dashboard-title, .dashboard-subtitle {
     color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
 }
 
-/* Tutorial and video content fixes */
-.video-item {
-    background: rgba(44, 62, 80, 0.8) !important;
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-}
-
-/* Process design elements */
-.enhanced-element {
-    background: rgba(44, 62, 80, 0.9) !important;
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-}
-
-/* Button contrast improvements */
-.btn-secondary {
-    background: rgba(52, 73, 94, 0.9) !important;
-    color: white !important;
-    border: 2px solid rgba(255, 255, 255, 0.3) !important;
-}
-
-.btn-secondary:hover {
-    background: rgba(44, 62, 80, 1) !important;
-    border-color: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* Navigation improvements */
-.nav-btn {
-    background: rgba(44, 62, 80, 0.8) !important;
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-}
-
-.nav-btn:hover {
-    background: rgba(52, 152, 219, 0.8) !important;
-    color: white !important;
-}
-
-.nav-btn.active {
-    background: rgba(52, 152, 219, 0.9) !important;
-    color: white !important;
-    border-color: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* Tab improvements */
-.tab {
-    background: rgba(44, 62, 80, 0.8) !important;
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-}
-
-.tab.active {
-    background: rgba(52, 152, 219, 0.9) !important;
-    color: white !important;
-    border-color: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* Module card text fixes */
+/* Module cards - dark text on light background */
 .module-card {
     background: rgba(255, 255, 255, 0.95) !important;
     color: #2c3e50 !important;
@@ -124,10 +39,34 @@
     color: #7f8c8d !important;
 }
 
-/* Workspace content fixes */
+/* Navigation - white text on dark background */
+.nav-btn {
+    background: rgba(44, 62, 80, 0.8) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.nav-btn:hover {
+    background: rgba(52, 152, 219, 0.8) !important;
+    color: white !important;
+}
+
+.nav-btn.active {
+    background: rgba(52, 152, 219, 0.9) !important;
+    color: white !important;
+}
+
+/* Workspace content - dark text on light background */
+.workspace {
+    background: transparent;
+}
+
 .workspace-content {
     background: rgba(255, 255, 255, 0.95) !important;
     color: #2c3e50 !important;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
 }
 
 .workspace-content h1, .workspace-content h2, .workspace-content h3 {
@@ -138,116 +77,91 @@
     color: #34495e !important;
 }
 
-/* Canvas and drawing area fixes */
-.process-canvas, .process-canvas-enhanced {
-    background: rgba(255, 255, 255, 0.9) !important;
-    border: 2px dashed rgba(52, 152, 219, 0.5) !important;
+/* Forms - dark text on white background */
+.form-input, .form-textarea, .form-select {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #2c3e50 !important;
+    border: 2px solid rgba(52, 152, 219, 0.3) !important;
+}
+
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+    background: white !important;
+    border-color: #3498db !important;
     color: #2c3e50 !important;
 }
 
-/* Strategy content fixes */
+/* Video items - white text on semi-transparent dark background */
+.video-item {
+    background: rgba(44, 62, 80, 0.8) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Process elements - white text on dark background */
+.enhanced-element {
+    background: rgba(44, 62, 80, 0.9) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Canvas areas - dark text on light background */
+.process-canvas, .process-canvas-enhanced {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #2c3e50 !important;
+    border: 2px dashed rgba(52, 152, 219, 0.5) !important;
+}
+
+/* Strategy cards - dark text on light background */
 .strategy-card {
     background: rgba(255, 255, 255, 0.95) !important;
     color: #2c3e50 !important;
     border: 1px solid rgba(52, 152, 219, 0.3) !important;
 }
 
-.canvas-section {
-    background: rgba(255, 255, 255, 0.9) !important;
-    color: #2c3e50 !important;
-    border: 1px solid rgba(52, 152, 219, 0.3) !important;
+/* Tabs - contextual coloring */
+.tab {
+    background: rgba(44, 62, 80, 0.8) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
-.canvas-title {
-    color: #2c3e50 !important;
+.tab.active {
+    background: rgba(52, 152, 219, 0.9) !important;
+    color: white !important;
 }
 
-/* Results section fixes */
-.results-section {
-    background: rgba(46, 204, 113, 0.15) !important;
-    border: 2px solid rgba(46, 204, 113, 0.5) !important;
-    color: #2c3e50 !important;
-}
-
-/* Video player fixes */
-.real-video-player {
+/* Modal content - dark text on white background */
+.modal-content {
     background: white !important;
     color: #2c3e50 !important;
-    border-radius: 15px !important;
 }
 
-.video-details {
-    background: #f8f9fa !important;
+.modal-content h1, .modal-content h2, .modal-content h3, .modal-content h4 {
     color: #2c3e50 !important;
 }
 
-/* Tutorial builder fixes */
-.tutorial-builder input, .tutorial-builder select, .tutorial-builder textarea {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #2c3e50 !important;
-    border: 2px solid rgba(52, 152, 219, 0.3) !important;
+.modal-content p, .modal-content li, .modal-content span {
+    color: #34495e !important;
 }
 
-/* Leadership coaching fixes */
-.coaching-module {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #2c3e50 !important;
-    border: 1px solid rgba(52, 152, 219, 0.3) !important;
-}
-
-/* Assessment fixes */
-.assessment-card {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #2c3e50 !important;
-}
-
-/* Scenario planning fixes */
-.scenario-card {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #2c3e50 !important;
-}
-
-/* Progress indicators */
-.progress-indicator {
-    background: rgba(255, 255, 255, 0.9) !important;
-    color: #2c3e50 !important;
-}
-
-/* Specific inline style overrides */
-[style*="color: white"][style*="background: rgba(255, 255, 255"] {
+/* Specific overrides for problematic elements */
+[style*="background: rgba(255, 255, 255, 0.1)"] {
     background: rgba(44, 62, 80, 0.9) !important;
     color: white !important;
 }
 
-/* Input field contrast in modals */
-.modal input, .modal textarea, .modal select {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #2c3e50 !important;
-    border: 2px solid rgba(52, 152, 219, 0.3) !important;
-}
-
-/* Opacity fixes for better readability */
-[style*="opacity: 0.4"], [style*="opacity: 0.3"], [style*="opacity: 0.2"] {
-    opacity: 0.8 !important;
-}
-
-/* Text on gradient backgrounds */
-.gradient-text {
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
-}
-
-/* Ensure proper contrast ratios */
-.high-contrast {
-    background: #2c3e50 !important;
+/* Ensure gradient text remains white */
+[style*="background: linear-gradient"] {
     color: white !important;
 }
 
-.light-contrast {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #2c3e50 !important;
+/* Focus indicators */
+*:focus {
+    outline: 3px solid rgba(52, 152, 219, 0.6) !important;
+    outline-offset: 2px !important;
 }
 
-/* Mobile-specific fixes */
+/* Mobile responsiveness */
 @media (max-width: 768px) {
     .module-card, .workspace-content, .strategy-card {
         background: rgba(255, 255, 255, 0.98) !important;
@@ -259,80 +173,4 @@
         color: #2c3e50 !important;
         border: 2px solid #3498db !important;
     }
-}
-
-/* Ensure accessibility compliance */
-.wcag-aa-compliant {
-    /* Minimum contrast ratio of 4.5:1 for normal text */
-    /* Minimum contrast ratio of 3:1 for large text */
-}
-
-/* Focus indicators for keyboard navigation */
-*:focus {
-    outline: 3px solid rgba(52, 152, 219, 0.6) !important;
-    outline-offset: 2px !important;
-}
-
-/* Print styles for better readability */
-@media print {
-    * {
-        background: white !important;
-        color: black !important;
-    }
-}
-
-/* Additional critical contrast fixes for remaining issues */
-.main-content {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #2c3e50 !important;
-}
-
-.workspace-content h1, .workspace-content h2, .workspace-content h3, 
-.workspace-content h4, .workspace-content h5, .workspace-content h6 {
-    color: #2c3e50 !important;
-}
-
-.workspace-content p, .workspace-content div, .workspace-content span {
-    color: #34495e !important;
-}
-
-/* Fix any remaining white text on light backgrounds */
-*[style*="color: white"] {
-    color: #2c3e50 !important;
-}
-
-*[style*="color: rgba(255, 255, 255"] {
-    color: #2c3e50 !important;
-}
-
-/* Ensure all text elements have proper contrast */
-h1, h2, h3, h4, h5, h6, p, div, span, li, td, th, label {
-    color: #2c3e50 !important;
-}
-
-/* Override any problematic inline styles */
-[style*="background: rgba(255, 255, 255, 0.1)"] {
-    background: rgba(44, 62, 80, 0.9) !important;
-    color: white !important;
-}
-
-/* Specific section background fixes */
-section {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #2c3e50 !important;
-}
-
-.dashboard {
-    background: rgba(255, 255, 255, 0.95) !important;
-    color: #2c3e50 !important;
-}
-
-.dashboard-title, .dashboard-subtitle {
-    color: #2c3e50 !important;
-    text-shadow: none !important;
-}
-
-/* Force readable text everywhere */
-body * {
-    color: #2c3e50 !important;
 }
