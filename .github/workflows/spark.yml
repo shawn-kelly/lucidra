@@ -1,0 +1,14 @@
+name: Spark Deploy - lucidra
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Claude Mutation Check
+        run: claude validate ./lucidra
+      - name: Spark Deploy
+        run: spark deploy lucidra --token ${{ secrets.SPARK_TOKEN_lucidra }}
