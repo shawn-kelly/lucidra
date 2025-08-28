@@ -342,9 +342,9 @@ export class FrameworkRegistry {
   getAllPerformanceMetrics(): Map<string, Partial<PerformanceMetrics> | null> {
     const allMetrics = new Map<string, Partial<PerformanceMetrics> | null>();
     
-    for (const frameworkId of this.frameworks.keys()) {
+    Array.from(this.frameworks.keys()).forEach(frameworkId => {
       allMetrics.set(frameworkId, this.getPerformanceMetrics(frameworkId));
-    }
+    });
 
     return allMetrics;
   }

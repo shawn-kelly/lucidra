@@ -44,7 +44,7 @@ import {
   FiActivity, 
   FiTarget, 
   FiZap,
-  FiBarChart3,
+  FiBarChart,
   FiPieChart,
   FiTrendingDown,
   FiAlertTriangle,
