@@ -101,7 +101,7 @@ const ChunkLoadingSpinner = () => (
   </Center>
 );
 
-function App() {
+function App(): JSX.Element {
   const [currentView, setCurrentView] = useState('dashboard');
   const [userTier] = useState('pro'); // Default to pro for demo
   const [currentUser] = useState('demo-user-123'); // Demo user ID

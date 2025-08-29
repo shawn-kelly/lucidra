@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { 
   FiActivity, FiBarChart, FiTrendingUp, FiZap, FiCpu, 
-  FiVideo, FiEye, FiTarget, FiBrain, FiDatabase
+  FiVideo, FiEye, FiTarget, FiDatabase
 } from 'react-icons/fi';
 
 interface AIModule {
@@ -74,7 +74,7 @@ const AnalyticsAIPage: React.FC<AnalyticsAIPageProps> = ({ onNavigate }) => {
       id: 'ai-implementation',
       title: 'AI Implementation Coach',
       description: 'Guided AI integration and strategic implementation assistance',
-      icon: FiBrain,
+      icon: FiCpu,
       category: 'Automation',
       aiCapability: 80,
       status: 'active',
@@ -272,7 +272,7 @@ const AnalyticsAIPage: React.FC<AnalyticsAIPageProps> = ({ onNavigate }) => {
                             onClick={() => onNavigate(module.path)}
                             isDisabled={module.status === 'coming-soon'}
                             w="full"
-                            leftIcon={<FiBrain />}
+                            leftIcon={<FiCpu />}
                           >
                             {module.status === 'coming-soon' ? 'Coming Soon' : 'Launch AI Tool'}
                           </Button>
@@ -327,7 +327,7 @@ const AnalyticsAIPage: React.FC<AnalyticsAIPageProps> = ({ onNavigate }) => {
                   AI Process Logger
                 </Button>
                 <Button
-                  leftIcon={<FiBrain />}
+                  leftIcon={<FiCpu />}
                   colorScheme="blue"
                   variant="outline"
                   onClick={() => onNavigate('ai-implementation')}
