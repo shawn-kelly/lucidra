@@ -41,6 +41,8 @@ import InteractivePortersFiveForces from './components/InteractivePortersFiveFor
 import StrategyExecutionTracker from './components/StrategyExecutionTracker';
 import BusinessModelCanvasFixed from './components/BusinessModelCanvasFixed';
 import VisualProcessArchitect from './components/VisualProcessArchitect';
+import ComprehensivePortersFiveForces from './components/ComprehensivePortersFiveForces';
+import ComprehensiveSWOTAnalysis from './components/ComprehensiveSWOTAnalysis';
 
 // Lazy load component chunks to optimize build and runtime performance
 const ChunkStrategy = React.lazy(() => import('./components/ComprehensiveBlueOceanStrategy'));
@@ -2169,8 +2171,8 @@ function App(): JSX.Element {
     );
   };
 
-  // Comprehensive Porter's Five Forces Component
-  const ComprehensivePortersFiveForces = () => {
+  // Comprehensive Porter's Five Forces Component - COMMENTED OUT, USING EXTERNAL COMPONENT
+  /* const ComprehensivePortersFiveForces = () => {
     const [activeTab, setActiveTab] = React.useState('analysis');
     const [selectedForce, setSelectedForce] = React.useState<any>(null);
     const [industryData, setIndustryData] = React.useState({
@@ -2801,10 +2803,10 @@ function App(): JSX.Element {
         </VStack>
       </Box>
     );
-  };
+  }; */
 
-  // Comprehensive SWOT Analysis Component
-  const ComprehensiveSWOTAnalysis = () => {
+  // Comprehensive SWOT Analysis Component - COMMENTED OUT, USING EXTERNAL COMPONENT
+  /* const ComprehensiveSWOTAnalysis = () => {
     const [activeTab, setActiveTab] = React.useState('analysis');
     const [selectedQuadrant, setSelectedQuadrant] = React.useState<any>(null);
     const [swotData, setSwotData] = React.useState({
@@ -3720,7 +3722,7 @@ function App(): JSX.Element {
         </VStack>
       </Box>
     );
-  };
+  }; */
 
   // Strategic Project Integration Hub Component
   const StrategicProjectIntegrationHub = () => {
